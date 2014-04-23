@@ -94,7 +94,7 @@ Timing::calctras()
 	//factor which defines the rowbuffer*subarray2rowbuffer relation
 	float bankwidthfactor;
 	bankwidthfactor = n.rowbuffersize * n.subarray2rowbufferfactor;
-	std::cout<<"bankwidthfactor"<<bankwidthfactor<<"\n";
+	//std::cout<<"bankwidthfactor"<<bankwidthfactor<<"\n";
 	if (bankwidthfactor == 1) {
 		dqwirelength = 3;
 	} else if (bankwidthfactor == 2) {
@@ -138,7 +138,7 @@ Timing::calctrp()
     	//trp = Master wordline delay ( discharging ) + local wordline delay
 	// (discharging ) + 1 ns ( equalizer delay ) 
 	trp =  wlthau + 1 + blthau;
-	std::cout <<"blthau" << "\t" << blthau << ".\n";
+	//std::cout <<"blthau" << "\t" << blthau << ".\n";
 	std::cout <<"trp" << "\t" << trp << ".\n";
 	return true;          
 }
