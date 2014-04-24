@@ -1,4 +1,5 @@
-# DRAMSpec - DRAM Current and Timing Generator
+# DRAMSpec
+## DRAM Current and Timing Generator
 
 ## LICENSE 
 Copyright (c)  2014, University of Kaiserslautern
@@ -32,17 +33,16 @@ new DRAM Architectures and to model existing DRAM chips.
 ## Installing
 
 ### download prerequisites (rapidjson)
-$./install.sh
+	./install.sh
 
 ### compiling DCTG
-$make
+	make
 
 ### running DCTG
-
-$./dctg -t technologyfilename -p parameterfilename
+	./dctg -t technologyfilename -p parameterfilename
 
 ### execution line example 
-./dctg -t techddr3_5x.json -p parddr3.json
+	./dctg -t techddr3_5x.json -p parddr3.json
 
 ### cleaning
-make clean
+	make clean
