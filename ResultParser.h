@@ -38,8 +38,8 @@ class ResultParser
   public:
 	ResultParser(Timing T , Current I): t(NULL), i(NULL)
 	{
-		t=&T;
-		i=&I;
+	    t=&T;
+	    i=&I;
 	}
 	void 
 	jsonwriter();

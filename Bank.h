@@ -39,21 +39,21 @@ class Bank:public MemoryArray
 	numberofMemoryArrays(0), Bankwidth(0), chipwidth(0), chiparea(0),
 	Bankheight(0)
 	{
-		//order of functions is important
-		bool BINIT = false;
-		BINIT = Bankinit();
-		if(BINIT == false){
-            std::cout<<"ERROR: Function for Bank Initialization not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for Bank Initialization not called");
-        }
-		bool AREAC = false;
-		AREAC = calcchiparea();
-		if(AREAC == false){
-            std::cout<<"ERROR: Function for area calculation not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for area calculation not called");
-        }	
+	    //order of functions is important
+	    bool BINIT = false;
+	    BINIT = Bankinit();
+	    if(BINIT == false){
+                std::cout<<"ERROR: Function for Bank Initialization not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for Bank Initialization not called");
+            }
+	    bool AREAC = false;
+	    AREAC = calcchiparea();
+	    if(AREAC == false){
+                std::cout<<"ERROR: Function for area calculation not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for area calculation not called");
+            }	
 	}
   protected:	
 	//size of bank
@@ -79,6 +79,6 @@ class Bank:public MemoryArray
 	calcchiparea();
   public:
 	//height of bank
-    float Bankheight;
+        float Bankheight;
 };
 #endif //BANK_H

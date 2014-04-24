@@ -36,65 +36,65 @@ class Current
 	IDD3n(0), IDD5(0) , t(NULL), Q_MWL(0), Q_LWL(0), Q_LBL(0), Q_SSA(0),
 	Q_CSL(0), Q_MDL(0), Q_READ(0), Q_DQ(0) 
 	{
-		t=&T;
-		std::cout<<"Currents in mA:" << "\n";
-		//check if function is called (order important)
-		bool background_I = false;
-		background_I = calcbackgroundCurrent();
-		if(background_I == false){
-			std::cout<<"ERROR: Function for Backgroud Current not called"<<
-			"\t"<<"Order of Functions is important"<<"\n";
-			throw(" Function for Backgroud Current not called");
-		}
-		bool IDD0_I = false;
-		IDD0_I = calcIDD0();
-		if(IDD0_I == false){
-            std::cout<<"ERROR: Function for IDD0 Current not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for IDD0 Current not called");
-        }
-		bool IDD1_I = false;
-		IDD1_I = calcIDD1();
-		if(IDD1_I == false){
-            std::cout<<"ERROR: Function for IDD1 Current not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for IDD1 Current not called");
-        }
-		bool IDD4R_I = false;
-		IDD4R_I = calcIDD4R();
-		if(IDD4R_I == false){
-            std::cout<<"ERROR: Function for IDD4R Current not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for IDD4R Current not called");
-        }
-		bool IDD4W_I = false;
-		IDD4W_I = calcIDD4W();
-		if(IDD4W_I == false){
-            std::cout<<"ERROR: Function for IDD4W Current not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for IDD4W Current not called");
-        }
-		bool IDD5_I = false;
-		IDD5_I = calcIDD5();
-		if(IDD5_I == false){
-            std::cout<<"ERROR: Function for IDD5 Current not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for IDD5 Current not called");
-        }		
+	    t=&T;
+	    std::cout<<"Currents in mA:" << "\n";
+	    //check if function is called (order important)
+	    bool background_I = false;
+	    background_I = calcbackgroundCurrent();
+	    if(background_I == false){
+		std::cout<<"ERROR: Function for Backgroud Current not called"<<
+		"\t"<<"Order of Functions is important"<<"\n";
+		throw(" Function for Backgroud Current not called");
+	    }
+	    bool IDD0_I = false;
+	    IDD0_I = calcIDD0();
+	    if(IDD0_I == false){
+                std::cout<<"ERROR: Function for IDD0 Current not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for IDD0 Current not called");
+            }
+	    bool IDD1_I = false;
+	    IDD1_I = calcIDD1();
+	    if(IDD1_I == false){
+               std::cout<<"ERROR: Function for IDD1 Current not called"<<
+               "\t"<<"Order of Functions is important"<<"\n";
+               throw(" Function for IDD1 Current not called");
+            }
+	    bool IDD4R_I = false;
+	    IDD4R_I = calcIDD4R();
+	    if(IDD4R_I == false){
+               std::cout<<"ERROR: Function for IDD4R Current not called"<<
+               "\t"<<"Order of Functions is important"<<"\n";
+               throw(" Function for IDD4R Current not called");
+            }
+	    bool IDD4W_I = false;
+	    IDD4W_I = calcIDD4W();
+	    if(IDD4W_I == false){
+               std::cout<<"ERROR: Function for IDD4W Current not called"<<
+               "\t"<<"Order of Functions is important"<<"\n";
+               throw(" Function for IDD4W Current not called");
+            }
+	    bool IDD5_I = false;
+	    IDD5_I = calcIDD5();
+	    if(IDD5_I == false){
+               std::cout<<"ERROR: Function for IDD5 Current not called"<<
+               "\t"<<"Order of Functions is important"<<"\n";
+               throw(" Function for IDD5 Current not called");
+            }		
 	}
 
 	//current IDD0 in mA ( ACT-PRE )
 	float IDD0;
-    //current IDD1 in mA
-    float IDD1;
-    //current IDD4R in mA
-    float IDD4R;
-    //current IDD4W in mA
-    float IDD4W;
-    //background current IDD2n precharge background current
-    float IDD2n;
-    //background current IDD3n active background current
-    float IDD3n;
+        //current IDD1 in mA
+        float IDD1;
+        //current IDD4R in mA
+        float IDD4R;
+        //current IDD4W in mA
+        float IDD4W;
+        //background current IDD2n precharge background current
+        float IDD2n;
+        //background current IDD3n active background current
+        float IDD3n;
 	//calculate the refresh current
 	float IDD5;
   private:

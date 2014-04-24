@@ -62,6 +62,6 @@ class MemoryArray:public SubArray
 	MemoryArrayinit();
    public:
 	//the total width of the memory array
-    float  MemoryArraywidth;
+        float  MemoryArraywidth;
 };
 #endif//MEMORYARRAY_H

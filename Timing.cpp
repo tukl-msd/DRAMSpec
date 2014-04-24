@@ -278,6 +278,5 @@ Timing::Timingclk()
 	std::cout << "txp_clk" << "\t" << txp_clk << "\n";
 	//tcke in clk cycles set to 4 cycles
 	tcke_clk = 4;
-	std::cout << "tcke_clk" << "\t" << tcke_clk << "\n";   		  		     	
-	return true;
+	std::cout << "tcke_clk" << "\t" << tcke_clk << "\n";   		  		     	      return true;
 }

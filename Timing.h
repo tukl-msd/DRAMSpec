@@ -40,77 +40,77 @@ class Timing
 	tref1_clk(0), trrd_clk(0), twtr_clk(0), tfaw_clk(0), txp_clk(0),
 	tcke_clk(0) 
 	{
-		//do not change order of function
-		bool TRCD = false;
-		TRCD = calctrcd();
-		if (TRCD == false){
-            std::cout<<"ERROR: Function for trcd timing not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for trcd timing  not called");
-        }
-		bool TRAS = false;
-		TRAS = calctras();
-		if (TRAS == false){
-            std::cout<<"ERROR: Function for tras timing not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for tras timing not called");
-        }
-		bool TRP = false;
-		TRP = calctrp();
-		if (TRP == false){
-            std::cout<<"ERROR: Function for trp timing not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for trp timing not called");
-        }
-		bool TRC = false;
-		TRC = calctrc();
-		if (TRC == false){
-			std::cout<<"ERROR: Function for trc timing not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for trc timing not called");
-        }
-		bool TRL = false;
-		TRL = calctrl();
-		if (TRL == false){
-            std::cout<<"ERROR: Function for trl timing not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for trl timing not called");
-        }
-		bool TWL = false;
-		TWL = calctwl();
-		if (TWL == false){
-            std::cout<<"ERROR: Function for twl timing not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for twl timing not called");
-        }
-		bool TRFC = false;		
-		TRFC = calctrfc();
-		if (TRFC == false){
-            std::cout<<"ERROR: Function for trfc timing not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for trfc timing not called");
-        }
-		bool TREF1 = false;
-		TREF1 = calctref1();
-		if (TREF1 == false){
-            std::cout<<"ERROR: Function for tref1 timing not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for tref1 timing not called");
-        }
-		bool TPOWER = false;
-		TPOWER = setpowerconstrainttiming();
-		if (TPOWER == false){
-            std::cout<<"ERROR: Function for power constraint timing not called"
-			<<"\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for power constraint timings not called");
-        }
-		bool TCLK = false;
-		TCLK = Timingclk();
-		if (TCLK == false){
-            std::cout<<"ERROR: Function for clocked timings not called"<<
-            "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for clocked timings not called");
-        }
+	    //do not change order of function
+	    bool TRCD = false;
+	    TRCD = calctrcd();
+	    if (TRCD == false){
+                std::cout<<"ERROR: Function for trcd timing not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for trcd timing  not called");
+            }
+	    bool TRAS = false;
+	    TRAS = calctras();
+	    if (TRAS == false){
+                std::cout<<"ERROR: Function for tras timing not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for tras timing not called");
+            }  
+	    bool TRP = false;
+	    TRP = calctrp();
+	    if (TRP == false){
+                std::cout<<"ERROR: Function for trp timing not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for trp timing not called");
+            }
+	    bool TRC = false;
+	    TRC = calctrc();
+	    if (TRC == false){
+		std::cout<<"ERROR: Function for trc timing not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for trc timing not called");
+            }
+	    bool TRL = false;
+	    TRL = calctrl();
+	    if (TRL == false){
+                std::cout<<"ERROR: Function for trl timing not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for trl timing not called");
+            } 
+	    bool TWL = false;
+	    TWL = calctwl();
+	    if (TWL == false){
+                std::cout<<"ERROR: Function for twl timing not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for twl timing not called");
+            }
+	    bool TRFC = false;		
+	    TRFC = calctrfc();
+	    if (TRFC == false){
+                std::cout<<"ERROR: Function for trfc timing not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for trfc timing not called");
+            }
+	    bool TREF1 = false;
+	    TREF1 = calctref1();
+	    if (TREF1 == false){
+                std::cout<<"ERROR: Function for tref1 timing not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for tref1 timing not called");
+            }
+	    bool TPOWER = false;
+	    TPOWER = setpowerconstrainttiming();
+	    if (TPOWER == false){
+                std::cout<<"ERROR: Function for power constraint timing not called"
+		<<"\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for power constraint timings not called");
+            }
+	    bool TCLK = false;
+	    TCLK = Timingclk();
+	    if (TCLK == false){
+                std::cout<<"ERROR: Function for clocked timings not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for clocked timings not called");
+            }
 	}	
 	//capacitace of local wordline
         float wlc;
