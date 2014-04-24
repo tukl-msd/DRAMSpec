@@ -1,4 +1,6 @@
-*********** LICENSE ***********
+# DRAMSpec - DRAM Current and Timing Generator
+
+## LICENSE 
 Copyright (c)  2014, University of Kaiserslautern
 All rights reserved.
 Redistribution and use in source and binary forms, with or without
@@ -23,20 +25,24 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Author : Omar Naji
 
-DCTG ( DRAM Current and Timing Generator ) is an open Source Tool which
+DRAMSpec - DRAM Current and Timing Generator is an open Source Tool which
 generates the Datasheet values of DRAM chips. This tool can be used to Explore
 new DRAM Architectures and to model existing DRAM chips.
 
-//cleaning
-make clean
+## Installing
 
-//compiling DCTG
- make
+### download prerequisites (rapidjson)
+$./install.sh
 
-//running DCTG
+### compiling DCTG
+$make
 
-./dctg -t technologyfilename -p parameterfilename
+### running DCTG
 
-//execution line example 
+$./dctg -t technologyfilename -p parameterfilename
+
+### execution line example 
 ./dctg -t techddr3_5x.json -p parddr3.json
 
+### cleaning
+make clean

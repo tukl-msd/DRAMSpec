@@ -1,8 +1,9 @@
 *.o
 .directory
-DCTG1.4/currentresult
-DCTG1.4/dctg
-DCTG1.4/rapidjson/
-DCTG1.4/results/
-DCTG1.4/timingresult
+currentresult
+dctg
+rapidjson/
+results/
+timingresult
+rapidjson-0.11.zip
 
