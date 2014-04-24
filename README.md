@@ -35,14 +35,14 @@ new DRAM Architectures and to model existing DRAM chips.
 ### download prerequisites (rapidjson)
 	./install.sh
 
-### compiling DCTG
+### compiling DRAMSpec
 	make
 
 ### running DCTG
-	./dctg -t technologyfilename -p parameterfilename
+	./dramspec -t technologyfilename -p parameterfilename
 
 ### execution line example 
-	./dctg -t techddr3_5x.json -p parddr3.json
+	./dramspec -t techddr3_5x.json -p parddr3.json
 
 ### cleaning
 	make clean

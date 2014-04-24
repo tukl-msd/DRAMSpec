@@ -32,42 +32,40 @@ Author: Omar Naji
 	int 
 	main(int argc, char* argv[])
 	{
-	 std::string techname;
-	 std::string paraname;
-		for (int i = 1; i < argc; i++) 
-		{
-        				
-			if (std::string(argv[i]) == "-t") {
-				techname = argv[i+1];
-				std::cout << "Technology filename" << "\t" << techname <<".\n"; 
-				//check if technology filename correct
-            	std::ifstream tout(techname.c_str());
-           		if(tout.fail()){
-                std::cout << std::endl << " Technology File not specified! "
-				<<std::endl;
-                return 0;
-            	}
+	     std::string techname;
+	     std::string paraname;
+	     for (int i = 1; i < argc; i++) 
+	     {
+                 if (std::string(argv[i]) == "-t") {
+		    techname = argv[i+1];
+		    std::cout << "Technology filename" << "\t" << techname <<".\n"; 
+		    //check if technology filename correct
+            	    std::ifstream tout(techname.c_str());
+           	    if(tout.fail()){
+                       std::cout << std::endl << " Technology File not specified! "
+		       <<std::endl;
+                       return 0;
+            	    }
 
-			}
-			if (std::string(argv[i]) == "-p") {
-                paraname = argv[i+1];
-                std::cout << "Parameter filename" << "\t" << paraname <<".\n";
-				//check if parameter filename correct
-           		std::ifstream pout(paraname.c_str());
-            	if(pout.fail()){
-                	std::cout << std::endl << " Parameter File not specified! " <<
-                	std::endl;
-                	return 0;
-            	}
-
-            }
-		}
-		//calculating timing specification
-		Timing t(techname, paraname);
-		//calculating power specification ( currents )
-		Current i(t);
-		//result parser
-		ResultParser result( t , i );
-		result.jsonwriter();
-		return 0;
+		 }
+		 if (std::string(argv[i]) == "-p") {
+                    paraname = argv[i+1];
+                    std::cout << "Parameter filename" << "\t" << paraname <<".\n";
+		    //check if parameter filename correct
+           	    std::ifstream pout(paraname.c_str());
+            	    if(pout.fail()){
+                       std::cout << std::endl << " Parameter File not specified! " <<
+                       std::endl;
+                       return 0;
+            	    } 
+                 }
+	     }
+	     //calculating timing specification
+	     Timing t(techname, paraname);
+	     //calculating power specification ( currents )
+	     Current i(t);
+	     //result parser
+	     ResultParser result( t , i );
+	     result.jsonwriter();
+	     return 0;
 	}

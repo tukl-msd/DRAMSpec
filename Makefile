@@ -26,7 +26,7 @@ SRC := $(wildcard *.cpp)
 
 OBJ := $(SRC:.cpp=.o)
 
-BIN := dctg
+BIN := dramspec
 
 # clang does not seem to like some rapidjson comparisons
 CXXFLAGS := -Wno-tautological-constant-out-of-range-compare
