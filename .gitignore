@@ -1,0 +1,8 @@
+*.o
+.directory
+DCTG1.4/currentresult
+DCTG1.4/dctg
+DCTG1.4/rapidjson/
+DCTG1.4/results/
+DCTG1.4/timingresult
+
