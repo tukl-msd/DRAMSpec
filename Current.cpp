@@ -115,7 +115,13 @@ Current::calcIDD4W()
 {
 	//number of signals for write is number of signals for read 
 	//+ 1 extra signal for rcv per 8 bits
-	IDD4W = IDD4R + (t->n.Interface/8) * t->n.IDD_OCD_RCV;
+	int rcvconst;
+	if(t->n.Interface/8 < 1) {
+	   rcvconst = 1 ;
+	} else {
+	rcvconst = 0 ;
+	}
+	IDD4W = IDD4R + (t->n.Interface/8 + rcvconst) * t->n.IDD_OCD_RCV;
 	std::cout<<"IDD4W"<<"\t" << IDD4W << "\n";
 	return true;
 }
