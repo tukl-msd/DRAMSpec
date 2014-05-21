@@ -1,9 +1,9 @@
 {
 	"DRAMType": "DDR",
-	"Size":1,
+	"Size": 2,
 	"Numberofbanks":8,
-	"Interface": 4,
-	"Freq": 400,
+	"Interface": 16,
+	"Freq": 533,
 	"Prefetch": 8,
 	"additionallatency" : 0,
 	"Rowbuffersize": 2,

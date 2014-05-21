@@ -81,7 +81,7 @@ Current::calcIDD1()
  	Q_DQ =(float) ( t->n.Interface * t->n.Prefetch * t->DQcapa 
 	* t->n.vcc );
 	//read charges in pC
- 	Q_READ = (Q_SSA + Q_CSL + Q_MDL + Q_DQ) ;
+ 	Q_READ = (Q_SSA + 2*Q_CSL + 2*Q_MDL + Q_DQ) ;
 	float Q_total1 = ( (Q_MWL + Q_LWL + Q_LBL + Q_READ)*2 ) / 1000;
 	float Trc = t->trc_clk * t->clk;
 	IDD1 =  Q_total1 / Trc + IDD3n;
@@ -101,7 +101,7 @@ Current::calcIDD4R()
 	} else {
 	clkconstant = 1;
 	}
-	float Q_total4R = (Q_READ)* 2 / 1000;
+	float Q_total4R = (Q_READ) / 1000;
 	//number of output signals for read = interface number 
 	//+ 1 datastrobe signal pro 4 bits
 	//current IDD4R ;  
