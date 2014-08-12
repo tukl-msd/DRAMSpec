@@ -49,8 +49,6 @@ TechnologyValues::readjson(const std::string& t,const std::string& p){
     //parsing the json file
     //pointing to the string
     const char* techjson = testtech.c_str();
-    //test if correct array is stored
-    std::cout<<"Technology Parameters"<<"\n"<<techjson;
     //using the library for parsing
     rapidjson::Document techdocument;
     techdocument.Parse<0>(techjson);	
@@ -192,8 +190,6 @@ TechnologyValues::readjson(const std::string& t,const std::string& p){
     //parsing the json file
     //pointing to the string
     const char* parajson = testpara.c_str();
-    //test if correct array is stored
-    std::cout<<" Parameters "<<"\n"<<parajson;
     //using the library for parsing
     rapidjson::Document paradocument;
     paradocument.Parse<0>(parajson);
