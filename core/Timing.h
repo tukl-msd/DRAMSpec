@@ -31,203 +31,206 @@ Author: Omar Naji
 class Timing
 {
   public:
-	Timing( const std::string& techname, const std::string& paraname )
-	:n(techname,paraname), wlc(0), blc(0), GWDC(0), CSLcapa(0), GDLcapa(0),
-	DQcapa(0), clk(0), trcd(0), tcl(0), tras(0), trp(0), trc(0), trl(0),
-	twl(0),trtp(0), tccd(0), twr(0), trfc(0), tref1(0), trrd(0), twtr(0), tfaw(0), tGWLD(0), wlthau(0),
-	blthau(0), trcd_clk(0), tcl_clk(0), tras_clk(0), trp_clk(0), trc_clk(0),
-	trl_clk(0), twl_clk(0), trtp_clk(0), tccd_clk(0), twr_clk(0), trfc_clk(0),
-	tref1_clk(0), trrd_clk(0), twtr_clk(0), tfaw_clk(0), txp_clk(0),
-	tcke_clk(0) 
-	{
-	    //do not change order of function
-	    bool TRCD = false;
-	    TRCD = calctrcd();
-	    if (TRCD == false){
+    Timing( const std::string& techname, const std::string& paraname )
+    :n(techname,paraname), wlc(0), blc(0), GWDC(0), CSLcapa(0), GDLcapa(0),
+    DQcapa(0), clk(0), trcd(0), tcl(0), tras(0), trp(0), trc(0), trl(0),
+    twl(0),trtp(0), tccd(0), twr(0), trfc(0), tref1(0), trrd(0), twtr(0), tfaw(0), tGWLD(0), wlthau(0),
+    blthau(0), trcd_clk(0), tcl_clk(0), tras_clk(0), trp_clk(0), trc_clk(0),
+    trl_clk(0), twl_clk(0), trtp_clk(0), tccd_clk(0), twr_clk(0), trfc_clk(0),
+    tref1_clk(0), trrd_clk(0), twtr_clk(0), tfaw_clk(0), txp_clk(0),
+    tcke_clk(0) 
+    {
+        //do not change order of function
+        bool TRCD = false;
+        TRCD = calctrcd();
+        if (TRCD == false){
                 std::cout<<"ERROR: Function for trcd timing not called"<<
                 "\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for trcd timing  not called");
             }
-	    bool TRAS = false;
-	    TRAS = calctras();
-	    if (TRAS == false){
+        bool TRAS = false;
+        TRAS = calctras();
+        if (TRAS == false){
                 std::cout<<"ERROR: Function for tras timing not called"<<
                 "\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for tras timing not called");
             }  
-	    bool TRP = false;
-	    TRP = calctrp();
-	    if (TRP == false){
+        bool TRP = false;
+        TRP = calctrp();
+        if (TRP == false){
                 std::cout<<"ERROR: Function for trp timing not called"<<
                 "\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for trp timing not called");
             }
-	    bool TRC = false;
-	    TRC = calctrc();
-	    if (TRC == false){
-		std::cout<<"ERROR: Function for trc timing not called"<<
+        bool TRC = false;
+        TRC = calctrc();
+        if (TRC == false){
+        std::cout<<"ERROR: Function for trc timing not called"<<
                 "\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for trc timing not called");
             }
-	    bool TRL = false;
-	    TRL = calctrl();
-	    if (TRL == false){
+        bool TRL = false;
+        TRL = calctrl();
+        if (TRL == false){
                 std::cout<<"ERROR: Function for trl timing not called"<<
                 "\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for trl timing not called");
             } 
-	    bool TWL = false;
-	    TWL = calctwl();
-	    if (TWL == false){
+        bool TWL = false;
+        TWL = calctwl();
+        if (TWL == false){
                 std::cout<<"ERROR: Function for twl timing not called"<<
                 "\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for twl timing not called");
             }
-	    bool TRFC = false;		
-	    TRFC = calctrfc();
-	    if (TRFC == false){
+        bool TRFC = false;        
+        TRFC = calctrfc();
+        if (TRFC == false){
                 std::cout<<"ERROR: Function for trfc timing not called"<<
                 "\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for trfc timing not called");
             }
-	    bool TREF1 = false;
-	    TREF1 = calctref1();
-	    if (TREF1 == false){
+        bool TREF1 = false;
+        TREF1 = calctref1();
+        if (TREF1 == false){
                 std::cout<<"ERROR: Function for tref1 timing not called"<<
                 "\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for tref1 timing not called");
             }
-	    bool TPOWER = false;
-	    TPOWER = setpowerconstrainttiming();
-	    if (TPOWER == false){
+        bool TPOWER = false;
+        TPOWER = setpowerconstrainttiming();
+        if (TPOWER == false){
                 std::cout<<"ERROR: Function for power constraint timing not called"
-		<<"\t"<<"Order of Functions is important"<<"\n";
+        <<"\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for power constraint timings not called");
             }
-	    bool TCLK = false;
-	    TCLK = Timingclk();
-	    if (TCLK == false){
+        bool TCLK = false;
+        TCLK = Timingclk();
+        if (TCLK == false){
                 std::cout<<"ERROR: Function for clocked timings not called"<<
                 "\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for clocked timings not called");
             }
-	}	
-	//capacitace of local wordline
-        float wlc;
-        //capacitance of local bitline
-        float blc;
-        //capacitance of global wordline
-        float GWDC;
-        //capacitanace of CSL
-        float CSLcapa;
-        //capacitance of GDL
-        float GDLcapa;
-        //capacitance of wire to DQ
-        float DQcapa;
-	//clk in ns
-	float clk;
-	//row-column delay
-	float trcd;
-	//column latency (column access strobe delay)
-	float tcl;
-	//row access strobe delay
-	float tras;
-	//row precharge delay
-	float trp;
-	//row cycle delay
-	float trc;
-	//read latency delay
-	float trl;
-	//write latency delay
-	float twl;
-	//read to precharge delay
-	float trtp;
-	//column to column delay
-	float tccd;
-	//write recovery delay
-	float twr;
-	//refresh cycle time
-	float trfc;
-	//average refresh period
-	float tref1;
-	//row to row delay
-	float trrd;
-	//write to read delay
-	float twtr;
-	//time window for max amount of activates
-	float tfaw;
-	//timing for Global wordline 
-        float tGWLD;
-        //timing for local wordline
-        float wlthau;
-        //timing for local bitline
-        float blthau;
-	//timing parameters in clk cycles
-	//trcd in clk
-	int trcd_clk;
-	//tcl in clk
-	int tcl_clk;
-	//tras in clk
-	int tras_clk;
-	//trp in clk
-	int trp_clk;
-	//trc in clk
-	int trc_clk;
-	//trl in clk
-	int trl_clk;
-	//twl in clk
-	int twl_clk;
-	//trtp in clk
-	int trtp_clk;
-	//tccd in clk
-	int tccd_clk;
-	//twr in clk
-	int twr_clk;
-	//trfc in clk
-	int trfc_clk;
-	//tref1 in clk
-	int tref1_clk;
-	//row to row delay in clk
-	int trrd_clk;
-	//write to read delay in clk
-	int twtr_clk;
-	//time window for maximum amount of activates in clk
-	int tfaw_clk;
-	//time to exit low power state in clk
-	int txp_clk;
-	//clock enable in clk
-	int tcke_clk;
-	//bank used for the timing calculation
-	Bank n;
+    }    
+    //capacitace of local wordline
+    float wlc;
+    //capacitance of local bitline
+    float blc;
+    //capacitance of global wordline
+    float GWDC;
+    //capacitanace of CSL
+    float CSLcapa;
+    //capacitance of GDL
+    float GDLcapa;
+    //capacitance of wire to DQ
+    float DQcapa;
+    //clk in ns
+    float clk;
+    //row-column delay
+    float trcd;
+    //column latency (column access strobe delay)
+    float tcl;
+    //row access strobe delay
+    float tras;
+    //row precharge delay
+    float trp;
+    //row cycle delay
+    float trc;
+    //read latency delay
+    float trl;
+    //write latency delay
+    float twl;
+    //read to precharge delay
+    float trtp;
+    //column to column delay
+    float tccd;
+    //write recovery delay
+    float twr;
+    //refresh cycle time
+    float trfc;
+    //average refresh period
+    float tref1;
+    //row to row delay
+    float trrd;
+    //write to read delay
+    float twtr;
+    //time window for max amount of activates
+    float tfaw;
+    //timing for Global wordline 
+    float tGWLD;
+    //timing for local wordline
+    float wlthau;
+    //timing for local bitline
+    float blthau;
+    //timing parameters in clk cycles
+    //trcd in clk
+    int trcd_clk;
+    //tcl in clk
+    int tcl_clk;
+    //tras in clk
+    int tras_clk;
+    //trp in clk
+    int trp_clk;
+    //trc in clk
+    int trc_clk;
+    //trl in clk
+    int trl_clk;
+    //twl in clk
+    int twl_clk;
+    //trtp in clk
+    int trtp_clk;
+    //tccd in clk
+    int tccd_clk;
+    //twr in clk
+    int twr_clk;
+    //trfc in clk
+    int trfc_clk;
+    //tref1 in clk
+    int tref1_clk;
+    //row to row delay in clk
+    int trrd_clk;
+    //write to read delay in clk
+    int twtr_clk;
+    //time window for maximum amount of activates in clk
+    int tfaw_clk;
+    //time to exit low power state in clk
+    int txp_clk;
+    //clock enable in clk
+    int tcke_clk;
+    //bank used for the timing calculation
+    Bank n;
+    //function for printing timing results
+    void
+    printTiming();
   private:
-	bool 
-	calctrcd();
-	//function used for tras calculation
-	bool 
-	calctras();
-	//function used for trp calculation
-	bool 
-	calctrp();
-	//function used for trc calculation
-	bool 
-	calctrc();
-	//function used for trl calculation
-	bool 
-	calctrl();
-	//function used for twl calculation
-	bool 
-	calctwl();
-	//function for calculating refresh cycle time
-	bool 
-	calctrfc();
-	//function for calculating average refresh period
-	bool 
-	calctref1();
-	//function for setting the power constraint timings
-	bool
-	setpowerconstrainttiming();
-	//function changing timing parameters to clock cycles
-	bool 
-	Timingclk();
+    bool 
+    calctrcd();
+    //function used for tras calculation
+    bool 
+    calctras();
+    //function used for trp calculation
+    bool 
+    calctrp();
+    //function used for trc calculation
+    bool 
+    calctrc();
+    //function used for trl calculation
+    bool 
+    calctrl();
+    //function used for twl calculation
+    bool 
+    calctwl();
+    //function for calculating refresh cycle time
+    bool 
+    calctrfc();
+    //function for calculating average refresh period
+    bool 
+    calctref1();
+    //function for setting the power constraint timings
+    bool
+    setpowerconstrainttiming();
+    //function changing timing parameters to clock cycles
+    bool 
+    Timingclk();
 };
 #endif

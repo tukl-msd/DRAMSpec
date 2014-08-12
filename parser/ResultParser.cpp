@@ -77,7 +77,7 @@ ResultParser::jsonwriter()
     timingdoc.Accept(timingwriter);
     const char* timingstr = timingbuffer.GetString();
     //open a file
-    std::ofstream timingresultfile("timingresult");
+    std::ofstream timingresultfile("result/timingresult");
     timingresultfile<<timingstr;
     //printf("JSON: %s\n", str);
     //parsing the currents
@@ -103,6 +103,6 @@ ResultParser::jsonwriter()
     const char* currentstr = currentbuffer.GetString();
     //printf("CurrentJSON: %s \n", currentstr);
     //open a file
-    std::ofstream currentresultfile("currentresult");
+    std::ofstream currentresultfile("result/currentresult");
     currentresultfile<<currentstr;	  	
 }
