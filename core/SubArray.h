@@ -28,7 +28,7 @@ Author: Omar Naji
 // and DRAM cells in the Bitline Direction (vertical)
 #ifndef SUBARRAY_H
 #define SUBARRAY_H
-#include "TechnologyValues.h"
+#include "../parser/TechnologyValues.h"
 class SubArray:public TechnologyValues
 {
   public:

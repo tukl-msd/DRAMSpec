@@ -24,7 +24,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Author: Omar Naji
 */
 //Main Function for DCTG Tool ( DRAM Current and Timing Generation )
-#include "ResultParser.h"
+#include "parser/ResultParser.h"
 #include <ctime>
 #include <iostream>
 #include <fstream>

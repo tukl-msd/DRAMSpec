@@ -22,17 +22,46 @@
 #OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #Author: Omar Naji
 
-SRC := $(wildcard *.cpp)
+SRC := main.cpp $(wildcard core/*.cpp parser/*.cpp)
 
 OBJ := $(SRC:.cpp=.o)
 
+DEPENDENCIES := ${SRC:.cpp=.d}
+
 BIN := dramspec
+
+##########################################
+# Compiler settings
+##########################################
+
+# State what compiler we use.
+CXX := g++
+
+# Optimization flags. Usually you should not optimize until you have finished
+# debugging, except when you want to detect dead code.
+OPTCXXFLAGS =
+
+# Debugging flags.
+DBGCXXFLAGS = -g
+
+# Common warning flags shared by both C and C++.
+WARNFLAGS := -W -Wall -pedantic-errors -Wextra -Werror \
+             -Wformat -Wformat-nonliteral -Wpointer-arith \
+             -Wcast-align -Wconversion
+
+# Sum up the flags.
+CXXFLAGS := -O #${WARNFLAGS} ${DBGCXXFLAGS} ${OPTCXXFLAGS}
+
+# Linker flags.
+LDFLAGS := -Wall
 
 # clang does not seem to like some rapidjson comparisons
 CXXFLAGS := -Wno-tautological-constant-out-of-range-compare
 
+#########################################
+
 $(BIN): $(OBJ)
-	$(CXX) -o $@ $^
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
 
 all: $(BIN)
 
