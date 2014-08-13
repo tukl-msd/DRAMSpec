@@ -60,16 +60,6 @@ ResultParser::jsonwriter()
     timingdoc.AddMember("trfc_cc", t->trfc_clk , timingdoc.GetAllocator());
     //parsing of tref1 in cc
     timingdoc.AddMember("tref1_cc", t->tref1_clk , timingdoc.GetAllocator());
-    //parsing of trrd in cc
-    timingdoc.AddMember("trrd_cc", t->trrd_clk , timingdoc.GetAllocator());
-    //parsing of twtr in cc
-    timingdoc.AddMember("twtr_cc", t->twtr_clk , timingdoc.GetAllocator());
-    //parsing of tfaw in cc
-    timingdoc.AddMember("tfaw_cc", t->tfaw_clk , timingdoc.GetAllocator());
-    //parsing of txp in cc
-    timingdoc.AddMember("txp_cc", t->txp_clk , timingdoc.GetAllocator());
-    //parsing of tcke in cc
-    timingdoc.AddMember("tcke_cc", t->tcke_clk , timingdoc.GetAllocator());   
     // Convert JSON document to string
     rapidjson::GenericStringBuffer< rapidjson::UTF8<> > timingbuffer;
     rapidjson::Writer< rapidjson::GenericStringBuffer< 

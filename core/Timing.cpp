@@ -188,20 +188,7 @@ Timing::calctref1()
 
     return true;
 }
-bool
-Timing::setpowerconstrainttiming()
-{
-    //row to row delay set to 5 ns
-    trrd = 5; 
 
-    //write to read delay set to 5 ns
-    twtr = 5;
-  
-    //activation window time set to 30 ns
-    tfaw = 30;
- 
-    return true;
-}
 bool 
 Timing::Timingclk()
 {
@@ -269,21 +256,6 @@ Timing::Timingclk()
     //tref1 in clk cycles
     tref1_clk = ceil(tref1/clk);
 
-    //trrd in clk cycles
-    trrd_clk = ceil(trrd/clk);
-
-    //twtr in clk cycles
-    twtr_clk = ceil(twtr/clk);
-    
-    //tfaw in clk cycles
-    tfaw_clk = ceil(tfaw/clk);
-
-    //txp in clk cycles set to 12 cycles
-    txp_clk = 12;
-
-    //tcke in clk cycles set to 4 cycles
-    tcke_clk = 4;
-                                    
     return true;
 }
 void
@@ -302,7 +274,4 @@ Timing::printTiming()
     std::cout << "trl" << "\t" << trl << ".\n";
     std::cout << "trfc" << "\t" << trfc << "\n";
     std::cout << "tref1" << "\t" << tref1 << "\n";
-    std::cout << "trrd" << "\t" << trrd << "\n";
-    std::cout << "twtr" << "\t" << twtr << "\n";
-    std::cout << "tfaw" << "\t" << tfaw << "\n";
 }
