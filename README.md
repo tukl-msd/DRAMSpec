@@ -36,13 +36,14 @@ new DRAM Architectures and to model existing DRAM chips.
 	./install.sh
 
 ### compiling DRAMSpec
+	make clean
 	make
 
 ### running DCTG
 	./dramspec -t technologyfilename -p parameterfilename
 
 ### execution line example 
-	./dramspec -t techddr3_5x.json -p parddr3.json
+	./dramspec -t technology_input/techddr3_5x.json -p architecture_input/parddr3.json
 
 ### cleaning
 	make clean
