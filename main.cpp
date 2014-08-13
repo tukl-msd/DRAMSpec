@@ -62,10 +62,11 @@ Author: Omar Naji
          }
          //calculating timing specification
          Timing t(techname, paraname);
-         //print timing results
-         t.printTiming();
          //calculating power specification ( currents )
          Current i(&t);
+         //printing the results
+         //print timing results
+         t.printTiming();
          //print current results
          i.printCurrent();
          //result parser

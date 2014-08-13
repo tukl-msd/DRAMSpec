@@ -222,57 +222,61 @@ Timing::Timingclk()
     if(freq_core_actual < freq_core_max ) {
         std::cout<<"The Specified Frequency fits the DRAM Design!!!"<<"\n";
     } else {
-        std::cout<<"WARNING : Specified Frequency too high for DRAM Design.Go Down with Frequency!!"<<"\n";
-        std::cout<<"If User wants to keep the high frequency,  try using a smaller bank or a higher subarray2rowbufferfactor"<<"\n";
+        std::cout<<"WARNING : Specified Frequency too high"
+                 <<"for DRAM Design.Go Down with Frequency!!"
+                 <<"\n";
+        std::cout<<"If User wants to keep the high frequency," 
+                 <<"try using a smaller bank or a higher" 
+                 <<"subarray2rowbufferfactor"<<"\n";
     }
     clk = (1 / freq ) * 1000;
     std::cout << "clk" << "\t" << clk << "\t" << "ns" <<"\n";
     
     //trcd in clk cycles round-up
-    trcd_clk = trcd/clk + 1 ;
+    trcd_clk = ceil(trcd/clk);
 
     //tcl in clk cycles
-    tcl_clk = tcl/clk + 1 ; 
+    tcl_clk = ceil(tcl/clk); 
 
     //tras in clk cycles
-    tras_clk = tras/clk + 1 ;
+    tras_clk = ceil(tras/clk);
 
     //trp in clk cycles 
-    trp_clk = trp/clk + 1 ;
+    trp_clk = ceil(trp/clk);
 
     //trc in clk cycles
-    trc_clk = trc/clk + 1 ;
+    trc_clk = ceil(trc/clk);
     
     //trl in clk cycles // tal is additional latency defined in tech. 
     //parameter
-    trl_clk = tcl/clk + 1 + n.tal;
+    trl_clk = ceil(tcl/clk) + n.tal;
 
     //twl in clk cycles
     twl_clk = trl_clk - 1;
 
     //trtp in clk cycles
-    trtp_clk = trtp/clk + 1;
+    trtp_clk = ceil(trtp/clk);
 
     //tccd in clk cycles
-    tccd_clk = tccd/clk + 1;
+    tccd_clk = ceil(tccd/clk);
 
     //twr in clk cycles
-    twr_clk = twr/clk + 1;
+    twr_clk = ceil(twr/clk);
 
     //trfc in clk cycles
-    trfc_clk = trfc/clk + 1;
+    trfc_clk = ceil(trfc/clk);
     
     //tref1 in clk cycles
-    tref1_clk = tref1/clk + 1;
+    tref1_clk = ceil(tref1/clk);
 
     //trrd in clk cycles
-    trrd_clk = trrd/clk + 1;
+    trrd_clk = ceil(trrd/clk);
 
     //twtr in clk cycles
-    twtr_clk = twtr/clk +1;
+    twtr_clk = ceil(twtr/clk);
     
     //tfaw in clk cycles
-    tfaw_clk = tfaw/clk +1;
+    tfaw_clk = ceil(tfaw/clk);
 
     //txp in clk cycles set to 12 cycles
     txp_clk = 12;
@@ -301,24 +305,4 @@ Timing::printTiming()
     std::cout << "trrd" << "\t" << trrd << "\n";
     std::cout << "twtr" << "\t" << twtr << "\n";
     std::cout << "tfaw" << "\t" << tfaw << "\n";
-
-    //print timing in clock cycles
-    std::cout << "Timing Parameters in clock cycles" << "\n" ;
-    std::cout << "trcd_clk" << "\t" << trcd_clk << "\n";
-    std::cout << "tcl_clk" << "\t" << tcl_clk << "\n";
-    std::cout << "tras_clk" << "\t" << tras_clk << "\n";
-    std::cout << "trp_clk" << "\t" << trp_clk << "\n";
-    std::cout << "trc_clk" << "\t" << trc_clk << "\n";
-    std::cout << "trl_clk" << "\t" << trl_clk << "\n";
-    std::cout << "twl_clk" << "\t" << twl_clk << "\n";
-    std::cout << "trtp_clk" << "\t" << trtp_clk << "\n";
-    std::cout << "tccd_clk" << "\t" << tccd_clk << "\n";
-    std::cout << "twr_clk" << "\t" << twr_clk << "\n";
-    std::cout << "trfc_clk" << "\t" << trfc_clk << "\n";
-    std::cout << "tref1_clk" << "\t" << tref1_clk << "\n";
-    std::cout << "trrd_clk" << "\t" << trrd_clk << "\n";
-    std::cout << "twtr_clk" << "\t" << twtr_clk << "\n";
-    std::cout << "tfaw_clk" << "\t" << tfaw_clk << "\n";
-    std::cout << "txp_clk" << "\t" << txp_clk << "\n";
-    std::cout << "tcke_clk" << "\t" << tcke_clk << "\n";
 }

@@ -28,48 +28,48 @@ Author: Omar Naji
 bool 
 Bank::Bankinit()
 {
-	//calculate size of bank * 1024 (transform to kBits)
-	sizeofBank = dramsize * 1024 / numberofbanks;
-	//calculate size of halfbank
-	sizeofhalfBank = sizeofBank/2;
-	//calculate number of memoryarrays pro halfbank + 1 (open-bit array
-	//structure)
-	numberofMemoryArrays = sizeofhalfBank/sizeofMemoryArray + 1;
-	//calculate bank height required for CSL and MDQ...
-	//5u space btw subarrays
-	Bankheight = numberofMemoryArrays * MemoryArrayheight + 
-	(numberofMemoryArrays - 1)*5;
-	std::cout << "AREA of DRAM"<<"\n";
-	std::cout <<"height of bank in micrometers"<<"\t" <<  
-	Bankheight << ".\n";
-	return true;
+    //calculate size of bank * 1024 (transform to kBits)
+    sizeofBank = dramsize * 1024 / numberofbanks;
+    //calculate size of halfbank
+    sizeofhalfBank = sizeofBank/2;
+    //calculate number of memoryarrays pro halfbank + 1 (open-bit array
+    //structure)
+    numberofMemoryArrays = sizeofhalfBank/sizeofMemoryArray + 1;
+    //calculate bank height required for CSL and MDQ...
+    //5u space btw subarrays
+    Bankheight = numberofMemoryArrays * MemoryArrayheight + 
+    (numberofMemoryArrays - 1)*5;
+    std::cout << "AREA of DRAM"<<"\n";
+    std::cout <<"height of bank in micrometers"<<"\t" <<  
+    Bankheight << ".\n";
+    return true;
 }
 bool 
 Bank::calcchiparea()
 {
-	//calculate number of subarrrays in the width direction * 1024 (to
-	//Bytes) * 8 (to bits)
-	int numbersubarraysinx = (rowbuffersize*1024*8 / 
-	(cellsperrow - cellsperrowredundancy)) * subarray2rowbufferfactor;
-	// mwldwidth//master wordline driver width ( value taken from a real
-	// chip designed)
-	float mwldwidth = 240;
-	//width of bank	..10u space btw subarrays
-	Bankwidth = numbersubarraysinx * SubArraywidth + wldwidth + mwldwidth ;
-	std::cout<<"bank width in micrometers" << "\t"<<Bankwidth<<"\n";
-	//chipwidth ( halg of the banks are placed above the Dataqueues and
-	//the other half below)
-	chipwidth = (numberofbanks/2)*Bankwidth;
-	std::cout<<"chip width in micrometers"<< "\t" << chipwidth <<"\n";
-	//columnlogicwidth values taken from a real chip design
-	float columnlogicwidth = 200;
-	//dq width values taken from a real chip design
-	float dqwidth = 500;
-	//chip heigth
-	chipheight = Bankheight *2 + columnlogicwidth + dqwidth;
-	std::cout<<"chip height in micrometers"<<"\t"<<chipheight<<"\n";
-	//chip area in mm^2
-	chiparea = chipwidth * chipheight/1000000;
-	std::cout<<"chip area in mm^2"<<"\t"<<chiparea<<"\n";
-	return true; 
+    //calculate number of subarrrays in the width direction * 1024 (to
+    //Bytes) * 8 (to bits)
+    int numbersubarraysinx = (rowbuffersize*1024*8 / 
+    (cellsperrow - cellsperrowredundancy)) * subarray2rowbufferfactor;
+    // mwldwidth//master wordline driver width ( value taken from a real
+    // chip designed)
+    float mwldwidth = 240;
+    //width of bank    ..10u space btw subarrays
+    Bankwidth = numbersubarraysinx * SubArraywidth + wldwidth + mwldwidth ;
+    std::cout<<"bank width in micrometers" << "\t"<<Bankwidth<<"\n";
+    //chipwidth ( halg of the banks are placed above the Dataqueues and
+    //the other half below)
+    chipwidth = (numberofbanks/2)*Bankwidth;
+    std::cout<<"chip width in micrometers"<< "\t" << chipwidth <<"\n";
+    //columnlogicwidth values taken from a real chip design
+    float columnlogicwidth = 200;
+    //dq width values taken from a real chip design
+    float dqwidth = 500;
+    //chip heigth
+    chipheight = Bankheight *2 + columnlogicwidth + dqwidth;
+    std::cout<<"chip height in micrometers"<<"\t"<<chipheight<<"\n";
+    //chip area in mm^2
+    chiparea = chipwidth * chipheight/1000000;
+    std::cout<<"chip area in mm^2"<<"\t"<<chiparea<<"\n";
+    return true; 
 }

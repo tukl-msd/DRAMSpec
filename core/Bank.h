@@ -33,52 +33,52 @@ Author: Omar Naji
 class Bank:public MemoryArray
 {
   public:
-	//constructor
-	Bank(const std::string& techname,const std::string& paraname)
-	:MemoryArray(techname,paraname), sizeofBank(0), sizeofhalfBank(0),
-	numberofMemoryArrays(0), Bankwidth(0), chipwidth(0), chiparea(0),
-	Bankheight(0)
-	{
-	    //order of functions is important
-	    bool BINIT = false;
-	    BINIT = Bankinit();
-	    if(BINIT == false){
+    //constructor
+    Bank(const std::string& techname,const std::string& paraname)
+    :MemoryArray(techname,paraname), sizeofBank(0), sizeofhalfBank(0),
+    numberofMemoryArrays(0), Bankwidth(0), chipwidth(0), chiparea(0),
+    Bankheight(0)
+    {
+        //order of functions is important
+        bool BINIT = false;
+        BINIT = Bankinit();
+        if(BINIT == false){
                 std::cout<<"ERROR: Function for Bank Initialization not called"<<
                 "\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for Bank Initialization not called");
             }
-	    bool AREAC = false;
-	    AREAC = calcchiparea();
-	    if(AREAC == false){
+        bool AREAC = false;
+        AREAC = calcchiparea();
+        if(AREAC == false){
                 std::cout<<"ERROR: Function for area calculation not called"<<
                 "\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for area calculation not called");
-            }	
-	}
-  protected:	
-	//size of bank
-	int sizeofBank;
-	//size of halfbank
-	int sizeofhalfBank;
-	//number of memory arrays
-	int numberofMemoryArrays;
-	//width of bank	
-	float Bankwidth;
-	//width of chip
-	float chipwidth;
-	//height of chip
-	float chipheight;
-	//Area of chip
-	float chiparea;
-	//performing the half bank calc
-	//performing the bank init
-	bool 
-	Bankinit();
-	//calculate the area of the chip
-	bool 
-	calcchiparea();
+            }    
+    }
+  protected:    
+    //size of bank
+    int sizeofBank;
+    //size of halfbank
+    int sizeofhalfBank;
+    //number of memory arrays
+    int numberofMemoryArrays;
+    //width of bank    
+    float Bankwidth;
+    //width of chip
+    float chipwidth;
+    //height of chip
+    float chipheight;
+    //Area of chip
+    float chiparea;
+    //performing the half bank calc
+    //performing the bank init
+    bool 
+    Bankinit();
+    //calculate the area of the chip
+    bool 
+    calcchiparea();
   public:
-	//height of bank
-        float Bankheight;
+    //height of bank
+    float Bankheight;
 };
 #endif //BANK_H

@@ -242,5 +242,5 @@ TechnologyValues::readjson(const std::string& t,const std::string& p){
     //number of times a row is refreshed in retention time
     assert(paradocument.HasMember("rowrefreshrate"));
     assert(paradocument["rowrefreshrate"].IsNumber());
-    rowrefreshrate = paradocument["rowrefreshrate"].GetDouble();      		
+    rowrefreshrate = paradocument["rowrefreshrate"].GetDouble();
 }
