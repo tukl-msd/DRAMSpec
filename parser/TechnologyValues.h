@@ -97,19 +97,19 @@ class TechnologyValues
     //the number of cells in the cellsperrowvalue which are redundant
     int cellsperrowredundancy;
     //the number of cells per column per subarray
-        int cellspercolumn;
+    int cellspercolumn;
     //the number of cells in the cellspercolumn which are redundant
     int cellspercolumnredundancy;
     //the height of the bitline sense amplifier
     int blsaheight;
     //the width of the wordline drive
-        int wldwidth;
+    int wldwidth;
     //this factor decides if you are placing as many subarrays as the page 
     //size in the horizantal direction or more or less
     float subarray2rowbufferfactor;    
     //the resistance of the global wordline driver (in Ohm)
     //the resistance values should change with different page size and 
-       //different technologies(value for rowbuffer = 2kB )
+    //different technologies(value for rowbuffer = 2kB )
     float GWLDresistance;
     //the resistance of the local wordline driver (in Ohm) for 
     //512 x 512 subarray
@@ -118,7 +118,7 @@ class TechnologyValues
     //512 x 512 subaarray
     float WRresistance;
     //the resistance of the CSL driver ( in Ohm )
-        float CSLDresistance;
+    float CSLDresistance;
     //the resistance of the GDL driver ( in Ohm )
     float GDLDresistance;
     //the resistance of the DQ driver ( in Ohm )

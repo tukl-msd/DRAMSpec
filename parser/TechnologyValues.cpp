@@ -124,11 +124,6 @@ TechnologyValues::readjson(const std::string& t,const std::string& p){
     assert(techdocument.HasMember("WL-driver"));
     assert(techdocument["WL-driver"].IsNumber());
     wldwidth = techdocument["WL-driver"].GetDouble();
-    //subarray to rowbuffer factor
-    assert(techdocument.HasMember("subarray2rowbufferfactor"));
-    assert(techdocument["subarray2rowbufferfactor"].IsNumber());
-    subarray2rowbufferfactor = techdocument["subarray2rowbufferfactor"].
-    GetDouble(); 
     //global wordline driver resistance in ohm
     assert(techdocument.HasMember("GWLDresistance"));
     assert(techdocument["GWLDresistance"].IsNumber());
@@ -243,4 +238,9 @@ TechnologyValues::readjson(const std::string& t,const std::string& p){
     assert(paradocument.HasMember("rowrefreshrate"));
     assert(paradocument["rowrefreshrate"].IsNumber());
     rowrefreshrate = paradocument["rowrefreshrate"].GetDouble();
+    //subarray to rowbuffer factor
+    assert(paradocument.HasMember("subarray2rowbufferfactor"));
+    assert(paradocument["subarray2rowbufferfactor"].IsNumber());
+    subarray2rowbufferfactor = paradocument["subarray2rowbufferfactor"].
+    GetDouble(); 
 }

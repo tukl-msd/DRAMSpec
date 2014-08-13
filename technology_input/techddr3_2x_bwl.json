@@ -16,7 +16,6 @@
 	"cellspercolumnredundancy": 12,
 	"blsa-height": 13,
 	"WL-driver": 6,
-	"subarray2rowbufferfactor": 1,
 	"GWLDresistance": 400,
 	"LWDresistance" : 1000,
 	"WRresistance" : 600 ,
