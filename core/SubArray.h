@@ -32,39 +32,39 @@ Author: Omar Naji
 class SubArray:public TechnologyValues
 {
   public:
-	//constructor for subarray class
-	SubArray(const std::string& techname,const std::string& paraname)
-	:TechnologyValues(techname,paraname), SubArraywidth(0), SubArrayheight(0)
-	{
-    	//Order of functions is important
-	    bool SINIT = false;
-	    SINIT = SubArrayinit();
-	    if(SINIT == false){
+    //constructor for subarray class
+    SubArray(const std::string& techname,const std::string& paraname)
+    :TechnologyValues(techname,paraname), SubArraywidth(0), SubArrayheight(0)
+    {
+        //Order of functions is important
+        bool SINIT = false;
+        SINIT = SubArrayinit();
+        if(SINIT == false){
             std::cout<<"ERROR: Function for subarray initialization not called"
-			<<"\t"<<"Order of Functions is important"<<"\n";
+            <<"\t"<<"Order of Functions is important"<<"\n";
             throw(" Function for subarry initialization not called");
             }
-	    bool DINIT = false;
-	    DINIT = driversinit();
-	    if(DINIT == false){
+        bool DINIT = false;
+        DINIT = driversinit();
+        if(DINIT == false){
                std::cout<<"ERROR: Function for driver initialization not called"
                <<"\t"<<"Order of Functions is important"<<"\n";
                throw(" Function for driver initialization not called");
-            }	
-	}
+            }    
+    }
   protected:
-	//the width of the subarray which should be calculated
-	float SubArraywidth;
-	//the height of the subarray which should be calculated
-	float SubArrayheight;
-	// function which calculates the height and width of the subarray
-	bool
-	SubArraycal();
-	//function to initialize the drivers resistances
-	bool 
-	driversinit();
-	//function to init subarray
-	bool 
-	SubArrayinit();
+    //the width of the subarray which should be calculated
+    float SubArraywidth;
+    //the height of the subarray which should be calculated
+    float SubArrayheight;
+    // function which calculates the height and width of the subarray
+    bool
+    SubArraycal();
+    //function to initialize the drivers resistances
+    bool 
+    driversinit();
+    //function to init subarray
+    bool 
+    SubArrayinit();
 };
 #endif//SUBARRAY_H

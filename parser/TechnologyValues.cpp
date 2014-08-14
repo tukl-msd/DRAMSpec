@@ -51,7 +51,7 @@ TechnologyValues::readjson(const std::string& t,const std::string& p){
     const char* techjson = testtech.c_str();
     //using the library for parsing
     rapidjson::Document techdocument;
-    techdocument.Parse<0>(techjson);	
+    techdocument.Parse<0>(techjson);
     //reading the values from the technology json file
     assert(techdocument.IsObject());
     //Technology node in nm
@@ -151,25 +151,25 @@ TechnologyValues::readjson(const std::string& t,const std::string& p){
     //current of SSA in microamperes
     assert(techdocument.HasMember("I_SSA"));
     assert(techdocument["I_SSA"].IsNumber());
-    I_SSA = techdocument["I_SSA"].GetInt();	
+    I_SSA = techdocument["I_SSA"].GetInt();
     //voltage vpp
-    assert(techdocument.HasMember("vpp"));   	
+    assert(techdocument.HasMember("vpp"));
     assert(techdocument["vpp"].IsNumber());
-    vpp  = techdocument["vpp"].GetDouble() ;  	
+    vpp  = techdocument["vpp"].GetDouble() ;
     //voltage vcc
     assert(techdocument.HasMember("vcc"));
     assert(techdocument["vcc"].IsNumber());
-    vcc  = techdocument["vcc"].GetDouble();  	
+    vcc  = techdocument["vcc"].GetDouble();
     //backgroundcurrentslope
     assert(techdocument.HasMember("Backgroundcurrentslope"));
     assert(techdocument["Backgroundcurrentslope"].IsNumber()); 
     backgroundcurrentslope  = techdocument["Backgroundcurrentslope"].
-    GetDouble();      	
+    GetDouble();
     //backgroundcurrentoffset
     assert(techdocument.HasMember("Backgroundcurrentoffset"));
-    assert(techdocument["Backgroundcurrentoffset"].IsNumber()); 	    
+    assert(techdocument["Backgroundcurrentoffset"].IsNumber());
     backgroundcurrentoffset  = techdocument["Backgroundcurrentoffset"].
-    GetDouble();	
+    GetDouble();
     //IDD pro IO for OCD
     assert(techdocument.HasMember("IDD_OCD_RCV"));
     assert(techdocument["IDD_OCD_RCV"].IsNumber());

@@ -28,30 +28,30 @@ Author: Omar Naji
 void 
 MemoryArray::calculateSubArrayxy()
 {
-	// number of rowcells without redundant cells
-	int rowcells = cellsperrow - cellsperrowredundancy;
-	//number of columncells without redundant cells
-	int columncells = cellspercolumn - cellspercolumnredundancy;
-	// size of the subarray (value presented in Kbit)
-	int sizeofSubArray = (rowcells*columncells)/(1024);
- 	//calculate number of subarrays in x direction (rowbuffersize is in kbytes)
-	//divided by 2 because half the page is opened per half bank!!
-	subproMemoryArrayx = (int)(((float)rowbuffersize*subarray2rowbufferfactor
-	*8*1024/2)/(float)rowcells);
-	//size of memoryarray (subarrays in x direction size ) in Mbit
-	sizeofMemoryArray = (subproMemoryArrayx * sizeofSubArray)/1024;
+    // number of rowcells without redundant cells
+    int rowcells = cellsperrow - cellsperrowredundancy;
+    //number of columncells without redundant cells
+    int columncells = cellspercolumn - cellspercolumnredundancy;
+    // size of the subarray (value presented in Kbit)
+    int sizeofSubArray = (rowcells*columncells)/(1024);
+     //calculate number of subarrays in x direction (rowbuffersize is in kbytes)
+    //divided by 2 because half the page is opened per half bank!!
+    subproMemoryArrayx = (int)(((float)rowbuffersize*subarray2rowbufferfactor
+    *8*1024/2)/(float)rowcells);
+    //size of memoryarray (subarrays in x direction size ) in Mbit
+    sizeofMemoryArray = (subproMemoryArrayx * sizeofSubArray)/1024;
 }
 void 
 MemoryArray::calculateSubArrayxylength()
 {
-	//calculate length of memory array in x direction assuming open bitline array structure
-	MemoryArraywidth = subproMemoryArrayx * SubArraywidth + wldwidth;
-	//calculate length of memory array in y direction
-	MemoryArrayheight = 1 * SubArrayheight;
+    //calculate length of memory array in x direction assuming open bitline array structure
+    MemoryArraywidth = subproMemoryArrayx * SubArraywidth + wldwidth;
+    //calculate length of memory array in y direction
+    MemoryArrayheight = 1 * SubArrayheight;
 }
 void 
 MemoryArray::MemoryArrayinit()
 {
-	calculateSubArrayxy();
-	calculateSubArrayxylength();
+    calculateSubArrayxy();
+    calculateSubArrayxylength();
 }

@@ -36,17 +36,17 @@ Author: Omar Naji
 class ResultParser
 {
   public:
-	ResultParser(Timing T , Current I): t(NULL), i(NULL)
-	{
-	    t=&T;
-	    i=&I;
-	}
-	void 
-	jsonwriter();
+    ResultParser(Timing T , Current I): t(NULL), i(NULL)
+    {
+        t=&T;
+        i=&I;
+    }
+    void 
+    jsonwriter();
   private:
-	//object which contains results of timing
-	Timing* t;
-	//object which contains results of currents
-	Current* i;
+    //object which contains results of timing
+    Timing* t;
+    //object which contains results of currents
+    Current* i;
 };
 #endif

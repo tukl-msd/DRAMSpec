@@ -84,7 +84,7 @@ ResultParser::jsonwriter()
     //parsing of IDD2n
     currentdoc.AddMember("IDD2n", i->IDD2n , currentdoc.GetAllocator());   
     //parsing of IDD3n
-    currentdoc.AddMember("IDD3n", i->IDD3n , currentdoc.GetAllocator());  	
+    currentdoc.AddMember("IDD3n", i->IDD3n , currentdoc.GetAllocator());
     //convert JSON document to string
     rapidjson::GenericStringBuffer< rapidjson::UTF8<> > currentbuffer;
     rapidjson::Writer< rapidjson::GenericStringBuffer
@@ -94,5 +94,5 @@ ResultParser::jsonwriter()
     //printf("CurrentJSON: %s \n", currentstr);
     //open a file
     std::ofstream currentresultfile("result/currentresult");
-    currentresultfile<<currentstr;	  	
+    currentresultfile<<currentstr;
 }

@@ -33,35 +33,35 @@ Author: Omar Naji
 class MemoryArray:public SubArray
 {
   public:
-	//constructur for memoryarray class
-	MemoryArray(const std::string& techname, const std::string& paraname)
-	:SubArray(techname,paraname), subproMemoryArrayx(0), sizeofMemoryArray(0),
-	MemoryArrayheight(0), MemoryArraywidth(0)
-	{
-		MemoryArrayinit();
-	}
-  protected:	
-	//the number of subarrays pro memory array(should be calculated)
-	//int subpromemoryarray;
-	//the number of subarrays in x direction 
-	int subproMemoryArrayx;
-	//size of memory array
-	int sizeofMemoryArray;
-	//the total height of the memory array
-	float MemoryArrayheight;
-	// function which calculates the number of subarrays in x and y directions
-	void 
-	calculateSubArrayxy();
-	// function which calc the total width and height of the memory array
-	void 
-	calculateSubArrayxylength();
-	// function which delivers all the missing parameter of the memory array
-	//needed for further calculations(x and y quadratic distribution)
-	// this function initializes the memory array
-	void 
-	MemoryArrayinit();
+    //constructur for memoryarray class
+    MemoryArray(const std::string& techname, const std::string& paraname)
+    :SubArray(techname,paraname), subproMemoryArrayx(0), sizeofMemoryArray(0),
+    MemoryArrayheight(0), MemoryArraywidth(0)
+    {
+        MemoryArrayinit();
+    }
+  protected:    
+    //the number of subarrays pro memory array(should be calculated)
+    //int subpromemoryarray;
+    //the number of subarrays in x direction 
+    int subproMemoryArrayx;
+    //size of memory array
+    int sizeofMemoryArray;
+    //the total height of the memory array
+    float MemoryArrayheight;
+    // function which calculates the number of subarrays in x and y directions
+    void 
+    calculateSubArrayxy();
+    // function which calc the total width and height of the memory array
+    void 
+    calculateSubArrayxylength();
+    // function which delivers all the missing parameter of the memory array
+    //needed for further calculations(x and y quadratic distribution)
+    // this function initializes the memory array
+    void 
+    MemoryArrayinit();
    public:
-	//the total width of the memory array
-        float  MemoryArraywidth;
+    //the total width of the memory array
+    float  MemoryArraywidth;
 };
 #endif//MEMORYARRAY_H
