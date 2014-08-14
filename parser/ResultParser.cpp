@@ -31,7 +31,44 @@ Author: Omar Naji
 void 
 ResultParser::jsonwriter()
 {
-    //parsing the timing results
+    //parsing the timing results in ns
+    rapidjson::Document timingnsdoc;
+    timingnsdoc.SetObject(); 
+    //parsing of trcd 
+    timingnsdoc.AddMember("trcd", t->trcd , timingnsdoc.GetAllocator());
+    //parsing of tcl in cc
+    timingnsdoc.AddMember("tcl", t->tcl , timingnsdoc.GetAllocator());
+    //parsing of tras in cc
+    timingnsdoc.AddMember("tras", t->tras , timingnsdoc.GetAllocator());
+    //parsing of trp in cc
+    timingnsdoc.AddMember("trp", t->trp , timingnsdoc.GetAllocator());
+    //parsing of trc in cc
+    timingnsdoc.AddMember("trc", t->trc , timingnsdoc.GetAllocator());
+    //parsing of trl in cc
+    timingnsdoc.AddMember("trl", t->trl , timingnsdoc.GetAllocator());
+    //parsing of twl in cc
+    timingnsdoc.AddMember("twl", t->twl , timingnsdoc.GetAllocator());
+    //parsing of trtp in cc
+    timingnsdoc.AddMember("trtp", t->trtp , timingnsdoc.GetAllocator());
+    //parsing of tccd in cc
+    timingnsdoc.AddMember("tccd", t->tccd , timingnsdoc.GetAllocator());
+    //parsing of twr in cc
+    timingnsdoc.AddMember("twr", t->twr , timingnsdoc.GetAllocator());
+    //parsing of trfc in cc
+    timingnsdoc.AddMember("trfc", t->trfc , timingnsdoc.GetAllocator());
+    //parsing of tref1 in cc
+    timingnsdoc.AddMember("tref1", t->tref1 , timingnsdoc.GetAllocator());
+    // Convert JSON document to string
+    rapidjson::GenericStringBuffer< rapidjson::UTF8<> > timingnsbuffer;
+    rapidjson::Writer< rapidjson::GenericStringBuffer< 
+    rapidjson::UTF8<> > > timingnswriter(timingnsbuffer);
+    timingnsdoc.Accept(timingnswriter);
+    const char* timingnsstr = timingnsbuffer.GetString();
+    //open a file
+    std::ofstream timingnsresultfile("timingnsresult.json");
+    timingnsresultfile<<timingnsstr;
+
+    //parsing the timing results in clock cycles
     rapidjson::Document timingdoc;
     timingdoc.SetObject(); 
     //parsing of frequency 
@@ -67,7 +104,7 @@ ResultParser::jsonwriter()
     timingdoc.Accept(timingwriter);
     const char* timingstr = timingbuffer.GetString();
     //open a file
-    std::ofstream timingresultfile("result/timingresult");
+    std::ofstream timingresultfile("timingresult.json");
     timingresultfile<<timingstr;
     //printf("JSON: %s\n", str);
     //parsing the currents
@@ -85,6 +122,8 @@ ResultParser::jsonwriter()
     currentdoc.AddMember("IDD2n", i->IDD2n , currentdoc.GetAllocator());   
     //parsing of IDD3n
     currentdoc.AddMember("IDD3n", i->IDD3n , currentdoc.GetAllocator());
+    //parsing of IDD5
+    currentdoc.AddMember("IDD5", i->IDD5 , currentdoc.GetAllocator());
     //convert JSON document to string
     rapidjson::GenericStringBuffer< rapidjson::UTF8<> > currentbuffer;
     rapidjson::Writer< rapidjson::GenericStringBuffer
@@ -93,6 +132,6 @@ ResultParser::jsonwriter()
     const char* currentstr = currentbuffer.GetString();
     //printf("CurrentJSON: %s \n", currentstr);
     //open a file
-    std::ofstream currentresultfile("result/currentresult");
+    std::ofstream currentresultfile("currentresult.json");
     currentresultfile<<currentstr;
 }
