@@ -1,0 +1,15 @@
+{
+	"DRAMType": "DDR",
+	"Size": 2,
+	"Numberofbanks":32,
+	"Interface": 32,
+	"Freq": 1000,
+	"Prefetch": 8,
+	"additionallatency" : 0,
+	"Rowbuffersize": 0.25,
+	"DLL": "ON",
+	"Requiredrefreshperiod": 3.9,
+	"banksrefreshfactor":1,
+    "rowrefreshrate":1,
+	"subarray2rowbufferfactor": 4
+}
