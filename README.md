@@ -39,8 +39,10 @@ new DRAM Architectures and to model existing DRAM chips.
 	make clean
 	make
 
-### running DCTG
-	./dramspec -t technologyfilename -p parameterfilename
+### running DCTG ( use -term if you want to add IO termination Current)
+### If you do not want to add IO termination current than do not add -term
+### parameter
+	./dramspec -t technologyfilename -p parameterfilename -term
 
 ### execution line example 
 	./dramspec -t technology_input/techddr3_5x.json -p architecture_input/parddr3.json
