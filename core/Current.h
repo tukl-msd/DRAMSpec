@@ -32,11 +32,10 @@ Author: Omar Naji
 class Current
 {
   public: 
-    Current(Timing* T): t(T), IDD0(0), IDD1(0), IDD4R(0), IDD4W(0), IDD2n(0),
-    IDD3n(0), IDD5(0), Q_MWL(0), Q_LWL(0), Q_LBL(0), Q_SSA(0),
+    Current(Timing* T, bool term): t(T), includeTerm(term), IDD0(0), IDD1(0), IDD4R(0), 
+    IDD4W(0), IDD2n(0), IDD3n(0), IDD5(0), Q_MWL(0), Q_LWL(0), Q_LBL(0), Q_SSA(0),
     Q_CSL(0), Q_MDL(0), Q_READ(0), Q_DQ(0) 
     {
-
         //check if function is called (order important)
         bool background_I = false;
         background_I = calcbackgroundCurrent();
@@ -102,6 +101,8 @@ class Current
   private:
     //object of class timing 
     Timing* t;
+    // bool for including IO termination current
+    bool includeTerm;
     //charges for MWL ( Master wordline )
     float Q_MWL;
     //charges for LWL ( local wordline )

@@ -104,9 +104,16 @@ Current::calcIDD4R()
     float Q_total4R = (Q_READ) / 1000;
     //number of output signals for read = interface number 
     //+ 1 datastrobe signal pro 4 bits
+    float ioTermRdCurrent;
+    if (includeTerm) {
+       ioTermRdCurrent = (t->n.Interface + t->n.Interface/4) * t->n.IDD_OCD_RCV;
+    }
+    else {
+       ioTermRdCurrent = 0;
+    }
     //current IDD4R ;  
     IDD4R = Q_total4R / ((t->n.Prefetch / clkconstant) * t->clk)  
-    + IDD3n + (t->n.Interface + t->n.Interface/4) * t->n.IDD_OCD_RCV ;
+    + IDD3n + ioTermRdCurrent;
 
     return true;
 }
@@ -121,7 +128,15 @@ Current::calcIDD4W()
     } else {
     rcvconst = 0 ;
     }
-    IDD4W = IDD4R + (t->n.Interface/8 + rcvconst) * t->n.IDD_OCD_RCV;
+    //additional IO term current for Writes
+    float ioTermWraddCurrent;
+    if (includeTerm) {
+        ioTermWraddCurrent = (t->n.Interface/8 + rcvconst) * t->n.IDD_OCD_RCV; 
+    }
+    else {
+        ioTermWraddCurrent = 0;
+    }
+    IDD4W = IDD4R + ioTermWraddCurrent;
 
     return true;
 }
