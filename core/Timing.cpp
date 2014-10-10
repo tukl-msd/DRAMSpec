@@ -94,7 +94,10 @@ Timing::calctras()
     //factor which defines the rowbuffer*subarray2rowbuffer relation
     float bankwidthfactor;
     bankwidthfactor = n.rowbuffersize * n.subarray2rowbufferfactor;
-    //std::cout<<"bankwidthfactor"<<bankwidthfactor<<"\n";
+    // currently we assume 5 mm taken from a DDR3 ( 8 banks config)
+    // when the number of banks increases this distance from bank to 
+    // DQ should increas. We do not model this yet due to lack of input.
+    // This should be changed in the future.
     if (bankwidthfactor == 1) {
         dqwirelength = 3;
     } else if (bankwidthfactor == 2) {
@@ -107,7 +110,7 @@ Timing::calctras()
         dqwirelength = 5;
         std::cout<<"WARNING: YOUR PAGESIZE*Subarray2rowbuffer SEEMS to be too big!!"<<"\n";
     }
-    DQcapa = 5 * n.wirecapa;
+    DQcapa = dqwirelength * n.wirecapa;
     float tDQ = 0.6 + (2.2 * (n.DQDresistance * DQcapa) + 
     ( n.wireresistance * n.wirecapa * 5 * 5))*(1/pow(10.0,6.0));
     

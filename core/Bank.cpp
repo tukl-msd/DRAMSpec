@@ -28,7 +28,7 @@ Author: Omar Naji
 bool 
 Bank::Bankinit()
 {
-    //calculate size of bank * 1024 (transform to kBits)
+    //calculate size of bank * 1024 (transform to MBits)
     sizeofBank = dramsize * 1024 / numberofbanks;
     //calculate size of halfbank
     sizeofhalfBank = sizeofBank/2;
