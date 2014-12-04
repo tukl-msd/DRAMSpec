@@ -210,6 +210,12 @@ TechnologyValues::readjson(const std::string& t,const std::string& p){
     assert(paradocument.HasMember("Freq"));
     assert(paradocument["Freq"].IsNumber());
     Freq = paradocument["Freq"].GetInt();
+    //DRAM Core Frequency
+    //if this value is not specified then calculate this value:
+    //Core Freq= Freq / (n.prefetch / n.DataRate)
+    assert(paradocument.HasMember("CoreFreq"));
+    assert(paradocument["CoreFreq"].IsNumber());
+    CoreFreq = paradocument["CoreFreq"].GetInt();
     //Number of Prefetch
     assert(paradocument.HasMember("Prefetch"));
     assert(paradocument["Prefetch"].IsNumber());

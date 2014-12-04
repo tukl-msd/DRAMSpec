@@ -54,9 +54,9 @@ Current::calcIDD0()
     //charge of master wordline //3.3 is efficiency factor of the vpp pumps
     Q_MWL = t->GWDC * t-> n.vpp * 3.3;
     //charge of local wordline
-     Q_LWL = t->wlc * t-> n.vpp * numberofactivesubarrays * 3.3 ;
+    Q_LWL = t->wlc * t-> n.vpp * numberofactivesubarrays * 3.3 ;
     //charge of local bitline//8 bytes to bits // 1024 kbits to bits
-     Q_LBL = t->blc * t-> n.vcc/2 * t->n.rowbuffersize * 8 * 1024;
+    Q_LBL = t->blc * t-> n.vcc/2 * t->n.rowbuffersize * 8 * 1024;
     //total charges in pC
     float Q_total0 = (( Q_MWL + Q_LWL + Q_LBL ) * 2) / 1000 ;
     //current caused by charging and discharging of capas in mA
@@ -71,17 +71,17 @@ bool
 Current::calcIDD1()
 {
     //charges of SSA / SSA active for 1.5 ns 
-     Q_SSA = (float)(t->n.Interface * t->n.Prefetch * t->n.I_SSA) * 1.5;
+    Q_SSA = (float)(t->n.Interface * t->n.Prefetch * t->n.I_SSA) * 1.5;
     //charges for CSL// 8 bits pro CSL 
-     Q_CSL = t->CSLcapa * t-> n.vcc * ((t->n.Interface * 
+    Q_CSL = t->CSLcapa * t-> n.vcc * ((t->n.Interface * 
     t->n.Prefetch) / 8 );
     //charge of global Dataline
-     Q_MDL = t->GDLcapa * t-> n.vcc * t->n.Interface * t->n.Prefetch;
+    Q_MDL = t->GDLcapa * t-> n.vcc * t->n.Interface * t->n.Prefetch;
     //charges for Dataqueue // 1 Read is done for interface x prefetch
-     Q_DQ =(float) ( t->n.Interface * t->n.Prefetch * t->DQcapa 
+    Q_DQ =(float) ( t->n.Interface * t->n.Prefetch * t->DQcapa 
     * t->n.vcc );
     //read charges in pC
-     Q_READ = (Q_SSA + 2*Q_CSL + 2*Q_MDL + Q_DQ) ;
+    Q_READ = (Q_SSA + 2*Q_CSL + 2*Q_MDL + Q_DQ) ;
     float Q_total1 = ( (Q_MWL + Q_LWL + Q_LBL + Q_READ)*2 ) / 1000;
     float Trc = t->trc_clk * t->clk;
     IDD1 =  Q_total1 / Trc + IDD3n;
@@ -111,8 +111,17 @@ Current::calcIDD4R()
     else {
        ioTermRdCurrent = 0;
     }
+    //DRAM core freq
+    float core_freq = 0;
+    if (t->n.CoreFreq != 0) {
+        // 1/core_freq in ns
+        core_freq = (float)t->n.CoreFreq / 1000;
+        std::cout<<"core freq"<< core_freq << std::endl;
+    } else {
+        core_freq = 1/((t->n.Prefetch / clkconstant) * t->clk);
+    }
     //current IDD4R ;  
-    IDD4R = Q_total4R / ((t->n.Prefetch / clkconstant) * t->clk)  
+    IDD4R = Q_total4R * core_freq;  
     + IDD3n + ioTermRdCurrent;
 
     return true;

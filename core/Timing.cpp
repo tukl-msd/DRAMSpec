@@ -198,7 +198,7 @@ Timing::Timingclk()
     int clockfactor;
     std::cout<<"Freq" << "\t" << n.Freq << "\t" << "MHz" <<"\n";
     float freq = n.Freq;
-    float freq_core_max = (1/ tccd ) * 1000 ;
+    float freq_core_max = (1/ tccd ) * 1000;
     std::cout<<"Max DRAM Core Freq" << "\t" << freq_core_max 
     << "\t" << "MHz" << "\n";
     if (n.DRAMType == "DDR") {
@@ -206,7 +206,17 @@ Timing::Timingclk()
     } else {
         clockfactor = 1;
     }
-    float freq_core_actual = freq/(n.Prefetch/clockfactor);
+    float freq_core_actual;
+    // if we specified a core Freq then take the value else calculate it
+    if (n.CoreFreq != 0) {
+        freq_core_actual = n.CoreFreq;
+    } else {
+        freq_core_actual = freq/(n.Prefetch/clockfactor);
+    }
+    // scale the actual tcl, tccd, trl to the actual core freq
+    tcl_act = tcl * (freq_core_max/freq_core_actual);
+    trl_act = tcl_act;
+    tccd_act = tccd * (freq_core_max/freq_core_actual);
     std::cout<<"Actual DRAM Core Freq" << "\t" << 
     freq_core_actual << "\t" << "MHz" << "\n";  
     if(freq_core_actual < freq_core_max ) {
@@ -228,6 +238,9 @@ Timing::Timingclk()
     //tcl in clk cycles
     tcl_clk = ceil(tcl/clk); 
 
+    //tcl_act in clk cycles
+    tcl_act_clk = ceil(tcl_act/clk);
+
     //tras in clk cycles
     tras_clk = ceil(tras/clk);
 
@@ -241,6 +254,10 @@ Timing::Timingclk()
     //parameter
     trl_clk = ceil(tcl/clk) + n.tal;
 
+    //trl_act in clk cycles // tal is additional latency defined in tech.
+    //parameter
+    trl_act_clk = ceil(tcl_act/clk) + n.tal;
+
     //twl in clk cycles
     twl_clk = trl_clk - 1;
 
@@ -249,6 +266,9 @@ Timing::Timingclk()
 
     //tccd in clk cycles
     tccd_clk = ceil(tccd/clk);
+
+    //tccd_act in clk cycles
+    tccd_act_clk = ceil(tccd_act/clk);
 
     //twr in clk cycles
     twr_clk = ceil(twr/clk);
@@ -268,13 +288,16 @@ Timing::printTiming()
     std::cout << "Timing Parameters in ns" << "\n";
     std::cout << "trcd" << "\t" << trcd << ".\n";
     std::cout << "tcl" << "\t" << tcl << ".\n";
+    std::cout << "actual tcl" << "\t" << tcl_act << ".\n";
     std::cout << "trtp" << "\t" << trtp << ".\n";
     std::cout << "tccd" << "\t" << tccd << ".\n";
+    std::cout << "actual tccd" << "\t" << tccd_act << ".\n";
     std::cout << "tras" << "\t" << tras << ".\n";
     std::cout << "twr" << "\t" << twr << "\n" ;
     std::cout << "trp" << "\t" << trp << ".\n";
     std::cout << "trc" << "\t" << trc << ".\n";
     std::cout << "trl" << "\t" << trl << ".\n";
+    std::cout << "actual trl" << "\t" << trl_act << ".\n";
     std::cout << "trfc" << "\t" << trfc << "\n";
     std::cout << "tref1" << "\t" << tref1 << "\n";
 }

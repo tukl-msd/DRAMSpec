@@ -34,7 +34,7 @@ class TechnologyValues
   public:
     TechnologyValues(const std::string& techname,const std::string&
     paraname) : Techname(""), Paraname(""), DRAMType(""), dramsize(0),
-    Freq(0), Prefetch(0), tal(0), DLL(""), tref1required(0),
+    Freq(0), CoreFreq(0), Prefetch(0), tal(0), DLL(""), tref1required(0),
     Blpercellcapa(0), Blpercellresistance(0), Wlpercellcapa(0),
     Wlpercellresistance(0), cellcapa(0), cellresistance(0), wireresistance(0),
     wirecapa(0), cellwidth(0), cellheight(0), cellsperrow(0),
@@ -47,7 +47,7 @@ class TechnologyValues
     rowrefreshrate(0)   
     {
        Techname = techname;
-        Paraname = paraname;
+       Paraname = paraname;
     }
     //Technologyfile name to be read
     std::string Techname;
@@ -62,7 +62,9 @@ class TechnologyValues
     //# of banks 
     int numberofbanks; 
     //Frequency in MHz
-    int Freq; 
+    int Freq;
+    //Core Frequency in Mhz
+    int CoreFreq;
     //Prefetch number
     int Prefetch;
     //additional latency tal added to trl 
@@ -78,7 +80,7 @@ class TechnologyValues
     int Blpercellresistance ;
     //capacitance of wordline per cell
     int Wlpercellcapa;
-        //resistance of wordline per cell
+    //resistance of wordline per cell
     int Wlpercellresistance;
     // capacitance per cell
     int cellcapa;

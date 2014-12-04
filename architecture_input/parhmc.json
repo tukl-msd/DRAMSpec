@@ -4,6 +4,7 @@
 	"Numberofbanks":32,
 	"Interface": 32,
 	"Freq": 1000,
+	"CoreFreq": 0,
 	"Prefetch": 8,
 	"additionallatency" : 0,
 	"Rowbuffersize": 0.25,

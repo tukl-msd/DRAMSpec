@@ -33,11 +33,11 @@ class Timing
   public:
     Timing( const std::string& techname, const std::string& paraname )
     :n(techname,paraname), wlc(0), blc(0), GWDC(0), CSLcapa(0), GDLcapa(0),
-    DQcapa(0), clk(0), trcd(0), tcl(0), tras(0), trp(0), trc(0), trl(0),
-    twl(0),trtp(0), tccd(0), twr(0), trfc(0), tref1(0), tGWLD(0), wlthau(0),
-    blthau(0), trcd_clk(0), tcl_clk(0), tras_clk(0), trp_clk(0), trc_clk(0),
-    trl_clk(0), twl_clk(0), trtp_clk(0), tccd_clk(0), twr_clk(0), trfc_clk(0),
-    tref1_clk(0) 
+    DQcapa(0), clk(0), trcd(0), tcl(0), tcl_act(0), tras(0), trp(0), trc(0), trl(0),
+    trl_act(0), twl(0), trtp(0), tccd(0), tccd_act(0), twr(0), trfc(0), tref1(0),
+    tGWLD(0), wlthau(0), blthau(0), trcd_clk(0), tcl_clk(0), tcl_act_clk(0),
+    tras_clk(0), trp_clk(0), trc_clk(0), trl_clk(0), trl_act_clk(0), twl_clk(0), trtp_clk(0),
+    tccd_clk(0), tccd_act_clk(0), twr_clk(0), trfc_clk(0), tref1_clk(0) 
     {
         //do not change order of function
         bool TRCD = false;
@@ -122,6 +122,8 @@ class Timing
     float trcd;
     //column latency (column access strobe delay)
     float tcl;
+    //actual column latency scaled according to the actual core Freq
+    float tcl_act;
     //row access strobe delay
     float tras;
     //row precharge delay
@@ -130,12 +132,17 @@ class Timing
     float trc;
     //read latency delay
     float trl;
+    //actual read latency scaled according to the actual core Freq
+    float trl_act;
     //write latency delay
     float twl;
     //read to precharge delay
     float trtp;
     //column to column delay
     float tccd;
+    //actual column to column delay latency scared according to the actual
+    //core Freq
+    float tccd_act;
     //write recovery delay
     float twr;
     //refresh cycle time
@@ -151,6 +158,8 @@ class Timing
     //timing parameters in clk cycles
     //tcl in clk
     int tcl_clk;
+    //tcl_act in clk
+    int tcl_act_clk;
     //trch in clk
     int trcd_clk;
     //tras in clk
@@ -161,12 +170,16 @@ class Timing
     int trc_clk;
     //trl in clk
     int trl_clk;
+    //trl_act in clk
+    int trl_act_clk;
     //twl in clk
     int twl_clk;
     //trtp in clk
     int trtp_clk;
     //tccd in clk
     int tccd_clk;
+    //tccd_act in clk
+    int tccd_act_clk;
     //twr in clk
     int twr_clk;
     //trfc in clk

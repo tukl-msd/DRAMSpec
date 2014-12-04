@@ -1,16 +1,16 @@
 {
 	"DRAMType": "DDR",
-	"Size": 2,
-	"Numberofbanks":8,
-	"Interface": 16,
-	"Freq": 533,
-	"CoreFreq": 0,
+	"Size": 4,
+	"Numberofbanks":32,
+	"Interface": 8,
+	"Freq": 1350,
+	"CoreFreq": 250,
 	"Prefetch": 8,
 	"additionallatency" : 0,
-	"Rowbuffersize": 2,
+	"Rowbuffersize": 0.5,
 	"DLL": "ON",
 	"Requiredrefreshperiod": 3.9,
 	"banksrefreshfactor":1,
     "rowrefreshrate":1,
-	"subarray2rowbufferfactor": 1
+	"subarray2rowbufferfactor": 4
 }
