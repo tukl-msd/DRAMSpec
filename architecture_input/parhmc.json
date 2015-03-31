@@ -1,9 +1,11 @@
 {
 	"DRAMType": "DDR",
-	"Size": 2,
+	"3D": "ON",
+        "Vaultsperlayer": 16,
+        "Size": 1,
 	"Numberofbanks":32,
 	"Interface": 32,
-	"Freq": 1000,
+	"Freq": 1250,
 	"CoreFreq": 0,
 	"Prefetch": 8,
 	"additionallatency" : 0,
@@ -11,6 +13,6 @@
 	"DLL": "ON",
 	"Requiredrefreshperiod": 3.9,
 	"banksrefreshfactor":1,
-    "rowrefreshrate":1,
-	"subarray2rowbufferfactor": 4
+        "rowrefreshrate":1,
+	"subarray2rowbufferfactor": 2
 }

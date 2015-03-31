@@ -64,6 +64,7 @@ Timing::calctrcd()
     
     //calculating trcd
     trcd = tGWLD + wlthau + blthau + cellthau + 2 ;
+    //std::cout<<"TGWLD"<<tGWLD<<std::endl;
     return true;
 }
 bool
@@ -98,29 +99,39 @@ Timing::calctras()
     // when the number of banks increases this distance from bank to 
     // DQ should increas. We do not model this yet due to lack of input.
     // This should be changed in the future.
-    if (bankwidthfactor == 1) {
-        dqwirelength = 3;
-    } else if (bankwidthfactor == 2) {
-        dqwirelength = 5;
-    } else if(bankwidthfactor == 4) {
-        dqwirelength = 7;
-    } else if(bankwidthfactor == 8) {
-        dqwirelength = 9;
+    if (n.ThreeD == "ON") {
+        dqwirelength = 1;
     } else {
-        dqwirelength = 5;
-        std::cout<<"WARNING: YOUR PAGESIZE*Subarray2rowbuffer SEEMS to be too big!!"<<"\n";
+        if (bankwidthfactor == 1) {
+            dqwirelength = 3;
+        } else if (bankwidthfactor == 2) {
+            dqwirelength = 5;
+        } else if(bankwidthfactor == 4) {
+            dqwirelength = 7;
+        } else if(bankwidthfactor == 8) {
+            dqwirelength = 9;
+        } else if(bankwidthfactor == 0.5) {
+            dqwirelength = 2;
+        } else {
+            dqwirelength = 5;
+            std::cout<<"WARNING: YOUR PAGESIZE*Subarray2rowbuffer SEEMS to be too big!!"<<"\n";
+        }
     }
     DQcapa = dqwirelength * n.wirecapa;
     float tDQ = 0.6 + (2.2 * (n.DQDresistance * DQcapa) + 
-    ( n.wireresistance * n.wirecapa * 5 * 5))*(1/pow(10.0,6.0));
+    ( n.wireresistance * n.wirecapa * dqwirelength * dqwirelength))*(1/pow(10.0,6.0));
     
     //calculating tcl
-    //( readout-sensing of SSA ) + tDQ + 1 ns (interface delay)
-    tcl = tCSL + 1 + tGDL + 2 + tDQ + 1 ;    
+    // command decoding latency (consider for now 2ns) + ( readout-sensing of SSA ) + tDQ + 1 ns (interface delay)
+    tcl = 2 + tCSL + 1 + tGDL + 2 + tDQ + 1;    
     
     //calculating trtp
-    //read to precharge 
-    trtp = tcl - tDQ - 1 + blthau ; 
+    //read to precharge
+    //trtp is tCSL + tGDL + delay for sense amps. This is the point in time where precharging is allowed
+    //std::cout<<"blthau"<<blthau<<std::endl; 
+    //std::cout<<"tCSL"<<tCSL<<std::endl;
+    // remove the command decoding latency 
+    trtp = tcl - 2 - tDQ - 1 - 1; 
     
     //calculating tccd
     //tccd ( column to column delay) is equal time to select another CSL
@@ -129,10 +140,10 @@ Timing::calctras()
     tccd = tCSL + 1 + tGDL - 0.5;
     
     //calculating tras 
-    tras = trcd + tcl + 2 + blthau - tDQ - 1;
+    tras = trcd + tcl + blthau - tDQ - 1;
 
-    //calculating twr
-    twr = blthau + tGDL ;
+    //calculating twr + 2 (command decoding) + 1 (security margin)
+    twr = 2 + blthau + tGDL + 1;
 
     return true;
 }
@@ -175,7 +186,14 @@ Timing::calctrfc()
     //time for refresh cycle
     //numberofbanks refreshed*(5(Act cmd delay ) + 
     // 5(pre cmd delay)) + 10 ns (offset)) + trc
-    trfc =  ( n.rowrefreshrate * n.banksrefreshfactor * n.numberofbanks * (5 + 5) + 10 ) + trc;
+    int numberbanks;
+    if (n.ThreeD == "ON") {
+        numberbanks = n.numberofbanks/n.vaultsperlayer;
+    } else {
+    numberbanks = n.numberofbanks;
+    }
+
+    trfc =  ( n.rowrefreshrate * n.banksrefreshfactor * numberbanks * (5 + 5) + 10 ) + trc;
 
     return true;
 }

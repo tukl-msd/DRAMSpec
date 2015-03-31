@@ -194,6 +194,16 @@ TechnologyValues::readjson(const std::string& t,const std::string& p){
     assert(paradocument.HasMember("DRAMType"));
     assert(paradocument["DRAMType"].IsString());
     DRAMType = paradocument["DRAMType"].GetString();
+    //3D ON/OFF Feature
+    //set 3D on for HMC/WideIO
+    assert(paradocument.HasMember("3D"));
+    assert(paradocument["3D"].IsString());
+    ThreeD = paradocument["3D"].GetString();
+    // vaults per layer
+    // set to 0 for non 3D DRAMs
+    assert(paradocument.HasMember("Vaultsperlayer"));
+    assert(paradocument["Vaultsperlayer"].IsNumber()); 
+    vaultsperlayer = paradocument["Vaultsperlayer"].GetInt();
     //size of DRAM
     assert(paradocument.HasMember("Size"));
     assert(paradocument["Size"].IsNumber()); 

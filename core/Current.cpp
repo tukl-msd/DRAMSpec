@@ -56,7 +56,7 @@ Current::calcIDD0()
     //charge of local wordline
     Q_LWL = t->wlc * t-> n.vpp * numberofactivesubarrays * 3.3 ;
     //charge of local bitline//8 bytes to bits // 1024 kbits to bits
-    Q_LBL = t->blc * t-> n.vcc/2 * t->n.rowbuffersize * 8 * 1024;
+    Q_LBL = (float)t->blc * (float)t->n.vcc/2 * (float)t->n.rowbuffersize * 8 * 1024;
     //total charges in pC
     float Q_total0 = (( Q_MWL + Q_LWL + Q_LBL ) * 2) / 1000 ;
     //current caused by charging and discharging of capas in mA

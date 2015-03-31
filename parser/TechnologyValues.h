@@ -71,6 +71,10 @@ class TechnologyValues
     int tal;
     //DLL ON/OFF Feature
     std::string DLL;
+    //3D ON/OFF Feature
+    std::string ThreeD;
+    //Vaults per Layer 
+    int vaultsperlayer;
     //required refresh period
     //possibility to set the refresh period 
     float tref1required;

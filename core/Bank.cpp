@@ -49,8 +49,9 @@ Bank::calcchiparea()
 {
     //calculate number of subarrrays in the width direction * 1024 (to
     //Bytes) * 8 (to bits)
-    int numbersubarraysinx = (rowbuffersize*1024*8 / 
-    (cellsperrow - cellsperrowredundancy)) * subarray2rowbufferfactor;
+int numbersubarraysinx = ((float)0.5*1024*8 / 
+    //int numbersubarraysinx = ((float)rowbuffersize*1024*8 / 
+    (float)(cellsperrow - cellsperrowredundancy)) * subarray2rowbufferfactor;
     // mwldwidth//master wordline driver width ( value taken from a real
     // chip designed)
     float mwldwidth = 240;
