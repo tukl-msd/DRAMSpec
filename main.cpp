@@ -29,7 +29,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Author: Omar Naji, Matthias Jung
+ * Authors: Omar Naji, Matthias Jung, Christian Weis
  */
 
 #include "parser/ResultParser.h"

@@ -1,101 +1,132 @@
 /*
-Copyright (c)  2014, University of Kaiserslautern
-All rights reserved.
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-1. Redistributions of source code must retain the above copyright notice, this
-list of conditions and the following disclaimer.
-2. Redistributions in binary form must reproduce the above copyright notice,
-this list of conditions and the following disclaimer in the documentation
-and/or other materials provided with the distribution.
-3. Neither the name of the copyright holder nor the names of its contributors
-may be used to endorse or promote products derived from this software without
-specific prior written permission.
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-Author: Omar Naji
-*/
+ * Copyright (c) 2015, University of Kaiserslautern
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
+ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * Authors: Omar Naji, Matthias Jung, Christian Weis
+ */
+
 #include "Timing.h"
 #include <math.h>
 #include <iostream>
+
+// TODO: why not void?
 bool 
 Timing::calctrcd()
 {
-    //trcd is divided as following
-    //the first part is for wordline driver delay estimated as 2 ns
-    //the second part is the delay throught the local wordline and 
-    //local bitline and delay coming from cell itself
-    //the 3rd part is the delay of the ssa and is estimated to 2 ns
-    //calculating thau for wl
-    //calculating wordline total resistance ( value in Ohm )
-    //local wordline resistance equals resistance of local wordline driver+
-    //resistance of cells in wordline direction
+    // Trcd is divided as following:
+    // the first part is for wordline driver delay estimated as 2 ns
+    // the second part is the delay throught the local wordline and 
+    // local bitline and delay coming from cell itself
+    // the 3rd part is the delay of the ssa and is estimated to 2 ns
+    // calculating thau for wl
+    // calculating wordline total resistance ( value in Ohm )
+    // local wordline resistance equals resistance of local wordline driver+
+    // resistance of cells in wordline direction
     float wlr = n.LWDresistance + (n.cellsperrow * n. Wlpercellresistance);
-    //calculating wordline total capacitance ( value in ff)
+
+    // Calculating wordline total capacitance ( value in ff)
     wlc = (n.cellsperrow * n.Wlpercellcapa)*(1/pow(10.0,3.0));
-    //calculating wlthau( in ns ) 
+
+    // Calculating wlthau( in ns ) 
     wlthau =   2.2 * wlr * wlc * (1/pow(10.0,6.0));
-    //calculating bitline total resistance  
+
+    // Calculating bitline total resistance  
     float blr = (n.cellspercolumn * n.Blpercellresistance);
-    //calculating bitline total capacitance 
+
+    // Calculating bitline total capacitance 
     blc = (n.cellspercolumn * n.Blpercellcapa)*(1/pow(10.0,3.0));
-    //calculating the blthau( in ns )
-    //for timing of bitline, the voltage should reach 90% of the value 
-    //or else the BLSA can kipp to the wrong value => thau*2.3
+
+    // Calculating the blthau( in ns )
+    // for timing of bitline, the voltage should reach 90% of the value 
+    // or else the BLSA can kipp to the wrong value => thau*2.3
     blthau = 2.3 * blr * blc * (1/pow(10.0,6.0));
-    //calculating thau for cell cellthau ( in ns )
+
+    // Calculating thau for cell cellthau ( in ns )
     float cellthau = 2.2 * n.cellcapa * n.cellresistance * (1/pow(10.0,3.0));
+
     //calculating GWL decoder + wiring delay
     //calculating global wordline total capa in fF
     GWDC = n.wirecapa*n.MemoryArraywidth*(1/pow(10.0,3.0));
+
+    // TODO cleanup:
     //std::cout<<"Global wordline capa"<<GWDC<<"\n";
-    //calculating delay through global wordline driver and wiring
+    
+    // Calculating delay through global wordline driver and wiring
     tGWLD =0.6 + (2.2 * n.GWLDresistance*GWDC +  n.wireresistance 
     * n.wirecapa * n.MemoryArraywidth * n.MemoryArraywidth 
     * (1/pow(10.0,6.0)))*(1/pow(10.0,6.0));
     
-    //calculating trcd
+    // Calculating trcd
     trcd = tGWLD + wlthau + blthau + cellthau + 2 ;
-    //std::cout<<"TGWLD"<<tGWLD<<std::endl;
+
+    // TODO: cleanup:
+    // std::cout<<"TGWLD"<<tGWLD<<std::endl;
     return true;
 }
+
+// TODO: why not void?
 bool
 Timing::calctras()
 {
-    //tras is divided into 4 parts: trcd + tCAS + time for precharging
-    // SSA(~2ns) + time needed to restore the bits into the cells(thau bitline)
-    //calculating tCAS
-    //tCAS has delay from CSL driver + Wire ,Local Dataline driver 
-    //+ wire (~1 ns ), Global Data line driver + wire, Delay from 
-    //SSA to Dataqueue(DQ)
-    //delay through CSL
-    //CSL wire capacitane in fF + 8 fF for load
+    // tras is divided into 4 parts: trcd + tCAS + time for precharging
+    // SSA(~2ns) + time needed to restore the bits into the cells
+    // (thau bitline)
+    //
+    // Calculating tCAS:
+    // tCAS has delay from CSL driver + Wire ,Local Dataline driver 
+    // + wire (~1 ns ), Global Data line driver + wire, Delay from 
+    // SSA to Dataqueue(DQ)
+    // delay through CSL
+    // CSL wire capacitane in fF + 8 fF for load
     CSLcapa = n.Bankheight * n.wirecapa * (1/pow(10.0,3.0)) + 8;
+
     //thau CSL in ns
     float tCSL = 0.6 +  (2.2 * (n.CSLDresistance * CSLcapa) + 
     ( n.wireresistance * n.wirecapa * n.Bankheight * n.Bankheight)
     *(1/pow(10.0,6.0)))*(1/pow(10.0,6.0));
+
     //through global data line(voltage on dataline should reach 90%
     GDLcapa = n.Bankheight * n.wirecapa * (1/pow(10.0,3.0));
     float tGDL =  0.6 +  (2.2 * (n.GDLDresistance * GDLcapa) 
     + ( n.wireresistance * n.wirecapa * n.Bankheight * n.Bankheight)
     *(1/pow(10.0,6.0)))*(1/pow(10.0,6.0));
-    //delay from SSA to DQ//assume wire length = 5mm 
-    //the length of the DQ wire depends on the width of the bank
+
+    // Delay from SSA to DQ//assume wire length = 5mm 
+    // the length of the DQ wire depends on the width of the bank
     int dqwirelength;
     
-    //factor which defines the rowbuffer*subarray2rowbuffer relation
+    // Factor which defines the rowbuffer*subarray2rowbuffer relation
     float bankwidthfactor;
     bankwidthfactor = n.rowbuffersize * n.subarray2rowbufferfactor;
-    // currently we assume 5 mm taken from a DDR3 ( 8 banks config)
+
+    // Currently we assume 5 mm taken from a DDR3 ( 8 banks config)
     // when the number of banks increases this distance from bank to 
     // DQ should increas. We do not model this yet due to lack of input.
     // This should be changed in the future.
@@ -119,34 +150,39 @@ Timing::calctras()
     }
     DQcapa = dqwirelength * n.wirecapa;
     float tDQ = 0.6 + (2.2 * (n.DQDresistance * DQcapa) + 
-    ( n.wireresistance * n.wirecapa * dqwirelength * dqwirelength))*(1/pow(10.0,6.0));
+    ( n.wireresistance * n.wirecapa * dqwirelength *
+    dqwirelength))*(1/pow(10.0,6.0));
     
-    //calculating tcl
-    // command decoding latency (consider for now 2ns) + ( readout-sensing of SSA ) + tDQ + 1 ns (interface delay)
+    // Calculating tcl:
+    // command decoding latency (consider for now 2ns) + 
+    // ( readout-sensing of SSA ) + tDQ + 1 ns (interface delay)
     tcl = 2 + tCSL + 1 + tGDL + 2 + tDQ + 1;    
     
-    //calculating trtp
-    //read to precharge
-    //trtp is tCSL + tGDL + delay for sense amps. This is the point in time where precharging is allowed
-    //std::cout<<"blthau"<<blthau<<std::endl; 
-    //std::cout<<"tCSL"<<tCSL<<std::endl;
+    // Calculating trtp:
+    // read to precharge
+    // trtp is tCSL + tGDL + delay for sense amps.
+    // This is the point in time where precharging is allowed
+    // std::cout<<"blthau"<<blthau<<std::endl; 
+    // std::cout<<"tCSL"<<tCSL<<std::endl;
     // remove the command decoding latency 
     trtp = tcl - 2 - tDQ - 1 - 1; 
     
-    //calculating tccd
-    //tccd ( column to column delay) is equal time to select another CSL
-    // + precharging secondary SSA + Global Dataline delay... 
-    //- 0.5(delay of CSL driver isnot in the critical path)
+    // Calculating tccd:
+    // tccd ( column to column delay) is equal time to select another CSL
+    //  + precharging secondary SSA + Global Dataline delay... 
+    // - 0.5(delay of CSL driver isnot in the critical path)
     tccd = tCSL + 1 + tGDL - 0.5;
     
-    //calculating tras 
+    // Calculating tras:
     tras = trcd + tcl + blthau - tDQ - 1;
 
-    //calculating twr + 2 (command decoding) + 1 (security margin)
+    // Calculating twr + 2 (command decoding) + 1 (security margin):
     twr = 2 + blthau + tGDL + 1;
 
     return true;
 }
+
+// TODO: why not void?
 bool 
 Timing::calctrp()
 {
@@ -157,6 +193,8 @@ Timing::calctrp()
 
     return true;          
 }
+
+// TODO: why not void?
 bool 
 Timing::calctrc()
 {
@@ -166,6 +204,8 @@ Timing::calctrc()
 
     return true;
 }
+
+// TODO: why not void?
 bool 
 Timing::calctrl()
 {
@@ -175,11 +215,15 @@ Timing::calctrl()
 
     return true;
 }
+
+// TODO: why not void?
 bool  
 Timing::calctwl()
 {
     return true;
 }
+
+// TODO: why not void?
 bool
 Timing::calctrfc()
 {
@@ -190,13 +234,15 @@ Timing::calctrfc()
     if (n.ThreeD == "ON") {
         numberbanks = n.numberofbanks/n.vaultsperlayer;
     } else {
-    numberbanks = n.numberofbanks;
+        numberbanks = n.numberofbanks;
     }
 
     trfc =  ( n.rowrefreshrate * n.banksrefreshfactor * numberbanks * (5 + 5) + 10 ) + trc;
 
     return true;
 }
+
+// TODO: why not void?
 bool
 Timing::calctref1()
 {
@@ -210,6 +256,7 @@ Timing::calctref1()
     return true;
 }
 
+// TODO: why not void?
 bool 
 Timing::Timingclk()
 {
@@ -299,23 +346,25 @@ Timing::Timingclk()
 
     return true;
 }
+
+// TODO: why not void?
 void
 Timing::printTiming()
 {
     //print analog timings
     std::cout << "Timing Parameters in ns" << "\n";
-    std::cout << "trcd" << "\t" << trcd << ".\n";
-    std::cout << "tcl" << "\t" << tcl << ".\n";
-    std::cout << "actual tcl" << "\t" << tcl_act << ".\n";
-    std::cout << "trtp" << "\t" << trtp << ".\n";
-    std::cout << "tccd" << "\t" << tccd << ".\n";
-    std::cout << "actual tccd" << "\t" << tccd_act << ".\n";
-    std::cout << "tras" << "\t" << tras << ".\n";
-    std::cout << "twr" << "\t" << twr << "\n" ;
-    std::cout << "trp" << "\t" << trp << ".\n";
-    std::cout << "trc" << "\t" << trc << ".\n";
-    std::cout << "trl" << "\t" << trl << ".\n";
-    std::cout << "actual trl" << "\t" << trl_act << ".\n";
-    std::cout << "trfc" << "\t" << trfc << "\n";
+    std::cout << "trcd"          << "\t"  << trcd     << ".\n";
+    std::cout << "tcl"           << "\t"  << tcl      << ".\n";
+    std::cout << "actual tcl"    << "\t"  << tcl_act  << ".\n";
+    std::cout << "trtp" << "\t"  << trtp  << ".\n";
+    std::cout << "tccd" << "\t"  << tccd  << ".\n";
+    std::cout << "actual tccd"   << "\t"  << tccd_act << ".\n";
+    std::cout << "tras" << "\t"  << tras  << ".\n";
+    std::cout << "twr" << "\t"   << twr   << "\n" ;
+    std::cout << "trp" << "\t"   << trp   << ".\n";
+    std::cout << "trc" << "\t"   << trc   << ".\n";
+    std::cout << "trl" << "\t"   << trl   << ".\n";
+    std::cout << "actual trl"    << "\t"  << trl_act  << ".\n";
+    std::cout << "trfc" << "\t"  << trfc  << "\n";
     std::cout << "tref1" << "\t" << tref1 << "\n";
 }
