@@ -1,5 +1,7 @@
 {
 	"DRAMType": "DDR",
+ 	"3D": "OFF",
+	"Vaultsperlayer": 1,
 	"Size": 1,
 	"Numberofbanks":8,
 	"Interface": 16,
