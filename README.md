@@ -1,4 +1,4 @@
-# DRAMSpec
+# DRAMSpec [1]
 a DRAM Current and Timing Generator
 
 ## LICENSE 
@@ -33,17 +33,18 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Author: Omar Naji, Matthias Jung, Christian Weis
+
 ## Installing
 
-### download prerequisites (rapidjson)
-	./install_prerequisites.sh
+### Cloning from github (recursive to get submodules!)
+	git clone --recursive <URL>
 
 ### compiling DRAMSpec
 	make clean
 	make
 
 ### Running DRAMSpec
-running DCTG ( use -term if you want to add IO termination Current)
+running DRAMSpec (use -term if you want to add IO termination Current)
 If you do not want to add IO termination current than do not add -term
 parameter
 
@@ -55,3 +56,7 @@ parameter
 
 ### cleaning
 	make clean
+
+## Reference
+[1] A High-Level DRAM Timing, Power and Area Exploration Tool
+O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn. Accepted for publication, IEEE International Conference on Embedded Computer Systems Architectures Modeling and Simulation (SAMOS), July, 2015, Samos Island, Greece
