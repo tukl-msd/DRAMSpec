@@ -197,7 +197,7 @@ Current::calcIDD5()
     int numberofrowactivation = t->tref1/(t->n.tref1required*1000);
 
     // Calculate the refresh current for the required period
-    std::cout<<"WARNING: for the required refresh time of " <<
+    std::cout<<"Remark: for the required refresh time of " <<
     t->n.tref1required << "us,each row will be refreshed"
     <<"\t"<<numberofrowactivation 
     <<"\t"<< "times more than required for a retention time of 64 ms"

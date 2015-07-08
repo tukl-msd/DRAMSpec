@@ -13,6 +13,6 @@
 	"DLL": "ON",
 	"Requiredrefreshperiod": 3.9,
 	"banksrefreshfactor":1,
-        "rowrefreshrate":1,
-	"subarray2rowbufferfactor": 0.75
+        "rowrefreshrate":0.5,
+	"subarray2rowbufferfactor": 2
 }
