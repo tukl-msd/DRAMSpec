@@ -148,8 +148,7 @@ Current::calcIDD4R()
         core_freq = 1/((t->n.Prefetch / clkconstant) * t->clk);
     }
     //current IDD4R ;  
-    IDD4R = Q_total4R * core_freq;  
-    + IDD3n + ioTermRdCurrent; // TODO: what are you doing here??
+    IDD4R = Q_total4R * core_freq + IDD3n + ioTermRdCurrent;
 
     return true;
 }
