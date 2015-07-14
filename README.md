@@ -40,7 +40,6 @@ Author: Omar Naji, Matthias Jung, Christian Weis
 	git clone --recursive <URL>
 
 ### compiling DRAMSpec
-	make clean
 	make
 
 ### Running DRAMSpec
@@ -50,12 +49,8 @@ parameter
 
 	./dramspec -t technologyfilename -p parameterfilename -term
 
-### execution line example 
-	./dramspec -t technology_input/techddr3_5x.json \
-    -p architecture_input/parddr3.json
-
-### cleaning
-	make clean
+#### Example:
+	./dramspec -t technology_input/techddr3_5x.json -p architecture_input/parddr3.json
 
 ## Reference
 [1] A High-Level DRAM Timing, Power and Area Exploration Tool
