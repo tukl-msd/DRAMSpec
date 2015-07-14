@@ -35,7 +35,6 @@
 #include "Bank.h"
 #include <iostream>
 
-// TODO: if this funciton always returns true why not void?
 bool 
 Bank::Bankinit()
 {
@@ -59,11 +58,9 @@ Bank::Bankinit()
     return true;
 }
 
-// TODO: if this funciton always returns true why not void?
 bool 
 Bank::calcchiparea()
 {
-    // TODO: Cleanup:
     // Calculate number of subarrrays in the width
     // direction * 1024 (to Bytes) * 8 (to bits)
     int numbersubarraysinx = ((float)0.5*1024*8 / 

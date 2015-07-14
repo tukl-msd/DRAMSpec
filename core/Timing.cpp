@@ -36,7 +36,6 @@
 #include <math.h>
 #include <iostream>
 
-// TODO: why not void?
 bool 
 Timing::calctrcd()
 {
@@ -75,9 +74,6 @@ Timing::calctrcd()
     //calculating global wordline total capa in fF
     GWDC = n.wirecapa*n.MemoryArraywidth*(1/pow(10.0,3.0));
 
-    // TODO cleanup:
-    //std::cout<<"Global wordline capa"<<GWDC<<"\n";
-    
     // Calculating delay through global wordline driver and wiring
     tGWLD =0.6 + (2.2 * n.GWLDresistance*GWDC +  n.wireresistance 
     * n.wirecapa * n.MemoryArraywidth * n.MemoryArraywidth 
@@ -86,12 +82,9 @@ Timing::calctrcd()
     // Calculating trcd
     trcd = tGWLD + wlthau + blthau + cellthau + 2 ;
 
-    // TODO: cleanup:
-    // std::cout<<"TGWLD"<<tGWLD<<std::endl;
     return true;
 }
 
-// TODO: why not void?
 bool
 Timing::calctras()
 {
@@ -182,7 +175,6 @@ Timing::calctras()
     return true;
 }
 
-// TODO: why not void?
 bool 
 Timing::calctrp()
 {
@@ -194,7 +186,6 @@ Timing::calctrp()
     return true;          
 }
 
-// TODO: why not void?
 bool 
 Timing::calctrc()
 {
@@ -205,7 +196,6 @@ Timing::calctrc()
     return true;
 }
 
-// TODO: why not void?
 bool 
 Timing::calctrl()
 {
@@ -216,14 +206,12 @@ Timing::calctrl()
     return true;
 }
 
-// TODO: why not void?
 bool  
 Timing::calctwl()
 {
     return true;
 }
 
-// TODO: why not void?
 bool
 Timing::calctrfc()
 {
@@ -242,7 +230,6 @@ Timing::calctrfc()
     return true;
 }
 
-// TODO: why not void?
 bool
 Timing::calctref1()
 {
@@ -256,7 +243,6 @@ Timing::calctref1()
     return true;
 }
 
-// TODO: why not void?
 bool 
 Timing::Timingclk()
 {
@@ -347,7 +333,6 @@ Timing::Timingclk()
     return true;
 }
 
-// TODO: why not void?
 void
 Timing::printTiming()
 {

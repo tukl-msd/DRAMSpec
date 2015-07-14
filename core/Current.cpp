@@ -37,7 +37,6 @@
 #include <iostream>
 
 // Backgorund current calculation
-// TODO: why not void?
 bool 
 Current::calcbackgroundCurrent()
 {
@@ -57,7 +56,6 @@ Current::calcbackgroundCurrent()
     return true;
 }
 
-// TODO: why not void?
 bool 
 Current::calcIDD0()
 {
@@ -86,7 +84,6 @@ Current::calcIDD0()
     return true;
 }
 
-// TODO: why not void?
 bool
 Current::calcIDD1()
 {
@@ -113,7 +110,6 @@ Current::calcIDD1()
     return true;
 }
 
-// TODO: why not void?
 bool
 Current::calcIDD4R()
 {
@@ -177,7 +173,6 @@ Current::calcIDD4W()
     return true;
 }
 
-//TODO: why not void?
 bool
 Current::calcIDD5()
 {

@@ -45,7 +45,7 @@ main(int argc, char* argv[])
     std::string paraname;
     bool term = false;
 
-    // TODO: check number of arguments!
+    // check number of arguments!
     if (argc != 6 && argc != 5)
     {
     	std::cout<< std::endl << "Number of arguments is incorrect" <<".\n";
