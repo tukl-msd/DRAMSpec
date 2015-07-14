@@ -145,9 +145,6 @@ ResultParser::jsonwriter()
     std::ofstream timingresultfile("timingresult.json");
     timingresultfile<<timingstr;
 
-    // TODO: cleanup
-    //printf("JSON: %s\n", str);
-
     //parsing the currents
     rapidjson::Document currentdoc;
     currentdoc.SetObject();
@@ -180,9 +177,6 @@ ResultParser::jsonwriter()
     currentdoc.Accept(currentwriter);
     const char* currentstr = currentbuffer.GetString();
 
-    // TODO: cleanup
-    //printf("CurrentJSON: %s \n", currentstr);
-    
     //open a file
     std::ofstream currentresultfile("currentresult.json");
     currentresultfile<<currentstr;

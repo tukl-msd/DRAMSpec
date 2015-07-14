@@ -176,19 +176,9 @@ class TechnologyValues
 
     //the resistance of the DQ driver ( in Ohm )
     float DQDresistance;
-
-    // TODO: cleanup
-    //the area of a cell 
-    // float cellarea;
     
     //the row buffer size /page size
     float rowbuffersize;
-
-    // TODO: cleanup
-    // size of memory array
-    // int sizeofmemoryarray;
-    //size of bank
-    // int sizeofbank;
     
     //current of Secondary sense amp in microamperes
     int I_SSA;

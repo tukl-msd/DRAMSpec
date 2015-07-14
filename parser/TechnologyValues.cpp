@@ -39,9 +39,6 @@
 #include <sstream>
 #include <fstream>
 
-// TODO: remove this
-using namespace std;
-
 void 
 TechnologyValues::readjson(const std::string& t,const std::string& p)
 {
@@ -291,10 +288,7 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     assert(paradocument["Prefetch"].IsNumber());
     Prefetch = paradocument["Prefetch"].GetInt();
 
-    // TODO: cleanup
-    //std::cout << "Freq should be 533" <<"\t"<<Freq<<".\n" ;
-
-    // TODO: what is done here?
+    //additional latency required for trl calculation
     assert(paradocument.HasMember("additionallatency"));
     assert(paradocument["additionallatency"].IsNumber());
     tal = paradocument["additionallatency"].GetInt();
