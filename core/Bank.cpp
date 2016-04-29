@@ -50,8 +50,9 @@ Bank::Bankinit()
 
     // Calculate bank height required for CSL and MDQ...
     // 5u space btw subarrays
-    Bankheight = numberofMemoryArrays * MemoryArrayheight + 
-    (numberofMemoryArrays - 1)*5;
+     Bankheight = numberofMemoryArrays * MemoryArraywidth +
+    (numberofMemoryArrays - 1) * 5;    
+                                 
     std::cout << "AREA of DRAM"<<"\n";
     std::cout <<"height of bank in micrometers"<<"\t" <<  
     Bankheight << ".\n";
