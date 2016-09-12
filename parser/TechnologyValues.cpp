@@ -29,7 +29,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
  */
 
 #include "TechnologyValues.h"
@@ -323,4 +323,15 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     assert(paradocument["subarray2rowbufferfactor"].IsNumber());
     subarray2rowbufferfactor = paradocument["subarray2rowbufferfactor"].
     GetDouble(); 
+
+    // Retention time
+    assert(paradocument.HasMember("retentiontime"));
+    assert(paradocument["retentiontime"].IsNumber());
+    retentiontime = paradocument["retentiontime"].GetDouble();
+
+    // Number of tiles per bank
+    assert(paradocument.HasMember("tilesperbank"));
+    assert(paradocument["tilesperbank"].IsNumber());
+    tilesperbank = paradocument["tilesperbank"].GetInt();
+
 }

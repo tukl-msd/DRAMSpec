@@ -29,7 +29,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
  */
 
 // this class is used to parse the results of timing and 
@@ -51,7 +51,7 @@ class ResultParser
         i=&I;
     }
     void 
-    jsonwriter();
+    jsonwriter(int filenumber);
   private:
     //object which contains results of timing
     Timing* t;

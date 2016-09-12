@@ -29,16 +29,17 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
  */
 
 #include "ResultParser.h"
 #include <math.h>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 //function for writing results in json
 void 
-ResultParser::jsonwriter()
+ResultParser::jsonwriter(int filenumber)
 {
     //parsing the timing results in ns
     rapidjson::Document timingnsdoc;
@@ -88,8 +89,11 @@ ResultParser::jsonwriter()
     const char* timingnsstr = timingnsbuffer.GetString();
 
     //open a file
-    std::ofstream timingnsresultfile("timingnsresult.json");
+    std::stringstream timingnsresstr;
+    timingnsresstr<< std::string("timingnsresult_")<< filenumber<<std::string(".json");
+    std::ofstream timingnsresultfile(timingnsresstr.str().c_str());
     timingnsresultfile<<timingnsstr;
+    timingnsresultfile.close();
 
     //parsing the timing results in clock cycles
     rapidjson::Document timingdoc;
@@ -141,9 +145,12 @@ ResultParser::jsonwriter()
     timingdoc.Accept(timingwriter);
     const char* timingstr = timingbuffer.GetString();
 
-    //open a file
-    std::ofstream timingresultfile("timingresult.json");
+    //Placing timing results (in clock cycles) in different files according to file number
+    std::stringstream timingresstr;
+    timingresstr<< std::string("timingresult_")<< filenumber<<std::string(".json");
+    std::ofstream timingresultfile(timingresstr.str().c_str());
     timingresultfile<<timingstr;
+    timingresultfile.close();
 
     //parsing the currents
     rapidjson::Document currentdoc;
@@ -177,7 +184,10 @@ ResultParser::jsonwriter()
     currentdoc.Accept(currentwriter);
     const char* currentstr = currentbuffer.GetString();
 
-    //open a file
-    std::ofstream currentresultfile("currentresult.json");
+    //Placing current results in different files according to file number
+    std::stringstream currentresstr;
+    currentresstr<< std::string("currentresult_")<< filenumber<<std::string(".json");
+    std::ofstream currentresultfile(currentresstr.str().c_str());
     currentresultfile<<currentstr;
+    currentresultfile.close();
 }

@@ -29,14 +29,15 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
  */
 
 #include "Current.h"
 #include <math.h>
 #include <iostream>
+#include <fstream>
 
-// Backgorund current calculation
+// Background current calculation
 bool 
 Current::calcbackgroundCurrent()
 {
@@ -58,7 +59,7 @@ Current::calcbackgroundCurrent()
 
 bool 
 Current::calcIDD0()
-{
+{ 
     // Number of active subarrays
     int numberofactivesubarrays = (t->n.rowbuffersize * 8 * 1024) 
     / (t->n.cellsperrow - t->n.cellsperrowredundancy); 
@@ -70,15 +71,26 @@ Current::calcIDD0()
     Q_LWL = t->wlc * t-> n.vpp * numberofactivesubarrays * 3.3 ;
 
     //charge of local bitline//8 bytes to bits // 1024 kbits to bits
-    Q_LBL = (float)t->blc * (float)t->n.vcc/2 * (float)t->n.rowbuffersize * 8 * 1024;
+    Q_LBL = (float)t->blc * (float)t->n.vcc/2 * (float)t->n.rowbuffersize * 8 * 1024; 
+ 
+    //Extra charge added as the number of tiles per bank is changed 	
+    float Q_tilesperbank = 0;
 
+    //If it is a halfbank, Charge = wire capacitance * number of wires * length of wire * voltage
+    if(t->n.tilesperbank == 2) 
+    Q_tilesperbank = t->n.wirecapa * 13 * 0.25 * t->n.vcc/2; 
+    //If it is a quarterbank, Charge = wire capacitance * number of wires * length of wire * voltage * 2
+    if(t->n.tilesperbank == 4) 
+    Q_tilesperbank = t->n.wirecapa * 13 * 0.25 * t->n.vcc/2 * 2;
+ 
     // Total charges in pC
-    float Q_total0 = (( Q_MWL + Q_LWL + Q_LBL ) * 2) / 1000 ;
+    float Q_total0 = (( Q_MWL + Q_LWL + Q_LBL + Q_tilesperbank) * 2) / 1000 ;
 
     // Current caused by charging and discharging of capas in mA
     // Clock cycles of trc in ns
     float Trc = t->trc_clk * t->clk;
     float IDD_Q = Q_total0/Trc; 
+
     IDD0 = IDD_Q + IDD3n;
 
     return true;
@@ -98,6 +110,7 @@ Current::calcIDD1()
     Q_MDL = t->GDLcapa * t-> n.vcc * t->n.Interface * t->n.Prefetch;
 
     // Charges for Dataqueue // 1 Read is done for interface x prefetch
+
     Q_DQ =(float) ( t->n.Interface * t->n.Prefetch * t->DQcapa 
     * t->n.vcc );
      
@@ -124,7 +137,16 @@ Current::calcIDD4R()
     } else {
         clkconstant = 1;
     }
-    float Q_total4R = (Q_READ) / 1000;
+
+    float Q_tilesperbank = 0;
+
+    if(t->n.tilesperbank == 2) 
+    Q_tilesperbank = t->n.wirecapa * 13 * 0.25 * t->n.vcc * 10;
+ 
+    if(t->n.tilesperbank == 4) 
+    Q_tilesperbank = t->n.wirecapa * 13 * 0.25 * t->n.vcc * 2 * 10; 
+
+    float Q_total4R = (Q_READ + Q_tilesperbank) / 1000;
     // Number of output signals for read = interface number 
     // + 1 datastrobe signal pro 4 bits
     float ioTermRdCurrent;
@@ -193,9 +215,9 @@ Current::calcIDD5()
 
     // Calculate the refresh current for the required period
     std::cout<<"Remark: for the required refresh time of " <<
-    t->n.tref1required << "us,each row will be refreshed"
+    t->n.tref1required << " µs, each row will be refreshed"
     <<"\t"<<numberofrowactivation 
-    <<"\t"<< "times more than required for a retention time of 64 ms"
+    <<"\t"<< "times more than required for a retention time of "<<t->n.retentiontime<< " ms"
     <<"\n";
     return true;
 }
@@ -203,12 +225,6 @@ Current::calcIDD5()
 void
 Current::printCurrent()
 {
-     std::cout<<"Currents in mA:" << "\n";
-     std::cout << "IDD2n" << "\t" << IDD2n << "\n";
-     std::cout << "IDD3n" << "\t" << IDD3n << "\n"; 
-     std::cout << "IDD0"  << "\t" << IDD0  << "\n" ;
-     std::cout << "IDD1"  << "\t" << IDD1  << "\n" ;
-     std::cout << "IDD4R" << "\t" << IDD4R << "\n";
-     std::cout << "IDD4W" << "\t" << IDD4W << "\n";
-     std::cout << "IDD5"  << "\t" << IDD5  << "\n";
+	
+
 }

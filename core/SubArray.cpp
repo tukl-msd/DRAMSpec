@@ -39,8 +39,8 @@ SubArray::SubArraycal()
     // Width of subarray is number of cells x cell width + WLDriver width
     SubArraywidth = cellsperrow * cellwidth + wldwidth;
 
-    // Height of subarray is number of cells x cell height + BLSA height
-    SubArrayheight = cellspercolumn * cellheight + blsaheight;
+    // Height of subarray is number of cells x cell height
+    SubArrayheight = cellspercolumn * cellheight;
 
     return true; 
 }
@@ -79,6 +79,7 @@ SubArray::driversinit()
         LWDresistance = LWDresistance - 200 ;
         WRresistance = WRresistance - 200 ;
     }
+
     return true;
 }
 

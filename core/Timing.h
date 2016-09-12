@@ -47,7 +47,7 @@ class Timing
     trfc(0), tref1(0), tGWLD(0), wlthau(0), blthau(0), trcd_clk(0),
     tcl_clk(0), tcl_act_clk(0), tras_clk(0), trp_clk(0), trc_clk(0),
     trl_clk(0), trl_act_clk(0), twl_clk(0), trtp_clk(0), tccd_clk(0),
-    tccd_act_clk(0), twr_clk(0), trfc_clk(0), tref1_clk(0) 
+    tccd_act_clk(0), twr_clk(0), trfc_clk(0), tref1_clk(0), ActFreq(0) 
     {
         //do not change order of function
         bool TRCD = false;
@@ -113,8 +113,8 @@ class Timing
                 "\t"<<"Order of Functions is important"<<"\n";
             throw(" Function for clocked timings not called");
         }
-    }    
-
+    }  
+  
     //capacitace of local wordline
     float wlc;
 
@@ -243,7 +243,11 @@ class Timing
     //function for printing timing results
     void printTiming();
 
-  private:
+    //Actual Frequency in MHz
+    float ActFreq;
+
+
+  protected:
 
     //function used for trcd calculation
     bool calctrcd();

@@ -50,7 +50,7 @@ class MemoryArray:public SubArray
     {
         MemoryArrayinit();
     }
-  protected:    
+    
     //The number of subarrays pro memory array(should be calculated)
     //The number of subarrays in x direction 
     int subproMemoryArrayx;
@@ -61,6 +61,9 @@ class MemoryArray:public SubArray
     // The total height of the memory array
     float MemoryArrayheight;
 
+    // The total width of the memory array
+    float  MemoryArraywidth;
+  
     // function which calculates the number of subarrays in x and y directions
     void 
     calculateSubArrayxy();
@@ -74,9 +77,5 @@ class MemoryArray:public SubArray
     // this function initializes the memory array
     void 
     MemoryArrayinit();
-
-  public:
-    // The total width of the memory array
-    float  MemoryArraywidth;
 };
 #endif//MEMORYARRAY_H

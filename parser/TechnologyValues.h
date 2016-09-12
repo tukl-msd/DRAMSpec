@@ -29,7 +29,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
  */
 
 //This class presents the main key technology points used by this tool.
@@ -44,7 +44,7 @@ class TechnologyValues
   public:
     TechnologyValues(const std::string& techname,const std::string&
     paraname) : Techname(""), Paraname(""), DRAMType(""), dramsize(0),
-    Freq(0), CoreFreq(0), Prefetch(0), tal(0), DLL(""), tref1required(0),
+    Freq(0), CoreFreq(0), Prefetch(0), DLL(""), tref1required(0),
     Blpercellcapa(0), Blpercellresistance(0), Wlpercellcapa(0),
     Wlpercellresistance(0), cellcapa(0), cellresistance(0), 
     wireresistance(0), wirecapa(0), cellwidth(0), cellheight(0),
@@ -54,7 +54,7 @@ class TechnologyValues
     WRresistance(0), CSLDresistance(0), GDLDresistance(0), DQDresistance(0),
     rowbuffersize(0), I_SSA(0), vpp(0), vcc(0), Interface(16),
     backgroundcurrentslope(0), backgroundcurrentoffset(0), IDD_OCD_RCV(0),
-    banksrefreshfactor(0), rowrefreshrate(0)   
+    banksrefreshfactor(0), rowrefreshrate(0), retentiontime(0), tilesperbank(0)
     {
        Techname = techname;
        Paraname = paraname;
@@ -88,7 +88,7 @@ class TechnologyValues
     int Prefetch;
 
     // additional latency tal added to trl 
-    int tal;
+     int tal;
 
     // DLL ON/OFF Feature
     std::string DLL;
@@ -205,7 +205,13 @@ class TechnologyValues
     float banksrefreshfactor;
 
     //number of times a row is refreshed in retention time
-    float rowrefreshrate;
+    float rowrefreshrate;	
+
+    // retention time
+    float retentiontime;
+    
+    //number of tiles per bank
+    int tilesperbank;
 
     //reading from json file
     void readjson(const std::string& t,const std::string& p);    

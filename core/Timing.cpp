@@ -35,6 +35,7 @@
 #include "Timing.h"
 #include <math.h>
 #include <iostream>
+#include <fstream>
 
 bool 
 Timing::calctrcd()
@@ -238,7 +239,7 @@ Timing::calctref1()
     //number of rows = (DRAM SIZE/#ofbanks) / rowbuffer
     int numberofrows = (n.dramsize * 1024 * 1024 / (n.numberofbanks) ) 
     / (n.rowbuffersize * 8);
-    tref1 = (n.rowrefreshrate * 64 * 1000 * 1000) / (numberofrows);
+    tref1 = (n.rowrefreshrate * n.retentiontime * 1000 * 1000) / (numberofrows);
 
     return true;
 }
@@ -247,11 +248,10 @@ bool
 Timing::Timingclk()
 {
     int clockfactor;
-    std::cout<<"Freq" << "\t" << n.Freq << "\t" << "MHz" <<"\n";
+
     float freq = n.Freq;
     float freq_core_max = (1/ tccd ) * 1000;
-    std::cout<<"Max DRAM Core Freq" << "\t" << freq_core_max 
-    << "\t" << "MHz" << "\n";
+   
     if (n.DRAMType == "DDR") {
         clockfactor = 2;
     } else {
@@ -264,24 +264,27 @@ Timing::Timingclk()
     } else {
         freq_core_actual = freq/(n.Prefetch/clockfactor);
     }
+	ActFreq = freq_core_actual;
     // scale the actual tcl, tccd, trl to the actual core freq
     tcl_act = tcl * (freq_core_max/freq_core_actual);
     trl_act = tcl_act;
     tccd_act = tccd * (freq_core_max/freq_core_actual);
-    std::cout<<"Actual DRAM Core Freq" << "\t" << 
-    freq_core_actual << "\t" << "MHz" << "\n";  
+
+
     if(freq_core_actual < freq_core_max ) {
+							  
         std::cout<<"The Specified Frequency fits the DRAM Design!!!"<<"\n";
     } else {
         std::cout<<"WARNING : Specified Frequency too high"
                  <<"for DRAM Design.Go Down with Frequency!!"
                  <<"\n";
+
         std::cout<<"If User wants to keep the high frequency," 
-                 <<"try using a smaller bank or a higher" 
+                 <<"try using a smaller bank or a higher " 
                  <<"subarray2rowbufferfactor"<<"\n";
     }
     clk = (1 / freq ) * 1000;
-    std::cout << "clk" << "\t" << clk << "\t" << "ns" <<"\n";
+
     
     //trcd in clk cycles round-up
     trcd_clk = ceil(trcd/clk);
@@ -352,4 +355,5 @@ Timing::printTiming()
     std::cout << "actual trl"    << "\t"  << trl_act  << ".\n";
     std::cout << "trfc" << "\t"  << trfc  << "\n";
     std::cout << "tref1" << "\t" << tref1 << "\n";
+    
 }

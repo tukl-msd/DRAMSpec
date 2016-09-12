@@ -32,26 +32,43 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-Author: Omar Naji, Matthias Jung, Christian Weis
+Author: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
 
 ## Installing
 
 ### Cloning from github (recursive to get submodules!)
+``` bash
 	git clone --recursive <URL>
+```
 
 ### compiling DRAMSpec
+``` bash
 	make
+```
 
 ### Running DRAMSpec
 running DRAMSpec (use -term if you want to add IO termination Current)
-If you do not want to add IO termination current than do not add -term
+If you do not want to add IO termination current then do not add -term
 parameter
 
+``` bash
 	./dramspec -t technologyfilename -p parameterfilename -term
+```
 
 #### Example:
+``` bash
 	./dramspec -t technology_input/techddr3_5x.json -p architecture_input/parddr3.json
+```
+
+It is also possible to run multiple input files at once:
+
+``` bash
+	./dramspec -t t1.json t2.json -p p1.json p1.json
+```
+Note: the number of input files on the -t and -p side must be equal.
 
 ## Reference
 [1] A High-Level DRAM Timing, Power and Area Exploration Tool
-O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn. Accepted for publication, IEEE International Conference on Embedded Computer Systems Architectures Modeling and Simulation (SAMOS), July, 2015, Samos Island, Greece
+O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn. Accepted for publication, IEEE
+International Conference on Embedded Computer Systems Architectures Modeling
+and Simulation (SAMOS), July, 2015, Samos Island, Greece

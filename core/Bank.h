@@ -29,7 +29,7 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
  */
 
 //This class repesents the highest level of abstraction which the DRAM bank.
@@ -44,7 +44,7 @@ class Bank:public MemoryArray
   public:
     Bank(const std::string& techname,const std::string& paraname)
     :MemoryArray(techname,paraname), sizeofBank(0), sizeofhalfBank(0),
-    numberofMemoryArrays(0), Bankwidth(0), chipwidth(0), chiparea(0),
+    numberofMemoryArrays(0), Bankwidth(0), chipwidth(0), chipheight(0), chiparea(0),
     Bankheight(0)
     {
         //order of functions is important
@@ -65,7 +65,7 @@ class Bank:public MemoryArray
                 throw(" Function for area calculation not called");
         }    
     }
-  protected:    
+  public:    
     //size of bank
     int sizeofBank;
     //size of halfbank
@@ -80,15 +80,17 @@ class Bank:public MemoryArray
     float chipheight;
     //Area of chip
     float chiparea;
+    //height of bank
+    float Bankheight;
+
     //performing the half bank calc
+
     //performing the bank init
     bool 
     Bankinit();
     //calculate the area of the chip
     bool 
     calcchiparea();
-  public:
-    //height of bank
-    float Bankheight;
+
 };
 #endif //BANK_H

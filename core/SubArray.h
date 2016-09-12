@@ -59,9 +59,8 @@ class SubArray:public TechnologyValues
             std::cout<<"ERROR: Function for driver initialization not called"
                 <<"\t"<<"Order of Functions is important"<<"\n";
             throw(" Function for driver initialization not called");
-        }    
+        } 
     }
-  protected:
     //the width of the subarray which should be calculated
     float SubArraywidth;
 
