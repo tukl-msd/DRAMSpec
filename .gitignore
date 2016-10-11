@@ -3,5 +3,8 @@
 currentresult
 dctg
 results/
+build/
 timingresult
 dramspec
+.DS_Store
+*.pro.user*

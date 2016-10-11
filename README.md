@@ -43,6 +43,9 @@ Author: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
 
 ### compiling DRAMSpec
 ``` bash
+    mkdir build
+    cd build
+    qmake ../DRAMSpec.pro
 	make
 ```
 

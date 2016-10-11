@@ -1,0 +1,20 @@
+{
+	"DRAMType": "DDR",
+ 	"3D": "OFF",
+	"Vaultsperlayer": 8,
+	"Size": 1,
+	"Numberofbanks":8,
+	"Interface": 16,
+	"Freq": 1066,
+	"CoreFreq": 0,
+	"Prefetch": 8,
+	"additionallatency" : 0,
+	"Rowbuffersize": 2,
+	"DLL": "ON",
+	"Requiredrefreshperiod": 3.9,
+	"banksrefreshfactor":1,
+        "rowrefreshrate":0.5,
+	"subarray2rowbufferfactor": 2,
+	"retentiontime":32
+
+}
