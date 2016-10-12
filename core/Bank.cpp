@@ -44,7 +44,8 @@ Bank::Bankinit()
 
     // Calculate size of halfbank:
 
-    //Depending on the tilesperbank parameter, wer either consider a monolithic bank, half bank, or quarter bank architecture
+    // Depending on the tilesperbank parameter, wer either consider
+    //  a monolithic bank, half bank, or quarter bank architecture
     switch(tilesperbank)
     {
         case 1: sizeofhalfBank = (sizeofBank); //Monolithic
@@ -56,7 +57,8 @@ Bank::Bankinit()
         case 4: sizeofhalfBank = (sizeofBank/4.0); //QuarterBank
                 break;
 
-        default: std::cout << "ERROR: tilesperbank must be 1,2 or 4" << std::endl;
+        default: std::cout << "ERROR: tilesperbank must be 1,2 or 4"
+                           << std::endl;
                  exit (EXIT_FAILURE);
                  break;
     }
@@ -69,11 +71,12 @@ Bank::Bankinit()
     // FIXME: Ask Christian why this is the case ...
     if(numberofMemoryArrays% 2 == 0)
     {
-        Bankheight = numberofMemoryArrays * (MemoryArrayheight +blsaheight);
+        Bankheight = numberofMemoryArrays * (MemoryArrayheight+blsaheight);
     }
     else
     {
-        Bankheight = numberofMemoryArrays* MemoryArrayheight + blsaheight*(numberofMemoryArrays-1);
+        Bankheight = numberofMemoryArrays*MemoryArrayheight
+                     + blsaheight * (numberofMemoryArrays-1);
     }
 
     return true;
@@ -96,7 +99,7 @@ Bank::calcchiparea()
     // dq width values taken from a real chip design
     float dqwidth = 500;
 
-    int columns, rows, x,y;
+    int columns, rows, x, y;
     
     // FIXME: Ask Christian if this is correct ...
     // Depending on the number of tiles per banks, the size and arrangements of
@@ -105,54 +108,71 @@ Bank::calcchiparea()
     {
         //For the case of monolithic banks
         // FIXME: why is the 0.5 there? we should explain that in a comment
-        numbersubarraysinx = ((float)0.5 * rowbuffersize 
-                                         * subarray2rowbufferfactor
-                                         * 1024
-                                         * 8
-                                         / (float)(cellsperrow - cellsperrowredundancy));
+        numbersubarraysinx = 0.5f * rowbuffersize
+                             * subarray2rowbufferfactor
+                             * 1024
+                             * 8
+                             / (float)(cellsperrow - cellsperrowredundancy);
 
-		Bankwidth = numbersubarraysinx * SubArraywidth + wldwidth + mwldwidth;
+        Bankwidth = numbersubarraysinx * SubArraywidth + wldwidth + mwldwidth;
 
 		//For the case of 3D architecture 
 		if(ThreeD == "ON")
 		{
             if(numberofbanks > 1)
             {
-                if((int)log2(numberofbanks) % 2 == 0) //If the number of banks is greater than 1 and is an even power of 2
+                //If the number of banks is greater than 1
+                // and is an even power of 2
+                if( ((int)log2(numberofbanks) % 2) == 0)
                 {
+                                //|-Isn't it sqrt(Numberofbanks)?-|
+                                //           \\\///
                     chipwidth = pow(2,(int)(log2(numberofbanks)/2)) * Bankwidth;
-                    chipheight = (Bankheight+ columnlogicwidth) * pow(2,(int)(log2(numberofbanks)/2))  + dqwidth*pow(2,(int)(log2(numberofbanks)/2))/2; 
+                    chipheight = (Bankheight+ columnlogicwidth)
+                                  *pow(2,(int)(log2(numberofbanks)/2))
+                                 + dqwidth*pow(2,(int)(log2(numberofbanks)/2))/2;
                 }
-                else //If the number of banks is greater than 1 and is an odd power of 2
+                //If the number of banks is greater than 1
+                // and is an odd power of 2
+                else
                 {
-                    rows = (int)log2(numberofbanks) - (int)(log2(numberofbanks)/2);
-                    x = pow(2,rows);
+                    //     |------Isn't it always 1?-----|
+                    rows =   (int)log2(numberofbanks)
+                           - (int)(log2(numberofbanks)/2);
+                    x = pow(2,rows); // So this is 2, right?
+
                     columns = (int)(log2(numberofbanks)/2);
                     y = pow(2,columns);
+
                     chipwidth = y * Bankwidth;
-                    chipheight = (Bankheight + columnlogicwidth) * x + (x/2) * dqwidth;
+                    chipheight = (Bankheight + columnlogicwidth) * x
+                                 + (x/2) * dqwidth;
                 }
 
             }
-            //Case if there is one bank, unlikely case but necessary nonetheless
+            //Case if there is one bank,
+            // unlikely case but necessary nonetheless
             if(numberofbanks == 1)
-            {chipwidth =  Bankwidth;
+            {
+                chipwidth =  Bankwidth;
                 chipheight = Bankheight  + columnlogicwidth + dqwidth; 
             }
 
 		}
         else if(ThreeD == "OFF")
-		{
+        {
             //If it is not 3D architecture
             if(numberofbanks > 3)
             {
                 chipwidth = (numberofbanks/4)* Bankwidth; 
-                chipheight = (Bankheight + columnlogicwidth) * 4 + 2 *(dqwidth);
+                chipheight = (Bankheight + columnlogicwidth) * 4
+                             + 2 *(dqwidth);
             }
             else
             {
                 chipwidth =  Bankwidth;
-                chipheight = (Bankheight  + columnlogicwidth)* numberofbanks + dqwidth; 
+                chipheight = (Bankheight  + columnlogicwidth)* numberofbanks
+                             + dqwidth;
             }
 		}
         else
@@ -163,127 +183,180 @@ Bank::calcchiparea()
 
     } else if (tilesperbank == 2)
     {
+        //For the case of half banks
+        numbersubarraysinx = 0.5f * rowbuffersize
+                             * subarray2rowbufferfactor
+                             * 1024
+                             * 8
+                             / (float)(cellsperrow - cellsperrowredundancy);
 
-	//For the case of half banks
-	numbersubarraysinx = ((float)0.5*rowbuffersize*subarray2rowbufferfactor*1024*8 / 
-                (float)(cellsperrow - cellsperrowredundancy)) ;
-		Bankwidth = numbersubarraysinx * SubArraywidth + wldwidth + mwldwidth ;
-	
-		//If it is a 3D architecture
-		if(ThreeD == "ON") 
-		{
-		  if(numberofbanks > 1)
-		   {
-               	 	if((int)log2(numberofbanks) % 2 == 0)
-		   	{
-			 //If the number of banks is greater than 1 and it is an even power of 2, the number of banks horizontally, and vertically are made equal (square shaped)
-		   	chipwidth = pow(2,(int)(log2(numberofbanks)/2)) * Bankwidth*2;
-		   	chipheight = (Bankheight+ columnlogicwidth) *pow(2,(int)(log2(numberofbanks)/2))  + dqwidth *pow(2,(int)(log2(numberofbanks)/2))/2 + 50*(pow(2,(int)(log2(numberofbanks)/2))-1);  
+        Bankwidth = numbersubarraysinx * SubArraywidth + wldwidth + mwldwidth;
 
-		   	}
+        //If it is a 3D architecture
+        if(ThreeD == "ON")
+        {
+                if(numberofbanks > 1)
+            {
+                if((int)log2(numberofbanks) % 2 == 0)
+                {
+                    //If the number of banks is greater than 1
+                    // and it is an even power of 2,
+                    // the number of banks horizontally,
+                    // and vertically are made equal (square shaped)
+                    chipwidth = pow(2,(int)(log2(numberofbanks)/2))
+                                 *Bankwidth*2;
+                    chipheight = (Bankheight+ columnlogicwidth)
+                                  *pow(2,(int)(log2(numberofbanks)/2))
+                                 + dqwidth
+                                  *pow(2,(int)(log2(numberofbanks)/2))/2
+                                 + 50*(pow(2,(int)(log2(numberofbanks)/2))-1);
 
-		 	else
-		   	{
-			 //If the number of banks is greater than 1 and it is not an even (odd) power of 2, the number of banks horizontally, and vertically are arranged such that 
-			 //no dummy is needed,so it is more rectangular in the x direction   
-		     	rows = (int)log2(numberofbanks) - (int)(log2(numberofbanks)/2);
-		        x = pow(2,rows);
-		     	columns = (int)(log2(numberofbanks)/2);
-		     	y = pow(2,columns);
-		     	chipwidth = y * Bankwidth*2;
-		     	chipheight = (Bankheight + columnlogicwidth) * x + (x/2) * dqwidth + 50*(x-1);
-		   	}
-		
-                    }
-		   //Case if there is one bank, unlikely case but necessary nonetheless
-	           if(numberofbanks == 1)
-		    {
-		     chipwidth =  Bankwidth*2; //The chip width is equal to twice the bank width, because it is a quarter bank and it has 2 quarter banks horizontally, multiplied by the number of
-					      //banks horizontally 
+                }
+                else
+                {
+                    //If the number of banks is greater than 1
+                    // and it is not an even (odd) power of 2,
+                    // the number of banks horizontally,
+                    // and vertically are arranged such that
+                    // no dummy is needed,
+                    // so it is more rectangular in the x direction
+                    rows = (int)log2(numberofbanks)
+                           - (int)(log2(numberofbanks)/2);
+                    x = pow(2,rows);
+                    columns = (int)(log2(numberofbanks)/2);
+                    y = pow(2,columns);
+                    chipwidth = y * Bankwidth*2;
+                    chipheight = (Bankheight + columnlogicwidth) * x
+                                 + (x/2) * dqwidth
+                                 + 50*(x-1);
+                }
 
-		     chipheight = Bankheight  + columnlogicwidth + dqwidth; //The bank height in addition to the column logic width multiplied by 2 because of the 										    //quarter bank and multiplied by the number of banks vertically in addition to the dq 
-							                    //width and an extra 100 micrometers and 50 micrometers in between for 
-						                            // Power TSVs and test structures  because it is 3D 
-		    }
+            }
+            //Case if there is one bank,
+            // unlikely case but necessary nonetheless
+            if(numberofbanks == 1)
+            {
+                //The chip width is equal to twice the bank width,
+                // because it is a quarter bank
+                // and it has 2 quarter banks horizontally,
+                // multiplied by the number of banks horizontally
+                chipwidth =  Bankwidth*2;
 
-		     
-		}
-                //If it is not 3D architecture
-		if(ThreeD == "OFF")
-		{
-		if(numberofbanks > 3)
-		{   
-		    chipwidth = (numberofbanks/4)*(Bankwidth*2);  //DEEPAK
-		    chipheight = (Bankheight +columnlogicwidth) *4 + 2*dqwidth; //DEEPAK
-		}
-		else
-		{
-		     chipwidth = Bankwidth;
-		     chipheight = (Bankheight + columnlogicwidth)* numberofbanks + dqwidth;
-		}
-		}
+                //The bank height
+                // in addition to the column logic width
+                // multiplied by 2 because of the quarter bank and
+                // multiplied by the number of banks vertically
+                // in addition to the dq width
+                // and an extra 100 micrometers and 50 micrometers in between
+                // for Power TSVs and test structures  because it is 3D
+                chipheight = Bankheight  + columnlogicwidth + dqwidth;
+            }
+
+
+        }
+        //If it is not 3D architecture
+        if(ThreeD == "OFF")
+        {
+            if(numberofbanks > 3)
+            {
+                //DEEPAK
+                chipwidth = (numberofbanks/4)*(Bankwidth*2);
+                //DEEPAK
+                chipheight = (Bankheight +columnlogicwidth) *4 + 2*dqwidth;
+            }
+            else
+            {
+                chipwidth = Bankwidth;
+                chipheight = (Bankheight + columnlogicwidth)* numberofbanks
+                             + dqwidth;
+            }
+        }
     } else if (tilesperbank == 4)
     {
+        //For the case of quarter banks
+        numbersubarraysinx = 0.5f * rowbuffersize
+                             * subarray2rowbufferfactor
+                             * 1024
+                             * 8
+                             /(float)(cellsperrow - cellsperrowredundancy);
 
-	//For the case of quarter banks
-	numbersubarraysinx = ((float)0.5* rowbuffersize*subarray2rowbufferfactor*1024*8 / 
-                (float)(cellsperrow - cellsperrowredundancy)) ;
-		Bankwidth = numbersubarraysinx * SubArraywidth + wldwidth + mwldwidth ;
+        Bankwidth = numbersubarraysinx * SubArraywidth + wldwidth + mwldwidth;
 
-		if(ThreeD == "ON") //If it is 3D architecture
-		{
-		  if(numberofbanks > 1)
-		   {
-			if((int)log2(numberofbanks) % 2 == 0) 
-		   	{
-			 //If the number of banks is greater than 1 and it is an even power of 2, the number of banks horizontally, and vertically are made equal (square shaped)
-		   	 chipwidth = pow(2,(int)(log2(numberofbanks)/2)) * Bankwidth*2;
+        if(ThreeD == "ON") //If it is 3D architecture
+        {
+            if(numberofbanks > 1)
+            {
+                if((int)log2(numberofbanks) % 2 == 0)
+                {
+                    //If the number of banks is greater than 1
+                    // and it is an even power of 2,
+                    // the number of banks horizontally,
+                    // and vertically are made equal (square shaped)
+                    chipwidth = pow(2,(int)(log2(numberofbanks)/2))
+                                * Bankwidth*2;
 
-		   	 chipheight = (Bankheight+ columnlogicwidth) * pow(2,(int)(log2(numberofbanks)/2))*2  + (dqwidth+100)*pow(2,(int)(log2(numberofbanks)/2))/2 + 50 * 
-			 (pow(2,(int)(log2(numberofbanks)/2))-1); 
-	
-		   	}
+                    chipheight = (Bankheight + columnlogicwidth)
+                                   *pow(2,(int)(log2(numberofbanks)/2))*2
+                                 + (dqwidth+100)
+                                   *pow(2,(int)(log2(numberofbanks)/2))/2
+                                 + 50*(pow(2,(int)(log2(numberofbanks)/2))-1);
+                }
+                else
+                {
+                    //If the number of banks is greater than 1
+                    // and it is not an even (odd) power of 2,
+                    // the number of banks horizontally,
+                    // and vertically are arranged such that
+                    // no dummy is needed,
+                    // so it is more rectangular in the x direction
+                    rows = (int)log2(numberofbanks)
+                            - (int)(log2(numberofbanks)/2);
+                    x = pow(2,rows);
+                    columns = (int)(log2(numberofbanks)/2);
+                    y = pow(2,columns);
+                    //The chip width is equal to twice the bank width,
+                    // because it is a quarter bank
+                    // and it has 2 quarter banks horizontally,
+                    // multiplied by the number of banks horizontally
+                    chipwidth = y * Bankwidth*2;
 
-		 	else
-		   	{
-			 //If the number of banks is greater than 1 and it is not an even (odd) power of 2, the number of banks horizontally, and vertically are arranged such that 
-			 //no dummy is needed,so it is more rectangular in the x direction   
-		     	 rows = (int)log2(numberofbanks) - (int)(log2(numberofbanks)/2);
-		         x = pow(2,rows);
-		     	 columns = (int)(log2(numberofbanks)/2);
-		     	 y = pow(2,columns);
-		     	 chipwidth = y * Bankwidth*2; //The chip width is equal to twice the bank width, because it is a quarter bank and it has 2 quarter banks horizontally, multiplied by the number of
-					  	      //banks horizontally 
+                    //The bank height
+                    // in addition to the column logic width
+                    // multiplied by 2 because of the quarter bank and
+                    // multiplied by the number of banks vertically
+                    // in addition to the dq width and
+                    // an extra 100 micrometers and 50 micrometers in between
+                    // for Power TSVs and test structures  because it is 3D
+                    chipheight = ((Bankheight + columnlogicwidth) * x*2)
+                                  + (x/2) * (dqwidth+100)
+                                  + 50*(x-1);
+                }
 
+            }
+            //Case if there is one bank,
+            // unlikely case but necessary nonetheless
+            if(numberofbanks == 1)
+            {
+                chipwidth =  Bankwidth*2;
+                chipheight = Bankheight  + columnlogicwidth + dqwidth+100;
+            }
+        }
+        //If it is not 3D architecture
+        if(ThreeD == "OFF")
+        {
+            if(numberofbanks > 3)
+            {
+                chipwidth = (numberofbanks/4)* Bankwidth*2;
+                chipheight = (Bankheight + columnlogicwidth) * 8
+                              + 2 *(dqwidth+100);
+            }
+            else
+            {
+                chipwidth =  Bankwidth;
+                chipheight = Bankheight  + columnlogicwidth + dqwidth+100;
+            }
 
-		     	 chipheight = ((Bankheight + columnlogicwidth) * x*2) + (x/2) * (dqwidth+100) + 50*(x-1);  //The bank height in addition to the column logic width multiplied by 2 because of the 															   //quarter bank and multiplied by the number of banks vertically in addition to the dq 
-														   //width and an extra 100 micrometers and 50 micrometers in between for 
-														   // Power TSVs and test structures  because it is 3D 
-		   	}
-		    	
-		   }
-		  //Case if there is one bank, unlikely case but necessary nonetheless
-		  if(numberofbanks == 1)
-		   {
-			chipwidth =  Bankwidth*2;
-		        chipheight = Bankheight  + columnlogicwidth + dqwidth+100; 
-		   }
-		}
-                //If it is not 3D architecture
-		if(ThreeD == "OFF")
-		{
-		  if(numberofbanks > 3)
-		  {
-                   chipwidth = (numberofbanks/4)* Bankwidth*2; 
-                   chipheight = (Bankheight + columnlogicwidth) * 8 + 2 *(dqwidth+100);
-                  }
-	          else
-		  {
-		   chipwidth =  Bankwidth;
-		   chipheight = Bankheight  + columnlogicwidth + dqwidth+100; 
-		  }
-
-		}
+        }
 
     }
     else
@@ -291,13 +364,16 @@ Bank::calcchiparea()
         std::cout << "ERROR: tilesperbank must be 1,2 or 4" << std::endl;
         exit (EXIT_FAILURE);
     }
-        // Warning if non-3D chip dimensions exceed 11x9 mm
+    // Warning if non-3D chip dimensions exceed 11x9 mm
 	if(ThreeD == "OFF" && (chipheight > 9000 || chipwidth > 11000))
+    {
 		std::cout<< "Chip dimensions are larger than 11x9 mm"<<"\n";
-        // Warning if 3D chip dimensions exceed 12x12 mm
-	if(ThreeD == "ON" && (chipheight > 12000 || chipwidth > 12000))
+    }
+    // Warning if 3D chip dimensions exceed 12x12 mm
+    if(ThreeD == "ON" && (chipheight > 12000 || chipwidth > 12000))
+    {
 		std::cout<< "Chip dimensions are larger than 12x12 mm"<<"\n";
- 
+    }
     //chip area in mm^2
     chiparea = chipwidth * chipheight/1000000; 
     return true; 
