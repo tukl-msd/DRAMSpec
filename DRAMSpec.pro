@@ -58,4 +58,7 @@ SOURCES += parser/TechnologyValues.cpp
 
 SOURCES += main.cpp
 
-TARGET = DRAMSpec
+TARGET = dramspec
+
+# Newest version of Boost Library
+INCLUDEPATH += /home/chinazzo/libs/boost_1_62_0

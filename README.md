@@ -60,7 +60,7 @@ parameter
 
 #### Example:
 ``` bash
-	./dramspec -t technology_input/techddr3_5x.json -p architecture_input/parddr3.json
+	./dramspec -t ../technology_input/techddr3_5x.json -p ../architecture_input/parddr3.json
 ```
 
 It is also possible to run multiple input files at once:
