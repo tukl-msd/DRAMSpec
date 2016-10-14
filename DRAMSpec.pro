@@ -47,6 +47,12 @@ HEADERS += core/Timing.h
 HEADERS += parser/ResultParser.h
 HEADERS += parser/TechnologyValues.h
 
+HEADERS += units/NewBaseDimensions.h
+HEADERS += units/NewDerivedDimensions.h
+HEADERS += units/NewBaseUnits.h
+HEADERS += units/NewSystem.h
+HEADERS += units/NewUnits.h
+
 SOURCES += core/Bank.cpp
 SOURCES += core/Current.cpp
 SOURCES += core/MemoryArray.cpp
