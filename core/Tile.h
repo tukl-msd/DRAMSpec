@@ -29,52 +29,63 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andr'e Lucas Chinazzo
  */
 
-//This class presents the second level of abstraction of the DRAM structure,
-//of the DRAM which is a subarray.
-#ifndef SUBARRAY_H
-#define SUBARRAY_H
-#include "../parser/TechnologyValues.h"
-class SubArray : public TechnologyValues
+//This class repesents the third level of abstraction of the DRAM structure,
+//being a tilea grouping of subarrays which are a grouping of cells.
+#ifndef TILE_H
+#define TILE_H
+
+#include "SubArray.h"
+#include <iostream>
+class Tile : public SubArray
 {
   public:
-    //constructor for subarray class
-    SubArray(const std::string& techname,const std::string& paraname)
-    :TechnologyValues(techname,paraname), subArrayWidth(0), subArrayHeight(0)
+    Tile(const std::string& techname,const std::string& paraname)
+        : SubArray(techname,paraname),
+          tileSize(0),
+          tileWidth(0),
+          tileHeight(0),
+          tileArea(0)
     {
-        //Order of functions is important
-        bool SINIT = false;
-        SINIT = subArrayInit();
-        if(SINIT == false){
-            std::cout<<"ERROR: Func. for subarray initialization not called"
-                <<"\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for subarry initialization not called");
+        //order of functions is important
+        bool TINIT = false;
+        TINIT = tileInit();
+        if(TINIT == false)
+        {
+                std::cout<<"ERROR: Function for Tile Initialization not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for Tile Initialization not called");
         }
-        bool DINIT = false;
-        DINIT = driversinit();
-        if(DINIT == false){
-            std::cout<<"ERROR: Function for driver initialization not called"
-                <<"\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for driver initialization not called");
-        } 
+        bool TLENGTH = false;
+        TLENGTH = tileLenghtCalc();
+        if(TLENGTH == false)
+        {
+                std::cout<<"ERROR: Function for Tile Lengths calculation not called"<<
+                "\t"<<"Order of Functions is important"<<"\n";
+                throw(" Function for Tile Width and Height calculation not called");
+        }
     }
-    //the width of the subarray which should be calculated
-//         [um/sa_row]
-    float subArrayWidth;
+  public:
+    //size in number of bits of a single tile
+    int tileSize;
+    //Width in micrometer of a single tile
+    int tileWidth;
+    //Height in micrometer of a single tile
+    int tileHeight;
+    //Area in micrometer squared of a single tile
+    float tileArea;
 
-    //the height of the subarray which should be calculated
-//         [um/sa_col]
-    float subArrayHeight;
+    bool tileInit();
 
-    // function which calculates the height and width of the subarray
-    bool subArrayLengthCalc();
+    bool tileLenghtCalc();
 
-    //function to initialize the drivers resistances
-    bool driversinit();
-
-    //function to init subarray
-    bool subArrayInit();
+    bool tileAreaCalc();
 };
-#endif//SUBARRAY_H
+
+#endif // TILE_H

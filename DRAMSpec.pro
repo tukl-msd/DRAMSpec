@@ -39,9 +39,10 @@ mac {
 
 
 HEADERS += core/Bank.h
-HEADERS += core/Current.h
+HEADERS += core/Tile.h
 HEADERS += core/MemoryArray.h
 HEADERS += core/SubArray.h
+HEADERS += core/Current.h
 HEADERS += core/Timing.h
 
 HEADERS += parser/ResultParser.h
@@ -54,9 +55,10 @@ HEADERS += units/NewSystem.h
 HEADERS += units/NewUnits.h
 
 SOURCES += core/Bank.cpp
-SOURCES += core/Current.cpp
+SOURCES += core/Tile.cpp
 SOURCES += core/MemoryArray.cpp
 SOURCES += core/SubArray.cpp
+SOURCES += core/Current.cpp
 SOURCES += core/Timing.cpp
 
 SOURCES += parser/ResultParser.cpp

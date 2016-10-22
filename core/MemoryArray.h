@@ -32,6 +32,14 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis
  */
 
+/*
+* This structure describes something that has little if any meaning
+*  for the DRAM overall structure,
+*  being a "MemoryArray" a row of subArrays.
+* Instead, the Tile structure will be implemented as the third
+*  abstraction level of the DRAM structure.
+*/
+
 // This class repesents a memoryarray. The memory array is a matrix of 
 // subarrays in the horizantal and vertical direction. The memory array
 // class inherits from subarray class

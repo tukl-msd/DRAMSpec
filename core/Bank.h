@@ -32,6 +32,13 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
  */
 
+/*
+* This file SEEMS to describe three different abstraction levels
+*  of the DRAM structure: the Tile; the Bank; and the Chip
+* Once implemented the Tile level, in the Tile.cpp and .h files,
+*  this file will describe only the Bank (fourth) level.
+*/
+
 //This class repesents the highest level of abstraction which the DRAM bank.
 //The DRAM Bank is a group of Memoryarrays in the horizantal direction. 
 //The class bank inherits from memoryarray class.
@@ -44,7 +51,7 @@ class Bank:public MemoryArray
   public:
     Bank(const std::string& techname,const std::string& paraname)
     :MemoryArray(techname,paraname), sizeofBank(0), sizeofhalfBank(0),
-    numberofMemoryArrays(0), Bankwidth(0), chipwidth(0), chipheight(0), chiparea(0),
+    numberofMemoryArrays(0), tileWidth(0), chipwidth(0), chipheight(0), chiparea(0),
     Bankheight(0)
     {
         //order of functions is important
@@ -73,7 +80,7 @@ class Bank:public MemoryArray
     //number of memory arrays
     int numberofMemoryArrays;
     //width of bank    
-    float Bankwidth;
+    float tileWidth;
     //width of chip
     float chipwidth;
     //height of chip

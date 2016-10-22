@@ -47,12 +47,12 @@ class TechnologyValues
     Freq(0), CoreFreq(0), Prefetch(0), DLL(""), tref1required(0),
     Blpercellcapa(0), Blpercellresistance(0), Wlpercellcapa(0),
     Wlpercellresistance(0), cellcapa(0), cellresistance(0), 
-    wireresistance(0), wirecapa(0), cellwidth(0), cellheight(0),
-    cellsperrow(0), cellsperrowredundancy(0),cellspercolumn(0),
+    wireresistance(0), wirecapa(0), cellwidth(0), cellHeight(0),
+    cellPerLWL(0), cellsPerLWL_Redundancy(0),cellsPerLBL(0),
     cellspercolumnredundancy(0), blsaheight(0), wldwidth(0),
-    subarray2rowbufferfactor(1), GWLDresistance(0), LWDresistance(0),
+    subArrayRatioToPage(1), GWLDresistance(0), LWDresistance(0),
     WRresistance(0), CSLDresistance(0), GDLDresistance(0), DQDresistance(0),
-    rowbuffersize(0), I_SSA(0), vpp(0), vcc(0), Interface(16),
+    pageSize(0), I_SSA(0), vpp(0), vcc(0), Interface(16),
     backgroundcurrentslope(0), backgroundcurrentoffset(0), IDD_OCD_RCV(0),
     banksrefreshfactor(0), rowrefreshrate(0), retentiontime(0), tilesperbank(0)
     {
@@ -131,16 +131,16 @@ class TechnologyValues
     float cellwidth;
 
     //the height of one cell
-    float cellheight;
+    float cellHeight;
 
     //the number of cells per row per subarray
-    int cellsperrow;
+    int cellPerLWL;
 
     //the number of cells in the cellsperrowvalue which are redundant
-    int cellsperrowredundancy;
+    int cellsPerLWL_Redundancy;
 
     //the number of cells per column per subarray
-    int cellspercolumn;
+    int cellsPerLBL;
 
     //the number of cells in the cellspercolumn which are redundant
     int cellspercolumnredundancy;
@@ -153,7 +153,7 @@ class TechnologyValues
 
     //this factor decides if you are placing as many subarrays as the page 
     //size in the horizantal direction or more or less
-    float subarray2rowbufferfactor;    
+    float subArrayRatioToPage;    
 
     //the resistance of the global wordline driver (in Ohm)
     //the resistance values should change with different page size and 
@@ -178,7 +178,7 @@ class TechnologyValues
     float DQDresistance;
     
     //the row buffer size /page size
-    float rowbuffersize;
+    float pageSize;
     
     //current of Secondary sense amp in microamperes
     int I_SSA;

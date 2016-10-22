@@ -123,23 +123,23 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     //cell height
     assert(techdocument.HasMember("cellheight"));
     assert(techdocument["cellheight"].IsNumber());
-    cellheight = techdocument["cellheight"].GetDouble();
+    cellHeight = techdocument["cellheight"].GetDouble();
 
     //cells per row 
     assert(techdocument.HasMember("cellsperrow"));
     assert(techdocument["cellsperrow"].IsNumber());
-    cellsperrow = techdocument["cellsperrow"].GetDouble();
+    cellPerLWL = techdocument["cellsperrow"].GetDouble();
 
     //cells per row redundancy
     assert(techdocument.HasMember("cellsperrowredundancy"));
     assert(techdocument["cellsperrowredundancy"].IsNumber());
-    cellsperrowredundancy = techdocument["cellsperrowredundancy"].
+    cellsPerLWL_Redundancy = techdocument["cellsperrowredundancy"].
     GetDouble();
 
     //cells per column 
     assert(techdocument.HasMember("cellspercolumn"));
     assert(techdocument["cellspercolumn"].IsNumber());
-    cellspercolumn = techdocument["cellspercolumn"].GetDouble();
+    cellsPerLBL = techdocument["cellspercolumn"].GetDouble();
 
     //cells per column redundancy 
     assert(techdocument.HasMember("cellspercolumnredundancy"));
@@ -296,7 +296,7 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     // Row buffer size this value is given in KBytes  
     assert(paradocument.HasMember("Rowbuffersize"));
     assert(paradocument["Rowbuffersize"].IsNumber());
-    rowbuffersize  = paradocument["Rowbuffersize"].GetDouble();
+    pageSize  = paradocument["Rowbuffersize"].GetDouble();
 
     // DLLON/OFF Feature
     assert(paradocument.HasMember("DLL"));
@@ -321,7 +321,7 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     // Subarray to rowbuffer factor
     assert(paradocument.HasMember("subarray2rowbufferfactor"));
     assert(paradocument["subarray2rowbufferfactor"].IsNumber());
-    subarray2rowbufferfactor = paradocument["subarray2rowbufferfactor"].
+    subArrayRatioToPage = paradocument["subarray2rowbufferfactor"].
     GetDouble(); 
 
     // Retention time

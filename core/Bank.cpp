@@ -32,6 +32,15 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
  */
 
+/*
+* This file SEEMS to describe three different abstraction levels
+*  of the DRAM structure: the Tile; the Bank; and the Chip
+* Once implemented the Tile level, in the Tile.cpp and .h files,
+*  this file will describe only the Bank (fourth) level.
+*/
+
+#define pagePerTile 0.5 // This will be a user input
+
 #include "Bank.h"
 #include <iostream>
 #include <cmath>
@@ -79,6 +88,7 @@ Bank::Bankinit()
                      + blsaheight * (numberofMemoryArrays-1);
     }
 
+
     return true;
 }
 
@@ -87,11 +97,11 @@ Bank::calcchiparea()
 {
     // Calculate number of subarrrays in the width
     // direction * 1024 (to Bytes) * 8 (to bits)
-    int numbersubarraysinx;
+    int subArrayPerTile;
 
     // mwldwidth//master wordline driver width ( value taken from a real
     // chip designed)	
-    float mwldwidth = 240;
+    float mwldwidth = 240; //row decoder width
 
     // columnlogicwidth values taken from a real chip design
     float columnlogicwidth = 200;
@@ -108,13 +118,24 @@ Bank::calcchiparea()
     {
         //For the case of monolithic banks
         // FIXME: why is the 0.5 there? we should explain that in a comment
-        numbersubarraysinx = 0.5f * rowbuffersize
-                             * subarray2rowbufferfactor
-                             * 1024
-                             * 8
-                             / (float)(cellsperrow - cellsperrowredundancy);
-
-        Bankwidth = numbersubarraysinx * SubArraywidth + wldwidth + mwldwidth;
+//      [subArray/tile]   [page/tile]
+        subArrayPerTile = pagePerTile
+//                         [Kbyte/page]
+                          * pageSize
+//                    [KByte -> Kbit]
+                          * 1024
+//                     [Kbit -> bit]
+                          * 8
+//                                   []
+                          / subArrayRatioToPage
+                          / (float)(cellPerLWL - cellsPerLWL_Redundancy); // cellperlwl
+        // assert(page2tile pagesize cellinarow)
+//      [um/mwl]      [lwl/mwl]       [um/lwl]
+        tileWidth = subArrayPerTile * subArrayWidth
+//                     [um/mwl]
+                     + wldwidth // /drs::mwl
+//                     [um/mwl]
+                     + mwldwidth; // /drs::mwl;
 
 		//For the case of 3D architecture 
 		if(ThreeD == "ON")
@@ -127,7 +148,7 @@ Bank::calcchiparea()
                 {
                                 //|-Isn't it sqrt(Numberofbanks)?-|
                                 //           \\\///
-                    chipwidth = pow(2,(int)(log2(numberofbanks)/2)) * Bankwidth;
+                    chipwidth = pow(2,(int)(log2(numberofbanks)/2)) * tileWidth;
                     chipheight = (Bankheight+ columnlogicwidth)
                                   *pow(2,(int)(log2(numberofbanks)/2))
                                  + dqwidth*pow(2,(int)(log2(numberofbanks)/2))/2;
@@ -144,7 +165,7 @@ Bank::calcchiparea()
                     columns = (int)(log2(numberofbanks)/2);
                     y = pow(2,columns);
 
-                    chipwidth = y * Bankwidth;
+                    chipwidth = y * tileWidth;
                     chipheight = (Bankheight + columnlogicwidth) * x
                                  + (x/2) * dqwidth;
                 }
@@ -154,7 +175,7 @@ Bank::calcchiparea()
             // unlikely case but necessary nonetheless
             if(numberofbanks == 1)
             {
-                chipwidth =  Bankwidth;
+                chipwidth =  tileWidth;
                 chipheight = Bankheight  + columnlogicwidth + dqwidth; 
             }
 
@@ -164,13 +185,13 @@ Bank::calcchiparea()
             //If it is not 3D architecture
             if(numberofbanks > 3)
             {
-                chipwidth = (numberofbanks/4)* Bankwidth; 
+                chipwidth = (numberofbanks/4)* tileWidth;
                 chipheight = (Bankheight + columnlogicwidth) * 4
                              + 2 *(dqwidth);
             }
             else
             {
-                chipwidth =  Bankwidth;
+                chipwidth =  tileWidth;
                 chipheight = (Bankheight  + columnlogicwidth)* numberofbanks
                              + dqwidth;
             }
@@ -184,13 +205,13 @@ Bank::calcchiparea()
     } else if (tilesperbank == 2)
     {
         //For the case of half banks
-        numbersubarraysinx = 0.5f * rowbuffersize
-                             * subarray2rowbufferfactor
+        subArrayPerTile = 0.5f * pageSize
+                             * subArrayRatioToPage
                              * 1024
                              * 8
-                             / (float)(cellsperrow - cellsperrowredundancy);
+                             / (float)(cellPerLWL - cellsPerLWL_Redundancy);
 
-        Bankwidth = numbersubarraysinx * SubArraywidth + wldwidth + mwldwidth;
+        tileWidth = subArrayPerTile * subArrayWidth + wldwidth + mwldwidth;
 
         //If it is a 3D architecture
         if(ThreeD == "ON")
@@ -204,7 +225,7 @@ Bank::calcchiparea()
                     // the number of banks horizontally,
                     // and vertically are made equal (square shaped)
                     chipwidth = pow(2,(int)(log2(numberofbanks)/2))
-                                 *Bankwidth*2;
+                                 *tileWidth*2;
                     chipheight = (Bankheight+ columnlogicwidth)
                                   *pow(2,(int)(log2(numberofbanks)/2))
                                  + dqwidth
@@ -225,7 +246,7 @@ Bank::calcchiparea()
                     x = pow(2,rows);
                     columns = (int)(log2(numberofbanks)/2);
                     y = pow(2,columns);
-                    chipwidth = y * Bankwidth*2;
+                    chipwidth = y * tileWidth*2;
                     chipheight = (Bankheight + columnlogicwidth) * x
                                  + (x/2) * dqwidth
                                  + 50*(x-1);
@@ -240,7 +261,7 @@ Bank::calcchiparea()
                 // because it is a quarter bank
                 // and it has 2 quarter banks horizontally,
                 // multiplied by the number of banks horizontally
-                chipwidth =  Bankwidth*2;
+                chipwidth =  tileWidth*2;
 
                 //The bank height
                 // in addition to the column logic width
@@ -260,13 +281,13 @@ Bank::calcchiparea()
             if(numberofbanks > 3)
             {
                 //DEEPAK
-                chipwidth = (numberofbanks/4)*(Bankwidth*2);
+                chipwidth = (numberofbanks/4)*(tileWidth*2);
                 //DEEPAK
                 chipheight = (Bankheight +columnlogicwidth) *4 + 2*dqwidth;
             }
             else
             {
-                chipwidth = Bankwidth;
+                chipwidth = tileWidth;
                 chipheight = (Bankheight + columnlogicwidth)* numberofbanks
                              + dqwidth;
             }
@@ -274,13 +295,13 @@ Bank::calcchiparea()
     } else if (tilesperbank == 4)
     {
         //For the case of quarter banks
-        numbersubarraysinx = 0.5f * rowbuffersize
-                             * subarray2rowbufferfactor
+        subArrayPerTile = 0.5f * pageSize
+                             * subArrayRatioToPage
                              * 1024
                              * 8
-                             /(float)(cellsperrow - cellsperrowredundancy);
+                             /(float)(cellPerLWL - cellsPerLWL_Redundancy);
 
-        Bankwidth = numbersubarraysinx * SubArraywidth + wldwidth + mwldwidth;
+        tileWidth = subArrayPerTile * subArrayWidth + wldwidth + mwldwidth;
 
         if(ThreeD == "ON") //If it is 3D architecture
         {
@@ -293,7 +314,7 @@ Bank::calcchiparea()
                     // the number of banks horizontally,
                     // and vertically are made equal (square shaped)
                     chipwidth = pow(2,(int)(log2(numberofbanks)/2))
-                                * Bankwidth*2;
+                                * tileWidth*2;
 
                     chipheight = (Bankheight + columnlogicwidth)
                                    *pow(2,(int)(log2(numberofbanks)/2))*2
@@ -318,7 +339,7 @@ Bank::calcchiparea()
                     // because it is a quarter bank
                     // and it has 2 quarter banks horizontally,
                     // multiplied by the number of banks horizontally
-                    chipwidth = y * Bankwidth*2;
+                    chipwidth = y * tileWidth*2;
 
                     //The bank height
                     // in addition to the column logic width
@@ -337,7 +358,7 @@ Bank::calcchiparea()
             // unlikely case but necessary nonetheless
             if(numberofbanks == 1)
             {
-                chipwidth =  Bankwidth*2;
+                chipwidth =  tileWidth*2;
                 chipheight = Bankheight  + columnlogicwidth + dqwidth+100;
             }
         }
@@ -346,13 +367,13 @@ Bank::calcchiparea()
         {
             if(numberofbanks > 3)
             {
-                chipwidth = (numberofbanks/4)* Bankwidth*2;
+                chipwidth = (numberofbanks/4)* tileWidth*2;
                 chipheight = (Bankheight + columnlogicwidth) * 8
                               + 2 *(dqwidth+100);
             }
             else
             {
-                chipwidth =  Bankwidth;
+                chipwidth =  tileWidth;
                 chipheight = Bankheight  + columnlogicwidth + dqwidth+100;
             }
 
@@ -376,5 +397,9 @@ Bank::calcchiparea()
     }
     //chip area in mm^2
     chiparea = chipwidth * chipheight/1000000; 
-    return true; 
+
+    std::cout << std::endl<< std::endl << numberofMemoryArrays*subArrayPerTile*512*512*8*tilesperbank/1024/1024/1024<< std::endl<< std::endl<< std::endl;
+
+
+    return true;
 }

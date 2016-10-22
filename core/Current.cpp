@@ -42,7 +42,9 @@ bool
 Current::calcbackgroundCurrent()
 {
     // Precharge background current (scaling with Freq)
-    IDD2n = t->n.backgroundcurrentslope * t-> n.Freq 
+//   [mA]              [mA/MHz]                [MHz]
+    IDD2n = t->n.backgroundcurrentslope * t-> n.Freq
+//                 [mA]
     + t-> n.backgroundcurrentoffset; 
     if (t->n.DLL =="OFF") {
         IDD2n = IDD2n - IDD2n*0.4;
@@ -52,7 +54,7 @@ Current::calcbackgroundCurrent()
     // IDD3n is equal to IDD2n + active-adder
     // Assumption : active-adder current = 4mA for 2K page 
     // and changes linearly while changing page size
-    IDD3n = IDD2n + 2 * t->n.rowbuffersize;    
+    IDD3n = IDD2n + 2 * t->n.pageSize;
 
     return true;
 }
@@ -61,8 +63,8 @@ bool
 Current::calcIDD0()
 { 
     // Number of active subarrays
-    int numberofactivesubarrays = (t->n.rowbuffersize * 8 * 1024) 
-    / (t->n.cellsperrow - t->n.cellsperrowredundancy); 
+    int numberofactivesubarrays = (t->n.pageSize * 8 * 1024)
+    / (t->n.cellPerLWL - t->n.cellsPerLWL_Redundancy);
 
     // Charge of master wordline //3.3 is efficiency factor of the vpp pumps
     Q_MWL = t->GWDC * t-> n.vpp * 3.3;
@@ -71,7 +73,7 @@ Current::calcIDD0()
     Q_LWL = t->wlc * t-> n.vpp * numberofactivesubarrays * 3.3 ;
 
     //charge of local bitline//8 bytes to bits // 1024 kbits to bits
-    Q_LBL = (float)t->blc * (float)t->n.vcc/2 * (float)t->n.rowbuffersize * 8 * 1024; 
+    Q_LBL = (float)t->blc * (float)t->n.vcc/2 * (float)t->n.pageSize * 8 * 1024;
  
     //Extra charge added as the number of tiles per bank is changed 	
     float Q_tilesperbank = 0;

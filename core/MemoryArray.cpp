@@ -32,6 +32,14 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis
  */
 
+/*
+* This structure describes something that has little if any meaning
+*  in the DRAM overall structure,
+*  being a "MemoryArray" a row of subArrays.
+* Instead, the Tile structure will be implemented as the third
+*  abstraction level of the DRAM structure.
+*/
+
 #include "MemoryArray.h"
 #include <math.h>
 
@@ -39,20 +47,37 @@ void
 MemoryArray::calculateSubArrayxy()
 {
     // Number of rowcells without redundant cells
-    int rowcells = cellsperrow - cellsperrowredundancy;
+//    [bit/sa_row] [bit/sa_row]     [bit/sa_row]
+    int rowcells = cellPerLWL - cellsPerLWL_Redundancy;
 
     // Number of columncells without redundant cells
-    int columncells = cellspercolumn - cellspercolumnredundancy;
+//     [bit/sa_col]    [bit/sa_col]         [bit/sa_col]
+    int columncells = cellsPerLBL - cellspercolumnredundancy;
 
     // Size of the subarray (value presented in Kbit)
-    int sizeofSubArray = (rowcells*columncells)/(1024);
+//          [bit]       [bit/sa_row] [bit/sa_col] ![row]*[column] = []!
+    int sizeofSubArray = (rowcells * columncells)/(1024);
 
+
+
+    //FIXME: This part does not verify the number of tiles per bank. Why?
     // Calculate number of subarrays in x direction (rowbuffersize is in
     // kbytes) divided by 2 because half the page is opened per half bank!!
-    subproMemoryArrayx = (int)(((float)rowbuffersize*subarray2rowbufferfactor
-    *8*1024/2)/(float)rowcells);
+//    [sa_row/ma_row]                     [KByte]
+    subproMemoryArrayx = (int)(((float)pageSize
+//                                    []
+                                * subArrayRatioToPage
+//                         [KByte -> Kbit]
+                                * 8
+//                           [Kbit -> bit]
+                                * 1024
+//                               [??]
+                                / 2)
+//                                      [bit/sa_row]
+                                / (float)rowcells);
 
     // Size of memoryarray (subarrays in x direction size ) in Mbit
+//     [Kbit/row]         [sa_row/ma_row]         [bit]   [bit -> Kbit]
     sizeofMemoryArray = (subproMemoryArrayx * sizeofSubArray)/1024;
 }
 
@@ -61,10 +86,13 @@ MemoryArray::calculateSubArrayxylength()
 {
     // calculate length of memory array in x direction assuming open
     // bitline array structure
-    MemoryArraywidth = subproMemoryArrayx * SubArraywidth + wldwidth;
+//     [um/ma_row]      [sa_row/ma_row]      [um/sa_row]   [um/ma_row] !ma_wldwidth != sa_wldwidth!
+    MemoryArraywidth = subproMemoryArrayx * subArrayWidth + wldwidth;
 
+    //FIXME: Why is it just 1 subarray?
     // calculate length of memory array in y direction
-    MemoryArrayheight = 1 * SubArrayheight;
+//     [um/ma_col]  [sa_col/ma_col] [um/sa_col]
+    MemoryArrayheight = 1   *    subArrayHeight; //JUST SUB ARRAY
 }
 
 void 

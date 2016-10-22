@@ -212,7 +212,7 @@ int main(int argc, char* argv[])
             currentsandtimings.at(j*numberOfresults+19) =t.trfc;
             currentsandtimings.at(j*numberOfresults+20) =t.tref1;
             currentsandtimings.at(j*numberOfresults+21) =t.n.Bankheight;
-            currentsandtimings.at(j*numberOfresults+22) =t.n.Bankwidth;
+            currentsandtimings.at(j*numberOfresults+22) =t.n.tileWidth;
             currentsandtimings.at(j*numberOfresults+23) =t.n.chipwidth;
             currentsandtimings.at(j*numberOfresults+24) =t.n.chipheight;
             currentsandtimings.at(j*numberOfresults+25) =t.n.chiparea;

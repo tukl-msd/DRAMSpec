@@ -34,13 +34,13 @@
 
 #include "SubArray.h"
 bool 
-SubArray::SubArraycal()
+SubArray::subArrayLengthCalc()
 {
-    // Width of subarray is number of cells x cell width + WLDriver width
-    SubArraywidth = cellsperrow * cellwidth + wldwidth;
+//   [um/sa_row]   [cell/sa_row] [um/cell]     [um]       [sa_row]
+    subArrayWidth = cellPerLWL * cellwidth + wldwidth;// /drs::sa_row;
 
-    // Height of subarray is number of cells x cell height
-    SubArrayheight = cellspercolumn * cellheight;
+//   [um/sa_col]    [cell/sa_col]   [um/cell]
+    subArrayHeight = cellsPerLBL * cellHeight;
 
     return true; 
 }
@@ -50,29 +50,34 @@ SubArray::driversinit()
     // The value for global ( master ) wordline driver resistance is 
     // give for a page size of 2 kB.If the rowbuffersize becomes 
     // smaller we will need a to drive less => bigger resistance 
-    // and if the rowbuffersize gets 
-    if (rowbuffersize < 2) {
+    // and if the rowbuffersize gets
+// [KByte/page] [KByte/page]
+    if (pageSize < 2) {
+//          [ohm]           [ohm]         [ohm]
         GWLDresistance = GWLDresistance + 200;
-    } else if ( rowbuffersize == 2 ) {
+    } else if ( pageSize == 2 ) {
         GWLDresistance = GWLDresistance;
-    } else if( rowbuffersize == 4 ) {
+    } else if( pageSize == 4 ) {
         GWLDresistance = GWLDresistance - 200 ;
-    } else if( rowbuffersize == 8 ) {
-        GWLDresistance = GWLDresistance - 300; 
+    } else if( pageSize == 8 ) {
+        GWLDresistance = GWLDresistance - 300;
     } else {
         GWLDresistance = GWLDresistance - 400;
     }
 
-    if((cellsperrow - cellsperrowredundancy) < 256 ) {
+//     [bit/sa_row]       [bit/sa_row]      [bit/sa_row]
+    if((cellPerLWL - cellsPerLWL_Redundancy) < 256 ) {
+//      [ohm/sa_row]   [ohm/sa_row] [ohm/sa_row]
         LWDresistance = LWDresistance + 200 ;
+//      [ohm/sa_col]   [ohm/sa_col] [ohm/sa_col]
         WRresistance = WRresistance + 200;
-    } else if((cellsperrow - cellsperrowredundancy) == 256) {
+    } else if((cellPerLWL - cellsPerLWL_Redundancy) == 256) {
         LWDresistance = LWDresistance + 100 ;
         WRresistance = WRresistance + 100 ; 
-    } else if((cellsperrow - cellsperrowredundancy) == 512) {
+    } else if((cellPerLWL - cellsPerLWL_Redundancy) == 512) {
         LWDresistance = LWDresistance;
         WRresistance = WRresistance;
-    } else if((cellsperrow - cellsperrowredundancy) == 1024) {
+    } else if((cellPerLWL - cellsPerLWL_Redundancy) == 1024) {
         LWDresistance = LWDresistance  - 100 ;
         WRresistance = WRresistance - 100 ;
     } else {
@@ -84,9 +89,9 @@ SubArray::driversinit()
 }
 
 bool
-SubArray::SubArrayinit()
+SubArray::subArrayInit()
 {
     readjson(Techname,Paraname);
-    SubArraycal();
+    subArrayLengthCalc();
     return true;
 }
