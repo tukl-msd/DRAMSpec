@@ -38,7 +38,8 @@ mac {
 }
 
 
-HEADERS += core/Bank.h
+HEADERS += core/Bank.h \
+    dramspec.h
 HEADERS += core/Tile.h
 HEADERS += core/MemoryArray.h
 HEADERS += core/SubArray.h
@@ -64,6 +65,7 @@ SOURCES += core/Timing.cpp
 SOURCES += parser/ResultParser.cpp
 SOURCES += parser/TechnologyValues.cpp
 
+SOURCES += dramspec.cpp
 SOURCES += main.cpp
 
 TARGET = dramspec

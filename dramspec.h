@@ -1,3 +1,6 @@
+#ifndef DRAMSPEC_H
+#define DRAMSPEC_H
+
 /*
  * Copyright (c) 2015, University of Kaiserslautern
  * All rights reserved.
@@ -36,10 +39,26 @@
  *          Andr'e Lucas Chinazzo
  */
 
+#include "parser/ResultParser.h"
+#include <ctime>
+#include <cmath>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <iomanip>
+#include <vector>
+#include <stdio.h>
+#include <string>
 
-#include "dramspec.h"
+using namespace std;
 
-int main(int argc, char* argv[])
-{
-    return dramspec(argc, argv);
-}
+void printresult(string resultname,
+                 int resultindex,
+                 int TechNamenumber,
+                 int NumberOfResults,
+                 vector<float> allresults,
+                 ofstream& resultsfile );
+
+int dramspec(int argc, char* argv[]);
+
+#endif // DRAMSPEC_H
