@@ -128,7 +128,7 @@ Bank::calcchiparea()
                           * 8
 //                                   []
                           / subArrayRatioToPage
-                          / (float)(cellPerLWL - cellsPerLWL_Redundancy); // cellperlwl
+                          / (float)(cellPerLWL - cellsPerLWLRedundancy); // cellperlwl
         // assert(page2tile pagesize cellinarow)
 //      [um/mwl]      [lwl/mwl]       [um/lwl]
         tileWidth = subArrayPerTile * subArrayWidth
@@ -209,7 +209,7 @@ Bank::calcchiparea()
                              * subArrayRatioToPage
                              * 1024
                              * 8
-                             / (float)(cellPerLWL - cellsPerLWL_Redundancy);
+                             / (float)(cellPerLWL - cellsPerLWLRedundancy);
 
         tileWidth = subArrayPerTile * subArrayWidth + wldwidth + mwldwidth;
 
@@ -299,7 +299,7 @@ Bank::calcchiparea()
                              * subArrayRatioToPage
                              * 1024
                              * 8
-                             /(float)(cellPerLWL - cellsPerLWL_Redundancy);
+                             /(float)(cellPerLWL - cellsPerLWLRedundancy);
 
         tileWidth = subArrayPerTile * subArrayWidth + wldwidth + mwldwidth;
 

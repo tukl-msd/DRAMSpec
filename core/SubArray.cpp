@@ -40,7 +40,7 @@ SubArray::subArrayLengthCalc()
     subArrayWidth = cellPerLWL * cellwidth + wldwidth;// /drs::sa_row;
 
 //   [um/sa_col]    [cell/sa_col]   [um/cell]
-    subArrayHeight = cellsPerLBL * cellHeight;
+    subArrayHeight = cellsPerLBL * cellheight;
 
     return true; 
 }
@@ -66,18 +66,18 @@ SubArray::driversinit()
     }
 
 //     [bit/sa_row]       [bit/sa_row]      [bit/sa_row]
-    if((cellPerLWL - cellsPerLWL_Redundancy) < 256 ) {
+    if((cellPerLWL - cellsPerLWLRedundancy) < 256 ) {
 //      [ohm/sa_row]   [ohm/sa_row] [ohm/sa_row]
         LWDresistance = LWDresistance + 200 ;
 //      [ohm/sa_col]   [ohm/sa_col] [ohm/sa_col]
         WRresistance = WRresistance + 200;
-    } else if((cellPerLWL - cellsPerLWL_Redundancy) == 256) {
+    } else if((cellPerLWL - cellsPerLWLRedundancy) == 256) {
         LWDresistance = LWDresistance + 100 ;
         WRresistance = WRresistance + 100 ; 
-    } else if((cellPerLWL - cellsPerLWL_Redundancy) == 512) {
+    } else if((cellPerLWL - cellsPerLWLRedundancy) == 512) {
         LWDresistance = LWDresistance;
         WRresistance = WRresistance;
-    } else if((cellPerLWL - cellsPerLWL_Redundancy) == 1024) {
+    } else if((cellPerLWL - cellsPerLWLRedundancy) == 1024) {
         LWDresistance = LWDresistance  - 100 ;
         WRresistance = WRresistance - 100 ;
     } else {

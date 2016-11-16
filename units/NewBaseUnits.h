@@ -35,6 +35,45 @@
 #ifndef NEW_BASE_UNITS_H
 #define NEW_BASE_UNITS_H
 
+///START: DRAMSPEC_CLOCK_BASE_UNIT_H
+
+#include <string>
+
+#include <boost/units/config.hpp>
+#include <boost/units/base_unit.hpp>
+#include "NewBaseDimensions.h"
+
+namespace boost {
+
+namespace units {
+
+namespace dramspec {
+
+struct clock_base_unit : public base_unit<clock_base_unit, clock_dimension, -29>
+{
+    static std::string name()   { return("clock"); }
+    static std::string symbol() { return("clock"); }
+};
+
+} // namespace dramspec
+
+} // namespace units
+
+} // namespace boost
+
+#if BOOST_UNITS_HAS_BOOST_TYPEOF
+
+#include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
+
+BOOST_TYPEOF_REGISTER_TYPE(boost::units::dramspec::clock_base_unit)
+
+#endif
+
+///END: DRAMSPEC_CLOCK_BASE_UNIT_H
+
+
+
+
 ///START: DRAMSPEC_CELL_BASE_UNIT_H
 
 #include <string>
@@ -88,10 +127,10 @@ namespace units {
 
 namespace dramspec {
 
-struct row_base_unit : public base_unit<row_base_unit, row_dimension, -31>
+struct subarray_row_base_unit : public base_unit<subarray_row_base_unit, subarray_row_dimension, -31>
 {
-    static std::string name()   { return("row"); }
-    static std::string symbol() { return("row"); }
+    static std::string name()   { return("sa_row"); }
+    static std::string symbol() { return("sa_row"); }
 };
 
 } // namespace dramspec

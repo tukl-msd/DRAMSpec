@@ -35,7 +35,55 @@
 #ifndef NEW_DERIVED_DIMENSIONS_H
 #define NEW_DERIVED_DIMENSIONS_H
 
-///START: DRAMSPEC_CAPACITANCE_PER_CELL_DERIVED_DIMENSION_H
+///START: DRAMSPEC_CLOCK_PERIOD_DERIVED_DIMENSION
+
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/time.hpp>
+#include "NewBaseDimensions.h"
+
+namespace boost {
+
+namespace units {
+
+/// derived dimension for time per clock: T^1 CLOCK^-1
+typedef derived_dimension<time_base_dimension,1,
+                          clock_base_dimension,-1>::type clock_period_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+///END: DRAMSPEC_CLOCK_PERIOD_DERIVED_DIMENSION
+
+
+
+
+///START: DRAMSPEC_CLOCK_FREQUENCY_DERIVED_DIMENSION
+
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/time.hpp>
+#include "NewBaseDimensions.h"
+
+namespace boost {
+
+namespace units {
+
+/// derived dimension for clock per time: CLOCK^1 T^-1
+typedef derived_dimension<time_base_dimension,-1,
+                          clock_base_dimension,1>::type clock_frequency_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+///END: DRAMSPEC_CLOCK_FREQUENCY_DERIVED_DIMENSION
+
+
+
+
+///START: DRAMSPEC_CAPACITANCE_PER_CELL_DERIVED_DIMENSION
 
 #include <boost/units/derived_dimension.hpp>
 
@@ -60,12 +108,12 @@ typedef derived_dimension<length_base_dimension,-2,
 
 } // namespace boost
 
-///END: DRAMSPEC_CAPACITANCE_PER_CELL_DERIVED_DIMENSION_H
+///END: DRAMSPEC_CAPACITANCE_PER_CELL_DERIVED_DIMENSION
 
 
 
 
-///START: DRAMSPEC_RESISTANCE_PER_CELL_DERIVED_DIMENSION_H
+///START: DRAMSPEC_RESISTANCE_PER_CELL_DERIVED_DIMENSION
 
 #include <boost/units/derived_dimension.hpp>
 
@@ -90,12 +138,83 @@ typedef derived_dimension<length_base_dimension,2,
 
 } // namespace boost
 
-///END: DRAMSPEC_RESISTANCE_PER_CELL_DERIVED_DIMENSION_H
+///END: DRAMSPEC_RESISTANCE_PER_CELL_DERIVED_DIMENSION
 
 
 
 
-///START: DRAMSPEC_CAPACITANCE_PER_LENGTH_DERIVED_DIMENSION_H
+///START: DRAMSPEC_LENGTH_PER_CELL_DERIVED_DIMENSION
+
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/length.hpp>
+#include "NewBaseDimensions.h"
+
+namespace boost {
+
+namespace units {
+
+/// derived dimension for length per cell: L^1 CELL^-1
+typedef derived_dimension<length_base_dimension,1,
+                          cell_base_dimension,-1>::type length_per_cell_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+///END: DRAMSPEC_LENGTH_PER_CELL_DERIVED_DIMENSION
+
+
+
+
+///START: DRAMSPEC_CELL_PER_SUBARRAY_ROW_DERIVED_DIMENSION
+
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/length.hpp>
+#include "NewBaseDimensions.h"
+
+namespace boost {
+
+namespace units {
+
+/// derived dimension for length per cell: CELL^1 SA_ROW^-1
+typedef derived_dimension<cell_base_dimension,1,
+                          subarray_row_base_dimension,-1>::type cell_per_subarray_row_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+///END: DRAMSPEC_CELL_PER_SUBARRAY_ROW_DERIVED_DIMENSION
+
+
+
+
+///START: DRAMSPEC_CELL_PER_SUBARRAY_COLUMN_DERIVED_DIMENSION
+
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/length.hpp>
+#include "NewBaseDimensions.h"
+
+namespace boost {
+
+namespace units {
+
+/// derived dimension for length per cell: SA_ROW^-1 = SA_COL^1
+typedef derived_dimension<subarray_row_base_dimension,-1>::type cell_per_subarray_column_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+///END: DRAMSPEC_CELL_PER_SUBARRAY_COLUMN_DERIVED_DIMENSION
+
+
+
+
+///START: DRAMSPEC_CAPACITANCE_PER_LENGTH_DERIVED_DIMENSION
 
 #include <boost/units/derived_dimension.hpp>
 
@@ -119,12 +238,12 @@ typedef derived_dimension<length_base_dimension,-3,
 
 } // namespace boost
 
-///END: DRAMSPEC_CAPACITANCE_PER_LENGTH_DERIVED_DIMENSION_H
+///END: DRAMSPEC_CAPACITANCE_PER_LENGTH_DERIVED_DIMENSION
 
 
 
 
-///START: DRAMSPEC_RESISTANCE_PER_LENGTH_DERIVED_DIMENSION_H
+///START: DRAMSPEC_RESISTANCE_PER_LENGTH_DERIVED_DIMENSION
 
 #include <boost/units/derived_dimension.hpp>
 
@@ -148,31 +267,56 @@ typedef derived_dimension<length_base_dimension,1,
 
 } // namespace boost
 
-///END: DRAMSPEC_RESISTANCE_PER_LENGTH_DERIVED_DIMENSION_H
+///END: DRAMSPEC_RESISTANCE_PER_LENGTH_DERIVED_DIMENSION
 
 
 
 
-///START: DRAMSPEC_LENGTH_PER_CELL_DERIVED_DIMENSION_H
+///START: DRAMSPEC_TILE_PER_BANK_DERIVED_DIMENSION
 
 #include <boost/units/derived_dimension.hpp>
 
-#include <boost/units/physical_dimensions/length.hpp>
 #include "NewBaseDimensions.h"
 
 namespace boost {
 
 namespace units {
 
-/// derived dimension for length per cell: L^1 CELL^-1
-typedef derived_dimension<length_base_dimension,1,
-                          cell_base_dimension,-1>::type length_per_cell_dimension;
+/// derived dimension for tiles per bank: TILE^1 BANK^-1
+typedef derived_dimension<tile_base_dimension,1,
+                          bank_base_dimension,-1>::type tile_per_bank_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-///END: DRAMSPEC_LENGTH_PER_CELL_DERIVED_DIMENSION_H
+///END: DRAMSPEC_TILE_PER_BANK_DERIVED_DIMENSION
+
+
+
+
+///START: DRAMSPEC_CURRENT_PER_FREQUENCY_DERIVED_DIMENSION
+
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/time.hpp>
+#include <boost/units/physical_dimensions/current.hpp>
+#include "NewBaseDimensions.h"
+
+namespace boost {
+
+namespace units {
+
+/// derived dimension for resistance per length: I^1 T^1
+typedef derived_dimension<current_base_dimension,1,
+                          time_base_dimension,1>::type current_per_frequency_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+///END: DRAMSPEC_CURRENT_PER_FREQUENCY_DERIVED_DIMENSION
+
 
 
 

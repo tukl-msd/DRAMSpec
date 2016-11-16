@@ -35,7 +35,49 @@
 #ifndef NEW_BASE_DIMENSIONS_H
 #define NEW_BASE_DIMENSIONS_H
 
-///START: DRAMSPEC_CELL_BASE_DIMENSION_H
+///START: DRAMSPEC_CLOCK_BASE_DIMENSION
+
+#include <boost/units/config.hpp>
+#include <boost/units/base_dimension.hpp>
+
+namespace boost {
+
+namespace units {
+
+/// base dimension of number of clocks
+struct clock_base_dimension :
+    boost::units::base_dimension<clock_base_dimension,-29>
+{ };
+
+} // namespace units
+
+} // namespace boost
+
+#if BOOST_UNITS_HAS_BOOST_TYPEOF
+
+#include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
+
+BOOST_TYPEOF_REGISTER_TYPE(boost::units::clock_base_dimension)
+
+#endif
+
+namespace boost {
+
+namespace units {
+
+/// dimension of number of clocks (#)
+typedef clock_base_dimension::dimension_type     clock_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+///END: DRAMSPEC_CLOCK_BASE_DIMENSION
+
+
+
+
+///START: DRAMSPEC_CELL_BASE_DIMENSION
 
 #include <boost/units/config.hpp>
 #include <boost/units/base_dimension.hpp>
@@ -72,12 +114,12 @@ typedef cell_base_dimension::dimension_type     cell_dimension;
 
 } // namespace boost
 
-///END: DRAMSPEC_CELL_BASE_DIMENSION_H
+///END: DRAMSPEC_CELL_BASE_DIMENSION
 
 
 
 
-///START: DRAMSPEC_ROW_BASE_DIMENSION_H
+///START: DRAMSPEC_SUBARRAY_ROW_BASE_DIMENSION
 
 #include <boost/units/config.hpp>
 #include <boost/units/base_dimension.hpp>
@@ -86,9 +128,9 @@ namespace boost {
 
 namespace units {
 
-/// base dimension of number of rows
-struct row_base_dimension :
-    boost::units::base_dimension<row_base_dimension,-31>
+/// base dimension of number of subarray rows
+struct subarray_row_base_dimension :
+    boost::units::base_dimension<subarray_row_base_dimension,-31>
 { };
 
 } // namespace units
@@ -99,7 +141,7 @@ struct row_base_dimension :
 
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::units::row_base_dimension)
+BOOST_TYPEOF_REGISTER_TYPE(boost::units::subarray_row_base_dimension)
 
 #endif
 
@@ -108,18 +150,18 @@ namespace boost {
 namespace units {
 
 /// dimension of number of rows (#)
-typedef row_base_dimension::dimension_type     row_dimension;
+typedef subarray_row_base_dimension::dimension_type     subarray_row_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-///END: DRAMSPEC_ROW_BASE_DIMENSION_H
+///END: DRAMSPEC_SUBARRAY_ROW_BASE_DIMENSION
 
 
 
 
-///START: DRAMSPEC_COLUMN_BASE_DIMENSION_H
+///START: DRAMSPEC_COLUMN_BASE_DIMENSION
 
 #include <boost/units/config.hpp>
 #include <boost/units/base_dimension.hpp>
@@ -156,12 +198,12 @@ typedef column_base_dimension::dimension_type     column_dimension;
 
 } // namespace boost
 
-///END: DRAMSPEC_COLUMN_BASE_DIMENSION_H
+///END: DRAMSPEC_COLUMN_BASE_DIMENSION
 
 
 
 
-///START: DRAMSPEC_VAULTPERLAYER_BASE_DIMENSION_H
+///START: DRAMSPEC_VAULTPERLAYER_BASE_DIMENSION
 
 #include <boost/units/config.hpp>
 #include <boost/units/base_dimension.hpp>
@@ -198,12 +240,12 @@ typedef vaultsperlayer_base_dimension::dimension_type vaultsperlayer_dimension;
 
 } // namespace boost
 
-///END: DRAMSPEC_VAULTPERLAYER_BASE_DIMENSION_H
+///END: DRAMSPEC_VAULTPERLAYER_BASE_DIMENSION
 
 
 
 
-///START: DRAMSPEC_BANK_BASE_DIMENSION_H
+///START: DRAMSPEC_BANK_BASE_DIMENSION
 
 #include <boost/units/config.hpp>
 #include <boost/units/base_dimension.hpp>
@@ -240,12 +282,12 @@ typedef bank_base_dimension::dimension_type     bank_dimension;
 
 } // namespace boost
 
-///END: DRAMSPEC_BANK_BASE_DIMENSION_H
+///END: DRAMSPEC_BANK_BASE_DIMENSION
 
 
 
 
-///START: DRAMSPEC_TILE_BASE_DIMENSION_H
+///START: DRAMSPEC_TILE_BASE_DIMENSION
 
 #include <boost/units/config.hpp>
 #include <boost/units/base_dimension.hpp>
@@ -282,7 +324,7 @@ typedef tile_base_dimension::dimension_type     tile_dimension;
 
 } // namespace boost
 
-///END: DRAMSPEC_TILE_BASE_DIMENSION_H
+///END: DRAMSPEC_TILE_BASE_DIMENSION
 
 
 

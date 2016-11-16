@@ -10,3 +10,5 @@ build/
 dramspec
 .DS_Store
 *.pro.user*
+unit_tests/Makefile
+unit_tests/dramspec_unit_test

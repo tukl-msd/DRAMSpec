@@ -48,11 +48,11 @@ MemoryArray::calculateSubArrayxy()
 {
     // Number of rowcells without redundant cells
 //    [bit/sa_row] [bit/sa_row]     [bit/sa_row]
-    int rowcells = cellPerLWL - cellsPerLWL_Redundancy;
+    int rowcells = cellPerLWL - cellsPerLWLRedundancy;
 
     // Number of columncells without redundant cells
 //     [bit/sa_col]    [bit/sa_col]         [bit/sa_col]
-    int columncells = cellsPerLBL - cellspercolumnredundancy;
+    int columncells = cellsPerLBL - cellsPerLBLRedundancy;
 
     // Size of the subarray (value presented in Kbit)
 //          [bit]       [bit/sa_row] [bit/sa_col] ![row]*[column] = []!

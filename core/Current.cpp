@@ -64,7 +64,7 @@ Current::calcIDD0()
 { 
     // Number of active subarrays
     int numberofactivesubarrays = (t->n.pageSize * 8 * 1024)
-    / (t->n.cellPerLWL - t->n.cellsPerLWL_Redundancy);
+    / (t->n.cellPerLWL - t->n.cellsPerLWLRedundancy);
 
     // Charge of master wordline //3.3 is efficiency factor of the vpp pumps
     Q_MWL = t->GWDC * t-> n.vpp * 3.3;

@@ -38,6 +38,7 @@
 #define TECHNOLOGYVALUES_H
 #include <iostream>
 #include <string>
+#include "../units/NewUnits.h"
 
 class TechnologyValues
 {
@@ -47,9 +48,9 @@ class TechnologyValues
     Freq(0), CoreFreq(0), Prefetch(0), DLL(""), tref1required(0),
     Blpercellcapa(0), Blpercellresistance(0), Wlpercellcapa(0),
     Wlpercellresistance(0), cellcapa(0), cellresistance(0), 
-    wireresistance(0), wirecapa(0), cellwidth(0), cellHeight(0),
-    cellPerLWL(0), cellsPerLWL_Redundancy(0),cellsPerLBL(0),
-    cellspercolumnredundancy(0), blsaheight(0), wldwidth(0),
+    wireresistance(0), wirecapa(0), cellwidth(0), cellheight(0),
+    cellPerLWL(0), cellsPerLWLRedundancy(0),cellsPerLBL(0),
+    cellsPerLBLRedundancy(0), blsaheight(0), wldwidth(0),
     subArrayRatioToPage(1), GWLDresistance(0), LWDresistance(0),
     WRresistance(0), CSLDresistance(0), GDLDresistance(0), DQDresistance(0),
     pageSize(0), I_SSA(0), vpp(0), vcc(0), Interface(16),
@@ -131,19 +132,19 @@ class TechnologyValues
     float cellwidth;
 
     //the height of one cell
-    float cellHeight;
+    float cellheight;
 
     //the number of cells per row per subarray
     int cellPerLWL;
 
     //the number of cells in the cellsperrowvalue which are redundant
-    int cellsPerLWL_Redundancy;
+    int cellsPerLWLRedundancy;
 
     //the number of cells per column per subarray
     int cellsPerLBL;
 
     //the number of cells in the cellspercolumn which are redundant
-    int cellspercolumnredundancy;
+    int cellsPerLBLRedundancy;
 
     //the height of the bitline sense amplifier
     int blsaheight;

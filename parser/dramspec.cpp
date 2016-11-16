@@ -53,17 +53,18 @@ void DRAMSpec::printresult(string resultname,
     cout << resultname;
     // 21 - the name of the result is done to count the number of spaces
     //that should be added
-	for(int i = 0; i < (21-resultname.size()) ; i++)
+    for(int i = 0; i < (21-resultname.size()) ; i++) {
         cout << " ";
-        for(int i = 0;i<numberOfConfigurations*NumberOfResults;i+=NumberOfResults)
+    }
+    for(int i = 0; i < numberOfConfigurations*NumberOfResults; i += NumberOfResults)
+    {
+        resultsfile << setprecision(7) << allresults.at(i+resultindex);
+        if(i != ((numberOfConfigurations*NumberOfResults) - NumberOfResults))
         {
-            resultsfile << setprecision(7) << allresults.at(i+resultindex);
-            if(i != ((numberOfConfigurations*NumberOfResults) - NumberOfResults))
-            {
-                resultsfile<<",";
-            }
-            printf("%16.5f", allresults.at(i+resultindex));
+            resultsfile<<",";
         }
+        fprintf(stdout, "%16.5f", allresults.at(i+resultindex));
+    }
 
 	resultsfile<<"\n";
     cout<<"\n";
@@ -97,54 +98,54 @@ void DRAMSpec::run()
     // and fill the array to print in a clean layout
     for(int j = 0; j<numberOfConfigurations;j++)
     {
-    cout << "(" << j+1 << ") "
-     << "\tTechnology filename: " << technologyFileName[j] << endl;
-    cout << "\tParameter filename:  " << architectureFileName[j] << endl;
+        cout << "(" << j+1 << ") "
+         << "\tTechnology filename: " << technologyFileName[j] << endl;
+        cout << "\tParameter filename:  " << architectureFileName[j] << endl;
 
-    // Calculating timing specification:
-    Timing t(technologyFileName[j], architectureFileName[j]);
-    // Calculating power specification ( currents ):
-    Current c(&t, IOTerminationCurrentFlag);
+        // Calculating timing specification:
+        Timing t(technologyFileName[j], architectureFileName[j]);
+        // Calculating power specification ( currents ):
+        Current c(&t, IOTerminationCurrentFlag);
 
-    cout    << "_______________________________________________________"
-            << "_______________________________________________________"
-            << "_______________________________________________________"
-            << endl;
+        cout    << "_______________________________________________________"
+                << "_______________________________________________________"
+                << "_______________________________________________________"
+                << endl;
 
-    currentsandtimings.at(j*numberOfresults) = c.IDD2n;
-    currentsandtimings.at(j*numberOfresults+1) = c.IDD3n;
-    currentsandtimings.at(j*numberOfresults+2) = c.IDD0;
-    currentsandtimings.at(j*numberOfresults+3) = c.IDD1;
-    currentsandtimings.at(j*numberOfresults+4) = c.IDD4R;
-    currentsandtimings.at(j*numberOfresults+5) = c.IDD4W;
-    currentsandtimings.at(j*numberOfresults+6) = c.IDD5;
-    currentsandtimings.at(j*numberOfresults+7) = t.trcd;
-    currentsandtimings.at(j*numberOfresults+8) = t.tcl;
-    currentsandtimings.at(j*numberOfresults+9) = t.tcl_act;
-    currentsandtimings.at(j*numberOfresults+10) =t.trtp;
-    currentsandtimings.at(j*numberOfresults+11) =t.tccd;
-    currentsandtimings.at(j*numberOfresults+12) =t.tccd_act;
-    currentsandtimings.at(j*numberOfresults+13) =t.tras;
-    currentsandtimings.at(j*numberOfresults+14) =t.twr;
-    currentsandtimings.at(j*numberOfresults+15) =t.trp;
-    currentsandtimings.at(j*numberOfresults+16) =t.trc;
-    currentsandtimings.at(j*numberOfresults+17) =t.trl;
-    currentsandtimings.at(j*numberOfresults+18) =t.trl_act;
-    currentsandtimings.at(j*numberOfresults+19) =t.trfc;
-    currentsandtimings.at(j*numberOfresults+20) =t.tref1;
-    currentsandtimings.at(j*numberOfresults+21) =t.n.Bankheight;
-    currentsandtimings.at(j*numberOfresults+22) =t.n.tileWidth;
-    currentsandtimings.at(j*numberOfresults+23) =t.n.chipwidth;
-    currentsandtimings.at(j*numberOfresults+24) =t.n.chipheight;
-    currentsandtimings.at(j*numberOfresults+25) =t.n.chiparea;
-    currentsandtimings.at(j*numberOfresults+26) =(float)t.n.Freq;
-    currentsandtimings.at(j*numberOfresults+27) =(float)(1/t.tccd)*1000;
-    currentsandtimings.at(j*numberOfresults+28) =t.ActFreq;
-    currentsandtimings.at(j*numberOfresults+29) = (1.0/t.n.Freq)*1000.0;
+        currentsandtimings.at(j*numberOfresults) = c.IDD2n;
+        currentsandtimings.at(j*numberOfresults+1) = c.IDD3n;
+        currentsandtimings.at(j*numberOfresults+2) = c.IDD0;
+        currentsandtimings.at(j*numberOfresults+3) = c.IDD1;
+        currentsandtimings.at(j*numberOfresults+4) = c.IDD4R;
+        currentsandtimings.at(j*numberOfresults+5) = c.IDD4W;
+        currentsandtimings.at(j*numberOfresults+6) = c.IDD5;
+        currentsandtimings.at(j*numberOfresults+7) = t.trcd;
+        currentsandtimings.at(j*numberOfresults+8) = t.tcl;
+        currentsandtimings.at(j*numberOfresults+9) = t.tcl_act;
+        currentsandtimings.at(j*numberOfresults+10) =t.trtp;
+        currentsandtimings.at(j*numberOfresults+11) =t.tccd;
+        currentsandtimings.at(j*numberOfresults+12) =t.tccd_act;
+        currentsandtimings.at(j*numberOfresults+13) =t.tras;
+        currentsandtimings.at(j*numberOfresults+14) =t.twr;
+        currentsandtimings.at(j*numberOfresults+15) =t.trp;
+        currentsandtimings.at(j*numberOfresults+16) =t.trc;
+        currentsandtimings.at(j*numberOfresults+17) =t.trl;
+        currentsandtimings.at(j*numberOfresults+18) =t.trl_act;
+        currentsandtimings.at(j*numberOfresults+19) =t.trfc;
+        currentsandtimings.at(j*numberOfresults+20) =t.tref1;
+        currentsandtimings.at(j*numberOfresults+21) =t.n.Bankheight;
+        currentsandtimings.at(j*numberOfresults+22) =t.n.tileWidth;
+        currentsandtimings.at(j*numberOfresults+23) =t.n.chipwidth;
+        currentsandtimings.at(j*numberOfresults+24) =t.n.chipheight;
+        currentsandtimings.at(j*numberOfresults+25) =t.n.chiparea;
+        currentsandtimings.at(j*numberOfresults+26) =(float)t.n.Freq;
+        currentsandtimings.at(j*numberOfresults+27) =(float)(1/t.tccd)*1000;
+        currentsandtimings.at(j*numberOfresults+28) =t.ActFreq;
+        currentsandtimings.at(j*numberOfresults+29) = (1.0/t.n.Freq)*1000.0;
 
-    //Results here are being parsed and placed in separate json files
-    ResultParser result( t , c );
-    result.jsonwriter(j+1);
+        //Results here are being parsed and placed in separate json files
+        ResultParser result( t , c );
+        result.jsonwriter(j+1);
     }
     cout << setw(32);
 

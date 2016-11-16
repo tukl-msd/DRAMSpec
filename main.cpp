@@ -37,9 +37,17 @@
  */
 
 
-#include "dramspec.h"
+#include "parser/dramspec.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char** argv)
 {
-    return dramspec(argc, argv);
+    DRAMSpec bankModellingTool(argc, argv);
+    try {
+        bankModellingTool.run();
+    } catch(string exceptionMsgThrown) {
+        cerr << exceptionMsgThrown;
+        return -1;
+    }
+
+    return 0;
 }
