@@ -73,7 +73,7 @@ class TechnologyValues
     int technologynode;
 
     // size of DRAM
-    int dramsize;
+    float dramsize;
 
     // # of banks 
     int numberofbanks; 
