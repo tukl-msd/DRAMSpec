@@ -259,7 +259,7 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     //size of DRAM
     assert(paradocument.HasMember("Size"));
     assert(paradocument["Size"].IsNumber()); 
-    dramsize = paradocument["Size"].GetInt();
+    dramsize = paradocument["Size"].GetDouble();
 
     //# of banks
     assert(paradocument.HasMember("Numberofbanks"));
