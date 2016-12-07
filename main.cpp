@@ -37,7 +37,7 @@
  */
 
 
-#include "parser/dramspec.h"
+#include "parser/DramSpec.h"
 
 int main(int argc, char** argv)
 {

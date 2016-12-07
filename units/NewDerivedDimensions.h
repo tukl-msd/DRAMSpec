@@ -143,6 +143,8 @@ typedef derived_dimension<length_base_dimension,2,
 
 
 
+
+
 ///START: DRAMSPEC_LENGTH_PER_CELL_DERIVED_DIMENSION
 
 #include <boost/units/derived_dimension.hpp>
@@ -178,7 +180,7 @@ namespace boost {
 
 namespace units {
 
-/// derived dimension for length per cell: CELL^1 SA_ROW^-1
+/// derived dimension for cell per subarray row: CELL^1 SA_ROW^-1
 typedef derived_dimension<cell_base_dimension,1,
                           subarray_row_base_dimension,-1>::type cell_per_subarray_row_dimension;
 
@@ -187,6 +189,86 @@ typedef derived_dimension<cell_base_dimension,1,
 } // namespace boost
 
 ///END: DRAMSPEC_CELL_PER_SUBARRAY_ROW_DERIVED_DIMENSION
+
+
+
+
+///START: DRAMSPEC_RESISTANCE_PER_SUBARRAY_ROW_DERIVED_DIMENSION
+
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/length.hpp>
+#include <boost/units/physical_dimensions/mass.hpp>
+#include <boost/units/physical_dimensions/time.hpp>
+#include <boost/units/physical_dimensions/current.hpp>
+#include "NewBaseDimensions.h"
+
+namespace boost {
+
+namespace units {
+
+/// derived dimension for resistance per subarray row: L^2 M^1 T^-3 I^-2 SA_ROW^-1
+typedef derived_dimension<length_base_dimension,2,
+                          mass_base_dimension,1,
+                          time_base_dimension,-3,
+                          current_base_dimension,-2,
+                          subarray_row_base_dimension,-1>::type resistance_per_subarray_row_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+///END: DRAMSPEC_RESISTANCE_PER_SUBARRAY_ROW_DERIVED_DIMENSION
+
+
+
+
+
+///START: DRAMSPEC_LENGTH_PER_SUBARRAY_ROW_DERIVED_DIMENSION
+
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/length.hpp>
+
+#include "NewBaseDimensions.h"
+
+namespace boost {
+
+namespace units {
+
+/// derived dimension for length per subarray row: L^1 SA_ROW^-1
+typedef derived_dimension<length_base_dimension,1,
+                          subarray_row_base_dimension,-1>::type length_per_subarray_row_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+///END: DRAMSPEC_LENGTH_PER_SUBARRAY_ROW_DERIVED_DIMENSION
+
+
+
+
+
+///START: DRAMSPEC_SUBARRAY_COLUMN_DERIVED_DIMENSION
+
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/length.hpp>
+#include "NewBaseDimensions.h"
+
+namespace boost {
+
+namespace units {
+
+/// derived dimension for subarray column: SA_ROW^-1 = SA_COL^1
+typedef derived_dimension<subarray_row_base_dimension,-1>::type subarray_column_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+///END: DRAMSPEC_CELL_PER_SUBARRAY_COLUMN_DERIVED_DIMENSION
 
 
 
@@ -202,14 +284,73 @@ namespace boost {
 
 namespace units {
 
-/// derived dimension for length per cell: SA_ROW^-1 = SA_COL^1
-typedef derived_dimension<subarray_row_base_dimension,-1>::type cell_per_subarray_column_dimension;
+/// derived dimension for cell per subarray column: CELL^1 SA_ROW^1 = CELL^1 SA_COL^-1
+typedef derived_dimension<cell_base_dimension,1,
+                          subarray_row_base_dimension,1>::type cell_per_subarray_column_dimension;
 
 } // namespace units
 
 } // namespace boost
 
 ///END: DRAMSPEC_CELL_PER_SUBARRAY_COLUMN_DERIVED_DIMENSION
+
+
+
+
+
+///START: DRAMSPEC_RESISTANCE_PER_SUBARRAY_COLUMN_DERIVED_DIMENSION
+
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/length.hpp>
+#include <boost/units/physical_dimensions/mass.hpp>
+#include <boost/units/physical_dimensions/time.hpp>
+#include <boost/units/physical_dimensions/current.hpp>
+#include "NewBaseDimensions.h"
+
+namespace boost {
+
+namespace units {
+
+/// derived dimension for resistance per subarray column: L^2 M^1 T^-3 I^-2 SA_ROW^1 = L^2 M^1 T^-3 I^-2 SA_COL^-1
+typedef derived_dimension<length_base_dimension,2,
+                          mass_base_dimension,1,
+                          time_base_dimension,-3,
+                          current_base_dimension,-2,
+                          subarray_row_base_dimension,1>::type resistance_per_subarray_column_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+///END: DRAMSPEC_RESISTANCE_PER_SUBARRAY_COLUMN_DERIVED_DIMENSION
+
+
+
+
+
+///START: DRAMSPEC_LENGTH_PER_SUBARRAY_COLUMN_DERIVED_DIMENSION
+
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/length.hpp>
+
+#include "NewBaseDimensions.h"
+
+namespace boost {
+
+namespace units {
+
+/// derived dimension for length per subarray column: L^1 SA_COL^-1 = L^1 SA_ROW^-1
+typedef derived_dimension<length_base_dimension,1,
+                          subarray_row_base_dimension,1>::type length_per_subarray_column_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+///END: DRAMSPEC_LENGTH_PER_SUBARRAY_COLUMN_DERIVED_DIMENSION
+
 
 
 

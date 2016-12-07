@@ -33,56 +33,61 @@
  */
 
 #include "SubArray.h"
-bool 
+
+namespace si=boost::units::si;
+namespace drs=boost::units::dramspec;
+
+bool
 SubArray::subArrayLengthCalc()
 {
-//   [um/sa_row]   [cell/sa_row] [um/cell]     [um]       [sa_row]
-    subArrayWidth = cellPerLWL * cellwidth + wldwidth;// /drs::sa_row;
+    subArrayWidth = cellsPerLWL * cellWidth + WLDriverWidth/drs::sa_row;
 
-//   [um/sa_col]    [cell/sa_col]   [um/cell]
-    subArrayHeight = cellsPerLBL * cellheight;
+    subArrayHeight = cellsPerLBL * cellHeight;
 
-    return true; 
+    return true;
 }
-bool 
+bool
 SubArray::driversinit()
 {
-    // The value for global ( master ) wordline driver resistance is 
-    // give for a page size of 2 kB.If the rowbuffersize becomes 
-    // smaller we will need a to drive less => bigger resistance 
-    // and if the rowbuffersize gets
-// [KByte/page] [KByte/page]
-    if (pageSize < 2) {
-//          [ohm]           [ohm]         [ohm]
-        GWLDresistance = GWLDresistance + 200;
-    } else if ( pageSize == 2 ) {
-        GWLDresistance = GWLDresistance;
-    } else if( pageSize == 4 ) {
-        GWLDresistance = GWLDresistance - 200 ;
-    } else if( pageSize == 8 ) {
-        GWLDresistance = GWLDresistance - 300;
-    } else {
-        GWLDresistance = GWLDresistance - 400;
+    // The value for global ( master ) wordline driver resistance is
+    // give for a page size of 2 kB.If the page size becomes
+    // smaller we will need a to drive less => bigger resistance
+    // and if the page size gets
+    if ( pageSize < 2*drs::kibibyte ) {
+        GWLDriverResistance = GWLDriverResistance + 200*si::ohm;
+    }
+    else if ( pageSize == 2*drs::kibibyte ) {
+        GWLDriverResistance = GWLDriverResistance;
+    }
+    else if( pageSize == 4*drs::kibibyte ) {
+        GWLDriverResistance = GWLDriverResistance - 200*si::ohm;
+    }
+    else if( pageSize == 8*drs::kibibyte ) {
+        GWLDriverResistance = GWLDriverResistance - 300*si::ohm;
+    }
+    else {
+        GWLDriverResistance = GWLDriverResistance - 400*si::ohm;
     }
 
-//     [bit/sa_row]       [bit/sa_row]      [bit/sa_row]
-    if((cellPerLWL - cellsPerLWLRedundancy) < 256 ) {
-//      [ohm/sa_row]   [ohm/sa_row] [ohm/sa_row]
-        LWDresistance = LWDresistance + 200 ;
-//      [ohm/sa_col]   [ohm/sa_col] [ohm/sa_col]
-        WRresistance = WRresistance + 200;
-    } else if((cellPerLWL - cellsPerLWLRedundancy) == 256) {
-        LWDresistance = LWDresistance + 100 ;
-        WRresistance = WRresistance + 100 ; 
-    } else if((cellPerLWL - cellsPerLWLRedundancy) == 512) {
-        LWDresistance = LWDresistance;
-        WRresistance = WRresistance;
-    } else if((cellPerLWL - cellsPerLWLRedundancy) == 1024) {
-        LWDresistance = LWDresistance  - 100 ;
-        WRresistance = WRresistance - 100 ;
+    if((cellsPerLWL - cellsPerLWLRedundancy) < 256*drs::cell_per_sa_row ) {
+        LWLDriverResistance = LWLDriverResistance + 200*drs::ohms_per_sa_row ;
+        WRResistance = WRResistance + 200*drs::ohms_per_sa_col;
+    }
+    else if((cellsPerLWL - cellsPerLWLRedundancy) == 256*drs::cell_per_sa_row ) {
+        LWLDriverResistance = LWLDriverResistance + 100*drs::ohms_per_sa_row;
+        WRResistance = WRResistance + 100*drs::ohms_per_sa_col ;
+    }
+    else if((cellsPerLWL - cellsPerLWLRedundancy) == 512*drs::cell_per_sa_row) {
+        LWLDriverResistance = LWLDriverResistance;
+        WRResistance = WRResistance;    
+    }
+    else if((cellsPerLWL - cellsPerLWLRedundancy) == 1024*drs::cell_per_sa_row) {
+        LWLDriverResistance = LWLDriverResistance  - 100*drs::ohms_per_sa_row ;
+        WRResistance = WRResistance - 100*drs::ohms_per_sa_col ;
+
     } else {
-        LWDresistance = LWDresistance - 200 ;
-        WRresistance = WRresistance - 200 ;
+        LWLDriverResistance = LWLDriverResistance - 200*drs::ohms_per_sa_row;
+        WRResistance = WRResistance - 200*drs::ohms_per_sa_col ;
     }
 
     return true;

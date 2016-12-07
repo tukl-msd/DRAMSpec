@@ -54,6 +54,7 @@ HEADERS += units/NewDerivedDimensions.h
 HEADERS += units/NewBaseUnits.h
 HEADERS += units/NewSystem.h
 HEADERS += units/NewUnits.h
+HEADERS += units/expanded_make_system.hpp
 
 
 SOURCES += core/Bank.cpp

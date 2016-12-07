@@ -41,7 +41,7 @@
 
 #include <boost/units/static_constant.hpp>
 #include <boost/units/unit.hpp>
-#include <boost/units/make_system.hpp>
+#include "expanded_make_system.hpp"
 
 #include <boost/units/base_units/si/meter.hpp>
 #include <boost/units/base_units/si/kilogram.hpp>

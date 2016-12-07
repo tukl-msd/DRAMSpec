@@ -203,48 +203,6 @@ typedef column_base_dimension::dimension_type     column_dimension;
 
 
 
-///START: DRAMSPEC_VAULTPERLAYER_BASE_DIMENSION
-
-#include <boost/units/config.hpp>
-#include <boost/units/base_dimension.hpp>
-
-namespace boost {
-
-namespace units {
-
-/// base dimension of number of vaults per layer
-struct vaultsperlayer_base_dimension :
-    boost::units::base_dimension<vaultsperlayer_base_dimension,-33>
-{ };
-
-} // namespace units
-
-} // namespace boost
-
-#if BOOST_UNITS_HAS_BOOST_TYPEOF
-
-#include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
-
-BOOST_TYPEOF_REGISTER_TYPE(boost::units::vaultsperlayer_base_dimension)
-
-#endif
-
-namespace boost {
-
-namespace units {
-
-/// dimension of number of vaults per layer (#)
-typedef vaultsperlayer_base_dimension::dimension_type vaultsperlayer_dimension;
-
-} // namespace units
-
-} // namespace boost
-
-///END: DRAMSPEC_VAULTPERLAYER_BASE_DIMENSION
-
-
-
-
 ///START: DRAMSPEC_BANK_BASE_DIMENSION
 
 #include <boost/units/config.hpp>

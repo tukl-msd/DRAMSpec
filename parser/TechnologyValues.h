@@ -40,22 +40,67 @@
 #include <string>
 #include "../units/NewUnits.h"
 
+namespace bu=boost::units;
+namespace si=boost::units::si;
+namespace inf=boost::units::information;
+namespace drs=boost::units::dramspec;
+
 class TechnologyValues
 {
   public:
-    TechnologyValues(const std::string& techname,const std::string&
-    paraname) : Techname(""), Paraname(""), DRAMType(""), dramsize(0),
-    Freq(0), CoreFreq(0), Prefetch(0), DLL(""), tref1required(0),
-    Blpercellcapa(0), Blpercellresistance(0), Wlpercellcapa(0),
-    Wlpercellresistance(0), cellcapa(0), cellresistance(0), 
-    wireresistance(0), wirecapa(0), cellwidth(0), cellheight(0),
-    cellPerLWL(0), cellsPerLWLRedundancy(0),cellsPerLBL(0),
-    cellsPerLBLRedundancy(0), blsaheight(0), wldwidth(0),
-    subArrayRatioToPage(1), GWLDresistance(0), LWDresistance(0),
-    WRresistance(0), CSLDresistance(0), GDLDresistance(0), DQDresistance(0),
-    pageSize(0), I_SSA(0), vpp(0), vcc(0), Interface(16),
-    backgroundcurrentslope(0), backgroundcurrentoffset(0), IDD_OCD_RCV(0),
-    banksrefreshfactor(0), rowrefreshrate(0), retentiontime(0), tilesperbank(0)
+    TechnologyValues(const std::string& techname,
+                     const std::string& paraname) :
+        Techname(""),
+        Paraname(""),
+
+        technologyNode(0*drs::nanometer),
+        capacitancePerBLCell(0*drs::attofarads_per_cell),
+        resistancePerBLCell(0*drs::ohm_per_cell),
+        capacitancePerWLCell(0*drs::attofarads_per_cell),
+        resistancePerWLCell(0*drs::ohm_per_cell),
+        capacitancePerCell(0*drs::picofarads_per_cell),
+        resistancePerCell(0*drs::ohm_per_cell),
+        wireResistance(0*drs::ohm_per_millimeter),
+        wireCapacitance(0*drs::femtofarad_per_millimeter),
+        cellWidth(0*drs::micrometer_per_cell),
+        cellHeight(0*drs::micrometer_per_cell),
+        cellsPerLWL(0*drs::cell_per_sa_row),
+        cellsPerLWLRedundancy(0*drs::cell_per_sa_row),
+        cellsPerLBL(0*drs::cell_per_sa_col),
+        cellsPerLBLRedundancy(0*drs::cell_per_sa_col),
+        BLSenseAmpHeight(0*drs::micrometer),
+        WLDriverWidth(0*drs::micrometer),
+        GWLDriverResistance(0*si::ohm),
+        LWLDriverResistance(0*drs::ohm_per_sa_row),
+        WRResistance(0*drs::ohm_per_sa_col),
+        CSLDriverResistance(0*si::ohm),
+        GDLDriverResistance(0*si::ohm),
+        DQDriverResistance(0*si::ohm),
+        Issa(0*drs::microampere),
+        Vpp(0*si::volt),
+        Vcc(0*si::volt),
+        backgroundCurrentSlope(0*drs::milliamperes_per_megahertz),
+        backgroundCurrentOffset(0*drs::microampere),
+        IddOcdRcv(0*drs::microampere),
+
+        dramType(""),
+        ThreeD(""),
+        vaultsPerLayer(0),
+        dramSize(0*drs::gibibit),
+        nBanks(0*drs::bank),
+        Interface(16),
+        dramFreq(0*drs::megahertz_clock),
+        dramCoreFreq(0*drs::megahertz_clock),
+        Prefetch(0),
+        additionalLatencyTrl(0*drs::clock),
+        pageSize(0*drs::kibibyte),
+        DLL(""),
+        tRef1Required(0*drs::nanosecond),
+        banksRefreshFactor(0),
+        rowRefreshRate(0),
+        subArrayRatioToPage(0),
+        retentionTime(0*drs::millisecond),
+        tilesPerBank(0*drs::tile_per_bank)
     {
        Techname = techname;
        Paraname = paraname;
@@ -67,154 +112,153 @@ class TechnologyValues
     // Parameter file name to be read
     std::string Paraname;
 
-    // type of the DRAM
-    std::string DRAMType;
+    //Technology node in nm
+    bu::quantity<drs::nanometer_unit> technologyNode;
 
-    // technology node
-    int technologynode;
+    //Bitline per cell capa
+    bu::quantity<drs::attofarad_per_cell_unit> capacitancePerBLCell;
 
-    // size of DRAM
-    int dramsize;
+    //Bitline per cell resistance
+    bu::quantity<drs::resistance_per_cell> resistancePerBLCell;
 
-    // # of banks 
-    int numberofbanks; 
+    //Wordline per cell capa
+    bu::quantity<drs::attofarad_per_cell_unit> capacitancePerWLCell;
 
-    // Frequency in MHz
-    int Freq;
+    //Wordline per cell resistance
+    bu::quantity<drs::resistance_per_cell> resistancePerWLCell;
 
-    // Core Frequency in Mhz
-    int CoreFreq;
+    //cell capa
+    bu::quantity<drs::picofarad_per_cell_unit> capacitancePerCell;
 
-    // Prefetch number
+    //cell resistance
+    bu::quantity<drs::resistance_per_cell> resistancePerCell;
+
+    //wire resistance in ohm/mm
+    bu::quantity<drs::ohm_per_millimeter_unit> wireResistance;
+
+    //wire capa in ff/mm
+    bu::quantity<drs::femtofarad_per_millimeter_unit> wireCapacitance;
+
+    //cell width
+    bu::quantity<drs::micrometer_per_cell_unit> cellWidth;
+
+    //cell height
+    bu::quantity<drs::micrometer_per_cell_unit> cellHeight;
+
+    //cells per subarray row
+    bu::quantity<drs::cell_per_subarray_row_unit> cellsPerLWL;
+
+    //cells per subarray row redundancy
+    bu::quantity<drs::cell_per_subarray_row_unit> cellsPerLWLRedundancy;
+
+    //cells per subarray column
+    bu::quantity<drs::cell_per_subarray_column_unit> cellsPerLBL;
+
+    //cells per subarray column redundancy
+    bu::quantity<drs::cell_per_subarray_column_unit> cellsPerLBLRedundancy;
+
+    //sense amp height
+    bu::quantity<drs::micrometer_unit> BLSenseAmpHeight;
+
+    //wordline driver width
+    bu::quantity<drs::micrometer_unit> WLDriverWidth;
+
+    //global wordline driver resistance in ohm
+    bu::quantity<si::resistance> GWLDriverResistance;
+
+    //Local wordline driver resistance in ohm
+    bu::quantity<drs::resistance_per_subarray_row_unit> LWLDriverResistance;
+
+    //WRrestore resistance
+    bu::quantity<drs::resistance_per_subarray_column_unit> WRResistance;
+
+    //CSL driver resistance in ohm
+    bu::quantity<si::resistance> CSLDriverResistance;
+
+    //GDL driver resistance in ohm
+    bu::quantity<si::resistance> GDLDriverResistance;
+
+    //DQ driver resistance in ohm
+    bu::quantity<si::resistance> DQDriverResistance;
+
+    //current of SSA in microamperes
+    bu::quantity<drs::microampere_unit> Issa;
+
+    //voltage vpp
+    bu::quantity<si::electric_potential> Vpp;
+
+    //voltage vcc
+    bu::quantity<si::electric_potential> Vcc;
+
+    //backgroundcurrentslope
+    bu::quantity<drs::milliampere_per_megahertz_unit> backgroundCurrentSlope;
+
+    //backgroundcurrentoffset
+    bu::quantity<drs::microampere_unit> backgroundCurrentOffset;
+
+    //IDD pro IO for OCD
+    bu::quantity<drs::microampere_unit> IddOcdRcv;
+
+
+    //DRAM Type
+    std::string dramType;
+
+    //3D ON/OFF Feature
+    //set 3D on for HMC/WideIO
+    std::string ThreeD;
+
+    // vaults per layer
+    // set to 0 for non 3D DRAMs
+    double vaultsPerLayer;
+
+    //size of DRAM
+    bu::quantity<drs::gibibit_unit> dramSize;
+
+    //# of banks
+    bu::quantity<drs::bank_unit> nBanks;
+
+    //Interface
+    int Interface;
+
+    //DRAM Frequency
+    bu::quantity<drs::megahertz_clock_unit> dramFreq;
+
+    //DRAM Core Frequency
+    //if this value is not specified then calculate this value:
+    //Core Freq= Freq / (n.prefetch / n.DataRate)
+    bu::quantity<drs::megahertz_clock_unit> dramCoreFreq;
+
+    //Number of Prefetch
     int Prefetch;
 
-    // additional latency tal added to trl 
-     int tal;
+    //additional latency required for trl calculation
+    bu::quantity<drs::clock_unit> additionalLatencyTrl;
+
+    // Row buffer size this value is given in KBytes
+    bu::quantity<drs::kibibyte_unit> pageSize;
 
     // DLL ON/OFF Feature
     std::string DLL;
 
-    //3D ON/OFF Feature
-    std::string ThreeD;
+    // Required tref by user
+    bu::quantity<drs::nanosecond_unit> tRef1Required;
 
-    //Vaults per Layer 
-    int vaultsperlayer;
+    // Factor for number of banks refreshed pro command
+    double banksRefreshFactor;
 
-    //required refresh period
-    //possibility to set the refresh period 
-    float tref1required;
+    // Number of times a row is refreshed in retention time
+    double rowRefreshRate;
 
-    //capacitance of bitline per cell
-    int Blpercellcapa ;
+    // Subarray to rowbuffer factor
+    double subArrayRatioToPage;
 
-    //resistance of bitline per cell
-    int Blpercellresistance ;
+    // Retention time
+    bu::quantity<drs::millisecond_unit> retentionTime;
 
-    //capacitance of wordline per cell
-    int Wlpercellcapa;
+    // Number of tiles per bank
+    bu::quantity<drs::tile_per_bank_unit> tilesPerBank;
 
-    //resistance of wordline per cell
-    int Wlpercellresistance;
+    void readjson(const std::string& t,const std::string& p);
 
-    // capacitance per cell
-    int cellcapa;
-
-    // resistance per cell 
-    int cellresistance;
-
-    // resistance of wire ohm/mm
-    int wireresistance;
-
-    // capa of wire ff/mm
-    int wirecapa;
-
-    //the width of one cell
-    float cellwidth;
-
-    //the height of one cell
-    float cellheight;
-
-    //the number of cells per row per subarray
-    int cellPerLWL;
-
-    //the number of cells in the cellsperrowvalue which are redundant
-    int cellsPerLWLRedundancy;
-
-    //the number of cells per column per subarray
-    int cellsPerLBL;
-
-    //the number of cells in the cellspercolumn which are redundant
-    int cellsPerLBLRedundancy;
-
-    //the height of the bitline sense amplifier
-    int blsaheight;
-
-    //the width of the wordline drive
-    int wldwidth;
-
-    //this factor decides if you are placing as many subarrays as the page 
-    //size in the horizantal direction or more or less
-    float subArrayRatioToPage;    
-
-    //the resistance of the global wordline driver (in Ohm)
-    //the resistance values should change with different page size and 
-    //different technologies(value for rowbuffer = 2kB )
-    float GWLDresistance;
-
-    //the resistance of the local wordline driver (in Ohm) for 
-    //512 x 512 subarray
-    float LWDresistance;
-
-    //the resistance of the WR ( wordline restor which selects one LWL for 
-    //512 x 512 subaarray
-    float WRresistance;
-
-    //the resistance of the CSL driver ( in Ohm )
-    float CSLDresistance;
-
-    //the resistance of the GDL driver ( in Ohm )
-    float GDLDresistance;
-
-    //the resistance of the DQ driver ( in Ohm )
-    float DQDresistance;
-    
-    //the row buffer size /page size
-    float pageSize;
-    
-    //current of Secondary sense amp in microamperes
-    int I_SSA;
-
-    //voltage vpp 
-    float vpp;
-
-    //voltage vcc
-    float vcc;
-
-    //interface number in bits
-    int Interface;
-
-    //Backgroundcurrentslope
-    float backgroundcurrentslope;
-
-    //Backgroundcurrentoffset
-    float backgroundcurrentoffset;
-
-    //current pro IO OCD
-    float IDD_OCD_RCV;
-
-    //number of banks refreshred pro command factor
-    float banksrefreshfactor;
-
-    //number of times a row is refreshed in retention time
-    float rowrefreshrate;	
-
-    // retention time
-    float retentiontime;
-    
-    //number of tiles per bank
-    int tilesperbank;
-
-    //reading from json file
-    void readjson(const std::string& t,const std::string& p);    
 };
 #endif //TECHNOLOGYVALUES_H

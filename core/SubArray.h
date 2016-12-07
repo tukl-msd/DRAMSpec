@@ -41,8 +41,10 @@ class SubArray : public TechnologyValues
 {
   public:
     //constructor for subarray class
-    SubArray(const std::string& techname,const std::string& paraname)
-    :TechnologyValues(techname,paraname), subArrayWidth(0), subArrayHeight(0)
+    SubArray(const std::string& techname, const std::string& paraname) :
+        TechnologyValues(techname,paraname),
+        subArrayWidth(0*drs::micrometer_per_sa_row),
+        subArrayHeight(0*drs::micrometer_per_sa_col)
     {
         //Order of functions is important
         bool SINIT = false;
@@ -58,15 +60,15 @@ class SubArray : public TechnologyValues
             std::cout<<"ERROR: Function for driver initialization not called"
                 <<"\t"<<"Order of Functions is important"<<"\n";
             throw(" Function for driver initialization not called");
-        } 
+        }
     }
     //the width of the subarray which should be calculated
 //         [um/sa_row]
-    float subArrayWidth;
+    bu::quantity<drs::micrometer_per_subarray_row_unit> subArrayWidth;
 
     //the height of the subarray which should be calculated
 //         [um/sa_col]
-    float subArrayHeight;
+    bu::quantity<drs::micrometer_per_subarray_column_unit>  subArrayHeight;
 
     // function which calculates the height and width of the subarray
     bool subArrayLengthCalc();

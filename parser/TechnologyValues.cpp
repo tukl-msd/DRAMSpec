@@ -78,190 +78,176 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     //Technology node in nm
     assert(techdocument.HasMember("Technologynode"));
     assert(techdocument["Technologynode"].IsNumber());
-    technologynode = techdocument["Technologynode"].GetInt(); 
-    bu::quantity<drs::nanometer> technologyNode(technologynode*si::nano*si::meter);
+    double technologyNode_value = techdocument["Technologynode"].GetDouble();
+    technologyNode = technologyNode_value*drs::nanometer;
 
     //Bitline per cell capa
     assert(techdocument.HasMember("BLpercellcapa"));
     assert(techdocument["BLpercellcapa"].IsNumber());
-    Blpercellcapa = techdocument["BLpercellcapa"].GetInt();
-    bu::quantity<drs::attofarad_per_cell> capacitancePerBLCell(Blpercellcapa*si::atto*drs::farads_per_cell);
+    double capacitancePerBLCell_value = techdocument["BLpercellcapa"].GetDouble();
+    capacitancePerBLCell =capacitancePerBLCell_value*drs::attofarads_per_cell;
 
     //Bitline per cell resistance
     assert(techdocument.HasMember("BLpercellresistance")); 
     assert(techdocument["BLpercellresistance"].IsNumber());
-    Blpercellresistance = techdocument["BLpercellresistance"].GetInt();
-    bu::quantity<drs::resistance_per_cell> resistancePerBLCell(Blpercellresistance*drs::ohm_per_cell);
+    double resistancePerBLCell_value = techdocument["BLpercellresistance"].GetDouble();
+    resistancePerBLCell = resistancePerBLCell_value*drs::ohm_per_cell;
 
     //Wordline per cell capa
     assert(techdocument.HasMember("WLpercellcapa"));
     assert(techdocument["WLpercellcapa"].IsNumber());
-    Wlpercellcapa = techdocument["WLpercellcapa"].GetInt();
-    bu::quantity<drs::attofarad_per_cell> capacitancePerWLCell(Wlpercellcapa*si::atto*drs::farads_per_cell);
+    double capacitancePerWLCell_value = techdocument["WLpercellcapa"].GetDouble();
+    capacitancePerWLCell = capacitancePerWLCell_value*drs::attofarads_per_cell;
 
     //Wordline per cell resistance
     assert(techdocument.HasMember("WLpercellresistance"));
     assert(techdocument["WLpercellresistance"].IsNumber());
-    Wlpercellresistance = techdocument["WLpercellresistance"].GetInt();
-    bu::quantity<drs::resistance_per_cell> resistancePerWLCell(Wlpercellresistance*drs::ohm_per_cell);
+    double resistancePerWLCell_value = techdocument["WLpercellresistance"].GetDouble();
+    resistancePerWLCell = resistancePerWLCell_value*drs::ohm_per_cell;
 
     //cell capa
     assert(techdocument.HasMember("cellcapa"));
     assert(techdocument["cellcapa"].IsNumber());
-    cellcapa = techdocument["cellcapa"].GetInt();
-    bu::quantity<drs::picofarad_per_cell> capacitancePerCell(cellcapa*si::pico*drs::farads_per_cell);
+    double capacitancePerCell_value = techdocument["cellcapa"].GetDouble();
+    capacitancePerCell = capacitancePerCell_value*drs::picofarads_per_cell;
 
     //cell resistance
     assert(techdocument.HasMember("cellresistance"));
     assert(techdocument["cellresistance"].IsNumber());
-    cellresistance = techdocument["cellresistance"].GetInt();
-    bu::quantity<drs::resistance_per_cell> resistancePerCell(cellresistance*drs::ohm_per_cell);
+    double resistancePerCell_value = techdocument["cellresistance"].GetDouble();
+    resistancePerCell = resistancePerCell_value*drs::ohm_per_cell;
 
     //wire resistance in ohm/mm
     assert(techdocument.HasMember("wireresistance"));
     assert(techdocument["wireresistance"].IsNumber());
-    wireresistance = techdocument["wireresistance"].GetInt();
-    bu::quantity<drs::ohm_per_millimeter> wireResistance(wireresistance*si::ohm/(si::milli*si::meter));
+    double wireResistance_value = techdocument["wireresistance"].GetDouble();
+    wireResistance = wireResistance_value*drs::ohm_per_millimeter;
 
     //wire capa in ff/mm
     assert(techdocument.HasMember("wirecapa"));
     assert(techdocument["wirecapa"].IsNumber());
-    wirecapa = techdocument["wirecapa"].GetInt();
-    bu::quantity<drs::femtofarad_per_millimeter> wireCapacitance(wirecapa*si::femto*si::farad/(si::milli*si::meter));
+    double wireCapacitance_value = techdocument["wirecapa"].GetDouble();
+    wireCapacitance = wireCapacitance_value*drs::femtofarad_per_millimeter;
 
     //cell width
     assert(techdocument.HasMember("cellwidth"));
     assert(techdocument["cellwidth"].IsNumber());
-    cellwidth = techdocument["cellwidth"].GetDouble();
-    bu::quantity<drs::micrometer_per_cell> cellWidth(cellwidth*si::micro*drs::meters_per_cell);
+    double cellWidth_value = techdocument["cellwidth"].GetDouble();
+    cellWidth = cellWidth_value*drs::micrometers_per_cell;
 
     //cell height
     assert(techdocument.HasMember("cellheight"));
     assert(techdocument["cellheight"].IsNumber());
-    cellheight = techdocument["cellheight"].GetDouble();
-    bu::quantity<drs::micrometer_per_cell> cellHeight(cellheight*si::micro*drs::meters_per_cell);
+    double cellHeight_value = techdocument["cellheight"].GetDouble();
+    cellHeight = cellHeight_value*drs::micrometers_per_cell;
 
     //cells per subarray row
     assert(techdocument.HasMember("cellsperrow"));
     assert(techdocument["cellsperrow"].IsNumber());
-    cellPerLWL = techdocument["cellsperrow"].GetDouble();
-    bu::quantity<drs::cell_per_subarray_row_unit> cellPerLWLq(cellPerLWL*drs::cell_per_sa_row);
+    double cellsPerLWL_value = techdocument["cellsperrow"].GetDouble();
+    cellsPerLWL = cellsPerLWL_value*drs::cell_per_sa_row;
 
     //cells per subarray row redundancy
     assert(techdocument.HasMember("cellsperrowredundancy"));
     assert(techdocument["cellsperrowredundancy"].IsNumber());
-    cellsPerLWLRedundancy = techdocument["cellsperrowredundancy"].GetDouble();
-    bu::quantity<drs::cell_per_subarray_row_unit> cellsPerLWLRedundancyq(cellsPerLWLRedundancy*drs::cell_per_sa_row);
+    double cellsPerLWLRedundancy_value = techdocument["cellsperrowredundancy"].GetDouble();
+    cellsPerLWLRedundancy = cellsPerLWLRedundancy_value*drs::cell_per_sa_row;
 
     //cells per subarray column
     assert(techdocument.HasMember("cellspercolumn"));
     assert(techdocument["cellspercolumn"].IsNumber());
-    cellsPerLBL = techdocument["cellspercolumn"].GetDouble();
-    bu::quantity<drs::cell_per_subarray_column_unit> cellsPerLBLq(cellsPerLBL*drs::cell_per_sa_col);
+    double cellsPerLBL_value = techdocument["cellspercolumn"].GetDouble();
+    cellsPerLBL = cellsPerLBL_value*drs::cell_per_sa_col;
 
     //cells per subarray column redundancy
     assert(techdocument.HasMember("cellspercolumnredundancy"));
     assert(techdocument["cellspercolumnredundancy"].IsNumber());
-    cellsPerLBLRedundancy = techdocument["cellspercolumnredundancy"].GetDouble();
-    bu::quantity<drs::cell_per_subarray_column_unit> cellsPerLBLRedundancyq(cellsPerLBLRedundancy*drs::cell_per_sa_col);
+    double cellsperLBLRedundancy_value = techdocument["cellspercolumnredundancy"].GetDouble();
+    cellsPerLBLRedundancy = cellsperLBLRedundancy_value*drs::cell_per_sa_col;
 
     //sense amp height
     assert(techdocument.HasMember("blsa-height"));
     assert(techdocument["blsa-height"].IsNumber());
-    blsaheight = techdocument["blsa-height"].GetDouble();
-    bu::quantity<drs::micrometer> BLSenseAmpHeight(blsaheight*si::micro*si::meter);
-    std::cerr << BLSenseAmpHeight << std::endl;
+    double BLSenseAmpHeight_value = techdocument["blsa-height"].GetDouble();
+    BLSenseAmpHeight = BLSenseAmpHeight_value*drs::micrometer;
 
     //wordline driver width 
     assert(techdocument.HasMember("WL-driver"));
     assert(techdocument["WL-driver"].IsNumber());
-    wldwidth = techdocument["WL-driver"].GetDouble();
-    bu::quantity<drs::micrometer> WLDriverWidth(wldwidth*si::micro*si::meter);
-    std::cerr << WLDriverWidth << std::endl;
+    double WLDriverWidth_value = techdocument["WL-driver"].GetDouble();
+    WLDriverWidth = WLDriverWidth_value*drs::micrometer;
 
     //global wordline driver resistance in ohm
     assert(techdocument.HasMember("GWLDresistance"));
     assert(techdocument["GWLDresistance"].IsNumber());
-    GWLDresistance = techdocument["GWLDresistance"].GetDouble();
-    bu::quantity<si::resistance> GWLDriverRresistance(GWLDresistance*si::ohm);
-    std::cerr << GWLDriverRresistance << std::endl;
+    double GWLDriverResistance_value = techdocument["GWLDresistance"].GetDouble();
+    GWLDriverResistance = GWLDriverResistance_value*si::ohm;
 
     //Local wordline driver resistance in ohm
     assert(techdocument.HasMember("LWDresistance"));
     assert(techdocument["LWDresistance"].IsNumber());
-    LWDresistance = techdocument["LWDresistance"].GetDouble();
-    bu::quantity<si::resistance> LWDriverResistance(LWDresistance*si::ohm);
-    std::cerr << LWDriverResistance << std::endl;
+    double LWLDriverResistance_value = techdocument["LWDresistance"].GetDouble();
+    LWLDriverResistance = LWLDriverResistance_value*drs::ohms_per_sa_row;
 
-    //WRrestore resistance 
+    //WRrestore resistance
     assert(techdocument.HasMember("WRresistance"));
     assert(techdocument["WRresistance"].IsNumber());
-    WRresistance = techdocument["WRresistance"].GetDouble();
-    bu::quantity<si::resistance> WRResistance(WRresistance*si::ohm);
-    std::cerr << WRResistance << std::endl;
+    double WRResistance_value = techdocument["WRresistance"].GetDouble();
+    WRResistance = WRResistance_value*drs::ohms_per_sa_col;
 
     //CSL driver resistance in ohm
     assert(techdocument.HasMember("CSLDresistance"));
     assert(techdocument["CSLDresistance"].IsNumber());
-    CSLDresistance = techdocument["CSLDresistance"].GetDouble();
-    bu::quantity<si::resistance> CSLDriverResistance(CSLDresistance*si::ohm);
-    std::cerr << CSLDriverResistance << std::endl;
+    double CSLDriverResistance_value = techdocument["CSLDresistance"].GetDouble();
+    CSLDriverResistance = CSLDriverResistance_value*si::ohm;
 
     //GDL driver resistance in ohm
     assert(techdocument.HasMember("GDLDresistance"));
     assert(techdocument["GDLDresistance"].IsNumber());
-    GDLDresistance = techdocument["GDLDresistance"].GetDouble();
-    bu::quantity<si::resistance> GDLDriverResistance(GDLDresistance*si::ohm);
-    std::cerr << GDLDriverResistance << std::endl;
+    double GDLDriverResistance_value = techdocument["GDLDresistance"].GetDouble();
+    GDLDriverResistance = GDLDriverResistance_value*si::ohm;
 
     //DQ driver resistance in ohm
     assert(techdocument.HasMember("DQDresistance"));
     assert(techdocument["DQDresistance"].IsNumber());
-    DQDresistance = techdocument["DQDresistance"].GetDouble();
-    bu::quantity<si::resistance> DQDriverResistance(DQDresistance*si::ohm);
-    std::cerr << DQDriverResistance << std::endl;
+    double DQDriverResistance_value = techdocument["DQDresistance"].GetDouble();
+    DQDriverResistance = DQDriverResistance_value*si::ohm;
 
     //current of SSA in microamperes
     assert(techdocument.HasMember("I_SSA"));
     assert(techdocument["I_SSA"].IsNumber());
-    I_SSA = techdocument["I_SSA"].GetInt();
-    bu::quantity<drs::microampere> ISSA(I_SSA*si::micro*si::ampere);
-    std::cerr << ISSA << std::endl;
+    double Issa_value = techdocument["I_SSA"].GetDouble();
+    Issa = Issa_value*drs::microampere;
 
     //voltage vpp
     assert(techdocument.HasMember("vpp"));
     assert(techdocument["vpp"].IsNumber());
-    vpp  = techdocument["vpp"].GetDouble() ;
-    bu::quantity<si::electric_potential> VPP(vpp*si::volt);
-    std::cerr << VPP << std::endl;
+    double Vpp_value  = techdocument["vpp"].GetDouble() ;
+    Vpp = Vpp_value*si::volt;
 
     //voltage vcc
     assert(techdocument.HasMember("vcc"));
     assert(techdocument["vcc"].IsNumber());
-    vcc  = techdocument["vcc"].GetDouble();
-    bu::quantity<si::electric_potential> VCC(vcc*si::volt);
-    std::cerr << VCC << std::endl;
+    double Vcc_value  = techdocument["vcc"].GetDouble();
+    Vcc = Vcc_value*si::volt;
 
     //backgroundcurrentslope    
     assert(techdocument.HasMember("Backgroundcurrentslope"));
     assert(techdocument["Backgroundcurrentslope"].IsNumber()); 
-    backgroundcurrentslope  = techdocument["Backgroundcurrentslope"].GetDouble();
-    bu::quantity<drs::milliampere_per_megahertz> backgroundCurrentSlope(backgroundcurrentslope*si::milli*si::ampere/(si::mega*si::hertz));
-    std::cerr << backgroundCurrentSlope << std::endl;
+    double backgroundCurrentSlope_value  = techdocument["Backgroundcurrentslope"].GetDouble();
+    backgroundCurrentSlope = backgroundCurrentSlope_value*drs::milliamperes_per_megahertz;
 
     //backgroundcurrentoffset
     assert(techdocument.HasMember("Backgroundcurrentoffset"));
     assert(techdocument["Backgroundcurrentoffset"].IsNumber());
-    backgroundcurrentoffset  = techdocument["Backgroundcurrentoffset"].GetDouble();
-    bu::quantity<drs::microampere> backgroundCurrentOffset(backgroundcurrentoffset*si::micro*si::ampere);
-    std::cerr << backgroundCurrentOffset << std::endl;
+    double backgroundCurrentOffset_value  = techdocument["Backgroundcurrentoffset"].GetDouble();
+    backgroundCurrentOffset = backgroundCurrentOffset_value*drs::microampere;
 
     //IDD pro IO for OCD
     assert(techdocument.HasMember("IDD_OCD_RCV"));
     assert(techdocument["IDD_OCD_RCV"].IsNumber());
-    IDD_OCD_RCV  = techdocument["IDD_OCD_RCV"].GetDouble();
-    bu::quantity<drs::microampere> Idd_OCD_RCV(IDD_OCD_RCV*si::micro*si::ampere);
-    std::cerr << Idd_OCD_RCV << std::endl;
+    double IddOcdRcv_value  = techdocument["IDD_OCD_RCV"].GetDouble();
+    IddOcdRcv = IddOcdRcv_value*drs::microampere;
 
     //load the parameter file and put in into a single string
     std::ifstream parain(paraname.c_str());
@@ -286,7 +272,7 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     //DRAM Type
     assert(paradocument.HasMember("DRAMType"));
     assert(paradocument["DRAMType"].IsString());
-    DRAMType = paradocument["DRAMType"].GetString();
+    dramType = paradocument["DRAMType"].GetString();
 
     //3D ON/OFF Feature
     //set 3D on for HMC/WideIO
@@ -298,59 +284,56 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     // set to 0 for non 3D DRAMs
     assert(paradocument.HasMember("Vaultsperlayer"));
     assert(paradocument["Vaultsperlayer"].IsNumber()); 
-    vaultsperlayer = paradocument["Vaultsperlayer"].GetInt();
+    vaultsPerLayer = paradocument["Vaultsperlayer"].GetDouble();
 
     //size of DRAM
     assert(paradocument.HasMember("Size"));
     assert(paradocument["Size"].IsNumber()); 
-    dramsize = paradocument["Size"].GetInt();
-    bu::quantity<drs::gibibit> dramSize(dramsize*inf::gibi*inf::bit);
-    std::cerr << dramSize << std::endl;
+    double dramSize_value = paradocument["Size"].GetDouble();
+    dramSize = dramSize_value*drs::gibibit;
 
     //# of banks
     assert(paradocument.HasMember("Numberofbanks"));
     assert(paradocument["Numberofbanks"].IsNumber());
-    numberofbanks = paradocument["Numberofbanks"].GetInt();      
-    bu::quantity<drs::bank_unit> nBanks(numberofbanks*drs::bank);
-    std::cerr << nBanks << std::endl;
+    double nBanks_value = paradocument["Numberofbanks"].GetDouble();
+    nBanks = nBanks_value*drs::bank;
 
     //Interface
     assert(paradocument.HasMember("Interface"));
     assert(paradocument["Interface"].IsNumber());   
-    Interface = paradocument["Interface"].GetInt();   
+    Interface = paradocument["Interface"].GetDouble();
 
     //DRAM Frequency
     assert(paradocument.HasMember("Freq"));
     assert(paradocument["Freq"].IsNumber());
-    Freq = paradocument["Freq"].GetInt();
-    bu::quantity<drs::clock_megahertz> frequency(Freq*si::mega*si::hertz*drs::clock);
-    std::cerr << frequency << std::endl;
+    double dramFreq_value = paradocument["Freq"].GetDouble();
+    dramFreq = dramFreq_value*drs::megahertz_clock;
 
     //DRAM Core Frequency
     //if this value is not specified then calculate this value:
     //Core Freq= Freq / (n.prefetch / n.DataRate)
     assert(paradocument.HasMember("CoreFreq"));
     assert(paradocument["CoreFreq"].IsNumber());
-    CoreFreq = paradocument["CoreFreq"].GetInt();
-    bu::quantity<drs::clock_megahertz> coreFrequency(CoreFreq*si::mega*si::hertz*drs::clock);
-    std::cerr << coreFrequency << std::endl;
+    double dramCoreFreq_value = paradocument["CoreFreq"].GetDouble();
+    dramCoreFreq = dramCoreFreq_value*drs::megahertz_clock;
 
     //Number of Prefetch
     assert(paradocument.HasMember("Prefetch"));
     assert(paradocument["Prefetch"].IsNumber());
-    Prefetch = paradocument["Prefetch"].GetInt();
+    Prefetch = paradocument["Prefetch"].GetDouble();
 
     //additional latency required for trl calculation
     assert(paradocument.HasMember("additionallatency"));
     assert(paradocument["additionallatency"].IsNumber());
-    tal = paradocument["additionallatency"].GetInt();
-    bu::quantity<drs::clock_unit> tal_clk(tal*drs::clock);
-    std::cerr << tal_clk << std::endl;
+    double additionalLatencyTrl_value = paradocument["additionallatency"].GetDouble();
+    additionalLatencyTrl = additionalLatencyTrl_value*drs::clock;
 
     // Row buffer size this value is given in KBytes  
     assert(paradocument.HasMember("Rowbuffersize"));
     assert(paradocument["Rowbuffersize"].IsNumber());
-    pageSize  = paradocument["Rowbuffersize"].GetDouble();
+    double pageSize_value  = paradocument["Rowbuffersize"].GetDouble();
+    pageSize = pageSize_value*drs::kibibyte;
+
 
     // DLLON/OFF Feature
     assert(paradocument.HasMember("DLL"));
@@ -360,19 +343,18 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     // Required tref by user
     assert(paradocument.HasMember("Requiredrefreshperiod"));
     assert(paradocument["Requiredrefreshperiod"].IsNumber());
-    tref1required  = paradocument["Requiredrefreshperiod"].GetDouble();
-    bu::quantity<drs::nanosecond> tRef1Required(tref1required*si::nano*si::second);
-    std::cerr << tRef1Required << std::endl;
+    double tRef1Required_value  = paradocument["Requiredrefreshperiod"].GetDouble();
+    tRef1Required = tRef1Required_value*drs::nanosecond;
 
     // Factor for number of banks refreshed pro command
     assert(paradocument.HasMember("banksrefreshfactor"));
     assert(paradocument["banksrefreshfactor"].IsNumber());
-    banksrefreshfactor = paradocument["banksrefreshfactor"].GetDouble();
+    banksRefreshFactor = paradocument["banksrefreshfactor"].GetDouble();
 
     // Number of times a row is refreshed in retention time
     assert(paradocument.HasMember("rowrefreshrate"));
     assert(paradocument["rowrefreshrate"].IsNumber());
-    rowrefreshrate = paradocument["rowrefreshrate"].GetDouble();
+    rowRefreshRate = paradocument["rowrefreshrate"].GetDouble();
 
     // Subarray to rowbuffer factor
     assert(paradocument.HasMember("subarray2rowbufferfactor"));
@@ -382,15 +364,13 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     // Retention time
     assert(paradocument.HasMember("retentiontime"));
     assert(paradocument["retentiontime"].IsNumber());
-    retentiontime = paradocument["retentiontime"].GetDouble();
-    bu::quantity<drs::millisecond> retentionTime(retentiontime*si::milli*si::second);
-    std::cerr << retentionTime << std::endl;
+    double retentionTime_value = paradocument["retentiontime"].GetDouble();
+    retentionTime = retentionTime_value*drs::millisecond;
 
     // Number of tiles per bank
     assert(paradocument.HasMember("tilesperbank"));
     assert(paradocument["tilesperbank"].IsNumber());
-    tilesperbank = paradocument["tilesperbank"].GetInt();
-    bu::quantity<drs::tile_per_bank_unit> tilesPerBank(tilesperbank*drs::tile_per_bank);
-    std::cerr << tilesPerBank << std::endl;
+    double tilesPerBank_value = paradocument["tilesperbank"].GetDouble();
+    tilesPerBank = tilesPerBank_value*drs::tile_per_bank;
 
 }

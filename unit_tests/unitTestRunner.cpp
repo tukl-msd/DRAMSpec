@@ -40,3 +40,5 @@
 #include <boost/test/included/unit_test.hpp>
 
 #include "unit_tests/ArgumentsParserTest.cpp"
+#include "unit_tests/TechnologyValuesTest.cpp"
+#include "unit_tests/SubArrayTest.cpp"

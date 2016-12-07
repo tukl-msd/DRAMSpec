@@ -38,7 +38,7 @@ mac {
 }
 
 # Newest version of Boost Library
-INCLUDEPATH += /home/chinazzo/libs/boost_1_62_0
+INCLUDEPATH += /users/chinazzo/libs/boost_1_62_0
 
 # DRAMSpec HEADERS and SOURCE files
 HEADERS += ../core/Bank.h
@@ -49,9 +49,9 @@ HEADERS += ../core/Current.h
 HEADERS += ../core/Timing.h
 
 HEADERS += ../parser/ArgumentsParser.h
-HEADERS += ../parser/ResultPasrser.h
+HEADERS += ../parser/ResultParser.h
 HEADERS += ../parser/TechnologyValues.h
-HEADERS += ../parser/dramspec.h
+HEADERS += ../parser/DramSpec.h
 
 HEADERS += ../units/NewBaseDimensions.h
 HEADERS += ../units/NewDerivedDimensions.h
@@ -70,11 +70,18 @@ SOURCES += ../core/Timing.cpp
 SOURCES += ../parser/ArgumentsParser.cpp
 SOURCES += ../parser/ResultParser.cpp
 SOURCES += ../parser/TechnologyValues.cpp
-SOURCES += ../parser/dramspec.cpp
-
+SOURCES += ../parser/DramSpec.cpp
 
 #UNIT TEST using Boost/Test HEADERS and SOURCE files
 SOURCES += unit_tests/ArgumentsParserTest.cpp
+SOURCES += unit_tests/TechnologyValuesTest.cpp
+SOURCES += unit_tests/SubArrayTest.cpp
+SOURCES += unit_tests/TileTest.cpp
+SOURCES += unit_tests/BankTest.cpp
+SOURCES += unit_tests/TimingTest.cpp
+SOURCES += unit_tests/CurrentTest.cpp
+
+SOURCES += unit_tests/DramSpecTest.cpp
 
 SOURCES += unitTestRunner.cpp
 

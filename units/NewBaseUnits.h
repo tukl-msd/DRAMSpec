@@ -192,44 +192,6 @@ BOOST_TYPEOF_REGISTER_TYPE(boost::units::dramspec::column_base_unit)
 
 
 
-///START: DRAMSPEC_VAULTPERLAYER_BASE_UNIT_H
-
-#include <string>
-
-#include <boost/units/config.hpp>
-#include <boost/units/base_unit.hpp>
-#include "NewBaseDimensions.h"
-
-namespace boost {
-
-namespace units {
-
-namespace dramspec {
-
-struct vaultsperlayer_base_unit :
-        public base_unit<vaultsperlayer_base_unit,
-                                   vaultsperlayer_dimension, -33>
-{
-    static std::string name()   { return("vaultsperlayer"); }
-    static std::string symbol() { return("vaultsperlayer"); }
-};
-
-} // namespace dramspec
-
-} // namespace units
-
-} // namespace boost
-
-#if BOOST_UNITS_HAS_BOOST_TYPEOF
-
-#include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
-
-BOOST_TYPEOF_REGISTER_TYPE(boost::units::dramspec::vaultsperlayer_base_unit)
-
-#endif
-
-///END: DRAMSPEC_VAULTPERLAYER_BASE_UNIT_H
-
 
 
 
