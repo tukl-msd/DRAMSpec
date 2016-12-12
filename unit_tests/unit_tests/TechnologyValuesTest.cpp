@@ -80,34 +80,34 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 58*drs::nanometer
                         << "\nGot: " << techValues.technologyNode);
 
-    BOOST_CHECK_MESSAGE( techValues.capacitancePerBLCell == 160*drs::attofarads_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.capacitancePerBLCell == 160*drs::attofarads_per_bl_cell,
                         "Capacitance per bitline cell different from the expected."
-                        << "\nExpected: " << 160*drs::attofarads_per_cell
+                        << "\nExpected: " << 160*drs::attofarads_per_bl_cell
                         << "\nGot: " << techValues.capacitancePerBLCell);
 
-    BOOST_CHECK_MESSAGE( techValues.resistancePerBLCell == 36*drs::ohm_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.resistancePerBLCell == 36*drs::ohm_per_bl_cell,
                         "Resistance per bitline cell different from the expected."
-                        << "\nExpected: " << 36*drs::ohm_per_cell
+                        << "\nExpected: " << 36*drs::ohm_per_bl_cell
                         << "\nGot: " << techValues.resistancePerBLCell);
 
-    BOOST_CHECK_MESSAGE( techValues.capacitancePerWLCell == 150*drs::attofarads_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.capacitancePerWLCell == 150*drs::attofarads_per_wl_cell,
                         "Capacitance per wordline cell different from the expected."
-                        << "\nExpected: " << 150*drs::attofarads_per_cell
+                        << "\nExpected: " << 150*drs::attofarads_per_wl_cell
                         << "\nGot: " << techValues.capacitancePerWLCell);
 
-    BOOST_CHECK_MESSAGE( techValues.resistancePerWLCell == 46*drs::ohm_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.resistancePerWLCell == 46*drs::ohm_per_wl_cell,
                         "Resistance per wordline cell different from the expected."
-                        << "\nExpected: " << 46*drs::ohm_per_cell
+                        << "\nExpected: " << 46*drs::ohm_per_wl_cell
                         << "\nGot: " << techValues.resistancePerWLCell);
 
-    BOOST_CHECK_MESSAGE( techValues.capacitancePerCell == 20*drs::picofarads_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.capacitancePerCell == 20*drs::picofarads_per_bl_cell,
                         "Capacitance per cell different from the expected."
-                        << "\nExpected: " << 20*drs::picofarads_per_cell
+                        << "\nExpected: " << 20*drs::picofarads_per_bl_cell
                         << "\nGot: " << techValues.capacitancePerWLCell);
 
-    BOOST_CHECK_MESSAGE( techValues.resistancePerCell == 20*drs::ohm_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.resistancePerCell == 20*drs::ohm_per_bl_cell,
                         "Resistance per cell different from the expected."
-                        << "\nExpected: " << 20*drs::ohm_per_cell
+                        << "\nExpected: " << 20*drs::ohm_per_bl_cell
                         << "\nGot: " << techValues.resistancePerWLCell);
 
     BOOST_CHECK_MESSAGE( techValues.wireResistance == 100*drs::ohm_per_millimeter,
@@ -120,34 +120,34 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 382*drs::femtofarads_per_millimeter
                         << "\nGot: " << techValues.wireCapacitance);
 
-    BOOST_CHECK_MESSAGE( techValues.cellWidth == 0.12*drs::micrometer_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.cellWidth == 0.12*drs::micrometer_per_wl_cell,
                         "Resistance per cell different from the expected."
-                        << "\nExpected: " << 0.12*drs::micrometer_per_cell
+                        << "\nExpected: " << 0.12*drs::micrometer_per_wl_cell
                         << "\nGot: " << techValues.cellWidth);
 
-    BOOST_CHECK_MESSAGE( techValues.cellHeight == 0.18*drs::micrometer_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.cellHeight == 0.18*drs::micrometer_per_bl_cell,
                         "Capacitance per cell different from the expected."
-                        << "\nExpected: " << 0.18*drs::micrometer_per_cell
+                        << "\nExpected: " << 0.18*drs::micrometer_per_bl_cell
                         << "\nGot: " << techValues.cellHeight);
 
-    BOOST_CHECK_MESSAGE( techValues.cellsPerLWL == 524*drs::cell_per_sa_row,
+    BOOST_CHECK_MESSAGE( techValues.cellsPerLWL == 524*drs::wl_cell_per_wl_subarray,
                         "Resistance per cell different from the expected."
-                        << "\nExpected: " << 524*drs::cell_per_sa_row
+                        << "\nExpected: " << 524*drs::wl_cell_per_wl_subarray
                         << "\nGot: " << techValues.cellsPerLWL);
 
-    BOOST_CHECK_MESSAGE( techValues.cellsPerLWLRedundancy == 12*drs::cell_per_sa_row,
+    BOOST_CHECK_MESSAGE( techValues.cellsPerLWLRedundancy == 12*drs::wl_cell_per_wl_subarray,
                         "Capacitance per cell different from the expected."
-                        << "\nExpected: " << 12*drs::cell_per_sa_row
+                        << "\nExpected: " << 12*drs::wl_cell_per_wl_subarray
                         << "\nGot: " << techValues.cellsPerLWLRedundancy);
 
-    BOOST_CHECK_MESSAGE( techValues.cellsPerLBL == 524*drs::cell_per_sa_col,
+    BOOST_CHECK_MESSAGE( techValues.cellsPerLBL == 524*drs::bl_cell_per_bl_subarray,
                         "Resistance per cell different from the expected."
-                        << "\nExpected: " << 524*drs::cell_per_sa_col
+                        << "\nExpected: " << 524*drs::bl_cell_per_bl_subarray
                         << "\nGot: " << techValues.cellsPerLBL);
 
-    BOOST_CHECK_MESSAGE( techValues.cellsPerLBLRedundancy == 12*drs::cell_per_sa_col,
+    BOOST_CHECK_MESSAGE( techValues.cellsPerLBLRedundancy == 12*drs::bl_cell_per_bl_subarray,
                         "Capacitance per cell different from the expected."
-                        << "\nExpected: " << 12*drs::cell_per_sa_col
+                        << "\nExpected: " << 12*drs::bl_cell_per_bl_subarray
                         << "\nGot: " << techValues.cellsPerLBLRedundancy);
 
     BOOST_CHECK_MESSAGE( techValues.BLSenseAmpHeight == 20*drs::micrometer,
@@ -165,14 +165,14 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 400*si::ohm
                         << "\nGot: " << techValues.GWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( techValues.LWLDriverResistance == 1000*drs::ohm_per_sa_row,
+    BOOST_CHECK_MESSAGE( techValues.LWLDriverResistance == 1000*drs::ohm_per_wl_subarray,
                         "Capacitance per cell different from the expected."
-                        << "\nExpected: " << 1000*drs::ohm_per_sa_row
+                        << "\nExpected: " << 1000*drs::ohm_per_wl_subarray
                         << "\nGot: " << techValues.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( techValues.WRResistance == 600*drs::ohm_per_sa_col,
+    BOOST_CHECK_MESSAGE( techValues.WRResistance == 600*drs::ohm_per_bl_subarray,
                         "Resistance per cell different from the expected."
-                        << "\nExpected: " << 600*drs::ohm_per_sa_col
+                        << "\nExpected: " << 600*drs::ohm_per_bl_subarray
                         << "\nGot: " << techValues.WRResistance);
 
     BOOST_CHECK_MESSAGE( techValues.CSLDriverResistance == 600*si::ohm,
@@ -349,34 +349,34 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 1*drs::nanometer
                         << "\nGot: " << techValues.technologyNode);
 
-    BOOST_CHECK_MESSAGE( techValues.capacitancePerBLCell == 2*drs::attofarads_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.capacitancePerBLCell == 2*drs::attofarads_per_bl_cell,
                         "Capacitance per bitline cell different from the expected."
-                        << "\nExpected: " << 2*drs::attofarads_per_cell
+                        << "\nExpected: " << 2*drs::attofarads_per_bl_cell
                         << "\nGot: " << techValues.capacitancePerBLCell);
 
-    BOOST_CHECK_MESSAGE( techValues.resistancePerBLCell == 3*drs::ohm_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.resistancePerBLCell == 3*drs::ohm_per_bl_cell,
                         "Resistance per bitline cell different from the expected."
-                        << "\nExpected: " << 3*drs::ohm_per_cell
+                        << "\nExpected: " << 3*drs::ohm_per_bl_cell
                         << "\nGot: " << techValues.resistancePerBLCell);
 
-    BOOST_CHECK_MESSAGE( techValues.capacitancePerWLCell == 4*drs::attofarads_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.capacitancePerWLCell == 4*drs::attofarads_per_wl_cell,
                         "Capacitance per wordline cell different from the expected."
-                        << "\nExpected: " << 4*drs::attofarads_per_cell
+                        << "\nExpected: " << 4*drs::attofarads_per_wl_cell
                         << "\nGot: " << techValues.capacitancePerWLCell);
 
-    BOOST_CHECK_MESSAGE( techValues.resistancePerWLCell == 5*drs::ohm_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.resistancePerWLCell == 5*drs::ohm_per_wl_cell,
                         "Resistance per wordline cell different from the expected."
-                        << "\nExpected: " << 5*drs::ohm_per_cell
+                        << "\nExpected: " << 5*drs::ohm_per_wl_cell
                         << "\nGot: " << techValues.resistancePerWLCell);
 
-    BOOST_CHECK_MESSAGE( techValues.capacitancePerCell == 6*drs::picofarads_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.capacitancePerCell == 6*drs::picofarads_per_bl_cell,
                         "Capacitance per cell different from the expected."
-                        << "\nExpected: " << 6*drs::picofarads_per_cell
+                        << "\nExpected: " << 6*drs::picofarads_per_bl_cell
                         << "\nGot: " << techValues.capacitancePerWLCell);
 
-    BOOST_CHECK_MESSAGE( techValues.resistancePerCell == 7*drs::ohm_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.resistancePerCell == 7*drs::ohm_per_bl_cell,
                         "Resistance per cell different from the expected."
-                        << "\nExpected: " << 7*drs::ohm_per_cell
+                        << "\nExpected: " << 7*drs::ohm_per_bl_cell
                         << "\nGot: " << techValues.resistancePerWLCell);
 
     BOOST_CHECK_MESSAGE( techValues.wireResistance == 8*drs::ohm_per_millimeter,
@@ -389,34 +389,34 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 9*drs::femtofarads_per_millimeter
                         << "\nGot: " << techValues.wireCapacitance);
 
-    BOOST_CHECK_MESSAGE( techValues.cellWidth == 10*drs::micrometer_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.cellWidth == 10*drs::micrometer_per_wl_cell,
                         "Resistance per cell different from the expected."
-                        << "\nExpected: " << 10*drs::micrometer_per_cell
+                        << "\nExpected: " << 10*drs::micrometer_per_wl_cell
                         << "\nGot: " << techValues.cellWidth);
 
-    BOOST_CHECK_MESSAGE( techValues.cellHeight == 11*drs::micrometer_per_cell,
+    BOOST_CHECK_MESSAGE( techValues.cellHeight == 11*drs::micrometer_per_bl_cell,
                         "Capacitance per cell different from the expected."
-                        << "\nExpected: " << 11*drs::micrometer_per_cell
+                        << "\nExpected: " << 11*drs::micrometer_per_bl_cell
                         << "\nGot: " << techValues.cellHeight);
 
-    BOOST_CHECK_MESSAGE( techValues.cellsPerLWL == 12*drs::cell_per_sa_row,
+    BOOST_CHECK_MESSAGE( techValues.cellsPerLWL == 12*drs::wl_cell_per_wl_subarray,
                         "Resistance per cell different from the expected."
-                        << "\nExpected: " << 12*drs::cell_per_sa_row
+                        << "\nExpected: " << 12*drs::wl_cell_per_wl_subarray
                         << "\nGot: " << techValues.cellsPerLWL);
 
-    BOOST_CHECK_MESSAGE( techValues.cellsPerLWLRedundancy == 13*drs::cell_per_sa_row,
+    BOOST_CHECK_MESSAGE( techValues.cellsPerLWLRedundancy == 13*drs::wl_cell_per_wl_subarray,
                         "Capacitance per cell different from the expected."
-                        << "\nExpected: " << 13*drs::cell_per_sa_row
+                        << "\nExpected: " << 13*drs::wl_cell_per_wl_subarray
                         << "\nGot: " << techValues.cellsPerLWLRedundancy);
 
-    BOOST_CHECK_MESSAGE( techValues.cellsPerLBL == 14*drs::cell_per_sa_col,
+    BOOST_CHECK_MESSAGE( techValues.cellsPerLBL == 14*drs::bl_cell_per_bl_subarray,
                         "Resistance per cell different from the expected."
-                        << "\nExpected: " << 14*drs::cell_per_sa_col
+                        << "\nExpected: " << 14*drs::bl_cell_per_bl_subarray
                         << "\nGot: " << techValues.cellsPerLBL);
 
-    BOOST_CHECK_MESSAGE( techValues.cellsPerLBLRedundancy == 15*drs::cell_per_sa_col,
+    BOOST_CHECK_MESSAGE( techValues.cellsPerLBLRedundancy == 15*drs::bl_cell_per_bl_subarray,
                         "Capacitance per cell different from the expected."
-                        << "\nExpected: " << 15*drs::cell_per_sa_col
+                        << "\nExpected: " << 15*drs::bl_cell_per_bl_subarray
                         << "\nGot: " << techValues.cellsPerLBLRedundancy);
 
     BOOST_CHECK_MESSAGE( techValues.BLSenseAmpHeight == 16*drs::micrometer,
@@ -434,14 +434,14 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 18*si::ohm
                         << "\nGot: " << techValues.GWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( techValues.LWLDriverResistance == 19*drs::ohm_per_sa_row,
+    BOOST_CHECK_MESSAGE( techValues.LWLDriverResistance == 19*drs::ohm_per_wl_subarray,
                         "Capacitance per cell different from the expected."
-                        << "\nExpected: " << 19*drs::ohm_per_sa_row
+                        << "\nExpected: " << 19*drs::ohm_per_wl_subarray
                         << "\nGot: " << techValues.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( techValues.WRResistance == 20*drs::ohm_per_sa_col,
+    BOOST_CHECK_MESSAGE( techValues.WRResistance == 20*drs::ohm_per_bl_subarray,
                         "Resistance per cell different from the expected."
-                        << "\nExpected: " << 20*drs::ohm_per_sa_col
+                        << "\nExpected: " << 20*drs::ohm_per_bl_subarray
                         << "\nGot: " << techValues.WRResistance);
 
     BOOST_CHECK_MESSAGE( techValues.CSLDriverResistance == 21*si::ohm,

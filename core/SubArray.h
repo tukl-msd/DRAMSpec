@@ -32,19 +32,22 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis
  */
 
-//This class presents the second level of abstraction of the DRAM structure,
-//of the DRAM which is a subarray.
 #ifndef SUBARRAY_H
 #define SUBARRAY_H
+
+//This class presents the second level of abstraction of the DRAM structure,
+//of the DRAM which is a subarray.
+
 #include "../parser/TechnologyValues.h"
+
 class SubArray : public TechnologyValues
 {
   public:
     //constructor for subarray class
     SubArray(const std::string& techname, const std::string& paraname) :
         TechnologyValues(techname,paraname),
-        subArrayWidth(0*drs::micrometer_per_sa_row),
-        subArrayHeight(0*drs::micrometer_per_sa_col)
+        subArrayWidth(0*drs::micrometer_per_wl_subarray),
+        subArrayHeight(0*drs::micrometer_per_bl_subarray)
     {
         //Order of functions is important
         bool SINIT = false;
@@ -62,13 +65,17 @@ class SubArray : public TechnologyValues
             throw(" Function for driver initialization not called");
         }
     }
+    // Size in number of bits of a single tile
+    bu::quantity<drs::information_per_subarray_unit> subArrayStorage;
+
     //the width of the subarray which should be calculated
-//         [um/sa_row]
-    bu::quantity<drs::micrometer_per_subarray_row_unit> subArrayWidth;
+    bu::quantity<drs::micrometer_per_wordline_subarray_unit> subArrayWidth;
 
     //the height of the subarray which should be calculated
-//         [um/sa_col]
-    bu::quantity<drs::micrometer_per_subarray_column_unit>  subArrayHeight;
+    bu::quantity<drs::micrometer_per_bitline_subarray_unit>  subArrayHeight;
+
+    // function which calculates the height and width of the subarray
+    bool subArrayStorageCalc();
 
     // function which calculates the height and width of the subarray
     bool subArrayLengthCalc();

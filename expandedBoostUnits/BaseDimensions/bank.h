@@ -32,51 +32,44 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef NEW_SYSTEM_H
-#define NEW_SYSTEM_H
+#ifndef DRAMSPEC_SQUARE_ROOT_BANK_BASE_DIMENSION_H
+#define DRAMSPEC_SQUARE_ROOT_BANK_BASE_DIMENSION_H
 
-///START: DRAMSPEC_SYSTEM_H
-
-#include <string>
-
-#include <boost/units/static_constant.hpp>
-#include <boost/units/unit.hpp>
-#include "expanded_make_system.hpp"
-
-#include <boost/units/base_units/si/meter.hpp>
-#include <boost/units/base_units/si/kilogram.hpp>
-#include <boost/units/base_units/si/second.hpp>
-#include <boost/units/base_units/si/ampere.hpp>
-#include <boost/units/base_units/information/bit.hpp>
-#include <boost/units/base_units/information/byte.hpp>
-
-#include "NewBaseUnits.h"
-
+#include <boost/units/config.hpp>
+#include <boost/units/base_dimension.hpp>
 
 namespace boost {
 
 namespace units {
 
-namespace dramspec {
-
-/// placeholder class defining dramspec unit system
-typedef make_system<clock_base_unit,
-                    cell_base_unit,
-                    subarray_row_base_unit,
-                    bank_base_unit,
-                    tile_base_unit,
-                    boost::units::si::meter_base_unit,
-                    boost::units::si::kilogram_base_unit,
-                    boost::units::si::second_base_unit,
-                    boost::units::si::ampere_base_unit,
-                    boost::units::information::bit_base_unit>::type system;
-
-} // namespace dramspec
+/// base dimension of number of banks in either direction (word- or bitline direction)
+/// the square root bank must be defined as a base dimension
+///  because boost/units do not support derived dimension which have not integer exponent
+struct square_root_bank_base_dimension :
+    boost::units::base_dimension<square_root_bank_base_dimension,-34>
+{ };
 
 } // namespace units
 
 } // namespace boost
 
-///END: DRAMSPEC_SYSTEM_H
+#if BOOST_UNITS_HAS_BOOST_TYPEOF
 
-#endif // NEW_SYSTEM_H
+#include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
+
+BOOST_TYPEOF_REGISTER_TYPE(boost::units::square_root_bank_base_dimension)
+
+#endif
+
+namespace boost {
+
+namespace units {
+
+/// dimension of number of banks in either direction (word- or bitline direction)
+typedef square_root_bank_base_dimension::dimension_type     square_root_bank_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+#endif // NEW_BASE_DIMENSIONS_H

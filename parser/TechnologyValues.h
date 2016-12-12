@@ -38,7 +38,7 @@
 #define TECHNOLOGYVALUES_H
 #include <iostream>
 #include <string>
-#include "../units/NewUnits.h"
+#include "../expandedBoostUnits/Units/dramSpec_units.h"
 
 namespace bu=boost::units;
 namespace si=boost::units::si;
@@ -54,25 +54,25 @@ class TechnologyValues
         Paraname(""),
 
         technologyNode(0*drs::nanometer),
-        capacitancePerBLCell(0*drs::attofarads_per_cell),
-        resistancePerBLCell(0*drs::ohm_per_cell),
-        capacitancePerWLCell(0*drs::attofarads_per_cell),
-        resistancePerWLCell(0*drs::ohm_per_cell),
-        capacitancePerCell(0*drs::picofarads_per_cell),
-        resistancePerCell(0*drs::ohm_per_cell),
+        capacitancePerBLCell(0*drs::attofarads_per_bl_cell),
+        resistancePerBLCell(0*drs::ohm_per_bl_cell),
+        capacitancePerWLCell(0*drs::attofarads_per_wl_cell),
+        resistancePerWLCell(0*drs::ohm_per_wl_cell),
+        capacitancePerCell(0*drs::picofarads_per_bl_cell),
+        resistancePerCell(0*drs::ohm_per_bl_cell),
         wireResistance(0*drs::ohm_per_millimeter),
         wireCapacitance(0*drs::femtofarad_per_millimeter),
-        cellWidth(0*drs::micrometer_per_cell),
-        cellHeight(0*drs::micrometer_per_cell),
-        cellsPerLWL(0*drs::cell_per_sa_row),
-        cellsPerLWLRedundancy(0*drs::cell_per_sa_row),
-        cellsPerLBL(0*drs::cell_per_sa_col),
-        cellsPerLBLRedundancy(0*drs::cell_per_sa_col),
+        cellWidth(0*drs::micrometer_per_wl_cell),
+        cellHeight(0*drs::micrometer_per_bl_cell),
+        cellsPerLWL(0*drs::wl_cell_per_wl_subarray),
+        cellsPerLWLRedundancy(0*drs::wl_cell_per_wl_subarray),
+        cellsPerLBL(0*drs::bl_cell_per_bl_subarray),
+        cellsPerLBLRedundancy(0*drs::bl_cell_per_bl_subarray),
         BLSenseAmpHeight(0*drs::micrometer),
         WLDriverWidth(0*drs::micrometer),
         GWLDriverResistance(0*si::ohm),
-        LWLDriverResistance(0*drs::ohm_per_sa_row),
-        WRResistance(0*drs::ohm_per_sa_col),
+        LWLDriverResistance(0*drs::ohm_per_wl_subarray),
+        WRResistance(0*drs::ohm_per_bl_subarray),
         CSLDriverResistance(0*si::ohm),
         GDLDriverResistance(0*si::ohm),
         DQDriverResistance(0*si::ohm),
@@ -116,22 +116,22 @@ class TechnologyValues
     bu::quantity<drs::nanometer_unit> technologyNode;
 
     //Bitline per cell capa
-    bu::quantity<drs::attofarad_per_cell_unit> capacitancePerBLCell;
+    bu::quantity<drs::attofarad_per_bitline_cell_unit> capacitancePerBLCell;
 
     //Bitline per cell resistance
-    bu::quantity<drs::resistance_per_cell> resistancePerBLCell;
+    bu::quantity<drs::resistance_per_bitline_cell_unit> resistancePerBLCell;
 
     //Wordline per cell capa
-    bu::quantity<drs::attofarad_per_cell_unit> capacitancePerWLCell;
+    bu::quantity<drs::attofarad_per_wordline_cell_unit> capacitancePerWLCell;
 
     //Wordline per cell resistance
-    bu::quantity<drs::resistance_per_cell> resistancePerWLCell;
+    bu::quantity<drs::resistance_per_wordline_cell_unit> resistancePerWLCell;
 
     //cell capa
-    bu::quantity<drs::picofarad_per_cell_unit> capacitancePerCell;
+    bu::quantity<drs::picofarad_per_bitline_cell_unit> capacitancePerCell;
 
     //cell resistance
-    bu::quantity<drs::resistance_per_cell> resistancePerCell;
+    bu::quantity<drs::resistance_per_bitline_cell_unit> resistancePerCell;
 
     //wire resistance in ohm/mm
     bu::quantity<drs::ohm_per_millimeter_unit> wireResistance;
@@ -140,22 +140,22 @@ class TechnologyValues
     bu::quantity<drs::femtofarad_per_millimeter_unit> wireCapacitance;
 
     //cell width
-    bu::quantity<drs::micrometer_per_cell_unit> cellWidth;
+    bu::quantity<drs::micrometer_per_wordline_cell_unit> cellWidth;
 
     //cell height
-    bu::quantity<drs::micrometer_per_cell_unit> cellHeight;
+    bu::quantity<drs::micrometer_per_bitline_cell_unit> cellHeight;
 
     //cells per subarray row
-    bu::quantity<drs::cell_per_subarray_row_unit> cellsPerLWL;
+    bu::quantity<drs::wordline_cell_per_wordline_subarray_unit> cellsPerLWL;
 
     //cells per subarray row redundancy
-    bu::quantity<drs::cell_per_subarray_row_unit> cellsPerLWLRedundancy;
+    bu::quantity<drs::wordline_cell_per_wordline_subarray_unit> cellsPerLWLRedundancy;
 
     //cells per subarray column
-    bu::quantity<drs::cell_per_subarray_column_unit> cellsPerLBL;
+    bu::quantity<drs::bitline_cell_per_bitline_subarray_unit> cellsPerLBL;
 
     //cells per subarray column redundancy
-    bu::quantity<drs::cell_per_subarray_column_unit> cellsPerLBLRedundancy;
+    bu::quantity<drs::bitline_cell_per_bitline_subarray_unit> cellsPerLBLRedundancy;
 
     //sense amp height
     bu::quantity<drs::micrometer_unit> BLSenseAmpHeight;
@@ -167,10 +167,10 @@ class TechnologyValues
     bu::quantity<si::resistance> GWLDriverResistance;
 
     //Local wordline driver resistance in ohm
-    bu::quantity<drs::resistance_per_subarray_row_unit> LWLDriverResistance;
+    bu::quantity<drs::resistance_per_wordline_subarray_unit> LWLDriverResistance;
 
     //WRrestore resistance
-    bu::quantity<drs::resistance_per_subarray_column_unit> WRResistance;
+    bu::quantity<drs::resistance_per_bitline_subarray_unit> WRResistance;
 
     //CSL driver resistance in ohm
     bu::quantity<si::resistance> CSLDriverResistance;

@@ -85,37 +85,37 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     assert(techdocument.HasMember("BLpercellcapa"));
     assert(techdocument["BLpercellcapa"].IsNumber());
     double capacitancePerBLCell_value = techdocument["BLpercellcapa"].GetDouble();
-    capacitancePerBLCell =capacitancePerBLCell_value*drs::attofarads_per_cell;
+    capacitancePerBLCell = capacitancePerBLCell_value*drs::attofarads_per_bl_cell;
 
     //Bitline per cell resistance
     assert(techdocument.HasMember("BLpercellresistance")); 
     assert(techdocument["BLpercellresistance"].IsNumber());
     double resistancePerBLCell_value = techdocument["BLpercellresistance"].GetDouble();
-    resistancePerBLCell = resistancePerBLCell_value*drs::ohm_per_cell;
+    resistancePerBLCell = resistancePerBLCell_value*drs::ohm_per_bl_cell;
 
     //Wordline per cell capa
     assert(techdocument.HasMember("WLpercellcapa"));
     assert(techdocument["WLpercellcapa"].IsNumber());
     double capacitancePerWLCell_value = techdocument["WLpercellcapa"].GetDouble();
-    capacitancePerWLCell = capacitancePerWLCell_value*drs::attofarads_per_cell;
+    capacitancePerWLCell = capacitancePerWLCell_value*drs::attofarads_per_wl_cell;
 
     //Wordline per cell resistance
     assert(techdocument.HasMember("WLpercellresistance"));
     assert(techdocument["WLpercellresistance"].IsNumber());
     double resistancePerWLCell_value = techdocument["WLpercellresistance"].GetDouble();
-    resistancePerWLCell = resistancePerWLCell_value*drs::ohm_per_cell;
+    resistancePerWLCell = resistancePerWLCell_value*drs::ohm_per_wl_cell;
 
     //cell capa
     assert(techdocument.HasMember("cellcapa"));
     assert(techdocument["cellcapa"].IsNumber());
     double capacitancePerCell_value = techdocument["cellcapa"].GetDouble();
-    capacitancePerCell = capacitancePerCell_value*drs::picofarads_per_cell;
+    capacitancePerCell = capacitancePerCell_value*drs::picofarads_per_bl_cell;
 
     //cell resistance
     assert(techdocument.HasMember("cellresistance"));
     assert(techdocument["cellresistance"].IsNumber());
     double resistancePerCell_value = techdocument["cellresistance"].GetDouble();
-    resistancePerCell = resistancePerCell_value*drs::ohm_per_cell;
+    resistancePerCell = resistancePerCell_value*drs::ohm_per_bl_cell;
 
     //wire resistance in ohm/mm
     assert(techdocument.HasMember("wireresistance"));
@@ -133,37 +133,37 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     assert(techdocument.HasMember("cellwidth"));
     assert(techdocument["cellwidth"].IsNumber());
     double cellWidth_value = techdocument["cellwidth"].GetDouble();
-    cellWidth = cellWidth_value*drs::micrometers_per_cell;
+    cellWidth = cellWidth_value*drs::micrometers_per_wl_cell;
 
     //cell height
     assert(techdocument.HasMember("cellheight"));
     assert(techdocument["cellheight"].IsNumber());
     double cellHeight_value = techdocument["cellheight"].GetDouble();
-    cellHeight = cellHeight_value*drs::micrometers_per_cell;
+    cellHeight = cellHeight_value*drs::micrometers_per_bl_cell;
 
     //cells per subarray row
     assert(techdocument.HasMember("cellsperrow"));
     assert(techdocument["cellsperrow"].IsNumber());
     double cellsPerLWL_value = techdocument["cellsperrow"].GetDouble();
-    cellsPerLWL = cellsPerLWL_value*drs::cell_per_sa_row;
+    cellsPerLWL = cellsPerLWL_value*drs::wl_cell_per_wl_subarray;
 
     //cells per subarray row redundancy
     assert(techdocument.HasMember("cellsperrowredundancy"));
     assert(techdocument["cellsperrowredundancy"].IsNumber());
     double cellsPerLWLRedundancy_value = techdocument["cellsperrowredundancy"].GetDouble();
-    cellsPerLWLRedundancy = cellsPerLWLRedundancy_value*drs::cell_per_sa_row;
+    cellsPerLWLRedundancy = cellsPerLWLRedundancy_value*drs::wl_cell_per_wl_subarray;
 
     //cells per subarray column
     assert(techdocument.HasMember("cellspercolumn"));
     assert(techdocument["cellspercolumn"].IsNumber());
     double cellsPerLBL_value = techdocument["cellspercolumn"].GetDouble();
-    cellsPerLBL = cellsPerLBL_value*drs::cell_per_sa_col;
+    cellsPerLBL = cellsPerLBL_value*drs::bl_cell_per_bl_subarray;
 
     //cells per subarray column redundancy
     assert(techdocument.HasMember("cellspercolumnredundancy"));
     assert(techdocument["cellspercolumnredundancy"].IsNumber());
     double cellsperLBLRedundancy_value = techdocument["cellspercolumnredundancy"].GetDouble();
-    cellsPerLBLRedundancy = cellsperLBLRedundancy_value*drs::cell_per_sa_col;
+    cellsPerLBLRedundancy = cellsperLBLRedundancy_value*drs::bl_cell_per_bl_subarray;
 
     //sense amp height
     assert(techdocument.HasMember("blsa-height"));
@@ -187,13 +187,13 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     assert(techdocument.HasMember("LWDresistance"));
     assert(techdocument["LWDresistance"].IsNumber());
     double LWLDriverResistance_value = techdocument["LWDresistance"].GetDouble();
-    LWLDriverResistance = LWLDriverResistance_value*drs::ohms_per_sa_row;
+    LWLDriverResistance = LWLDriverResistance_value*drs::ohm_per_wl_subarray;
 
     //WRrestore resistance
     assert(techdocument.HasMember("WRresistance"));
     assert(techdocument["WRresistance"].IsNumber());
     double WRResistance_value = techdocument["WRresistance"].GetDouble();
-    WRResistance = WRResistance_value*drs::ohms_per_sa_col;
+    WRResistance = WRResistance_value*drs::ohm_per_bl_subarray;
 
     //CSL driver resistance in ohm
     assert(techdocument.HasMember("CSLDresistance"));

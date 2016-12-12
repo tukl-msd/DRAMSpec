@@ -38,14 +38,25 @@ namespace si=boost::units::si;
 namespace drs=boost::units::dramspec;
 
 bool
+SubArray::subArrayStorageCalc()
+{
+    subArrayStorage =   (cellsPerLWL - cellsPerLWLRedundancy)
+                      * (cellsPerLBL - cellsPerLBLRedundancy)
+                      * drs::bit_per_cell;
+
+    return true;
+}
+
+bool
 SubArray::subArrayLengthCalc()
 {
-    subArrayWidth = cellsPerLWL * cellWidth + WLDriverWidth/drs::sa_row;
+    subArrayWidth = cellsPerLWL * cellWidth + WLDriverWidth/drs::wl_subarray;
 
     subArrayHeight = cellsPerLBL * cellHeight;
 
     return true;
 }
+
 bool
 SubArray::driversinit()
 {
@@ -69,25 +80,25 @@ SubArray::driversinit()
         GWLDriverResistance = GWLDriverResistance - 400*si::ohm;
     }
 
-    if((cellsPerLWL - cellsPerLWLRedundancy) < 256*drs::cell_per_sa_row ) {
-        LWLDriverResistance = LWLDriverResistance + 200*drs::ohms_per_sa_row ;
-        WRResistance = WRResistance + 200*drs::ohms_per_sa_col;
+    if((cellsPerLWL - cellsPerLWLRedundancy) < 256*drs::wl_cells_per_wl_subarray ) {
+        LWLDriverResistance = LWLDriverResistance + 200*drs::ohms_per_wl_subarray ;
+        WRResistance = WRResistance + 200*drs::ohms_per_bl_subarray;
     }
-    else if((cellsPerLWL - cellsPerLWLRedundancy) == 256*drs::cell_per_sa_row ) {
-        LWLDriverResistance = LWLDriverResistance + 100*drs::ohms_per_sa_row;
-        WRResistance = WRResistance + 100*drs::ohms_per_sa_col ;
+    else if((cellsPerLWL - cellsPerLWLRedundancy) == 256*drs::wl_cells_per_wl_subarray ) {
+        LWLDriverResistance = LWLDriverResistance + 100*drs::ohms_per_wl_subarray;
+        WRResistance = WRResistance + 100*drs::ohms_per_bl_subarray ;
     }
-    else if((cellsPerLWL - cellsPerLWLRedundancy) == 512*drs::cell_per_sa_row) {
+    else if((cellsPerLWL - cellsPerLWLRedundancy) == 512*drs::wl_cells_per_wl_subarray) {
         LWLDriverResistance = LWLDriverResistance;
         WRResistance = WRResistance;    
     }
-    else if((cellsPerLWL - cellsPerLWLRedundancy) == 1024*drs::cell_per_sa_row) {
-        LWLDriverResistance = LWLDriverResistance  - 100*drs::ohms_per_sa_row ;
-        WRResistance = WRResistance - 100*drs::ohms_per_sa_col ;
+    else if((cellsPerLWL - cellsPerLWLRedundancy) == 1024*drs::wl_cells_per_wl_subarray) {
+        LWLDriverResistance = LWLDriverResistance  - 100*drs::ohms_per_wl_subarray ;
+        WRResistance = WRResistance - 100*drs::ohms_per_bl_subarray ;
 
     } else {
-        LWLDriverResistance = LWLDriverResistance - 200*drs::ohms_per_sa_row;
-        WRResistance = WRResistance - 200*drs::ohms_per_sa_col ;
+        LWLDriverResistance = LWLDriverResistance - 200*drs::ohms_per_wl_subarray;
+        WRResistance = WRResistance - 200*drs::ohms_per_bl_subarray ;
     }
 
     return true;

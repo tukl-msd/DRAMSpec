@@ -49,10 +49,16 @@
 //class Bank:public MemoryArray
 //{
 //  public:
-//    Bank(const std::string& techname,const std::string& paraname)
-//    :MemoryArray(techname,paraname), sizeofBank(0), sizeofhalfBank(0),
-//    numberofMemoryArrays(0), tileWidth(0), chipwidth(0), chipheight(0), chiparea(0),
-//    Bankheight(0)
+//    Bank(const std::string& techname,const std::string& paraname):
+//        MemoryArray(techname,paraname),
+//        sizeofBank(0),
+//        sizeofhalfBank(0),
+//        numberofMemoryArrays(0),
+//        tileWidth(0),
+//        chipwidth(0),
+//        chipheight(0),
+//        chiparea(0),
+//        Bankheight(0)
 //    {
 //        //order of functions is important
 //        bool BINIT = false;

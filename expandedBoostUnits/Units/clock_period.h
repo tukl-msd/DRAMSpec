@@ -1,6 +1,3 @@
-#ifndef DRAMSPEC_H
-#define DRAMSPEC_H
-
 /*
  * Copyright (c) 2015, University of Kaiserslautern
  * All rights reserved.
@@ -32,33 +29,44 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji
- *          Matthias Jung
- *          Christian Weis
- *          Kamal Haddad
- *          Andr'e Lucas Chinazzo
+ * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#include "parser/ResultParser.h"
-#include <ctime>
-#include <cmath>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iomanip>
-#include <vector>
-#include <stdio.h>
-#include <string>
+#ifndef DRAMSPEC_CLOCK_PERIOD_UNIT_H
+#define DRAMSPEC_CLOCK_PERIOD_UNIT_H
 
-using namespace std;
+#include "../dramSpecUnitsSystem.h"
+#include "../DerivedDimensions/clock_period.h"
 
-void printresult(string resultname,
-                 int resultindex,
-                 int TechNamenumber,
-                 int NumberOfResults,
-                 vector<float> allresults,
-                 ofstream& resultsfile );
+#include <boost/units/systems/si.hpp>
+#include <boost/units/systems/si/io.hpp>
+#include <boost/units/systems/si/prefixes.hpp>
 
-int dramspec(int argc, char* argv[]);
+namespace boost {
 
-#endif // DRAMSPEC_H
+namespace units {
+
+namespace dramspec {
+
+typedef unit<clock_period_dimension,dramspec::system>    clock_period_unit;
+
+BOOST_UNITS_STATIC_CONSTANT(second_per_clock,clock_period_unit);
+BOOST_UNITS_STATIC_CONSTANT(seconds_per_clock,clock_period_unit);
+
+typedef make_scaled_unit<clock_period_unit,scale<10, static_rational<-6>>>::type microsecond_per_clock_unit;
+BOOST_UNITS_STATIC_CONSTANT(microsecond_per_clock,microsecond_per_clock_unit);
+BOOST_UNITS_STATIC_CONSTANT(microseconds_per_clock,microsecond_per_clock_unit);
+typedef make_scaled_unit<clock_period_unit,scale<10, static_rational<-9>>>::type nanosecond_per_clock_unit;
+BOOST_UNITS_STATIC_CONSTANT(nanosecond_per_clock,nanosecond_per_clock_unit);
+BOOST_UNITS_STATIC_CONSTANT(nanoseconds_per_clock,nanosecond_per_clock_unit);
+
+} // namespace dramspec
+
+inline std::string name_string(const reduce_unit<dramspec::clock_period_unit>::type&)   { return "second/clock"; }
+inline std::string symbol_string(const reduce_unit<dramspec::clock_period_unit>::type&) { return "s/clock"; }
+
+} // namespace units
+
+} // namespace boost
+
+#endif // DRAMSPEC_CLOCK_PERIOD_UNIT_H
