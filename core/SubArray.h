@@ -46,8 +46,9 @@ class SubArray : public TechnologyValues
     //constructor for subarray class
     SubArray(const std::string& techname, const std::string& paraname) :
         TechnologyValues(techname,paraname),
-        subArrayWidth(0*drs::micrometer_per_wl_subarray),
-        subArrayHeight(0*drs::micrometer_per_bl_subarray)
+        subArrayRowStorage(0*drs::bit_per_subarray),
+        subArrayWidth(0*drs::micrometer_per_subarray),
+        subArrayHeight(0*drs::micrometer_per_subarray)
     {
         //Order of functions is important
         bool SINIT = false;
@@ -65,14 +66,17 @@ class SubArray : public TechnologyValues
             throw(" Function for driver initialization not called");
         }
     }
-    // Size in number of bits of a single tile
+    // Size in number of bits of a single subarray
     bu::quantity<drs::information_per_subarray_unit> subArrayStorage;
 
+    // Size in number of bits of a single row of a subarray
+    bu::quantity<drs::information_per_subarray_unit> subArrayRowStorage;
+
     //the width of the subarray which should be calculated
-    bu::quantity<drs::micrometer_per_wordline_subarray_unit> subArrayWidth;
+    bu::quantity<drs::micrometer_per_subarray_unit> subArrayWidth;
 
     //the height of the subarray which should be calculated
-    bu::quantity<drs::micrometer_per_bitline_subarray_unit>  subArrayHeight;
+    bu::quantity<drs::micrometer_per_subarray_unit>  subArrayHeight;
 
     // function which calculates the height and width of the subarray
     bool subArrayStorageCalc();

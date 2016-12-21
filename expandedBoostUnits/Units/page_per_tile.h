@@ -32,22 +32,29 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_SUBARRAY_DERIVED_DIMENSION_H
-#define DRAMSPEC_SUBARRAY_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_PAGE_PER_BANK_UNIT_H
+#define DRAMSPEC_PAGE_PER_BANK_UNIT_H
 
-#include <boost/units/derived_dimension.hpp>
-
-#include "../BaseDimensions/subarray.h"
+#include "../dramSpecUnitsSystem.h"
+#include "../DerivedDimensions/page_per_tile.h"
 
 namespace boost {
 
 namespace units {
 
-/// derived dimension for number of subarrays in 2D space: SQRT_SUBARRAY^2 = SUBARRAY
-typedef derived_dimension<square_root_subarray_base_dimension,2>::type subarray_dimension;
+namespace dramspec {
+
+typedef unit<page_per_tile_dimension,dramspec::system> page_per_tile_unit;
+BOOST_UNITS_STATIC_CONSTANT(page_per_tile,page_per_tile_unit);
+BOOST_UNITS_STATIC_CONSTANT(pages_per_tile,page_per_tile_unit);
+
+} // namespace dramspec
+
+inline std::string name_string(const reduce_unit<dramspec::page_per_tile_unit>::type&)   { return "page/tile"; }
+inline std::string symbol_string(const reduce_unit<dramspec::page_per_tile_unit>::type&) { return "page/tile"; }
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_SUBARRAY_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_PAGE_PER_BANK_UNIT_H

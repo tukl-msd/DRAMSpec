@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_LENGTH_PER_SQUARE_ROOT_TILE_UNIT_H
-#define DRAMSPEC_LENGTH_PER_SQUARE_ROOT_TILE_UNIT_H
+#ifndef DRAMSPEC_LENGTH_PER_TILE_UNIT_H
+#define DRAMSPEC_LENGTH_PER_TILE_UNIT_H
 
 #include <boost/units/make_scaled_unit.hpp>
 
@@ -46,35 +46,19 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<length_per_square_root_tile_dimension,dramspec::system> length_per_square_root_tile_unit;
+typedef unit<length_per_tile_dimension,dramspec::system> length_per_tile_unit;
 
-typedef make_scaled_unit<length_per_square_root_tile_unit,
-                         scale<1, static_rational<0>>>::type length_per_wordline_tile_unit;
-BOOST_UNITS_STATIC_CONSTANT(meter_per_wl_tile,length_per_wordline_tile_unit);
-BOOST_UNITS_STATIC_CONSTANT(meters_per_wl_tile,length_per_wordline_tile_unit);
-
-typedef make_scaled_unit<length_per_wordline_tile_unit,scale<10, static_rational<-6>>>::type micrometer_per_wordline_tile_unit;
-BOOST_UNITS_STATIC_CONSTANT(micrometer_per_wl_tile,micrometer_per_wordline_tile_unit);
-BOOST_UNITS_STATIC_CONSTANT(micrometers_per_wl_tile,micrometer_per_wordline_tile_unit);
-
-
-typedef make_scaled_unit<length_per_square_root_tile_unit,
-                         scale<1, static_rational<0>>>::type length_per_bitline_tile_unit;
-BOOST_UNITS_STATIC_CONSTANT(meter_per_bl_tile,length_per_bitline_tile_unit);
-BOOST_UNITS_STATIC_CONSTANT(meters_per_bl_tiles,length_per_bitline_tile_unit);
-
-typedef make_scaled_unit<length_per_bitline_tile_unit,scale<10, static_rational<-6>>>::type micrometer_per_bitline_tile_unit;
-BOOST_UNITS_STATIC_CONSTANT(micrometer_per_bl_tile,micrometer_per_bitline_tile_unit);
-BOOST_UNITS_STATIC_CONSTANT(micrometers_per_bl_tile,micrometer_per_bitline_tile_unit);
-
+typedef make_scaled_unit<length_per_tile_unit,scale<10, static_rational<-6>>>::type micrometer_per_tile_unit;
+BOOST_UNITS_STATIC_CONSTANT(micrometer_per_tile,micrometer_per_tile_unit);
+BOOST_UNITS_STATIC_CONSTANT(micrometers_per_tile,micrometer_per_tile_unit);
 
 } // namespace dramspec
 
-inline std::string name_string(const reduce_unit<dramspec::length_per_square_root_tile_unit>::type&)   { return "meter/sqrt_tile"; }
-inline std::string symbol_string(const reduce_unit<dramspec::length_per_square_root_tile_unit>::type&) { return "meter/sqrt_tile"; }
+inline std::string name_string(const reduce_unit<dramspec::length_per_tile_unit>::type&)   { return "meter/tile"; }
+inline std::string symbol_string(const reduce_unit<dramspec::length_per_tile_unit>::type&) { return "meter/tile"; }
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_LENGTH_PER_SQUARE_ROOT_TILE_UNIT_H
+#endif // DRAMSPEC_LENGTH_PER_TILE_UNIT_H

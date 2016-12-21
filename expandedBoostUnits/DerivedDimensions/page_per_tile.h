@@ -32,22 +32,27 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_BANK_DERIVED_DIMENSION_H
-#define DRAMSPEC_BANK_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_PAGE_PER_BANK_DERIVED_DIMENSION_H
+#define DRAMSPEC_PAGE_PER_BANK_DERIVED_DIMENSION_H
 
 #include <boost/units/derived_dimension.hpp>
 
-#include "../BaseDimensions/bank.h"
+#include "../BaseDimensions/page.h"
+#include "../BaseDimensions/tile.h"
 
 namespace boost {
 
 namespace units {
 
-/// derived dimension for number of banks in 2D space: SQRT_BANK^2 = BANK
-typedef derived_dimension<square_root_bank_base_dimension,2>::type bank_dimension;
+/// derived dimension for #pages per tile
+/// PAGE^1 tile^-1
+typedef derived_dimension<page_base_dimension,1,
+                          tile_base_dimension,-1>::type
+                                        page_per_tile_dimension;
+
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_BANK_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_PAGE_PER_BANK_DERIVED_DIMENSION_H

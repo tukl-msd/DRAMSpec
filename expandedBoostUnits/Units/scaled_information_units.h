@@ -60,7 +60,7 @@ BOOST_UNITS_STATIC_CONSTANT(gibibits,gibibit_unit);
 typedef make_scaled_unit<information::hu::byte::info,scale<2, static_rational<0>>>::type byte_unit;
 BOOST_UNITS_STATIC_CONSTANT(byte,byte_unit);
 BOOST_UNITS_STATIC_CONSTANT(bytes,byte_unit);
-typedef make_scaled_unit<information::hu::byte::info,scale<2, static_rational<20>>>::type kibibyte_unit;
+typedef make_scaled_unit<information::hu::byte::info,scale<2, static_rational<10>>>::type kibibyte_unit;
 BOOST_UNITS_STATIC_CONSTANT(kibibyte,kibibyte_unit);
 BOOST_UNITS_STATIC_CONSTANT(kibibytes,kibibyte_unit);
 

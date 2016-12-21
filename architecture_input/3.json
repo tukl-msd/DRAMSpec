@@ -14,7 +14,9 @@
 	"Requiredrefreshperiod": 3.9,
 	"banksrefreshfactor":1,
         "rowrefreshrate":0.5,
-	"subarray2rowbufferfactor": 2,
-	"retentiontime":32
-
+    "subArrayToPageFactor": 2,
+    "retentiontime": 32,
+    "tilesperbank": 2,
+    "pageSpammingFactor": 1,
+    "bitlineArchitecture": "OPEN"
 }

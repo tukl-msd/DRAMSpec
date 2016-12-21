@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_SQUARE_ROOT_TILE_PER_SQUARE_ROOT_BANK_UNIT_H
-#define DRAMSPEC_SQUARE_ROOT_TILE_PER_SQUARE_ROOT_BANK_UNIT_H
+#ifndef DRAMSPEC_TILE_PER_BANK_UNIT_H
+#define DRAMSPEC_TILE_PER_BANK_UNIT_H
 
 #include "../dramSpecUnitsSystem.h"
 #include "../DerivedDimensions/tile_per_bank.h"
@@ -48,28 +48,13 @@ typedef unit<tile_per_bank_dimension,dramspec::system> tile_per_bank_unit;
 BOOST_UNITS_STATIC_CONSTANT(tile_per_bank,tile_per_bank_unit);
 BOOST_UNITS_STATIC_CONSTANT(tiles_per_bank,tile_per_bank_unit);
 
-typedef unit<square_root_tile_per_square_root_bank_dimension,dramspec::system> square_root_tile_per_square_root_bank_unit;
-
-typedef make_scaled_unit<square_root_tile_per_square_root_bank_unit,
-                         scale<1, static_rational<0>>>::type wordline_tile_per_wordline_bank_unit;
-BOOST_UNITS_STATIC_CONSTANT(wl_tile_per_wl_bank,wordline_tile_per_wordline_bank_unit);
-BOOST_UNITS_STATIC_CONSTANT(wl_tiles_per_wl_bank,wordline_tile_per_wordline_bank_unit);
-
-typedef make_scaled_unit<square_root_tile_per_square_root_bank_unit,
-                         scale<1, static_rational<0>>>::type bitline_tile_per_bitline_bank_unit;
-BOOST_UNITS_STATIC_CONSTANT(bl_tile_per_bl_bank,bitline_tile_per_bitline_bank_unit);
-BOOST_UNITS_STATIC_CONSTANT(bl_tiles_per_bl_bank,bitline_tile_per_bitline_bank_unit);
-
 } // namespace dramspec
 
 inline std::string name_string(const reduce_unit<dramspec::tile_per_bank_unit>::type&)   { return "tile/bank"; }
 inline std::string symbol_string(const reduce_unit<dramspec::tile_per_bank_unit>::type&) { return "tile/bank"; }
 
-inline std::string name_string(const reduce_unit<dramspec::square_root_tile_per_square_root_bank_unit>::type&)   { return "sqrt_tile/sqrt_bank"; }
-inline std::string symbol_string(const reduce_unit<dramspec::square_root_tile_per_square_root_bank_unit>::type&) { return "sqrt_tile/sqrt_bank"; }
-
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_SQUARE_ROOT_TILE_PER_SQUARE_ROOT_BANK_UNIT_H
+#endif // DRAMSPEC_TILE_PER_BANK_UNIT_H

@@ -44,9 +44,9 @@ namespace boost {
 
 namespace units {
 
-/// derived dimension for information per bank: INF^1 SQRT_BANK^-2 = INF^1 BANK^-1
+/// derived dimension for information per bank: INF^1 BANK^-1
 typedef derived_dimension<information_base_dimension,1,
-                          square_root_bank_base_dimension,-2>::type information_per_bank_dimension;
+                          bank_base_dimension,-1>::type information_per_bank_dimension;
 
 } // namespace units
 

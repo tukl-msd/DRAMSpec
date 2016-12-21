@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_CAPACITANCE_PER_SQUARE_ROOT_BANK_UNIT_H
-#define DRAMSPEC_CAPACITANCE_PER_SQUARE_ROOT_BANK_UNIT_H
+#ifndef DRAMSPEC_CAPACITANCE_PER_BANK_UNIT_H
+#define DRAMSPEC_CAPACITANCE_PER_BANK_UNIT_H
 
 #include <boost/units/make_scaled_unit.hpp>
 
@@ -46,53 +46,29 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<capacitance_per_square_root_bank_dimension,dramspec::system> capacitance_per_square_root_bank_unit;
+typedef unit<capacitance_per_bank_dimension,dramspec::system> capacitance_per_bank_unit;
 
-typedef make_scaled_unit<capacitance_per_square_root_bank_unit,
-                         scale<1, static_rational<0>>>::type capacitance_per_wordline_bank_unit;
-BOOST_UNITS_STATIC_CONSTANT(farad_per_wl_bank,capacitance_per_wordline_bank_unit);
-BOOST_UNITS_STATIC_CONSTANT(farads_per_wl_bank,capacitance_per_wordline_bank_unit);
-
-typedef make_scaled_unit<capacitance_per_wordline_bank_unit,scale<10, static_rational<-9>>>::type nanofarad_per_wordline_bank_unit;
-BOOST_UNITS_STATIC_CONSTANT(nanofarad_per_wl_bank,nanofarad_per_wordline_bank_unit);
-BOOST_UNITS_STATIC_CONSTANT(nanofarads_per_wl_bank,nanofarad_per_wordline_bank_unit);
-typedef make_scaled_unit<capacitance_per_wordline_bank_unit,scale<10, static_rational<-12>>>::type picofarad_per_wordline_bank_unit;
-BOOST_UNITS_STATIC_CONSTANT(picofarad_per_wl_bank,picofarad_per_wordline_bank_unit);
-BOOST_UNITS_STATIC_CONSTANT(picofarads_per_wl_bank,picofarad_per_wordline_bank_unit);
-typedef make_scaled_unit<capacitance_per_wordline_bank_unit,scale<10, static_rational<-15>>>::type femtofarad_per_wordline_bank_unit;
-BOOST_UNITS_STATIC_CONSTANT(femtofarad_per_wl_bank,femtofarad_per_wordline_bank_unit);
-BOOST_UNITS_STATIC_CONSTANT(femtofarads_per_wl_bank,femtofarad_per_wordline_bank_unit);
-typedef make_scaled_unit<capacitance_per_wordline_bank_unit,scale<10, static_rational<-18>>>::type attofarad_per_wordline_bank_unit;
-BOOST_UNITS_STATIC_CONSTANT(attofarad_per_wl_bank,attofarad_per_wordline_bank_unit);
-BOOST_UNITS_STATIC_CONSTANT(attofarads_per_wl_bank,attofarad_per_wordline_bank_unit);
-
-
-typedef make_scaled_unit<capacitance_per_square_root_bank_unit,
-                         scale<1, static_rational<0>>>::type capacitance_per_bitline_bank_unit;
-BOOST_UNITS_STATIC_CONSTANT(farad_per_bl_bank,capacitance_per_bitline_bank_unit);
-BOOST_UNITS_STATIC_CONSTANT(farads_per_bl_banks,capacitance_per_bitline_bank_unit);
-
-typedef make_scaled_unit<capacitance_per_bitline_bank_unit,scale<10, static_rational<-9>>>::type nanofarad_per_bitline_bank_unit;
-BOOST_UNITS_STATIC_CONSTANT(nanofarad_per_bl_bank,nanofarad_per_bitline_bank_unit);
-BOOST_UNITS_STATIC_CONSTANT(nanofarads_per_bl_bank,nanofarad_per_bitline_bank_unit);
-typedef make_scaled_unit<capacitance_per_bitline_bank_unit,scale<10, static_rational<-12>>>::type picofarad_per_bitline_bank_unit;
-BOOST_UNITS_STATIC_CONSTANT(picofarad_per_bl_bank,picofarad_per_bitline_bank_unit);
-BOOST_UNITS_STATIC_CONSTANT(picofarads_per_bl_bank,picofarad_per_bitline_bank_unit);
-typedef make_scaled_unit<capacitance_per_bitline_bank_unit,scale<10, static_rational<-15>>>::type femtofarad_per_bitline_bank_unit;
-BOOST_UNITS_STATIC_CONSTANT(femtofarad_per_bl_bank,femtofarad_per_bitline_bank_unit);
-BOOST_UNITS_STATIC_CONSTANT(femtofarads_per_bl_bank,femtofarad_per_bitline_bank_unit);
-typedef make_scaled_unit<capacitance_per_bitline_bank_unit,scale<10, static_rational<-18>>>::type attofarad_per_bitline_bank_unit;
-BOOST_UNITS_STATIC_CONSTANT(attofarad_per_bl_bank,attofarad_per_bitline_bank_unit);
-BOOST_UNITS_STATIC_CONSTANT(attofarads_per_bl_bank,attofarad_per_bitline_bank_unit);
+typedef make_scaled_unit<capacitance_per_bank_unit,scale<10, static_rational<-9>>>::type nanofarad_per_bank_unit;
+BOOST_UNITS_STATIC_CONSTANT(nanofarad_per_bank,nanofarad_per_bank_unit);
+BOOST_UNITS_STATIC_CONSTANT(nanofarads_per_bank,nanofarad_per_bank_unit);
+typedef make_scaled_unit<capacitance_per_bank_unit,scale<10, static_rational<-12>>>::type picofarad_per_bank_unit;
+BOOST_UNITS_STATIC_CONSTANT(picofarad_per_bank,picofarad_per_bank_unit);
+BOOST_UNITS_STATIC_CONSTANT(picofarads_per_bank,picofarad_per_bank_unit);
+typedef make_scaled_unit<capacitance_per_bank_unit,scale<10, static_rational<-15>>>::type femtofarad_per_bank_unit;
+BOOST_UNITS_STATIC_CONSTANT(femtofarad_per_bank,femtofarad_per_bank_unit);
+BOOST_UNITS_STATIC_CONSTANT(femtofarads_per_bank,femtofarad_per_bank_unit);
+typedef make_scaled_unit<capacitance_per_bank_unit,scale<10, static_rational<-18>>>::type attofarad_per_bank_unit;
+BOOST_UNITS_STATIC_CONSTANT(attofarad_per_bank,attofarad_per_bank_unit);
+BOOST_UNITS_STATIC_CONSTANT(attofarads_per_bank,attofarad_per_bank_unit);
 
 
 } // namespace dramspec
 
-inline std::string name_string(const reduce_unit<dramspec::capacitance_per_square_root_bank_unit>::type&)   { return "farad/sqrt_bank"; }
-inline std::string symbol_string(const reduce_unit<dramspec::capacitance_per_square_root_bank_unit>::type&) { return "farad/sqrt_bank"; }
+inline std::string name_string(const reduce_unit<dramspec::capacitance_per_bank_unit>::type&)   { return "farad/bank"; }
+inline std::string symbol_string(const reduce_unit<dramspec::capacitance_per_bank_unit>::type&) { return "farad/bank"; }
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_CAPACITANCE_PER_SQUARE_ROOT_BANK_UNIT_H
+#endif // DRAMSPEC_CAPACITANCE_PER_BANK_UNIT_H

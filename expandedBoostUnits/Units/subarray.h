@@ -37,8 +37,6 @@
 
 #include "../dramSpecUnitsSystem.h"
 
-#include "../DerivedDimensions/subarray.h"
-
 #include "../BaseDimensions/subarray.h"
 
 namespace boost {
@@ -52,26 +50,10 @@ typedef unit<subarray_dimension,dramspec::system>    subarray_unit;
 BOOST_UNITS_STATIC_CONSTANT(subarray,subarray_unit);
 BOOST_UNITS_STATIC_CONSTANT(subarrays,subarray_unit);
 
-typedef unit<square_root_subarray_dimension,dramspec::system>    square_root_subarray_unit;
-typedef make_scaled_unit<square_root_subarray_unit,
-                         scale<1, static_rational<0>>>::type wordline_subarray_unit;
-BOOST_UNITS_STATIC_CONSTANT(wl_subarray,wordline_subarray_unit);
-BOOST_UNITS_STATIC_CONSTANT(wl_subarrays,wordline_subarray_unit);
-
-typedef make_scaled_unit<square_root_subarray_unit,
-                         scale<1, static_rational<0>>>::type bitline_subarray_unit;
-BOOST_UNITS_STATIC_CONSTANT(bl_subarray,bitline_subarray_unit);
-BOOST_UNITS_STATIC_CONSTANT(bl_subarrays,bitline_subarray_unit);
-
-
-
 } // namespace dramspec
 
 inline std::string name_string(const reduce_unit<dramspec::subarray_unit>::type&)   { return "subarray"; }
 inline std::string symbol_string(const reduce_unit<dramspec::subarray_unit>::type&) { return "subarray"; }
-
-inline std::string name_string(const reduce_unit<dramspec::square_root_subarray_unit>::type&)   { return "sqrt_subarray"; }
-inline std::string symbol_string(const reduce_unit<dramspec::square_root_subarray_unit>::type&) { return "sqrt_subarray"; }
 
 } // namespace units
 

@@ -44,9 +44,9 @@ namespace boost {
 
 namespace units {
 
-/// derived dimension for information per tile: INF^1 SQRT_TILE^-2 = INF^1 TILE^-1
+/// derived dimension for information per tile: INF^1 TILE^-1
 typedef derived_dimension<information_base_dimension,1,
-                          square_root_tile_base_dimension,-2>::type information_per_tile_dimension;
+                          tile_base_dimension,-1>::type information_per_tile_dimension;
 
 } // namespace units
 

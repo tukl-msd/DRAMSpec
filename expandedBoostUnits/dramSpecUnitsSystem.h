@@ -51,6 +51,7 @@
 #include "BaseUnits/subarray.h"
 #include "BaseUnits/tile.h"
 #include "BaseUnits/bank.h"
+#include "BaseUnits/page.h"
 
 namespace boost {
 
@@ -60,10 +61,11 @@ namespace dramspec {
 
 /// placeholder class defining dramspec unit system
 typedef make_system<clock_base_unit,
-                    square_root_cell_base_unit,
-                    square_root_subarray_base_unit,
-                    square_root_bank_base_unit,
-                    square_root_tile_base_unit,
+                    cell_base_unit,
+                    subarray_base_unit,
+                    tile_base_unit,
+                    bank_base_unit,
+                    page_base_unit,
                     boost::units::si::meter_base_unit,
                     boost::units::si::kilogram_base_unit,
                     boost::units::si::second_base_unit,

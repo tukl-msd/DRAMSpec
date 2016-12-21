@@ -42,8 +42,7 @@ INCLUDEPATH += /users/chinazzo/libs/boost_1_62_0
 
 #DRAMSpec HEADERS
 #HEADERS += ../core/Bank.h
-#HEADERS += ../core/Tile.h
-#HEADERS += ../core/MemoryArray.h
+HEADERS += ../core/Tile.h
 HEADERS += ../core/SubArray.h
 #HEADERS += ../core/Current.h
 #HEADERS += ../core/Timing.h
@@ -59,41 +58,41 @@ HEADERS += ../expandedBoostUnits/BaseDimensions/cell.h
 HEADERS += ../expandedBoostUnits/BaseDimensions/clock.h
 HEADERS += ../expandedBoostUnits/BaseDimensions/subarray.h
 HEADERS += ../expandedBoostUnits/BaseDimensions/tile.h
+HEADERS += ../expandedBoostUnits/BaseDimensions/page.h
 
 HEADERS += ../expandedBoostUnits/BaseUnits/bank.h
 HEADERS += ../expandedBoostUnits/BaseUnits/cell.h
 HEADERS += ../expandedBoostUnits/BaseUnits/clock.h
 HEADERS += ../expandedBoostUnits/BaseUnits/subarray.h
 HEADERS += ../expandedBoostUnits/BaseUnits/tile.h
+HEADERS += ../expandedBoostUnits/BaseUnits/page.h
 
-HEADERS += ../expandedBoostUnits/DerivedDimensions/bank.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/capacitance_per_bank.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/capacitance_per_cell.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/capacitance_per_length.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/capacitance_per_subarray.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/capacitance_per_tile.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/cell_per_subarray.h
-HEADERS += ../expandedBoostUnits/DerivedDimensions/cell.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/clock_frequency.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/clock_period.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/current_per_frequency.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/information_per_bank.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/information_per_cell.h
+HEADERS += ../expandedBoostUnits/DerivedDimensions/information_per_page.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/information_per_subarray.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/information_per_tile.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/length_per_bank.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/length_per_cell.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/length_per_subarray.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/length_per_tile.h
+HEADERS += ../expandedBoostUnits/DerivedDimensions/page_per_tile.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/resistance_per_bank.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/resistance_per_cell.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/resistance_per_length.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/resistance_per_subarray.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/resistance_per_tile.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/subarray_per_tile.h
-HEADERS += ../expandedBoostUnits/DerivedDimensions/subarray.h
 HEADERS += ../expandedBoostUnits/DerivedDimensions/tile_per_bank.h
-HEADERS += ../expandedBoostUnits/DerivedDimensions/tile.h
 
 HEADERS += ../expandedBoostUnits/Units/dramSpec_units.h
 HEADERS += ../expandedBoostUnits/Units/bank.h
@@ -110,31 +109,33 @@ HEADERS += ../expandedBoostUnits/Units/clock.h
 HEADERS += ../expandedBoostUnits/Units/current_per_frequency.h
 HEADERS += ../expandedBoostUnits/Units/information_per_bank.h
 HEADERS += ../expandedBoostUnits/Units/information_per_cell.h
+HEADERS += ../expandedBoostUnits/Units/information_per_page.h
 HEADERS += ../expandedBoostUnits/Units/information_per_subarray.h
 HEADERS += ../expandedBoostUnits/Units/information_per_tile.h
 HEADERS += ../expandedBoostUnits/Units/length_per_bank.h
 HEADERS += ../expandedBoostUnits/Units/length_per_cell.h
 HEADERS += ../expandedBoostUnits/Units/length_per_subarray.h
 HEADERS += ../expandedBoostUnits/Units/length_per_tile.h
+HEADERS += ../expandedBoostUnits/Units/page_per_tile.h
+HEADERS += ../expandedBoostUnits/Units/page.h
 HEADERS += ../expandedBoostUnits/Units/resistance_per_bank.h
 HEADERS += ../expandedBoostUnits/Units/resistance_per_cell.h
 HEADERS += ../expandedBoostUnits/Units/resistance_per_length.h
 HEADERS += ../expandedBoostUnits/Units/resistance_per_subarray.h
 HEADERS += ../expandedBoostUnits/Units/resistance_per_tile.h
+HEADERS += ../expandedBoostUnits/Units/scaled_si_units.h
+HEADERS += ../expandedBoostUnits/Units/scaled_information_units.h
 HEADERS += ../expandedBoostUnits/Units/subarray_per_tile.h
 HEADERS += ../expandedBoostUnits/Units/subarray.h
 HEADERS += ../expandedBoostUnits/Units/tile_per_bank.h
 HEADERS += ../expandedBoostUnits/Units/tile.h
-HEADERS += ../expandedBoostUnits/Units/scaled_si_units.h
-HEADERS += ../expandedBoostUnits/Units/scaled_information_units.h
 
 HEADERS += ../expandedBoostUnits/expanded_make_system.hpp
 HEADERS += ../expandedBoostUnits/dramSpecUnitsSystem.h
 
 #DRAMSpec SOURCE files
 #SOURCES += ../core/Bank.cpp
-#SOURCES += ../core/Tile.cpp
-#SOURCES += ../core/MemoryArray.cpp
+SOURCES += ../core/Tile.cpp
 SOURCES += ../core/SubArray.cpp
 #SOURCES += ../core/Current.cpp
 #SOURCES += ../core/Timing.cpp
@@ -149,12 +150,12 @@ SOURCES += ../parser/TechnologyValues.cpp
 SOURCES += unit_tests/ArgumentsParserTest.cpp
 SOURCES += unit_tests/TechnologyValuesTest.cpp
 SOURCES += unit_tests/SubArrayTest.cpp
-#SOURCES += unit_tests/TileTest.cpp
+SOURCES += unit_tests/TileTest.cpp
 #SOURCES += unit_tests/BankTest.cpp
 #SOURCES += unit_tests/TimingTest.cpp
 #SOURCES += unit_tests/CurrentTest.cpp
 
-SOURCES += unit_tests/DramSpecTest.cpp
+#SOURCES += unit_tests/DramSpecTest.cpp
 
 SOURCES += unitTestRunner.cpp
 

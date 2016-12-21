@@ -37,7 +37,7 @@
 
 #include "../dramSpecUnitsSystem.h"
 
-#include "../DerivedDimensions/cell.h"
+#include "../BaseDimensions/cell.h"
 
 namespace boost {
 

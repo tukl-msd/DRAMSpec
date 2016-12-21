@@ -32,26 +32,26 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_LENGTH_PER_SQUARE_ROOT_BANK_DERIVED_DIMENSION_H
-#define DRAMSPEC_LENGTH_PER_SQUARE_ROOT_BANK_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_LENGTH_PER_BANK_DERIVED_DIMENSION_H
+#define DRAMSPEC_LENGTH_PER_BANK_DERIVED_DIMENSION_H
 
 #include <boost/units/derived_dimension.hpp>
 
 #include <boost/units/physical_dimensions/length.hpp>
 #include "../BaseDimensions/bank.h"
 
-namespace boost {DRAMSPEC_CLOCK_PERIOD_DERIVED_DIMENSION_H
+namespace boost {
 
 namespace units {
 
-/// derived dimension for length per bank in either word- or bitline direction:
+/// derived dimension for length per bank
 /// L^1 BANK^-1
 typedef derived_dimension<length_base_dimension,1,
-                          square_root_bank_base_dimension,-1>::type
-                                        length_per_square_root_bank_dimension;
+                          bank_base_dimension,-1>::type
+                                        length_per_bank_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_LENGTH_PER_SQUARE_ROOT_BANK_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_LENGTH_PER_BANK_DERIVED_DIMENSION_H

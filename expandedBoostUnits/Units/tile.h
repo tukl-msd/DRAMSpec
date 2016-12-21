@@ -37,7 +37,7 @@
 
 #include "../dramSpecUnitsSystem.h"
 
-#include "../DerivedDimensions/tile.h"
+#include "../BaseDimensions/tile.h"
 
 namespace boost {
 

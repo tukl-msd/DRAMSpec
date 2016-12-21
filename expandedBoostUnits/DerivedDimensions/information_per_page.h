@@ -32,22 +32,24 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_TILE_DERIVED_DIMENSION_H
-#define DRAMSPEC_TILE_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_INFORMATION_PER_PAGE_DERIVED_DIMENSION_H
+#define DRAMSPEC_INFORMATION_PER_PAGE_DERIVED_DIMENSION_H
 
 #include <boost/units/derived_dimension.hpp>
 
-#include "../BaseDimensions/tile.h"
+#include <boost/units/systems/information/bit.hpp>
+#include "../BaseDimensions/page.h"
 
 namespace boost {
 
 namespace units {
 
-/// derived dimension for number of tiles in 2D space: SQRT_TILE^2 = TILE
-typedef derived_dimension<square_root_tile_base_dimension,2>::type tile_dimension;
+/// derived dimension for information per page: INF^1 PAGE^-1
+typedef derived_dimension<information_base_dimension,1,
+                          page_base_dimension,-1>::type information_per_page_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_TILE_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_INFORMATION_PER_PAGE_DERIVED_DIMENSION_H

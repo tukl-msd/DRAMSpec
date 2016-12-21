@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_LENGTH_PER_SQUARE_ROOT_SUBARRAY_DERIVED_DIMENSION_H
-#define DRAMSPEC_LENGTH_PER_SQUARE_ROOT_SUBARRAY_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_LENGTH_PER_SUBARRAY_DERIVED_DIMENSION_H
+#define DRAMSPEC_LENGTH_PER_SUBARRAY_DERIVED_DIMENSION_H
 
 #include <boost/units/derived_dimension.hpp>
 
@@ -44,14 +44,14 @@ namespace boost {
 
 namespace units {
 
-/// derived dimension for length per subarray in either word- or bitline direction:
-/// L^1 SQRT_SUBARRAY^-1
+/// derived dimension for length per subarray
+/// L^1 SUBARRAY^-1
 typedef derived_dimension<length_base_dimension,1,
-                          square_root_subarray_base_dimension,-1>::type
-                                        length_per_square_root_subarray_dimension;
+                          subarray_base_dimension,-1>::type
+                                        length_per_subarray_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_LENGTH_PER_SQUARE_ROOT_SUBARRAY_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_LENGTH_PER_SUBARRAY_DERIVED_DIMENSION_H

@@ -36,24 +36,25 @@
  *          Andr'e Lucas Chinazzo
  */
 
-//This class repesents the third level of abstraction of the DRAM structure,
-//being a tilea grouping of subarrays which are a grouping of cells.
 #ifndef TILE_H
 #define TILE_H
 
+//This class repesents the third level of abstraction of the DRAM structure,
+//being the tile a grouping of subarrays which are a grouping of cells.
+
 #include "SubArray.h"
-#include <iostream>
+
 class Tile : public SubArray
 {
   public:
     Tile(const std::string& techname,const std::string& paraname):
         SubArray(techname,paraname),
-        tileSize(0),
-        tileWidth(0),
-        tileHeight(0),
+        tileStorage(0*drs::bit_per_tile),
+        tileWidth(0*drs::micrometer_per_tile),
+        tileHeight(0*drs::micrometer_per_tile),
 
-        nSubArrayRowPerTile(0*drs::sa_row_per_tile),
-        nSubArrayColumnPerTile(0*drs::sa_col_per_tile)
+        nSubArraysPerArrayBlock(0*drs::subarray_per_tile),
+        nArrayBlocksPerTile(0*drs::subarray_per_tile)
     {
         //order of functions is important
         bool TINIT = false;
@@ -64,18 +65,10 @@ class Tile : public SubArray
                 "\t"<<"Order of Functions is important"<<"\n";
                 throw(" Function for Tile Initialization not called");
         }
-        bool TLENGTH = false;
-        TLENGTH = tileLenghtCalc();
-        if(TLENGTH == false)
-        {
-                std::cout<<"ERROR: Function for Tile Lengths calculation not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-                throw(" Function for Tile Width and Height calculation not called");
-        }
     }
   public:
     // Size in number of bits of a single tile
-    bu::quantity<drs::bit_per_tile_unit> tileSize;
+    bu::quantity<drs::information_per_tile_unit> tileStorage;
 
     // Width in micrometer of a single tile
     bu::quantity<drs::micrometer_per_tile_unit> tileWidth;
@@ -83,15 +76,19 @@ class Tile : public SubArray
     bu::quantity<drs::micrometer_per_tile_unit> tileHeight;
 
     // Number of subarrays per tile in the wordline direction
-    bu::quantity<drs::subarray_row_per_tile> nSubArrayRowPerTile;
+    bu::quantity<drs::subarray_per_tile_unit> nSubArraysPerArrayBlock;
     // Number of subarrays per tile in the bitline direction
-    bu::quantity<drs::subarray_column_per_tile> nSubArrayColumnPerTile;
+    bu::quantity<drs::subarray_per_tile_unit> nArrayBlocksPerTile;
 
-    bool tileInit();
+    bool tileStorageCalc();
 
+    void checkTileDataConsistency();
     bool tileLenghtCalc();
 
     bool tileAreaCalc();
+
+    bool tileInit();
+
 };
 
 #endif // TILE_H

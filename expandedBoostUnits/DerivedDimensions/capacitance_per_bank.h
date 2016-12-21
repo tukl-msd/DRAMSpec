@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_CAPACITANCE_PER_SQUARE_ROOT_BANK_DERIVED_DIMENSION_H
-#define DRAMSPEC_CAPACITANCE_PER_SQUARE_ROOT_BANK_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_CAPACITANCE_PER_BANK_DERIVED_DIMENSION_H
+#define DRAMSPEC_CAPACITANCE_PER_BANK_DERIVED_DIMENSION_H
 
 #include <boost/units/derived_dimension.hpp>
 
@@ -47,17 +47,17 @@ namespace boost {
 
 namespace units {
 
-/// derived dimension for capacitance per bank in either word- or bitline direction:
-/// L^-2 M^-1 T^4 I^2 SQRT_BANK^-1
+/// derived dimension for capacitance per bank
+/// L^-2 M^-1 T^4 I^2 BANK^-1
 typedef derived_dimension<length_base_dimension,-2,
                           mass_base_dimension,-1,
                           time_base_dimension,4,
                           current_base_dimension,2,
-                          square_root_bank_base_dimension,-1>::type
-                                        capacitance_per_square_root_bank_dimension;
+                          bank_base_dimension,-1>::type
+                                        capacitance_per_bank_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_CAPACITANCE_PER_SQUARE_ROOT_BANK_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_CAPACITANCE_PER_BANK_DERIVED_DIMENSION_H

@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_SQUARE_ROOT_CELL_PER_SQUARE_ROOT_SUBARRAY_UNIT_H
-#define DRAMSPEC_SQUARE_ROOT_CELL_PER_SQUARE_ROOT_SUBARRAY_UNIT_H
+#ifndef DRAMSPEC_CELL_PER_SUBARRAY_UNIT_H
+#define DRAMSPEC_CELL_PER_SUBARRAY_UNIT_H
 
 #include "../dramSpecUnitsSystem.h"
 #include "../DerivedDimensions/cell_per_subarray.h"
@@ -44,24 +44,17 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<square_root_cell_per_square_root_subarray_dimension,dramspec::system> square_root_cell_per_square_root_subarray_unit;
-
-typedef make_scaled_unit<square_root_cell_per_square_root_subarray_unit,
-                         scale<1, static_rational<0>>>::type wordline_cell_per_wordline_subarray_unit;
-BOOST_UNITS_STATIC_CONSTANT(wl_cell_per_wl_subarray,wordline_cell_per_wordline_subarray_unit);
-BOOST_UNITS_STATIC_CONSTANT(wl_cells_per_wl_subarray,wordline_cell_per_wordline_subarray_unit);
-
-typedef make_scaled_unit<square_root_cell_per_square_root_subarray_unit,
-                         scale<1, static_rational<0>>>::type bitline_cell_per_bitline_subarray_unit;
-BOOST_UNITS_STATIC_CONSTANT(bl_cell_per_bl_subarray,bitline_cell_per_bitline_subarray_unit);
-BOOST_UNITS_STATIC_CONSTANT(bl_cells_per_bl_subarray,bitline_cell_per_bitline_subarray_unit);
+typedef unit<cell_per_subarray_dimension,dramspec::system> cell_per_subarray_unit;
+BOOST_UNITS_STATIC_CONSTANT(cell_per_subarray,cell_per_subarray_unit);
+BOOST_UNITS_STATIC_CONSTANT(cells_per_subarray,cell_per_subarray_unit);
 
 } // namespace dramspec
 
-inline std::string name_string(const reduce_unit<dramspec::square_root_cell_per_square_root_subarray_unit>::type&)   { return "sqrt_cell/sqrt_subarray"; }
-inline std::string symbol_string(const reduce_unit<dramspec::square_root_cell_per_square_root_subarray_unit>::type&) { return "sqrt_cell/sqrt_subarray"; }
+inline std::string name_string(const reduce_unit<dramspec::cell_per_subarray_unit>::type&)   { return "cell/subarray"; }
+inline std::string symbol_string(const reduce_unit<dramspec::cell_per_subarray_unit>::type&) { return "cell/subarray"; }
+
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_SQUARE_ROOT_CELL_PER_SQUARE_ROOT_SUBARRAY_UNIT_H
+#endif // DRAMSPEC_CELL_PER_SUBARRAY_UNIT_H

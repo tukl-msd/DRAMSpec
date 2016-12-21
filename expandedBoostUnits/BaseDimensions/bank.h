@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_SQUARE_ROOT_BANK_BASE_DIMENSION_H
-#define DRAMSPEC_SQUARE_ROOT_BANK_BASE_DIMENSION_H
+#ifndef DRAMSPEC_BANK_BASE_DIMENSION_H
+#define DRAMSPEC_BANK_BASE_DIMENSION_H
 
 #include <boost/units/config.hpp>
 #include <boost/units/base_dimension.hpp>
@@ -42,11 +42,9 @@ namespace boost {
 
 namespace units {
 
-/// base dimension of number of banks in either direction (word- or bitline direction)
-/// the square root bank must be defined as a base dimension
-///  because boost/units do not support derived dimension which have not integer exponent
-struct square_root_bank_base_dimension :
-    boost::units::base_dimension<square_root_bank_base_dimension,-34>
+/// base dimension of #banks
+struct bank_base_dimension :
+    boost::units::base_dimension<bank_base_dimension,-34>
 { };
 
 } // namespace units
@@ -57,7 +55,7 @@ struct square_root_bank_base_dimension :
 
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::units::square_root_bank_base_dimension)
+BOOST_TYPEOF_REGISTER_TYPE(boost::units::bank_base_dimension)
 
 #endif
 
@@ -65,11 +63,11 @@ namespace boost {
 
 namespace units {
 
-/// dimension of number of banks in either direction (word- or bitline direction)
-typedef square_root_bank_base_dimension::dimension_type     square_root_bank_dimension;
+/// dimension of number of banks
+typedef bank_base_dimension::dimension_type bank_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // NEW_BASE_DIMENSIONS_H
+#endif // DRAMSPEC_BANK_BASE_DIMENSION_H

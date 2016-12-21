@@ -32,13 +32,12 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_CAPACITANCE_PER_CELL_UNIT_H
-#define DRAMSPEC_CAPACITANCE_PER_CELL_UNIT_H
-
-#include <boost/units/make_scaled_unit.hpp>
+#ifndef DRAMSPEC_PAGE_UNIT_H
+#define DRAMSPEC_PAGE_UNIT_H
 
 #include "../dramSpecUnitsSystem.h"
-#include "../DerivedDimensions/capacitance_per_cell.h"
+
+#include "../BaseDimensions/page.h"
 
 namespace boost {
 
@@ -46,29 +45,19 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<capacitance_per_cell_dimension,dramspec::system> capacitance_per_cell_unit;
+typedef unit<page_dimension,dramspec::system>    page_unit;
 
-typedef make_scaled_unit<capacitance_per_cell_unit,scale<10, static_rational<-9>>>::type nanofarad_per_cell_unit;
-BOOST_UNITS_STATIC_CONSTANT(nanofarad_per_cell,nanofarad_per_cell_unit);
-BOOST_UNITS_STATIC_CONSTANT(nanofarads_per_cell,nanofarad_per_cell_unit);
-typedef make_scaled_unit<capacitance_per_cell_unit,scale<10, static_rational<-12>>>::type picofarad_per_cell_unit;
-BOOST_UNITS_STATIC_CONSTANT(picofarad_per_cell,picofarad_per_cell_unit);
-BOOST_UNITS_STATIC_CONSTANT(picofarads_per_cell,picofarad_per_cell_unit);
-typedef make_scaled_unit<capacitance_per_cell_unit,scale<10, static_rational<-15>>>::type femtofarad_per_cell_unit;
-BOOST_UNITS_STATIC_CONSTANT(femtofarad_per_cell,femtofarad_per_cell_unit);
-BOOST_UNITS_STATIC_CONSTANT(femtofarads_per_cell,femtofarad_per_cell_unit);
-typedef make_scaled_unit<capacitance_per_cell_unit,scale<10, static_rational<-18>>>::type attofarad_per_cell_unit;
-BOOST_UNITS_STATIC_CONSTANT(attofarad_per_cell,attofarad_per_cell_unit);
-BOOST_UNITS_STATIC_CONSTANT(attofarads_per_cell,attofarad_per_cell_unit);
+BOOST_UNITS_STATIC_CONSTANT(page,page_unit);
+BOOST_UNITS_STATIC_CONSTANT(pages,page_unit);
 
 
 } // namespace dramspec
 
-inline std::string name_string(const reduce_unit<dramspec::capacitance_per_cell_unit>::type&)   { return "farad/cell"; }
-inline std::string symbol_string(const reduce_unit<dramspec::capacitance_per_cell_unit>::type&) { return "farad/cell"; }
+inline std::string name_string(const reduce_unit<dramspec::page_unit>::type&)   { return "page"; }
+inline std::string symbol_string(const reduce_unit<dramspec::page_unit>::type&) { return "page"; }
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_CAPACITANCE_PER_CELL_UNIT_H
+#endif // DRAMSPEC_PAGE_UNIT_H

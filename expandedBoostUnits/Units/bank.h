@@ -37,7 +37,7 @@
 
 #include "../dramSpecUnitsSystem.h"
 
-#include "../DerivedDimensions/bank.h"
+#include "../BaseDimensions/bank.h"
 
 namespace boost {
 

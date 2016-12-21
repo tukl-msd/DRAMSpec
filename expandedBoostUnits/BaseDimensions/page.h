@@ -32,43 +32,42 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_CAPACITANCE_PER_CELL_UNIT_H
-#define DRAMSPEC_CAPACITANCE_PER_CELL_UNIT_H
+#ifndef DRAMSPEC_PAGE_BASE_DIMENSION_H
+#define DRAMSPEC_PAGE_BASE_DIMENSION_H
 
-#include <boost/units/make_scaled_unit.hpp>
-
-#include "../dramSpecUnitsSystem.h"
-#include "../DerivedDimensions/capacitance_per_cell.h"
+#include <boost/units/config.hpp>
+#include <boost/units/base_dimension.hpp>
 
 namespace boost {
 
 namespace units {
 
-namespace dramspec {
-
-typedef unit<capacitance_per_cell_dimension,dramspec::system> capacitance_per_cell_unit;
-
-typedef make_scaled_unit<capacitance_per_cell_unit,scale<10, static_rational<-9>>>::type nanofarad_per_cell_unit;
-BOOST_UNITS_STATIC_CONSTANT(nanofarad_per_cell,nanofarad_per_cell_unit);
-BOOST_UNITS_STATIC_CONSTANT(nanofarads_per_cell,nanofarad_per_cell_unit);
-typedef make_scaled_unit<capacitance_per_cell_unit,scale<10, static_rational<-12>>>::type picofarad_per_cell_unit;
-BOOST_UNITS_STATIC_CONSTANT(picofarad_per_cell,picofarad_per_cell_unit);
-BOOST_UNITS_STATIC_CONSTANT(picofarads_per_cell,picofarad_per_cell_unit);
-typedef make_scaled_unit<capacitance_per_cell_unit,scale<10, static_rational<-15>>>::type femtofarad_per_cell_unit;
-BOOST_UNITS_STATIC_CONSTANT(femtofarad_per_cell,femtofarad_per_cell_unit);
-BOOST_UNITS_STATIC_CONSTANT(femtofarads_per_cell,femtofarad_per_cell_unit);
-typedef make_scaled_unit<capacitance_per_cell_unit,scale<10, static_rational<-18>>>::type attofarad_per_cell_unit;
-BOOST_UNITS_STATIC_CONSTANT(attofarad_per_cell,attofarad_per_cell_unit);
-BOOST_UNITS_STATIC_CONSTANT(attofarads_per_cell,attofarad_per_cell_unit);
-
-
-} // namespace dramspec
-
-inline std::string name_string(const reduce_unit<dramspec::capacitance_per_cell_unit>::type&)   { return "farad/cell"; }
-inline std::string symbol_string(const reduce_unit<dramspec::capacitance_per_cell_unit>::type&) { return "farad/cell"; }
+/// base dimension of #pages
+struct page_base_dimension :
+    boost::units::base_dimension<page_base_dimension,-35>
+{ };
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_CAPACITANCE_PER_CELL_UNIT_H
+#if BOOST_UNITS_HAS_BOOST_TYPEOF
+
+#include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
+
+BOOST_TYPEOF_REGISTER_TYPE(boost::units::page_base_dimension)
+
+#endif
+
+namespace boost {
+
+namespace units {
+
+/// dimension of #pages
+typedef page_base_dimension::dimension_type     page_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+#endif // DRAMSPEC_PAGE_BASE_DIMENSION_H

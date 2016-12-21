@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_LENGTH_PER_SQUARE_ROOT_TILE_DERIVED_DIMENSION_H
-#define DRAMSPEC_LENGTH_PER_SQUARE_ROOT_TILE_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_LENGTH_PER_TILE_DERIVED_DIMENSION_H
+#define DRAMSPEC_LENGTH_PER_TILE_DERIVED_DIMENSION_H
 
 #include <boost/units/derived_dimension.hpp>
 
@@ -44,14 +44,14 @@ namespace boost {
 
 namespace units {
 
-/// derived dimension for length per tile in either word- or bitline direction:
+/// derived dimension for length per tile
 /// L^1 TILE^-1
 typedef derived_dimension<length_base_dimension,1,
-                          square_root_tile_base_dimension,-1>::type
-                                        length_per_square_root_tile_dimension;
+                          tile_base_dimension,-1>::type
+                                        length_per_tile_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_LENGTH_PER_SQUARE_ROOT_TILE_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_LENGTH_PER_TILE_DERIVED_DIMENSION_H

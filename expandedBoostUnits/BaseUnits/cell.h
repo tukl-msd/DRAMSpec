@@ -47,12 +47,12 @@ namespace units {
 
 namespace dramspec {
 
-struct square_root_cell_base_unit:
-        public base_unit<square_root_cell_base_unit,
-                         square_root_cell_dimension, -31>
+struct cell_base_unit:
+        public base_unit<cell_base_unit,
+                         cell_dimension, -31>
 {
-    static std::string name()   { return("square_root_cell"); }
-    static std::string symbol() { return("square_root_cell"); }
+    static std::string name()   { return("cell"); }
+    static std::string symbol() { return("cell"); }
 };
 
 } // namespace dramspec
@@ -65,7 +65,7 @@ struct square_root_cell_base_unit:
 
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::units::dramspec::square_root_cell_base_unit)
+BOOST_TYPEOF_REGISTER_TYPE(boost::units::dramspec::cell_base_unit)
 
 #endif
 

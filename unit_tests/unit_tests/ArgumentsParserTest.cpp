@@ -395,4 +395,4 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_different_number )
 
 BOOST_AUTO_TEST_SUITE_END()
 
-#endif
+#endif // ARGUMENTSPARSERTEST_CPP

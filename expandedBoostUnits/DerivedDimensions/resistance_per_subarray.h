@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_RESISTANCE_PER_SQUARE_ROOT_SUBARRAY_DERIVED_DIMENSION_H
-#define DRAMSPEC_RESISTANCE_PER_SQUARE_ROOT_SUBARRAY_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_RESISTANCE_PER_SUBARRAY_DERIVED_DIMENSION_H
+#define DRAMSPEC_RESISTANCE_PER_SUBARRAY_DERIVED_DIMENSION_H
 
 #include <boost/units/derived_dimension.hpp>
 
@@ -47,17 +47,17 @@ namespace boost {
 
 namespace units {
 
-/// derived dimension for resistance per subarray in either word- or bitline direction:
-/// L^2 M^1 T^-3 I^-2 SQRT_SUBARRAY^-1
+/// derived dimension for resistance per subarray
+/// L^2 M^1 T^-3 I^-2 SUBARRAY^-1
 typedef derived_dimension<length_base_dimension,2,
                           mass_base_dimension,1,
                           time_base_dimension,-3,
                           current_base_dimension,-2,
-                          square_root_subarray_base_dimension,-1>::type
-                                        resistance_per_square_root_subarray_dimension;
+                          subarray_base_dimension,-1>::type
+                                        resistance_per_subarray_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_RESISTANCE_PER_SQUARE_ROOT_SUBARRAY_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_RESISTANCE_PER_SUBARRAY_DERIVED_DIMENSION_H

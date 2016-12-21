@@ -45,9 +45,9 @@ namespace boost {
 
 namespace units {
 
-/// derived dimension for information per subarray: INF^1 SQRT_SUBARRAY^-2 = INF^1 SUBARRAY^-1
+/// derived dimension for information per subarray: INF^1 SUBARRAY^-1
 typedef derived_dimension<information_base_dimension,1,
-                          square_root_subarray_base_dimension,-2>::type information_per_subarray_dimension;
+                          subarray_base_dimension,-1>::type information_per_subarray_dimension;
 
 } // namespace units
 

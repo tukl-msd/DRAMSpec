@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_SQUARE_ROOT_CELL_BASE_DIMENSION_H
-#define DRAMSPEC_SQUARE_ROOT_CELL_BASE_DIMENSION_H
+#ifndef DRAMSPEC_CELL_BASE_DIMENSION_H
+#define DRAMSPEC_CELL_BASE_DIMENSION_H
 
 #include <boost/units/config.hpp>
 #include <boost/units/base_dimension.hpp>
@@ -42,11 +42,9 @@ namespace boost {
 
 namespace units {
 
-/// base dimension of number of cells in either direction (word- or bitline direction)
-/// the square root cell must be defined as a base dimension
-///  because boost/units do not support derived dimension which have not integer exponent
-struct square_root_cell_base_dimension :
-    boost::units::base_dimension<square_root_cell_base_dimension,-31>
+/// base dimension of #cells
+struct cell_base_dimension :
+    boost::units::base_dimension<cell_base_dimension,-31>
 { };
 
 } // namespace units
@@ -57,7 +55,7 @@ struct square_root_cell_base_dimension :
 
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::units::square_root_cell_base_dimension)
+BOOST_TYPEOF_REGISTER_TYPE(boost::units::cell_base_dimension)
 
 #endif
 
@@ -65,11 +63,11 @@ namespace boost {
 
 namespace units {
 
-/// dimension of number of cells in either direction (word- or bitline direction)
-typedef square_root_cell_base_dimension::dimension_type     square_root_cell_dimension;
+/// dimension of #cells
+typedef cell_base_dimension::dimension_type     cell_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_SQUARE_ROOT_CELL_BASE_DIMENSION_H
+#endif // DRAMSPEC_CELL_BASE_DIMENSION_H

@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_SQUARE_ROOT_SUBARRAY_BASE_UNIT_H
-#define DRAMSPEC_SQUARE_ROOT_SUBARRAY_BASE_UNIT_H
+#ifndef DRAMSPEC_SUBARRAY_BASE_UNIT_H
+#define DRAMSPEC_SUBARRAY_BASE_UNIT_H
 
 #include <string>
 
@@ -47,12 +47,12 @@ namespace units {
 
 namespace dramspec {
 
-struct square_root_subarray_base_unit:
-        public base_unit<square_root_subarray_base_unit,
-                         square_root_subarray_dimension, -32>
+struct subarray_base_unit:
+        public base_unit<subarray_base_unit,
+                         subarray_dimension, -32>
 {
-    static std::string name()   { return("square_root_subarray"); }
-    static std::string symbol() { return("square_root_subarray"); }
+    static std::string name()   { return("subarray"); }
+    static std::string symbol() { return("subarray"); }
 };
 
 } // namespace dramspec
@@ -65,8 +65,8 @@ struct square_root_subarray_base_unit:
 
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::units::dramspec::square_root_subarray_base_unit)
+BOOST_TYPEOF_REGISTER_TYPE(boost::units::dramspec::subarray_base_unit)
 
 #endif
 
-#endif // DRAMSPEC_SQUARE_ROOT_SUBARRAY_BASE_UNIT_H
+#endif // DRAMSPEC_SUBARRAY_BASE_UNIT_H

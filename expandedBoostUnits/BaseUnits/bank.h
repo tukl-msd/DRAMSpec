@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_SQUARE_ROOT_BANK_BASE_UNIT_H
-#define DRAMSPEC_SQUARE_ROOT_BANK_BASE_UNIT_H
+#ifndef DRAMSPEC_BANK_BASE_UNIT_H
+#define DRAMSPEC_BANK_BASE_UNIT_H
 
 #include <string>
 
@@ -47,12 +47,12 @@ namespace units {
 
 namespace dramspec {
 
-struct square_root_bank_base_unit:
-        public base_unit<square_root_bank_base_unit,
-                         square_root_bank_dimension, -34>
+struct bank_base_unit:
+        public base_unit<bank_base_unit,
+                         bank_dimension, -34>
 {
-    static std::string name()   { return("square_root_bank"); }
-    static std::string symbol() { return("square_root_bank"); }
+    static std::string name()   { return("bank"); }
+    static std::string symbol() { return("bank"); }
 };
 
 } // namespace dramspec
@@ -65,8 +65,8 @@ struct square_root_bank_base_unit:
 
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 
-BOOST_TYPEOF_REGISTER_TYPE(boost::units::dramspec::square_root_bank_base_unit)
+BOOST_TYPEOF_REGISTER_TYPE(boost::units::dramspec::bank_base_unit)
 
 #endif
 
-#endif // DRAMSPEC_SQUARE_ROOT_BANK_BASE_UNIT_H
+#endif // DRAMSPEC_BANK_BASE_UNIT_H

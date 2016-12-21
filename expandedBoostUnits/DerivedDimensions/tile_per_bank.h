@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_SQUARE_ROOT_TILE_PER_SQUARE_ROOT_BANK_DERIVED_DIMENSION_H
-#define DRAMSPEC_SQUARE_ROOT_TILE_PER_SQUARE_ROOT_BANK_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_TILE_PER_BANK_DERIVED_DIMENSION_H
+#define DRAMSPEC_TILE_PER_BANK_DERIVED_DIMENSION_H
 
 #include <boost/units/derived_dimension.hpp>
 
@@ -44,16 +44,10 @@ namespace boost {
 
 namespace units {
 
-/// derived dimension for tile per bank in either word- or bitline direction:
-/// SQRT_TILE^1 SQRT_BANK^-1
-typedef derived_dimension<square_root_tile_base_dimension,1,
-                          square_root_bank_base_dimension,-1>::type
-                                        square_root_tile_per_square_root_bank_dimension;
-
-/// derived dimension for tile per bank in 2D space:
-/// SQRT_TILE^2 SQRT_BANK^-2 = TILE^1 BANK^-1
-typedef derived_dimension<square_root_tile_base_dimension,2,
-                          square_root_bank_base_dimension,-2>::type
+/// derived dimension for #tiles per bank
+/// TILE^1 BANK^-1
+typedef derived_dimension<tile_base_dimension,1,
+                          bank_base_dimension,-1>::type
                                         tile_per_bank_dimension;
 
 
@@ -61,4 +55,4 @@ typedef derived_dimension<square_root_tile_base_dimension,2,
 
 } // namespace boost
 
-#endif // DRAMSPEC_SQUARE_ROOT_TILE_PER_SQUARE_ROOT_BANK_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_TILE_PER_BANK_DERIVED_DIMENSION_H

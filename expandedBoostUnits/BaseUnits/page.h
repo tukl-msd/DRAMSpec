@@ -32,22 +32,41 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_CELL_DERIVED_DIMENSION_H
-#define DRAMSPEC_CELL_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_PAGE_BASE_UNIT_H
+#define DRAMSPEC_PAGE_BASE_UNIT_H
 
-#include <boost/units/derived_dimension.hpp>
+#include <string>
 
-#include "../BaseDimensions/cell.h"
+#include <boost/units/config.hpp>
+#include <boost/units/base_unit.hpp>
+#include "../BaseDimensions/page.h"
 
 namespace boost {
 
 namespace units {
 
-/// derived dimension for number of cells in 2D space: SQRT_CELL^2 = CELL
-typedef derived_dimension<square_root_cell_base_dimension,2>::type cell_dimension;
+namespace dramspec {
+
+struct page_base_unit:
+        public base_unit<page_base_unit,
+                         page_dimension, -35>
+{
+    static std::string name()   { return("page"); }
+    static std::string symbol() { return("page"); }
+};
+
+} // namespace dramspec
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_CELL_DERIVED_DIMENSION_H
+#if BOOST_UNITS_HAS_BOOST_TYPEOF
+
+#include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
+
+BOOST_TYPEOF_REGISTER_TYPE(boost::units::dramspec::page_base_unit)
+
+#endif
+
+#endif // DRAMSPEC_PAGE_BASE_UNIT_H

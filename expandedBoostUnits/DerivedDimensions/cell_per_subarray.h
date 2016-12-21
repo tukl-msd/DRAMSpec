@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_SQUARE_ROOT_CELL_PER_SQUARE_ROOT_SUBARRAY_DERIVED_DIMENSION_H
-#define DRAMSPEC_SQUARE_ROOT_CELL_PER_SQUARE_ROOT_SUBARRAY_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_CELL_PER_SUBARRAY_DERIVED_DIMENSION_H
+#define DRAMSPEC_CELL_PER_SUBARRAY_DERIVED_DIMENSION_H
 
 #include <boost/units/derived_dimension.hpp>
 
@@ -45,14 +45,14 @@ namespace boost {
 
 namespace units {
 
-/// derived dimension for cell per subarray in either word- or bitline direction:
-/// SQRT_CELL^1 SQRT_SUBARRAY^-1
-typedef derived_dimension<square_root_cell_base_dimension,1,
-                          square_root_subarray_base_dimension,-1>::type
-                                        square_root_cell_per_square_root_subarray_dimension;
+/// derived dimension for #cell per subarray
+/// CELL^1 SUBARRAY^-1
+typedef derived_dimension<cell_base_dimension,1,
+                          subarray_base_dimension,-1>::type
+                                        cell_per_subarray_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_SQUARE_ROOT_CELL_PER_SQUARE_ROOT_SUBARRAY_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_CELL_PER_SUBARRAY_DERIVED_DIMENSION_H

@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_SQUARE_ROOT_SUBARRAY_PER_SQUARE_ROOT_TILE_DERIVED_DIMENSION_H
-#define DRAMSPEC_SQUARE_ROOT_SUBARRAY_PER_SQUARE_ROOT_TILE_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_SUBARRAY_PER_TILE_DERIVED_DIMENSION_H
+#define DRAMSPEC_SUBARRAY_PER_TILE_DERIVED_DIMENSION_H
 
 #include <boost/units/derived_dimension.hpp>
 
@@ -44,14 +44,14 @@ namespace boost {
 
 namespace units {
 
-/// derived dimension for subarray per tile in either word- or bitline direction:
-/// SQRT_CELL^1 SQRT_SUBARRAY^-1
-typedef derived_dimension<square_root_subarray_base_dimension,1,
-                          square_root_tile_base_dimension,-1>::type
-                                        square_root_subarray_per_square_root_tile_dimension;
+/// derived dimension for #subarrays per tile
+/// CELL^1 SUBARRAY^-1
+typedef derived_dimension<subarray_base_dimension,1,
+                          tile_base_dimension,-1>::type
+                                        subarray_per_tile_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_SQUARE_ROOT_SUBARRAY_PER_SQUARE_ROOT_TILE_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_SUBARRAY_PER_TILE_DERIVED_DIMENSION_H

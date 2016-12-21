@@ -40,9 +40,12 @@ namespace drs=boost::units::dramspec;
 bool
 SubArray::subArrayStorageCalc()
 {
-    subArrayStorage =   (cellsPerLWL - cellsPerLWLRedundancy)
-                      * (cellsPerLBL - cellsPerLBLRedundancy)
-                      * drs::bit_per_cell;
+    subArrayRowStorage = (cellsPerLBL - cellsPerLBLRedundancy)
+                         * drs::bit_per_cell;
+
+    subArrayStorage = subArrayRowStorage
+                      * (cellsPerLWL - cellsPerLWLRedundancy)
+                      / drs::cell_per_subarray;
 
     return true;
 }
@@ -50,9 +53,9 @@ SubArray::subArrayStorageCalc()
 bool
 SubArray::subArrayLengthCalc()
 {
-    subArrayWidth = cellsPerLWL * cellWidth + WLDriverWidth/drs::wl_subarray;
+    subArrayWidth = cellsPerLWL * cellWidth + WLDriverWidth/drs::subarray;
 
-    subArrayHeight = cellsPerLBL * cellHeight;
+    subArrayHeight = cellsPerLBL * cellHeight + BLSenseAmpHeight/drs::subarray;
 
     return true;
 }
@@ -64,41 +67,41 @@ SubArray::driversinit()
     // give for a page size of 2 kB.If the page size becomes
     // smaller we will need a to drive less => bigger resistance
     // and if the page size gets
-    if ( pageSize < 2*drs::kibibyte ) {
+    if ( pageStorage < 16*drs::kibibit_per_page ) {
         GWLDriverResistance = GWLDriverResistance + 200*si::ohm;
     }
-    else if ( pageSize == 2*drs::kibibyte ) {
+    else if ( pageStorage == 16*drs::kibibit_per_page ) {
         GWLDriverResistance = GWLDriverResistance;
     }
-    else if( pageSize == 4*drs::kibibyte ) {
+    else if( pageStorage == 32*drs::kibibit_per_page ) {
         GWLDriverResistance = GWLDriverResistance - 200*si::ohm;
     }
-    else if( pageSize == 8*drs::kibibyte ) {
+    else if( pageStorage == 64*drs::kibibit_per_page ) {
         GWLDriverResistance = GWLDriverResistance - 300*si::ohm;
     }
     else {
         GWLDriverResistance = GWLDriverResistance - 400*si::ohm;
     }
 
-    if((cellsPerLWL - cellsPerLWLRedundancy) < 256*drs::wl_cells_per_wl_subarray ) {
-        LWLDriverResistance = LWLDriverResistance + 200*drs::ohms_per_wl_subarray ;
-        WRResistance = WRResistance + 200*drs::ohms_per_bl_subarray;
+    if((cellsPerLWL - cellsPerLWLRedundancy) < 256*drs::cells_per_subarray ) {
+        LWLDriverResistance = LWLDriverResistance + 200*drs::ohms_per_subarray ;
+        WRResistance = WRResistance + 200*drs::ohms_per_subarray;
     }
-    else if((cellsPerLWL - cellsPerLWLRedundancy) == 256*drs::wl_cells_per_wl_subarray ) {
-        LWLDriverResistance = LWLDriverResistance + 100*drs::ohms_per_wl_subarray;
-        WRResistance = WRResistance + 100*drs::ohms_per_bl_subarray ;
+    else if((cellsPerLWL - cellsPerLWLRedundancy) == 256*drs::cells_per_subarray ) {
+        LWLDriverResistance = LWLDriverResistance + 100*drs::ohms_per_subarray;
+        WRResistance = WRResistance + 100*drs::ohms_per_subarray ;
     }
-    else if((cellsPerLWL - cellsPerLWLRedundancy) == 512*drs::wl_cells_per_wl_subarray) {
+    else if((cellsPerLWL - cellsPerLWLRedundancy) == 512*drs::cells_per_subarray) {
         LWLDriverResistance = LWLDriverResistance;
         WRResistance = WRResistance;    
     }
-    else if((cellsPerLWL - cellsPerLWLRedundancy) == 1024*drs::wl_cells_per_wl_subarray) {
-        LWLDriverResistance = LWLDriverResistance  - 100*drs::ohms_per_wl_subarray ;
-        WRResistance = WRResistance - 100*drs::ohms_per_bl_subarray ;
+    else if((cellsPerLWL - cellsPerLWLRedundancy) == 1024*drs::cells_per_subarray) {
+        LWLDriverResistance = LWLDriverResistance  - 100*drs::ohms_per_subarray ;
+        WRResistance = WRResistance - 100*drs::ohms_per_subarray ;
 
     } else {
-        LWLDriverResistance = LWLDriverResistance - 200*drs::ohms_per_wl_subarray;
-        WRResistance = WRResistance - 200*drs::ohms_per_bl_subarray ;
+        LWLDriverResistance = LWLDriverResistance - 200*drs::ohms_per_subarray;
+        WRResistance = WRResistance - 200*drs::ohms_per_subarray ;
     }
 
     return true;
@@ -108,6 +111,7 @@ bool
 SubArray::subArrayInit()
 {
     readjson(Techname,Paraname);
+    subArrayStorageCalc();
     subArrayLengthCalc();
     return true;
 }

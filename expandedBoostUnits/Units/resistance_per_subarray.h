@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_RESISTANCE_PER_SQUARE_ROOT_SUBARRAY_UNIT_H
-#define DRAMSPEC_RESISTANCE_PER_SQUARE_ROOT_SUBARRAY_UNIT_H
+#ifndef DRAMSPEC_RESISTANCE_PER_SUBARRAY_UNIT_H
+#define DRAMSPEC_RESISTANCE_PER_SUBARRAY_UNIT_H
 
 #include <boost/units/make_scaled_unit.hpp>
 
@@ -46,26 +46,19 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<resistance_per_square_root_subarray_dimension,dramspec::system> resistance_per_square_root_subarray_unit;
+typedef unit<resistance_per_subarray_dimension,dramspec::system> resistance_per_subarray_unit;
 
-typedef make_scaled_unit<resistance_per_square_root_subarray_unit,
-                         scale<1, static_rational<0>>>::type resistance_per_wordline_subarray_unit;
-BOOST_UNITS_STATIC_CONSTANT(ohm_per_wl_subarray,resistance_per_wordline_subarray_unit);
-BOOST_UNITS_STATIC_CONSTANT(ohms_per_wl_subarray,resistance_per_wordline_subarray_unit);
-
-typedef make_scaled_unit<resistance_per_square_root_subarray_unit,
-                         scale<1, static_rational<0>>>::type resistance_per_bitline_subarray_unit;
-BOOST_UNITS_STATIC_CONSTANT(ohm_per_bl_subarray,resistance_per_bitline_subarray_unit);
-BOOST_UNITS_STATIC_CONSTANT(ohms_per_bl_subarray,resistance_per_bitline_subarray_unit);
+BOOST_UNITS_STATIC_CONSTANT(ohm_per_subarray,resistance_per_subarray_unit);
+BOOST_UNITS_STATIC_CONSTANT(ohms_per_subarray,resistance_per_subarray_unit);
 
 } // namespace dramspec
 
-inline std::string name_string(const reduce_unit<dramspec::resistance_per_square_root_subarray_unit>::type&)   { return "ohm/sqrt_subarray"; }
-inline std::string symbol_string(const reduce_unit<dramspec::resistance_per_square_root_subarray_unit>::type&) { return "ohm/sqrt_subarray"; }
+inline std::string name_string(const reduce_unit<dramspec::resistance_per_subarray_unit>::type&)   { return "ohm/subarray"; }
+inline std::string symbol_string(const reduce_unit<dramspec::resistance_per_subarray_unit>::type&) { return "ohm/subarray"; }
 
 } // namespace units
 
 } // namespace boost
 
 
-#endif // DRAMSPEC_RESISTANCE_PER_SQUARE_ROOT_SUBARRAY_UNIT_H
+#endif // DRAMSPEC_RESISTANCE_PER_SUBARRAY_UNIT_H
