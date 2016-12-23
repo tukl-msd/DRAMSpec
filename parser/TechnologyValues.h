@@ -106,7 +106,7 @@ class TechnologyValues
         subArrayToPageFactor(0),
         retentionTime(0*drs::millisecond),
         tilesPerBank(0*drs::tile_per_bank),
-        pageSpammingFactor(0*drs::page_per_tile),
+        pageSpanningFactor(0*drs::page_per_tile),
         BLArchitecture("")
     {
        Techname = techname;
@@ -265,8 +265,8 @@ class TechnologyValues
     // Number of tiles per bank
     bu::quantity<drs::tile_per_bank_unit> tilesPerBank;
 
-    // Spam factor of pages across tiles
-    bu::quantity<drs::page_per_tile_unit> pageSpammingFactor;
+    // Spanning factor of pages across tiles
+    bu::quantity<drs::page_per_tile_unit> pageSpanningFactor;
 
     // DRAM Bitline Architecture: OPEN or FOLDED bit-line
     std::string BLArchitecture;

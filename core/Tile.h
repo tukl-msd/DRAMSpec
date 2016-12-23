@@ -85,8 +85,6 @@ class Tile : public SubArray
     void checkTileDataConsistency();
     bool tileLenghtCalc();
 
-    bool tileAreaCalc();
-
     bool tileInit();
 
 };

@@ -312,10 +312,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 1*drs::tile_per_bank
                         << "\nGot: " << techValues.tilesPerBank);
 
-    BOOST_CHECK_MESSAGE( techValues.pageSpammingFactor == 1*drs::page_per_tile,
+    BOOST_CHECK_MESSAGE( techValues.pageSpanningFactor == 1*drs::page_per_tile,
                          "Pages per bank different from the expected."
                         << "\nExpected: " << 1*drs::page_per_tile
-                        << "\nGot: " << techValues.pageSpammingFactor);
+                        << "\nGot: " << techValues.pageSpanningFactor);
 
     BOOST_CHECK_MESSAGE( techValues.BLArchitecture == "OPEN",
                         "Bitline architecture different from the expected."
@@ -591,10 +591,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 47*drs::tile_per_bank
                         << "\nGot: " << techValues.tilesPerBank);
 
-    BOOST_CHECK_MESSAGE( techValues.pageSpammingFactor == 48*drs::page_per_tile,
+    BOOST_CHECK_MESSAGE( techValues.pageSpanningFactor == 48*drs::page_per_tile,
                         "Pages per bank different from the expected."
                         << "\nExpected: " << 48*drs::page_per_tile
-                        << "\nGot: " << techValues.pageSpammingFactor);
+                        << "\nGot: " << techValues.pageSpanningFactor);
 
     BOOST_CHECK_MESSAGE( techValues.BLArchitecture == "49",
                         "Bitline architecture different from the expected."

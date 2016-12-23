@@ -44,7 +44,6 @@ Tile::tileStorageCalc()
     bu::quantity<drs::information_per_bank_unit> bankStorage(dramSize/nBanks);
 
     tileStorage = bankStorage/tilesPerBank;
-    std::cerr << std::setprecision(100) << tileStorage << std::endl;
     return true;
 }
 
@@ -53,30 +52,40 @@ Tile::checkTileDataConsistency()
 {
     // Check input consistency with respect to tilesPerBank & pageSpammingFactor
     if ( tilesPerBank == 1*drs::tile_per_bank ) {
-        if (   pageSpammingFactor != 1*drs::page_per_tile)
+        if (   pageSpanningFactor != 1*drs::page_per_tile)
         {
-            std::cerr << "ERROR MSG!!\n"; // TODO: FIX ERROR MSG
-            exit(-1);
+            std::string exceptionMsgThrown("[ERROR] If architecture has ");
+            exceptionMsgThrown.append("1 tile per bank, ");
+            exceptionMsgThrown.append("the page spanning factor ");
+            exceptionMsgThrown.append("across the tile must be 1.");
+            throw exceptionMsgThrown;
         }
     } else if ( tilesPerBank == 2*drs::tile_per_bank ) {
-        if (   pageSpammingFactor != 1*drs::page_per_tile
-               && pageSpammingFactor != 1/2*drs::page_per_tile
+        if (   pageSpanningFactor != 1*drs::page_per_tile
+               && pageSpanningFactor != 1/2*drs::page_per_tile
                )
         {
-            std::cerr << "ERROR MSG!!\n"; // TODO: FIX ERROR MSG
-            exit(-1);
+            std::string exceptionMsgThrown("[ERROR] If architecture has ");
+            exceptionMsgThrown.append("1 tile per bank, ");
+            exceptionMsgThrown.append("the page spanning factor ");
+            exceptionMsgThrown.append("across the tile must be 1 or 0.5.");
+            throw exceptionMsgThrown;
         }
     } else if ( tilesPerBank == 4*drs::tile_per_bank ) {
-        if (   pageSpammingFactor != 1*drs::page_per_tile
-            && pageSpammingFactor != 1/2*drs::page_per_tile
-            && pageSpammingFactor != 1/4*drs::page_per_tile)
+        if (   pageSpanningFactor != 1*drs::page_per_tile
+            && pageSpanningFactor != 1/2*drs::page_per_tile
+            && pageSpanningFactor != 1/4*drs::page_per_tile)
         {
-            std::cerr << "ERROR MSG!!\n"; // TODO: FIX ERROR MSG
-            exit(-1);
+            std::string exceptionMsgThrown("[ERROR] If architecture has ");
+            exceptionMsgThrown.append("1 tile per bank, ");
+            exceptionMsgThrown.append("the page spanning factor ");
+            exceptionMsgThrown.append("across the tile must be 1, 0.5 or 0.25.");
+            throw exceptionMsgThrown;
         }
     } else {
-        std::cerr << "ERROR MSG!!\n"; // TODO: FIX ERROR MSG
-        exit(-1);
+        std::string exceptionMsgThrown("[ERROR] Architecture must have ");
+        exceptionMsgThrown.append("1, 2 or 4 tile per bank.");
+        throw exceptionMsgThrown;
     }
 }
 
@@ -84,16 +93,18 @@ Tile::checkTileDataConsistency()
 bool
 Tile::tileLenghtCalc()
 {
-    checkTileDataConsistency();
+    try {
+        checkTileDataConsistency();
+    }catch (std::string exceptionMsgThrown){
+        throw exceptionMsgThrown;
+    }
 
     nSubArraysPerArrayBlock =
             static_cast<bu::quantity<drs::information_per_tile_unit>>
-                             (pageStorage * pageSpammingFactor)
+                             (pageStorage * pageSpanningFactor)
                              / subArrayRowStorage
                              / subArrayToPageFactor;
-    std::cerr << nSubArraysPerArrayBlock << std::endl;
     tileWidth = nSubArraysPerArrayBlock * subArrayWidth + WLDriverWidth/drs::tile;
-    std::cerr << std::setprecision(100) << tileWidth << std::endl;
 
 
     if ( BLArchitecture == "OPEN" ) {
@@ -102,27 +113,17 @@ Tile::tileLenghtCalc()
                               / nSubArraysPerArrayBlock
                               + 1 )
                               * drs::subarrays_per_tile;
-        std::cerr << nArrayBlocksPerTile << std::endl;
         tileHeight = nArrayBlocksPerTile * subArrayHeight - BLSenseAmpHeight/drs::tile;
-        std::cerr << tileHeight << std::endl;
     } else if ( BLArchitecture == "FOLDED" ) {
         nArrayBlocksPerTile = (tileStorage
                               / subArrayStorage
                               / nSubArraysPerArrayBlock)
                               * drs::subarrays_per_tile;
-        std::cerr << nArrayBlocksPerTile << std::endl;
         tileHeight = nArrayBlocksPerTile * subArrayHeight + BLSenseAmpHeight/drs::tile;
-        std::cerr << std::setprecision(100) << tileHeight << std::endl;
     } else {
         throw;
     }
 
-    return true;
-}
-
-bool
-Tile::tileAreaCalc()
-{
     return true;
 }
 

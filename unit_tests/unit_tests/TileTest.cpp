@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE( checkTile_real_input )
 
     BOOST_CHECK_MESSAGE( tile.tileStorage == 134217728*drs::bits_per_tile,
                         "Tile storage size different from the expected."
-                        << "\nExpected: " << 13421772*drs::bits_per_tile
+                        << "\nExpected: " << 134217728*drs::bits_per_tile
                         << "\nGot: " << tile.tileStorage);
 
     BOOST_CHECK_MESSAGE( tile.tileWidth == 1159.08*drs::micrometer_per_tile,
@@ -124,14 +124,19 @@ BOOST_AUTO_TEST_CASE( checkTile_dummy_input )
                         << "\nExpected: " << expectedMsg
                         << "\nGot: " << exceptionMsg);
 
-    Tile tile(inputFileName.technologyFileName[0],
+    try {
+        Tile tile(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
 
-    BOOST_CHECK_MESSAGE( tile.tileStorage == 134217728*drs::bits_per_tile,
-                        "Tile storage size different from the expected."
-                        << "\nExpected: " << 13421772*drs::bits_per_tile
-                        << "\nGot: " << tile.tileStorage);
-
+    expectedMsg = "[ERROR] Architecture must have ";
+    expectedMsg.append("1, 2 or 4 tile per bank.");
+    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
+                        "Error message different from what was expected."
+                        << "\nExpected: " << expectedMsg
+                        << "\nGot: " << exceptionMsg);
 
 }
 
