@@ -53,6 +53,63 @@ namespace drs=boost::units::dramspec;
 class TechnologyValues
 {
   public:
+
+    TechnologyValues() : //Empty constructor for test proposes
+        Techname(""),
+        Paraname(""),
+
+        technologyNode(0*drs::nanometer),
+        capacitancePerBLCell(0*drs::attofarads_per_cell),
+        resistancePerBLCell(0*drs::ohm_per_cell),
+        capacitancePerWLCell(0*drs::attofarads_per_cell),
+        resistancePerWLCell(0*drs::ohm_per_cell),
+        capacitancePerCell(0*drs::picofarads_per_cell),
+        resistancePerCell(0*drs::ohm_per_cell),
+        wireResistance(0*drs::ohm_per_millimeter),
+        wireCapacitance(0*drs::femtofarad_per_millimeter),
+        cellWidth(0*drs::micrometer_per_cell),
+        cellHeight(0*drs::micrometer_per_cell),
+        cellsPerLWL(0*drs::cell_per_subarray),
+        cellsPerLWLRedundancy(0*drs::cell_per_subarray),
+        cellsPerLBL(0*drs::cell_per_subarray),
+        cellsPerLBLRedundancy(0*drs::cell_per_subarray),
+        BLSenseAmpHeight(0*drs::micrometer),
+        WLDriverWidth(0*drs::micrometer),
+        GWLDriverResistance(0*si::ohm),
+        LWLDriverResistance(0*drs::ohm_per_subarray),
+        WRResistance(0*drs::ohm_per_subarray),
+        CSLDriverResistance(0*si::ohm),
+        GDLDriverResistance(0*si::ohm),
+        DQDriverResistance(0*si::ohm),
+        Issa(0*drs::microampere),
+        Vpp(0*si::volt),
+        Vcc(0*si::volt),
+        backgroundCurrentSlope(0*drs::milliamperes_per_megahertz),
+        backgroundCurrentOffset(0*drs::microampere),
+        IddOcdRcv(0*drs::microampere),
+
+        dramType(""),
+        ThreeD(""),
+        vaultsPerLayer(0),
+        dramSize(0*drs::gibibit),
+        nBanks(0*drs::bank),
+        Interface(16),
+        dramFreq(0*drs::megahertz_clock),
+        dramCoreFreq(0*drs::megahertz_clock),
+        Prefetch(0),
+        additionalLatencyTrl(0*drs::clock),
+        pageStorage(0*drs::kibibit_per_page),
+        DLL(""),
+        tRef1Required(0*drs::nanosecond),
+        banksRefreshFactor(0),
+        rowRefreshRate(0),
+        subArrayToPageFactor(0),
+        retentionTime(0*drs::millisecond),
+        tilesPerBank(0*drs::tile_per_bank),
+        pageSpanningFactor(0*drs::page_per_tile),
+        BLArchitecture("")
+    {}
+
     TechnologyValues(const std::string& techname,
                      const std::string& paraname) :
         Techname(""),

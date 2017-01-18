@@ -57,14 +57,14 @@ BOOST_AUTO_TEST_CASE( checkSubArray_real_input)
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (string exceptionMsgThrown){
+    }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Empty");
+    std::string expectedMsg("Empty");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -121,14 +121,14 @@ BOOST_AUTO_TEST_CASE( checkSubArray_dummy_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (string exceptionMsgThrown){
+    }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Empty");
+    std::string expectedMsg("Empty");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -186,14 +186,14 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (string exceptionMsgThrown){
+    }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Empty");
+    std::string expectedMsg("Empty");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -203,41 +203,41 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
                       inputFileName.architectureFileName[0]);
 
 
-    subarray.subArrayInit();
+    subarray.subArrayInitialize();
     subarray.pageStorage = 1*bu::conversion_factor(inf::byte,inf::bit)*drs::kibibit_per_page;
-    subarray.driversinit();
+    subarray.driversInitialize();
     BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 218*si::ohm,
                         "Resistance of global wordline driver different from the expected."
                         << "\nExpected: " << 218*si::ohm
                         << "\nGot: " << subarray.GWLDriverResistance);
 
-    subarray.subArrayInit();
+    subarray.subArrayInitialize();
     subarray.pageStorage = 2*bu::conversion_factor(inf::byte,inf::bit)*drs::kibibit_per_page;
-    subarray.driversinit();
+    subarray.driversInitialize();
     BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 18*si::ohm,
                         "Resistance of global wordline driver different from the expected."
                         << "\nExpected: " << 18*si::ohm
                         << "\nGot: " << subarray.GWLDriverResistance);
 
-    subarray.subArrayInit();
+    subarray.subArrayInitialize();
     subarray.pageStorage = 4*bu::conversion_factor(inf::byte,inf::bit)*drs::kibibit_per_page;
-    subarray.driversinit();
+    subarray.driversInitialize();
     BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == -182*si::ohm,
                         "Resistance of global wordline driver different from the expected."
                         << "\nExpected: " << -182*si::ohm
                         << "\nGot: " << subarray.GWLDriverResistance);
 
-    subarray.subArrayInit();
+    subarray.subArrayInitialize();
     subarray.pageStorage = 8*bu::conversion_factor(inf::byte,inf::bit)*drs::kibibit_per_page;
-    subarray.driversinit();
+    subarray.driversInitialize();
     BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == -282*si::ohm,
                         "Resistance of global wordline driver different from the expected."
                         << "\nExpected: " << -282*si::ohm
                         << "\nGot: " << subarray.GWLDriverResistance);
 
-    subarray.subArrayInit();
+    subarray.subArrayInitialize();
     subarray.pageStorage = 16*bu::conversion_factor(inf::byte,inf::bit)*drs::kibibit_per_page;
-    subarray.driversinit();
+    subarray.driversInitialize();
     BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == -382*si::ohm,
                         "Resistance of global wordline driver different from the expected."
                         << "\nExpected: " << -382*si::ohm
@@ -256,14 +256,14 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (string exceptionMsgThrown){
+    }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Empty");
+    std::string expectedMsg("Empty");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -273,10 +273,10 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                       inputFileName.architectureFileName[0]);
 
 
-    subarray.subArrayInit();
-    subarray.cellsPerLWL = (255+24)*drs::cells_per_subarray;
+    subarray.subArrayInitialize();
+    subarray.cellsPerLWL = (255+24)*drs::cells_per_subarray; // < 256
     subarray.cellsPerLWLRedundancy = 24*drs::cells_per_subarray;
-    subarray.driversinit();
+    subarray.driversInitialize();
     BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 219*drs::ohms_per_subarray,
                         "Resistance of local wordline driver different from the expected."
                         << "\nExpected: " << 219*drs::ohms_per_subarray
@@ -288,10 +288,10 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.WRResistance);
 
 
-    subarray.subArrayInit();
+    subarray.subArrayInitialize();
     subarray.cellsPerLWL = (256+24)*drs::cells_per_subarray;
     subarray.cellsPerLWLRedundancy = 24*drs::cells_per_subarray;
-    subarray.driversinit();
+    subarray.driversInitialize();
     BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 119*drs::ohms_per_subarray,
                         "Resistance of local wordline driver different from the expected."
                         << "\nExpected: " << 119*drs::ohms_per_subarray
@@ -303,10 +303,10 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.WRResistance);
 
 
-    subarray.subArrayInit();
+    subarray.subArrayInitialize();
     subarray.cellsPerLWL = (512+24)*drs::cells_per_subarray;
     subarray.cellsPerLWLRedundancy = 24*drs::cells_per_subarray;
-    subarray.driversinit();
+    subarray.driversInitialize();
     BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 19*drs::ohms_per_subarray,
                         "Resistance of local wordline driver different from the expected."
                         << "\nExpected: " << 19*drs::ohms_per_subarray
@@ -318,10 +318,10 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.WRResistance);
 
 
-    subarray.subArrayInit();
+    subarray.subArrayInitialize();
     subarray.cellsPerLWL = (1024+24)*drs::cells_per_subarray;
     subarray.cellsPerLWLRedundancy = 24*drs::cells_per_subarray;
-    subarray.driversinit();
+    subarray.driversInitialize();
     BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == -81*drs::ohms_per_subarray,
                         "Resistance of local wordline driver different from the expected."
                         << "\nExpected: " << -81*drs::ohms_per_subarray
@@ -333,10 +333,10 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.WRResistance);
 
 
-    subarray.subArrayInit();
-    subarray.cellsPerLWL = (1025+24)*drs::cells_per_subarray;
+    subarray.subArrayInitialize();
+    subarray.cellsPerLWL = (1025+24)*drs::cells_per_subarray; // > 1024
     subarray.cellsPerLWLRedundancy = 24*drs::cells_per_subarray;
-    subarray.driversinit();
+    subarray.driversInitialize();
     BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == -181*drs::ohms_per_subarray,
                         "Resistance of local wordline driver different from the expected."
                         << "\nExpected: " << -181*drs::ohms_per_subarray

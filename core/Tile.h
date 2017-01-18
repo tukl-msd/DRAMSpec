@@ -47,6 +47,16 @@
 class Tile : public SubArray
 {
   public:
+    Tile() : //Empty constructor for test proposes
+        SubArray(),
+        tileStorage(0*drs::bit_per_tile),
+        tileWidth(0*drs::micrometer_per_tile),
+        tileHeight(0*drs::micrometer_per_tile),
+
+        nSubArraysPerArrayBlock(0*drs::subarray_per_tile),
+        nArrayBlocksPerTile(0*drs::subarray_per_tile)
+    {}
+
     Tile(const std::string& techname,const std::string& paraname):
         SubArray(techname,paraname),
         tileStorage(0*drs::bit_per_tile),
@@ -56,17 +66,14 @@ class Tile : public SubArray
         nSubArraysPerArrayBlock(0*drs::subarray_per_tile),
         nArrayBlocksPerTile(0*drs::subarray_per_tile)
     {
-        //order of functions is important
-        bool TINIT = false;
-        TINIT = tileInit();
-        if(TINIT == false)
-        {
-                std::cout<<"ERROR: Function for Tile Initialization not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-                throw(" Function for Tile Initialization not called");
+        //order of functions is important        
+        try {
+            tileInitialize();
+        }catch (std::string exceptionMsgThrown){
+            throw exceptionMsgThrown;
         }
     }
-  public:
+
     // Size in number of bits of a single tile
     bu::quantity<drs::information_per_tile_unit> tileStorage;
 
@@ -80,12 +87,12 @@ class Tile : public SubArray
     // Number of subarrays per tile in the bitline direction
     bu::quantity<drs::subarray_per_tile_unit> nArrayBlocksPerTile;
 
-    bool tileStorageCalc();
+    void tileStorageCalc();
 
     void checkTileDataConsistency();
-    bool tileLenghtCalc();
+    void tileLenghtCalc();
 
-    bool tileInit();
+    void tileInitialize();
 
 };
 

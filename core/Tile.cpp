@@ -38,19 +38,18 @@
 
 #include "Tile.h"
 
-bool
+void
 Tile::tileStorageCalc()
 {
     bu::quantity<drs::information_per_bank_unit> bankStorage(dramSize/nBanks);
 
     tileStorage = bankStorage/tilesPerBank;
-    return true;
 }
 
 void
 Tile::checkTileDataConsistency()
 {
-    // Check input consistency with respect to tilesPerBank & pageSpammingFactor
+    // Check input consistency with respect to tilesPerBank & pageSpanningFactor
     if ( tilesPerBank == 1*drs::tile_per_bank ) {
         if (   pageSpanningFactor != 1*drs::page_per_tile)
         {
@@ -66,7 +65,7 @@ Tile::checkTileDataConsistency()
                )
         {
             std::string exceptionMsgThrown("[ERROR] If architecture has ");
-            exceptionMsgThrown.append("1 tile per bank, ");
+            exceptionMsgThrown.append("2 tile per bank, ");
             exceptionMsgThrown.append("the page spanning factor ");
             exceptionMsgThrown.append("across the tile must be 1 or 0.5.");
             throw exceptionMsgThrown;
@@ -77,7 +76,7 @@ Tile::checkTileDataConsistency()
             && pageSpanningFactor != 1/4*drs::page_per_tile)
         {
             std::string exceptionMsgThrown("[ERROR] If architecture has ");
-            exceptionMsgThrown.append("1 tile per bank, ");
+            exceptionMsgThrown.append("4 tile per bank, ");
             exceptionMsgThrown.append("the page spanning factor ");
             exceptionMsgThrown.append("across the tile must be 1, 0.5 or 0.25.");
             throw exceptionMsgThrown;
@@ -90,7 +89,7 @@ Tile::checkTileDataConsistency()
 }
 
 
-bool
+void
 Tile::tileLenghtCalc()
 {
     try {
@@ -114,6 +113,7 @@ Tile::tileLenghtCalc()
                               + 1 )
                               * drs::subarrays_per_tile;
         tileHeight = nArrayBlocksPerTile * subArrayHeight - BLSenseAmpHeight/drs::tile;
+
     } else if ( BLArchitecture == "FOLDED" ) {
         nArrayBlocksPerTile = (tileStorage
                               / subArrayStorage
@@ -121,19 +121,21 @@ Tile::tileLenghtCalc()
                               * drs::subarrays_per_tile;
         tileHeight = nArrayBlocksPerTile * subArrayHeight + BLSenseAmpHeight/drs::tile;
     } else {
-        throw;
+        std::string exceptionMsgThrown("[ERROR] Bitline architecture must be ");
+        exceptionMsgThrown.append("either \'OPEN\' or \'FOLDED\'.");
+        throw exceptionMsgThrown;
     }
-
-    return true;
 }
 
-bool
-Tile::tileInit()
+void
+Tile::tileInitialize()
 {
-
     tileStorageCalc();
-    tileLenghtCalc();
-    tileAreaCalc();
-    return true;
+
+    try {
+        tileLenghtCalc();
+    }catch (std::string exceptionMsgThrown){
+        throw exceptionMsgThrown;
+    }
 }
 

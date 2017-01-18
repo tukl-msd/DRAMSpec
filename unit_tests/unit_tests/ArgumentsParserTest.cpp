@@ -56,14 +56,14 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_wrong_first_flag )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Unexpected argument \'");
+    std::string expectedMsg("Unexpected argument \'");
     expectedMsg.append("-r"); // Same flag error: "-r" instead of "-t".
     expectedMsg.append("\'.\nUse \'-t\' and \'-p\' before the ");
     expectedMsg.append("Technology and Archtecture file names, respectively.\n");
@@ -87,14 +87,14 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_wrong_second_flag1 )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Unexpected argument \'");
+    std::string expectedMsg("Unexpected argument \'");
     expectedMsg.append("-o"); // Same flag error: "-o" instead of "-p".
     expectedMsg.append("\'.\nUse \'-t\' and \'-p\' before the ");
     expectedMsg.append("Technology and Archtecture file names, respectively.\n");
@@ -118,14 +118,14 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_wrong_second_flag2 )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Unexpected argument \'");
+    std::string expectedMsg("Unexpected argument \'");
     expectedMsg.append("-r"); // Same flag error: "-r" instead of "-t".
     expectedMsg.append("\'.\nUse \'-t\' and \'-p\' before the ");
     expectedMsg.append("Technology and Archtecture file names, respectively.\n");
@@ -149,14 +149,14 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_1tech_1arch )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Empty");
+    std::string expectedMsg("Empty");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -194,14 +194,14 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_2tech_2arch )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Empty");
+    std::string expectedMsg("Empty");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -253,14 +253,14 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_2tech_2arch_mixed )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Empty");
+    std::string expectedMsg("Empty");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -313,14 +313,14 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_2tech_2arch_term_mixed )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Empty");
+    std::string expectedMsg("Empty");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -373,14 +373,14 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_different_number )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Number of technology files (");
+    std::string expectedMsg("Number of technology files (");
     expectedMsg.append("2");
     expectedMsg.append(") is different from ");
     expectedMsg.append("the number of archtecture files (");

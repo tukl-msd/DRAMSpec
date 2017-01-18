@@ -56,14 +56,14 @@ BOOST_AUTO_TEST_CASE( checkTile_real_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (string exceptionMsgThrown){
+    }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Empty");
+    std::string expectedMsg("Empty");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -111,14 +111,14 @@ BOOST_AUTO_TEST_CASE( checkTile_dummy_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
+    std::string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (string exceptionMsgThrown){
+    }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
-    string expectedMsg("Empty");
+    std::string expectedMsg("Empty");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -126,13 +126,66 @@ BOOST_AUTO_TEST_CASE( checkTile_dummy_input )
 
     try {
         Tile tile(inputFileName.technologyFileName[0],
-                      inputFileName.architectureFileName[0]);
-    }catch (string exceptionMsgThrown){
+                  inputFileName.architectureFileName[0]);
+    }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
     expectedMsg = "[ERROR] Architecture must have ";
     expectedMsg.append("1, 2 or 4 tile per bank.");
+    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
+                        "Error message different from what was expected."
+                        << "\nExpected: " << expectedMsg
+                        << "\nGot: " << exceptionMsg);
+
+    Tile tile;
+    tile.readjson(inputFileName.technologyFileName[0],
+                  inputFileName.architectureFileName[0]);
+    tile.subArrayStorageCalc();
+    tile.subArrayLengthCalc();
+    tile.driversInitialize();
+
+
+    tile.tilesPerBank = 1*drs::tiles_per_bank;
+    tile.pageSpanningFactor = 2*drs::pages_per_tile;
+    try {
+        tile.tileInitialize();
+    }catch (std::string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+
+    expectedMsg = "[ERROR] If architecture has 1 tile per bank, ";
+    expectedMsg.append("the page spanning factor across the tile must be 1.");
+    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
+                        "Error message different from what was expected."
+                        << "\nExpected: " << expectedMsg
+                        << "\nGot: " << exceptionMsg);
+
+    tile.tilesPerBank = 2*drs::tiles_per_bank;
+    tile.pageSpanningFactor = 4*drs::pages_per_tile;
+    try {
+        tile.tileInitialize();
+    }catch (std::string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+
+    expectedMsg = "[ERROR] If architecture has 2 tile per bank, ";
+    expectedMsg.append("the page spanning factor across the tile must be 1 or 0.5.");
+    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
+                        "Error message different from what was expected."
+                        << "\nExpected: " << expectedMsg
+                        << "\nGot: " << exceptionMsg);
+
+    tile.tilesPerBank = 4*drs::tiles_per_bank;
+    tile.pageSpanningFactor = 5*drs::pages_per_tile;
+    try {
+        tile.tileInitialize();
+    }catch (std::string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+
+    expectedMsg = "[ERROR] If architecture has 4 tile per bank, ";
+    expectedMsg.append("the page spanning factor across the tile must be 1, 0.5 or 0.25.");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg

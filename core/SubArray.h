@@ -43,29 +43,23 @@
 class SubArray : public TechnologyValues
 {
   public:
-    //constructor for subarray class
+    SubArray() : //Empty constructor for test proposes
+        TechnologyValues(),
+        subArrayRowStorage(0*drs::bit_per_subarray),
+        subArrayWidth(0*drs::micrometer_per_subarray),
+        subArrayHeight(0*drs::micrometer_per_subarray)
+    {}
+
     SubArray(const std::string& techname, const std::string& paraname) :
         TechnologyValues(techname,paraname),
         subArrayRowStorage(0*drs::bit_per_subarray),
         subArrayWidth(0*drs::micrometer_per_subarray),
         subArrayHeight(0*drs::micrometer_per_subarray)
     {
-        //Order of functions is important
-        bool SINIT = false;
-        SINIT = subArrayInit();
-        if(SINIT == false){
-            std::cout<<"ERROR: Func. for subarray initialization not called"
-                <<"\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for subarry initialization not called");
-        }
-        bool DINIT = false;
-        DINIT = driversinit();
-        if(DINIT == false){
-            std::cout<<"ERROR: Function for driver initialization not called"
-                <<"\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for driver initialization not called");
-        }
+        subArrayInitialize();
+        driversInitialize();
     }
+
     // Size in number of bits of a single subarray
     bu::quantity<drs::information_per_subarray_unit> subArrayStorage;
 
@@ -79,15 +73,15 @@ class SubArray : public TechnologyValues
     bu::quantity<drs::micrometer_per_subarray_unit>  subArrayHeight;
 
     // function which calculates the height and width of the subarray
-    bool subArrayStorageCalc();
+    void subArrayStorageCalc();
 
     // function which calculates the height and width of the subarray
-    bool subArrayLengthCalc();
-
-    //function to initialize the drivers resistances
-    bool driversinit();
+    void subArrayLengthCalc();
 
     //function to init subarray
-    bool subArrayInit();
+    void subArrayInitialize();
+
+    //function to initialize the drivers resistances
+    void driversInitialize();
 };
 #endif//SUBARRAY_H

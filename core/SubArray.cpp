@@ -37,7 +37,7 @@
 namespace si=boost::units::si;
 namespace drs=boost::units::dramspec;
 
-bool
+void
 SubArray::subArrayStorageCalc()
 {
     subArrayRowStorage = (cellsPerLBL - cellsPerLBLRedundancy)
@@ -46,22 +46,26 @@ SubArray::subArrayStorageCalc()
     subArrayStorage = subArrayRowStorage
                       * (cellsPerLWL - cellsPerLWLRedundancy)
                       / drs::cell_per_subarray;
-
-    return true;
 }
 
-bool
+void
 SubArray::subArrayLengthCalc()
 {
     subArrayWidth = cellsPerLWL * cellWidth + WLDriverWidth/drs::subarray;
 
     subArrayHeight = cellsPerLBL * cellHeight + BLSenseAmpHeight/drs::subarray;
-
-    return true;
 }
 
-bool
-SubArray::driversinit()
+void
+SubArray::subArrayInitialize()
+{
+    readjson(Techname,Paraname);
+    subArrayStorageCalc();
+    subArrayLengthCalc();
+}
+
+void
+SubArray::driversInitialize()
 {
     // The value for global ( master ) wordline driver resistance is
     // give for a page size of 2 kB.If the page size becomes
@@ -103,15 +107,4 @@ SubArray::driversinit()
         LWLDriverResistance = LWLDriverResistance - 200*drs::ohms_per_subarray;
         WRResistance = WRResistance - 200*drs::ohms_per_subarray ;
     }
-
-    return true;
-}
-
-bool
-SubArray::subArrayInit()
-{
-    readjson(Techname,Paraname);
-    subArrayStorageCalc();
-    subArrayLengthCalc();
-    return true;
 }
