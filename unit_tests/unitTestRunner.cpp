@@ -43,3 +43,4 @@
 #include "unit_tests/TechnologyValuesTest.cpp"
 #include "unit_tests/SubArrayTest.cpp"
 #include "unit_tests/TileTest.cpp"
+#include "unit_tests/BankTest.cpp"

@@ -66,7 +66,6 @@ class Tile : public SubArray
         nSubArraysPerArrayBlock(0*drs::subarray_per_tile),
         nArrayBlocksPerTile(0*drs::subarray_per_tile)
     {
-        //order of functions is important        
         try {
             tileInitialize();
         }catch (std::string exceptionMsgThrown){

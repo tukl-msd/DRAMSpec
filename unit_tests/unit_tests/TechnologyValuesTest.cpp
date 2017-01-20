@@ -220,6 +220,27 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 3.0*drs::microampere
                         << "\nGot: " << techValues.IddOcdRcv);
 
+    BOOST_CHECK_MESSAGE( techValues.rowDecoderWidth == 240*drs::micrometer,
+                         "Row decoder (between tiles) width different from the expected."
+                        << "\nExpected: " << 240*drs::micrometer
+                        << "\nGot: " << techValues.rowDecoderWidth);
+
+    BOOST_CHECK_MESSAGE( techValues.colDecoderHeight == 200*drs::micrometer,
+                         "Column decoder (between tiles) width different from the expected."
+                        << "\nExpected: " << 200*drs::micrometer
+                        << "\nGot: " << techValues.colDecoderHeight);
+
+    BOOST_CHECK_MESSAGE( techValues.DQDriverHeight == 500*drs::micrometer,
+                         "DQ driver (between banks) height different from the expected."
+                        << "\nExpected: " << 500*drs::micrometer
+                        << "\nGot: " << techValues.DQDriverHeight);
+
+    BOOST_CHECK_MESSAGE( techValues.bankSpacingWidth == 2*drs::micrometer,
+                         "Space between banks driver in width direction different from the expected."
+                        << "\nExpected: " << 2*drs::micrometer
+                        << "\nGot: " << techValues.bankSpacingWidth);
+
+
 
 
     BOOST_CHECK_MESSAGE( techValues.dramType == "DDR",
@@ -499,106 +520,127 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 29*drs::microampere
                         << "\nGot: " << techValues.IddOcdRcv);
 
+    BOOST_CHECK_MESSAGE( techValues.rowDecoderWidth == 30*drs::micrometer,
+                         "Row decoder (between tiles) width different from the expected."
+                        << "\nExpected: " << 30*drs::micrometer
+                        << "\nGot: " << techValues.rowDecoderWidth);
+
+    BOOST_CHECK_MESSAGE( techValues.colDecoderHeight == 31*drs::micrometer,
+                         "Column decoder (between tiles) width different from the expected."
+                        << "\nExpected: " << 31*drs::micrometer
+                        << "\nGot: " << techValues.colDecoderHeight);
+
+    BOOST_CHECK_MESSAGE( techValues.DQDriverHeight == 32*drs::micrometer,
+                         "DQ driver (between banks) height different from the expected."
+                        << "\nExpected: " << 32*drs::micrometer
+                        << "\nGot: " << techValues.DQDriverHeight);
+
+    BOOST_CHECK_MESSAGE( techValues.bankSpacingWidth == 33*drs::micrometer,
+                         "Space between banks driver in width direction different from the expected."
+                        << "\nExpected: " << 33*drs::micrometer
+                        << "\nGot: " << techValues.bankSpacingWidth);
 
 
-    BOOST_CHECK_MESSAGE( techValues.dramType == "30",
+
+
+    BOOST_CHECK_MESSAGE( techValues.dramType == "100",
                         "DRAM type different from the expected."
-                        << "\nExpected: " << "30"
+                        << "\nExpected: " << "100"
                         << "\nGot: " << techValues.dramType);
 
-    BOOST_CHECK_MESSAGE( techValues.ThreeD == "31",
+    BOOST_CHECK_MESSAGE( techValues.ThreeD == "101",
                         "3D flag different from the expected."
-                        << "\nExpected: " << "31"
+                        << "\nExpected: " << "101"
                         << "\nGot: " << techValues.ThreeD);
 
-    BOOST_CHECK_MESSAGE( techValues.vaultsPerLayer == 32,
+    BOOST_CHECK_MESSAGE( techValues.vaultsPerLayer == 102,
                         "Vaults per layer different from the expected."
-                        << "\nExpected: " << 32
+                        << "\nExpected: " << 102
                         << "\nGot: " << techValues.vaultsPerLayer);
 
-    BOOST_CHECK_MESSAGE( techValues.dramSize == 33*drs::gibibit,
+    BOOST_CHECK_MESSAGE( techValues.dramSize == 103*drs::gibibit,
                         "DRAM Size different from the expected."
-                        << "\nExpected: " << 33*drs::gibibit
+                        << "\nExpected: " << 103*drs::gibibit
                         << "\nGot: " << techValues.dramSize);
 
-    BOOST_CHECK_MESSAGE( techValues.nBanks == 34*drs::bank,
+    BOOST_CHECK_MESSAGE( techValues.nBanks == 104*drs::bank,
                         "Number of banks different from the expected."
-                        << "\nExpected: " << 34*drs::bank
+                        << "\nExpected: " << 104*drs::bank
                         << "\nGot: " << techValues.nBanks);
 
-    BOOST_CHECK_MESSAGE( techValues.Interface == 35,
+    BOOST_CHECK_MESSAGE( techValues.Interface == 105,
                         "Interface different from the expected."
-                        << "\nExpected: " << 35
+                        << "\nExpected: " << 105
                         << "\nGot: " << techValues.Interface);
 
-    BOOST_CHECK_MESSAGE( techValues.dramFreq == 36*drs::megahertz_clock,
+    BOOST_CHECK_MESSAGE( techValues.dramFreq == 106*drs::megahertz_clock,
                         "DRAM frequency different from the expected."
-                        << "\nExpected: " << 36*drs::megahertz_clock
+                        << "\nExpected: " << 106*drs::megahertz_clock
                         << "\nGot: " << techValues.dramFreq);
 
-    BOOST_CHECK_MESSAGE( techValues.dramCoreFreq == 37*drs::megahertz_clock,
+    BOOST_CHECK_MESSAGE( techValues.dramCoreFreq == 107*drs::megahertz_clock,
                         "DRAM core frequency different from the expected."
-                        << "\nExpected: " << 37*drs::megahertz_clock
+                        << "\nExpected: " << 107*drs::megahertz_clock
                         << "\nGot: " << techValues.dramCoreFreq);
 
-    BOOST_CHECK_MESSAGE( techValues.Prefetch == 38,
+    BOOST_CHECK_MESSAGE( techValues.Prefetch == 108,
                         "Prefetch different from the expected."
-                        << "\nExpected: " << 38
+                        << "\nExpected: " << 108
                         << "\nGot: " << techValues.Prefetch);
 
-    BOOST_CHECK_MESSAGE( techValues.additionalLatencyTrl == 39*drs::clock,
+    BOOST_CHECK_MESSAGE( techValues.additionalLatencyTrl == 109*drs::clock,
                         "Additional latency to trl different from the expected."
-                        << "\nExpected: " << 39*drs::clock
+                        << "\nExpected: " << 109*drs::clock
                         << "\nGot: " << techValues.additionalLatencyTrl);
 
-    BOOST_CHECK_MESSAGE( techValues.pageStorage == 320*drs::kibibit_per_page,
+    BOOST_CHECK_MESSAGE( techValues.pageStorage == 110*8*drs::kibibit_per_page,
                         "Page size different from the expected."
-                        << "\nExpected: " << 320*drs::kibibit_per_page
+                        << "\nExpected: " << 110*8*drs::kibibit_per_page
                         << "\nGot: " << techValues.pageStorage);
 
-    BOOST_CHECK_MESSAGE( techValues.DLL == "41",
+    BOOST_CHECK_MESSAGE( techValues.DLL == "111",
                         "DLL flag different from the expected."
-                        << "\nExpected: " << "41"
+                        << "\nExpected: " << "111"
                         << "\nGot: " << techValues.DLL);
 
-    BOOST_CHECK_MESSAGE( techValues.tRef1Required == 42*drs::nanosecond,
+    BOOST_CHECK_MESSAGE( techValues.tRef1Required == 112*drs::nanosecond,
                         "Required tRef1 different from the expected."
-                        << "\nExpected: " << 42*drs::nanosecond
+                        << "\nExpected: " << 112*drs::nanosecond
                         << "\nGot: " << techValues.tRef1Required);
 
-    BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 43,
+    BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 113,
                         "Bank refresh factor different from the expected."
-                        << "\nExpected: " << 43
+                        << "\nExpected: " << 113
                         << "\nGot: " << techValues.banksRefreshFactor);
 
-    BOOST_CHECK_MESSAGE( techValues.rowRefreshRate == 44,
+    BOOST_CHECK_MESSAGE( techValues.rowRefreshRate == 114,
                         "Row refresh rate different from the expected."
-                        << "\nExpected: " << 44
+                        << "\nExpected: " << 114
                         << "\nGot: " << techValues.rowRefreshRate);
 
-    BOOST_CHECK_MESSAGE( techValues.subArrayToPageFactor == 45,
+    BOOST_CHECK_MESSAGE( techValues.subArrayToPageFactor == 115,
                         "Ratio of subarrays activated pro command different from the expected."
-                        << "\nExpected: " << 45
+                        << "\nExpected: " << 115
                         << "\nGot: " << techValues.subArrayToPageFactor);
 
-    BOOST_CHECK_MESSAGE( techValues.retentionTime == 46*drs::millisecond,
+    BOOST_CHECK_MESSAGE( techValues.retentionTime == 116*drs::millisecond,
                         "Retention time different from the expected."
-                        << "\nExpected: " << 46*drs::millisecond
+                        << "\nExpected: " << 116*drs::millisecond
                         << "\nGot: " << techValues.retentionTime);
 
-    BOOST_CHECK_MESSAGE( techValues.tilesPerBank == 47*drs::tile_per_bank,
+    BOOST_CHECK_MESSAGE( techValues.tilesPerBank == 117*drs::tile_per_bank,
                         "Tiles per bank different from the expected."
-                        << "\nExpected: " << 47*drs::tile_per_bank
+                        << "\nExpected: " << 117*drs::tile_per_bank
                         << "\nGot: " << techValues.tilesPerBank);
 
-    BOOST_CHECK_MESSAGE( techValues.pageSpanningFactor == 48*drs::page_per_tile,
+    BOOST_CHECK_MESSAGE( techValues.pageSpanningFactor == 118*drs::page_per_tile,
                         "Pages per bank different from the expected."
-                        << "\nExpected: " << 48*drs::page_per_tile
+                        << "\nExpected: " << 118*drs::page_per_tile
                         << "\nGot: " << techValues.pageSpanningFactor);
 
-    BOOST_CHECK_MESSAGE( techValues.BLArchitecture == "49",
+    BOOST_CHECK_MESSAGE( techValues.BLArchitecture == "119",
                         "Bitline architecture different from the expected."
-                        << "\nExpected: " << "49"
+                        << "\nExpected: " << "119"
                         << "\nGot: " << techValues.BLArchitecture);
 }
 

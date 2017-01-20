@@ -244,6 +244,30 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     double IddOcdRcv_value  = techdocument["IDD_OCD_RCV"].GetDouble();
     IddOcdRcv = IddOcdRcv_value*drs::microampere;
 
+    //Row decoder (between tiles) width
+    assert(techdocument.HasMember("rowDecoderWidth"));
+    assert(techdocument["rowDecoderWidth"].IsNumber());
+    double rowDecoderWidth_value = techdocument["rowDecoderWidth"].GetDouble();
+    rowDecoderWidth = rowDecoderWidth_value*drs::micrometer;
+
+    //Column decoder (between tiles) width
+    assert(techdocument.HasMember("colDecoderHeight"));
+    assert(techdocument["colDecoderHeight"].IsNumber());
+    double colDecoderHeight_value = techdocument["colDecoderHeight"].GetDouble();
+    colDecoderHeight = colDecoderHeight_value*drs::micrometer;
+
+    //DQ driver (between banks) height
+    assert(techdocument.HasMember("DQDriverHeight"));
+    assert(techdocument["DQDriverHeight"].IsNumber());
+    double DQDriverHeight_value = techdocument["DQDriverHeight"].GetDouble();
+    DQDriverHeight = DQDriverHeight_value*drs::micrometer;
+
+    //Space between banks driver in width direction
+    assert(techdocument.HasMember("bankSpacingWidth"));
+    assert(techdocument["bankSpacingWidth"].IsNumber());
+    double bankSpacingWidth_value = techdocument["bankSpacingWidth"].GetDouble();
+    bankSpacingWidth = bankSpacingWidth_value*drs::micrometer;
+
     //load the parameter file and put in into a single string
     std::ifstream parain(paraname.c_str());
     std::stringstream parabuffer;

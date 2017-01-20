@@ -41,7 +41,7 @@ mac {
 INCLUDEPATH += /users/chinazzo/libs/boost_1_62_0
 
 #DRAMSpec HEADERS
-#HEADERS += ../core/Bank.h
+HEADERS += ../core/Bank.h
 HEADERS += ../core/Tile.h
 HEADERS += ../core/SubArray.h
 #HEADERS += ../core/Current.h
@@ -134,7 +134,7 @@ HEADERS += ../expandedBoostUnits/expanded_make_system.hpp
 HEADERS += ../expandedBoostUnits/dramSpecUnitsSystem.h
 
 #DRAMSpec SOURCE files
-#SOURCES += ../core/Bank.cpp
+SOURCES += ../core/Bank.cpp
 SOURCES += ../core/Tile.cpp
 SOURCES += ../core/SubArray.cpp
 #SOURCES += ../core/Current.cpp
@@ -151,7 +151,7 @@ SOURCES += unit_tests/ArgumentsParserTest.cpp
 SOURCES += unit_tests/TechnologyValuesTest.cpp
 SOURCES += unit_tests/SubArrayTest.cpp
 SOURCES += unit_tests/TileTest.cpp
-#SOURCES += unit_tests/BankTest.cpp
+SOURCES += unit_tests/BankTest.cpp
 #SOURCES += unit_tests/TimingTest.cpp
 #SOURCES += unit_tests/CurrentTest.cpp
 

@@ -263,6 +263,17 @@ class TechnologyValues
     //IDD pro IO for OCD
     bu::quantity<drs::microampere_unit> IddOcdRcv;
 
+    //Row decoder (between tiles) width
+    bu::quantity<drs::micrometer_unit> rowDecoderWidth;
+
+    //Column decoder (between tiles) width
+    bu::quantity<drs::micrometer_unit> colDecoderHeight;
+
+    //DQ driver (between banks) height
+    bu::quantity<drs::micrometer_unit> DQDriverHeight;
+
+    //Space between banks driver in width direction
+    bu::quantity<drs::micrometer_unit> bankSpacingWidth;
 
     //DRAM Type
     std::string dramType;

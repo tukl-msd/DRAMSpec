@@ -50,8 +50,8 @@ void
 Tile::checkTileDataConsistency()
 {
     // Check input consistency with respect to tilesPerBank & pageSpanningFactor
-    if ( tilesPerBank == 1*drs::tile_per_bank ) {
-        if (   pageSpanningFactor != 1*drs::page_per_tile)
+    if ( tilesPerBank == 1.0*drs::tile_per_bank ) {
+        if (   pageSpanningFactor != 1.0*drs::page_per_tile)
         {
             std::string exceptionMsgThrown("[ERROR] If architecture has ");
             exceptionMsgThrown.append("1 tile per bank, ");
@@ -59,9 +59,9 @@ Tile::checkTileDataConsistency()
             exceptionMsgThrown.append("across the tile must be 1.");
             throw exceptionMsgThrown;
         }
-    } else if ( tilesPerBank == 2*drs::tile_per_bank ) {
-        if (   pageSpanningFactor != 1*drs::page_per_tile
-               && pageSpanningFactor != 1/2*drs::page_per_tile
+    } else if ( tilesPerBank == 2.0*drs::tile_per_bank ) {
+        if (   pageSpanningFactor != 1.0*drs::page_per_tile
+               && pageSpanningFactor != 0.5*drs::page_per_tile
                )
         {
             std::string exceptionMsgThrown("[ERROR] If architecture has ");
@@ -70,10 +70,10 @@ Tile::checkTileDataConsistency()
             exceptionMsgThrown.append("across the tile must be 1 or 0.5.");
             throw exceptionMsgThrown;
         }
-    } else if ( tilesPerBank == 4*drs::tile_per_bank ) {
+    } else if ( tilesPerBank == 4.0*drs::tile_per_bank ) {
         if (   pageSpanningFactor != 1*drs::page_per_tile
-            && pageSpanningFactor != 1/2*drs::page_per_tile
-            && pageSpanningFactor != 1/4*drs::page_per_tile)
+            && pageSpanningFactor != 0.5*drs::page_per_tile
+            && pageSpanningFactor != 0.25*drs::page_per_tile)
         {
             std::string exceptionMsgThrown("[ERROR] If architecture has ");
             exceptionMsgThrown.append("4 tile per bank, ");

@@ -27,5 +27,9 @@
 	"vcc": 1.1,
 	"Backgroundcurrentslope": 0.02,
 	"Backgroundcurrentoffset": 11,
-	"IDD_OCD_RCV": 2.5
+    "IDD_OCD_RCV": 2.5,
+    "rowDecoderWidth": 240,
+    "colDecoderHeight": 200,
+    "DQDriverHeight": 500,
+    "bankSpacingWidth": 2
 }
