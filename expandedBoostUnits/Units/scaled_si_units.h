@@ -46,12 +46,22 @@ namespace units {
 
 namespace dramspec {
 
+typedef make_scaled_unit<si::length,scale<10, static_rational<-3>>>::type millimeter_unit;
+BOOST_UNITS_STATIC_CONSTANT(millimeter,millimeter_unit);
+BOOST_UNITS_STATIC_CONSTANT(millimeters,millimeter_unit);
 typedef make_scaled_unit<si::length,scale<10, static_rational<-6>>>::type micrometer_unit;
 BOOST_UNITS_STATIC_CONSTANT(micrometer,micrometer_unit);
 BOOST_UNITS_STATIC_CONSTANT(micrometers,micrometer_unit);
 typedef make_scaled_unit<si::length,scale<10, static_rational<-9>>>::type nanometer_unit;
 BOOST_UNITS_STATIC_CONSTANT(nanometer,nanometer_unit);
 BOOST_UNITS_STATIC_CONSTANT(nanometers,nanometer_unit);
+
+typedef make_scaled_unit<si::area,scale<10, static_rational<-6>>>::type millimeter_squared_unit;
+BOOST_UNITS_STATIC_CONSTANT(millimeter_squared,millimeter_squared_unit);
+BOOST_UNITS_STATIC_CONSTANT(millimeters_squared,millimeter_squared_unit);
+typedef make_scaled_unit<si::area,scale<10, static_rational<-12>>>::type micrometer_squared_unit;
+BOOST_UNITS_STATIC_CONSTANT(micrometer_squared,micrometer_squared_unit);
+BOOST_UNITS_STATIC_CONSTANT(micrometers_squared,micrometer_squared_unit);
 
 typedef make_scaled_unit<si::current,scale<10, static_rational<-6>>>::type microampere_unit;
 BOOST_UNITS_STATIC_CONSTANT(microampere,microampere_unit);
