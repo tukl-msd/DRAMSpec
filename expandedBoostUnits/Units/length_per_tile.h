@@ -48,6 +48,9 @@ namespace dramspec {
 
 typedef unit<length_per_tile_dimension,dramspec::system> length_per_tile_unit;
 
+typedef make_scaled_unit<length_per_tile_unit,scale<10, static_rational<-3>>>::type millimeter_per_tile_unit;
+BOOST_UNITS_STATIC_CONSTANT(millimeter_per_tile,millimeter_per_tile_unit);
+BOOST_UNITS_STATIC_CONSTANT(millimeters_per_tile,millimeter_per_tile_unit);
 typedef make_scaled_unit<length_per_tile_unit,scale<10, static_rational<-6>>>::type micrometer_per_tile_unit;
 BOOST_UNITS_STATIC_CONSTANT(micrometer_per_tile,micrometer_per_tile_unit);
 BOOST_UNITS_STATIC_CONSTANT(micrometers_per_tile,micrometer_per_tile_unit);

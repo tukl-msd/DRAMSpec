@@ -1,112 +1,121 @@
-///*
-// * Copyright (c) 2015, University of Kaiserslautern
-// * All rights reserved.
-// *
-// * Redistribution and use in source and binary forms, with or without
-// * modification, are permitted provided that the following conditions are
-// * met:
-// *
-// * 1. Redistributions of source code must retain the above copyright notice,
-// *    this list of conditions and the following disclaimer.
-// *
-// * 2. Redistributions in binary form must reproduce the above copyright
-// *    notice, this list of conditions and the following disclaimer in the
-// *    documentation and/or other materials provided with the distribution.
-// *
-// * 3. Neither the name of the copyright holder nor the names of its
-// *    contributors may be used to endorse or promote products derived from
-// *    this software without specific prior written permission.
-// *
-// * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
-// * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-// * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
-// * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-// * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-// * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-// * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-// * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-// * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-// * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-// *
-// * Authors: Omar Naji, Matthias Jung, Christian Weis
-// */
+/*
+ * Copyright (c) 2015, University of Kaiserslautern
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distributio
+ *
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permissio
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
+ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * Authors: Omar Naji, Matthias Jung, Christian Weis
+ */
 
-//#include "Timing.h"
-//#include <math.h>
-//#include <iostream>
-//#include <fstream>
+#include "Timing.h"
+#include <math.h>
+#include <iostream>
+#include <fstream>
 
-//bool
-//Timing::calctrcd()
-//{
-//    // Trcd is divided as following:
-//    // the first part is for wordline driver delay estimated as 2 ns
-//    // the second part is the delay throught the local wordline and
-//    // local bitline and delay coming from cell itself
-//    // the 3rd part is the delay of the ssa and is estimated to 2 ns
-//    // calculating thau for wl
-//    // calculating wordline total resistance ( value in Ohm )
-//    // local wordline resistance equals resistance of local wordline driver+
-//    // resistance of cells in wordline direction
+double
+Timing::timeToPercentage(double percentage)
+{
+    return -log(1.0 - percentage/100.0);
+}
 
-////    [ohm/sa_row] [ohm/sa_row]    [cell/sa_row]          [ohm/cell]
-//    float wlr = n.LWLDriverResistance + (n.cellsPerLWL * n. resistancePerWLCell);
+bool
+Timing::calctrcd()
+{
+    // Trcd is divided as following:
+    // the first part is for wordline driver delay estimated as 2 ns
+    // the second part is the delay throught the local wordline and
+    // local bitline and delay coming from cell itself
+    // the 3rd part is the delay of the ssa and is estimated to 2 ns
+    // calculating tau for wl
+    // calculating wordline total resistance ( value in Ohm )
+    // local wordline resistance equals resistance of local wordline driver+
+    // resistance of cells in wordline direction
 
-//    // Calculating wordline total capacitance ( value in ff)
-////[fF/sa_row] [cell/sa_row]    [aF/cell]       [aF -> fF]
-//    wlc = (n.cellsPerLWL * n.capacitancePerWLCell)*(1/pow(10.0,3.0));
+    // Calculating tau for cell celltau ( in ns )
+    celltau = timeToPercentage(90)
+              * SCALE_QUANTITY(capacitancePerCell, drs::nanofarad_per_cell_unit)
+              * resistancePerCell
+              * drs::cell * drs::cell;
 
-//    // Calculating wlthau( in ns )
-////   [ns]     [ohm/sa_row][fF/sa_row]  [fs -> ns] !Add times [sa_row]^2!
-//    wlthau =   2.2 * wlr * wlc * (1/pow(10.0,6.0));
+    localWordlineResistance = LWLDriverResistance
+                              + (cellsPerLWL *  resistancePerWLCell);
 
-//    // Calculating bitline total resistance
-////   [ohm/sa_col]  [cell/sa_col]        [ohm/cell]
-//    float blr = (n.cellsPerLBL * n.resistancePerBLCell);
+    // Calculating wordline total capacitance ( value in ff)
+    localWordlineCapacitance = cellsPerLWL
+            * SCALE_QUANTITY(capacitancePerWLCell, drs::nanofarad_per_cell_unit);
 
-//    // Calculating bitline total capacitance
-////[fF/sa_col] [cell/sa_col]      [aF/cell]        [aF -> fF]
-//    blc = (n.cellsPerLBL * n.capacitancePerBLCell)*(1/pow(10.0,3.0));
+    // Calculating wltau( in ns )
+    wltau = timeToPercentage(90)
+            * localWordlineCapacitance
+            * localWordlineResistance
+            * drs::subarray * drs::subarray;
 
-//    // Calculating the blthau( in ns )
-//    // for timing of bitline, the voltage should reach 90% of the value
-//    // or else the BLSA can kipp to the wrong value => thau*2.3
-////   [ns]   [ohm/sa_col][fF/sa_col]  [fs -> ns] !Add times [sa_col]^2!
-//    blthau = 2.3 * blr * blc * (1/pow(10.0,6.0));
+    // Calculating bitline total resistance
+    blr = cellsPerLBL * resistancePerBLCell;
 
-//    // Calculating thau for cell cellthau ( in ns )
-//    //      [ns]            [pF/cell]      [ohm/cell]         [ps -> ns] !Add times [cell]^2!
-//    float cellthau = 2.2 * n.capacitancePerCell * n.resistancePerCell * (1/pow(10.0,3.0));
+    // Calculating bitline total capacitance
+    blc = cellsPerLBL
+          * SCALE_QUANTITY(capacitancePerBLCell, drs::nanofarad_per_cell_unit);
 
-//    //calculating GWL decoder + wiring delay
-//    //calculating global wordline total capa in fF
-////  [fF]     [fF/mm]            [um]            [um -> mm]
-//    GWDC = n.wireCapacitance * n.MemoryArraywidth*(1/pow(10.0,3.0));
+    // Calculating the bltau( in ns )
+    // for timing of bitline, the voltage should reach 90% of the value
+    // or else the BLSA can kipp to the wrong value => tau*2.3
+    bltau = timeToPercentage(90)
+            * blr * drs::subarray
+            * blc * drs::subarray;
 
-//    // Calculating delay through global wordline driver and wiring
-////   [ns]   [ns]              [ohm]         [fF]
-//    tGWLD = 0.6 + (2.2 * n.GWLDriverResistance * GWDC
-////          [ohm/mm]        [fF/mm]
-//     + n.wireResistance * n.wireCapacitance
-////          [um]                   [um]              [um -> mm]^2
-//      * n.MemoryArraywidth * n.MemoryArraywidth * (1/pow(10.0,6.0)))
-////              [fs -> ns]
-//            *(1/pow(10.0,6.0));
+    //calculating GWL decoder + wiring delay
+    //calculating global wordline total capa in fF
+    GWDR = wireResistance
+           * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit);
+
+    GWDC = SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+           * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit);
+
+    // Calculating delay through global wordline driver and wiring
+//   [ns]   [ns]              [ohm]         [fF]
+    tGWLD = driverOffset +
+            timeToPercentage(90) * GWLDriverResistance * GWDC * drs::tile +
+            timeToPercentage(63) * GWDR * drs::tile * GWDC * drs::tile;
     
-//    // Calculating trcd
-////  [ns]    [ns]    [ns]     [ns]     [ns]    [ns]
-//    trcd = tGWLD + wlthau + blthau + cellthau + 2 ;
+    // Calculating trcd
+//  [ns]    [ns]    [ns]     [ns]     [ns]    [ns]
+    trcd = tGWLD + wltau + bltau + celltau + SSADelay ;
 
-//    return true;
-//}
+    return true;
+}
 
 //bool
 //Timing::calctras()
 //{
 //    // tras is divided into 4 parts: trcd + tCAS + time for precharging
 //    // SSA(~2ns) + time needed to restore the bits into the cells
-//    // (thau bitline)
+//    // (tau bitline)
 //    //
 //    // Calculating tCAS:
 //    // tCAS has delay from CSL driver + Wire ,Local Dataline driver
@@ -115,29 +124,29 @@
 //    // delay through CSL
 //    // CSL wire capacitane in fF + 8 fF for load
 ////    [fF]      [um/bank]     [fF/mm]       [um -> mm] !Add [bank]!
-//    CSLcapa = n.Bankheight * n.wireCapacitance * (1/pow(10.0,3.0))
+//    CSLcapa = Bankheight * wireCapacitance * (1/pow(10.0,3.0))
 ////      [fF]
 //        + 8;
-//    //thau CSL in ns
+//    //tau CSL in ns
 ////        [ns]   [ns]                [ohm]               [fF]
-//    float tCSL = 0.6 +  (2.2 * (n.CSLDriverResistance * CSLcapa)
+//    float tCSL = 0.6 +  (2.2 * (CSLDriverResistance * CSLcapa)
 ////           [ohm/mm]        [fF/mm]
-//     + (n.wireResistance * n.wireCapacitance
+//     + (wireResistance * wireCapacitance
 ////          [um/bank]      [um/bank]       [um -> mm]^2
-//        * n.Bankheight * n.Bankheight)*(1/pow(10.0,6.0)))
+//        * Bankheight * Bankheight)*(1/pow(10.0,6.0)))
 ////              [fs -> ns]     !Add [bank]^2!
 //            *(1/pow(10.0,6.0));
 
 //    //through global data line(voltage on dataline should reach 90%
 ////    [fF]      [um/bank]     [fF/mm]        [um -> mm] !Add [bank]!
-//    GDLcapa = n.Bankheight * n.wireCapacitance * (1/pow(10.0,3.0));
+//    GDLcapa = Bankheight * wireCapacitance * (1/pow(10.0,3.0));
 
 ////        [ns]    [ns]                [ohm]          [fF]
-//    float tGDL =  0.6 +  (2.2 * (n.GDLDriverResistance * GDLcapa)
+//    float tGDL =  0.6 +  (2.2 * (GDLDriverResistance * GDLcapa)
 ////          [ohm/mm]         [fF/mm]
-//     + (n.wireResistance * n.wireCapacitance
+//     + (wireResistance * wireCapacitance
 ////          [um/bank]      [um/bank]       [um -> mm]^2
-//         * n.Bankheight * n.Bankheight)*(1/pow(10.0,6.0)))
+//         * Bankheight * Bankheight)*(1/pow(10.0,6.0)))
 ////               [fs -> ns]     !Add [bank]^2!
 //            *(1/pow(10.0,6.0));
 
@@ -149,13 +158,13 @@
 //    // Factor which defines the rowbuffer*subarray2rowbuffer relation
 //    float bankwidthfactor;
 ////   [Kbyte??]       [KByte]           [sa_row/ma_row] !CHECK!
-//    bankwidthfactor = n.pageSize * n.subArrayRatioToPage;
+//    bankwidthfactor = pageSize * subArrayRatioToPage;
 
 //    // Currently we assume 5 mm taken from a DDR3 ( 8 banks config)
 //    // when the number of banks increases this distance from bank to
 //    // DQ should increas. We do not model this yet due to lack of input.
 //    // This should be changed in the future.
-//    if (n.ThreeD == "ON") {
+//    if (ThreeD == "ON") {
 ////          [mm]      [mm]
 //        dqwirelength = 1;
 //    } else {
@@ -175,11 +184,11 @@
 //        }
 //    }
 ////   [fF]        [mm]        [fF/mm]
-//    DQcapa = dqwirelength * n.wireCapacitance;
+//    DQcapa = dqwirelength * wireCapacitance;
 ////       [ns]  [ns]                [ohm]         [fF]
-//    float tDQ = 0.6 + (2.2 * (n.DQDriverResistance * DQcapa)
+//    float tDQ = 0.6 + (2.2 * (DQDriverResistance * DQcapa)
 ////          [ohm/mm]          [fF/mm]       [mm]           [mm]
-//     + (n.wireResistance * n.wireCapacitance * dqwirelength * dqwirelength))
+//     + (wireResistance * wireCapacitance * dqwirelength * dqwirelength))
 ////               [fs -> ns]
 //            *(1/pow(10.0,6.0));
     
@@ -193,7 +202,7 @@
 //    // read to precharge
 //    // trtp is tCSL + tGDL + delay for sense amps.
 //    // This is the point in time where precharging is allowed
-//    // std::cout<<"blthau"<<blthau<<std::endl;
+//    // std::cout<<"bltau"<<bltau<<std::endl;
 //    // std::cout<<"tCSL"<<tCSL<<std::endl;
 //    // remove the command decoding latency
 ////  [ns]  [ns] [ns] [ns] [ns] [ns]
@@ -208,11 +217,11 @@
     
 //    // Calculating tras:
 ////  [ns]   [ns]  [ns]    [ns]   [ns] [ns]
-//    tras = trcd + tcl + blthau - tDQ - 1;
+//    tras = trcd + tcl + bltau - tDQ - 1;
 
 //    // Calculating twr + 2 (command decoding) + 1 (security margin):
 //// [ns] [ns]   [ns]    [ns]  [ns]
-//    twr = 2 + blthau + tGDL + 1;
+//    twr = 2 + bltau + tGDL + 1;
 
 //    return true;
 //}
@@ -224,7 +233,7 @@
 //    //trp = Master wordline delay ( discharging ) + local wordline delay
 //    // (discharging ) + 1 ns ( equalizer delay )
 ////  [ns]    [ns]   [ns]  [ns]
-//    trp =  wlthau + 1 + blthau;
+//    trp =  wltau + 1 + bltau;
 
 //    return true;
 //}
@@ -263,19 +272,19 @@
 //    //numberofbanks refreshed*(5(Act cmd delay ) +
 //    // 5(pre cmd delay)) + 10 ns (offset)) + trc
 //    int numberbanks;
-//    if (n.ThreeD == "ON") {
+//    if (ThreeD == "ON") {
 ////      [ns]           [??]              [??/bank]
-//        trfc = n.rowRefreshRate * n.banksRefreshFactor
+//        trfc = rowRefreshRate * banksRefreshFactor
 ////                     [bank]           []         [] []
-//                * n.nBanks/n.vaultsPerLayer*(5+5)
+//                * nBanks/vaultsPerLayer*(5+5)
 ////               [ns]   [ns]
 //                + 10  + trc;
-//        numberbanks = n.nBanks;
+//        numberbanks = nBanks;
 //    } else {
 ////      [ns]           [??]              [??]
-//        trfc = n.rowRefreshRate * n.banksRefreshFactor
+//        trfc = rowRefreshRate * banksRefreshFactor
 ////                     [bank]     [] []
-//                * n.nBanks*(5+5)
+//                * nBanks*(5+5)
 ////               [ns]   [ns]
 //                + 10  + trc;
 //    }
@@ -290,11 +299,11 @@
 //    //number of rows
 //    //number of rows = (DRAM SIZE/#ofbanks) / rowbuffer
 ////       [row/bank]        [Gbit]   [Gbit -> Kbit]     [bank]
-//    int numberofrows = (n.dramSize * 1024 * 1024 / (n.nBanks) )
+//    int numberofrows = (dramSize * 1024 * 1024 / (nBanks) )
 ////        [Kbyte/row] [Kbyte -> Kbit]
-//    / (n.pageSize * 8);
+//    / (pageSize * 8);
 ////   [ns]          [??]             [ms]           [ms -> ns]      [row/bank]
-//    tref1 = (n.rowRefreshRate * n.retentionTime * 1000 * 1000) / (numberofrows);
+//    tref1 = (rowRefreshRate * retentionTime * 1000 * 1000) / (numberofrows);
 
 //    return true;
 //}
@@ -304,26 +313,26 @@
 //{
 
 ////        [MHz]   [MHz]
-//    float freq = n.dramFreq;
+//    float freq = dramFreq;
 ////           [MHz]            [ns]  [GHz -> MHz]
 //    float freq_core_max = (1/ tccd ) * 1000;
 
 
 //    float freq_core_actual;
 //    // if we specified a core Freq then take the value else calculate it
-//    if (n.dramCoreFreq != 0) {
+//    if (dramCoreFreq != 0) {
 ////           [MHz]           [MHz]
-//        freq_core_actual = n.dramCoreFreq;
+//        freq_core_actual = dramCoreFreq;
 //    } else {
 ////            [??]
 //        int clockfactor;
-//        if (n.DramType == "DDR") {
+//        if (DramType == "DDR") {
 //            clockfactor = 2;
 //        } else {
 //            clockfactor = 1;
 //        }
 ////           [MHz]        [MHz]      [??]        [??]
-//        freq_core_actual = freq / (n.Prefetch/clockfactor);
+//        freq_core_actual = freq / (Prefetch/clockfactor);
 //    }
 ////   [MHz]         [MHz]
 //    ActFreq = freq_core_actual;
@@ -343,7 +352,7 @@
 //        std::cout<<"The Specified Frequency fits the DRAM Design!!!"<<"\n";
 //    } else {
 //        std::cout<<"WARNING : Specified Frequency too high"
-//                 <<"for DRAM Design.Go Down with Frequency!!"
+//                 <<"for DRAM DesigGo Down with Frequency!!"
 //                 <<"\n";
 
 //        std::cout<<"If User wants to keep the high frequency,"
@@ -381,12 +390,12 @@
 //    //trl in clk cycles
 //    //tal is additional latency defined in tech. parameter
 ////   [clock]    [ns] [ns/clock] [clock]
-//    trl_clk = ceil(tcl/clk) + n.additionalLatencyTrl;
+//    trl_clk = ceil(tcl/clk) + additionalLatencyTrl;
 
 //    //trl_act in clk cycles
 //    //tal is additional latency defined in tech. parameter
 ////   [clock]         [ns] [ns/clock]  [clock]
-//    trl_act_clk = ceil(tcl/clk_act) + n.additionalLatencyTrl;
+//    trl_act_clk = ceil(tcl/clk_act) + additionalLatencyTrl;
 
 //    //twl in clk cycles
 ////  [clock]   [clock]  clock]

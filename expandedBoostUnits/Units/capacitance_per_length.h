@@ -54,6 +54,11 @@ typedef make_scaled_unit<capacitance_per_length,scale<10, static_rational<-12>>>
 BOOST_UNITS_STATIC_CONSTANT(femtofarad_per_millimeter,femtofarad_per_millimeter_unit);
 BOOST_UNITS_STATIC_CONSTANT(femtofarads_per_millimeter,femtofarad_per_millimeter_unit);
 
+// nanofarad / millimeter = microfarad / meter
+typedef make_scaled_unit<capacitance_per_length,scale<10, static_rational<-6>>>::type nanofarad_per_millimeter_unit;
+BOOST_UNITS_STATIC_CONSTANT(nanofarad_per_millimeter,nanofarad_per_millimeter_unit);
+BOOST_UNITS_STATIC_CONSTANT(nanofarads_per_millimeter,nanofarad_per_millimeter_unit);
+
 } // namespace dramspec
 
 } // namespace units

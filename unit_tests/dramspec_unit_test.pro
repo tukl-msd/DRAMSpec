@@ -139,7 +139,7 @@ SOURCES += ../core/SubArray.cpp
 SOURCES += ../core/Tile.cpp
 SOURCES += ../core/Bank.cpp
 SOURCES += ../core/Chip.cpp
-#SOURCES += ../core/Timing.cpp
+SOURCES += ../core/Timing.cpp
 #SOURCES += ../core/Current.cpp
 
 #DRAMSpec parser source files
