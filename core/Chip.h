@@ -52,7 +52,7 @@ class Chip : public Bank
         chipStorage(0*drs::bit),
         chipWidth(0*drs::micrometer),
         chipHeight(0*drs::micrometer),
-        chipArea(0*drs::millimeter_squared)
+        chipArea(0*drs::square_millimeter)
     {}
 
     Chip(const std::string& techname,const std::string& paraname) :
@@ -60,7 +60,7 @@ class Chip : public Bank
         chipStorage(0*drs::bit),
         chipWidth(0*drs::micrometer),
         chipHeight(0*drs::micrometer),
-        chipArea(0*drs::millimeter_squared)
+        chipArea(0*drs::square_millimeter)
     {
         chipInitialize();
     }
@@ -74,7 +74,7 @@ class Chip : public Bank
     bu::quantity<drs::micrometer_unit> chipHeight;
 
     // Area in micrometer squared of the chip
-    bu::quantity<drs::millimeter_squared_unit> chipArea;
+    bu::quantity<drs::square_millimeter_unit> chipArea;
 
     void chipStorageCalc();
 

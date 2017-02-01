@@ -318,9 +318,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 0.5
                         << "\nGot: " << techValues.rowRefreshRate);
 
-    BOOST_CHECK_MESSAGE( techValues.subArrayToPageFactor == 2,
+    BOOST_CHECK_MESSAGE( techValues.subArrayToPageFactor == 1,
                          "Ratio of subarrays activated pro command different from the expected."
-                        << "\nExpected: " << 2
+                        << "\nExpected: " << 1
                         << "\nGot: " << techValues.subArrayToPageFactor);
 
     BOOST_CHECK_MESSAGE( techValues.retentionTime == 32*drs::millisecond,
@@ -328,14 +328,14 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 32*drs::millisecond
                         << "\nGot: " << techValues.retentionTime);
 
-    BOOST_CHECK_MESSAGE( techValues.tilesPerBank == 1*drs::tile_per_bank,
+    BOOST_CHECK_MESSAGE( techValues.tilesPerBank == 2*drs::tile_per_bank,
                          "Tiles per bank different from the expected."
-                        << "\nExpected: " << 1*drs::tile_per_bank
+                        << "\nExpected: " << 2*drs::tile_per_bank
                         << "\nGot: " << techValues.tilesPerBank);
 
-    BOOST_CHECK_MESSAGE( techValues.pageSpanningFactor == 1*drs::page_per_tile,
+    BOOST_CHECK_MESSAGE( techValues.pageSpanningFactor == 0.5*drs::page_per_tile,
                          "Pages per bank different from the expected."
-                        << "\nExpected: " << 1*drs::page_per_tile
+                        << "\nExpected: " << 0.5*drs::page_per_tile
                         << "\nGot: " << techValues.pageSpanningFactor);
 
     BOOST_CHECK_MESSAGE( techValues.BLArchitecture == "OPEN",

@@ -17,6 +17,6 @@
     "subArrayToPageFactor": 2,
     "retentiontime" : 32,
     "tilesperbank" : 1,
-    "pageSpammingFactor": 1,
+    "pageSpanningFactor": 1,
     "bitlineArchitecture": "OPEN"
 }

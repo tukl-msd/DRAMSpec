@@ -53,6 +53,12 @@
 #include "BaseUnits/bank.h"
 #include "BaseUnits/page.h"
 
+// Conversion between SCALED UNITS
+// 'from' is a quantity,
+// while 'to' is a unit dimension
+#define SCALE_QUANTITY(from, to) \
+    (static_cast<bu::quantity< to >> (from))
+
 namespace boost {
 
 namespace units {

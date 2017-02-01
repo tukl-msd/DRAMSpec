@@ -56,9 +56,9 @@ typedef make_scaled_unit<si::length,scale<10, static_rational<-9>>>::type nanome
 BOOST_UNITS_STATIC_CONSTANT(nanometer,nanometer_unit);
 BOOST_UNITS_STATIC_CONSTANT(nanometers,nanometer_unit);
 
-typedef make_scaled_unit<si::area,scale<10, static_rational<-6>>>::type millimeter_squared_unit;
-BOOST_UNITS_STATIC_CONSTANT(millimeter_squared,millimeter_squared_unit);
-BOOST_UNITS_STATIC_CONSTANT(millimeters_squared,millimeter_squared_unit);
+typedef make_scaled_unit<si::area,scale<10, static_rational<-6>>>::type square_millimeter_unit;
+BOOST_UNITS_STATIC_CONSTANT(square_millimeter,square_millimeter_unit);
+BOOST_UNITS_STATIC_CONSTANT(millimeters_squared,square_millimeter_unit);
 typedef make_scaled_unit<si::area,scale<10, static_rational<-12>>>::type micrometer_squared_unit;
 BOOST_UNITS_STATIC_CONSTANT(micrometer_squared,micrometer_squared_unit);
 BOOST_UNITS_STATIC_CONSTANT(micrometers_squared,micrometer_squared_unit);
@@ -81,7 +81,13 @@ BOOST_UNITS_STATIC_CONSTANT(microseconds,microsecond_unit);
 typedef make_scaled_unit<si::time,scale<10, static_rational<-9>>>::type nanosecond_unit;
 BOOST_UNITS_STATIC_CONSTANT(nanosecond,nanosecond_unit);
 BOOST_UNITS_STATIC_CONSTANT(nanoseconds,nanosecond_unit);
+typedef make_scaled_unit<si::time,scale<10, static_rational<-12>>>::type femtosecond_unit;
+BOOST_UNITS_STATIC_CONSTANT(femtosecond,femtosecond_unit);
+BOOST_UNITS_STATIC_CONSTANT(femtoseconds,femtosecond_unit);
 
+typedef make_scaled_unit<si::capacitance,scale<10, static_rational<-15>>>::type femtofarad_unit;
+BOOST_UNITS_STATIC_CONSTANT(femtofarad,femtofarad_unit);
+BOOST_UNITS_STATIC_CONSTANT(femtofarads,femtofarad_unit);
 
 } // namespace dramspec
 

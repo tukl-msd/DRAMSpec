@@ -395,10 +395,10 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     tilesPerBank = tilesPerBank_value*drs::tile_per_bank;
 
     // Spanning factor of pages across tiles
-    assert(paradocument.HasMember("pageSpammingFactor"));
-    assert(paradocument["pageSpammingFactor"].IsNumber());
-    double pageSpammingFactor_value = paradocument["pageSpammingFactor"].GetDouble();
-    pageSpanningFactor = pageSpammingFactor_value*drs::page_per_tile;
+    assert(paradocument.HasMember("pageSpanningFactor"));
+    assert(paradocument["pageSpanningFactor"].IsNumber());
+    double pageSpanningFactor_value = paradocument["pageSpanningFactor"].GetDouble();
+    pageSpanningFactor = pageSpanningFactor_value*drs::page_per_tile;
 
     // DRAM Bitline Architecture: OPEN or FOLDED bit-line
     assert(paradocument.HasMember("bitlineArchitecture"));

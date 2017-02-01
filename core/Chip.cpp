@@ -41,7 +41,7 @@
 void
 Chip::chipStorageCalc()
 {
-    chipStorage =  dramSize;
+    chipStorage = dramSize;
 }
 
 void
@@ -99,8 +99,8 @@ Chip::chipLenghtCalc()
 void
 Chip::chipAreaCalc()
 {
-    chipArea =  static_cast<bu::quantity<drs::millimeter_squared_unit>>
-                (chipWidth * chipHeight);
+    chipArea =  SCALE_QUANTITY(chipWidth, drs::millimeter_unit)
+                * SCALE_QUANTITY(chipHeight, drs::millimeter_unit);
 }
 
 void

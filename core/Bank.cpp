@@ -41,8 +41,7 @@
 void
 Bank::bankStorageCalc()
 {
-    bankStorage =  static_cast<bu::quantity<drs::information_per_bank_unit>>
-                   ( dramSize / nBanks );
+    bankStorage =  SCALE_QUANTITY(dramSize, drs::bit_unit) / nBanks;
 }
 
 void

@@ -77,19 +77,19 @@ BOOST_AUTO_TEST_CASE( checkChip_real_input )
                         << "\nExpected: " << 1*drs::gibibits
                         << "\nGot: " << chip.chipStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipWidth) == 5603*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipWidth) == 11199*drs::micrometer,
                         "Width of chip different from the expected."
-                        << "\nExpected: " << 5603*drs::micrometer
+                        << "\nExpected: " << 11199*drs::micrometer
                         << "\nGot: " << ceil(chip.chipWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipHeight) == 8406*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipHeight) == 4747*drs::micrometer,
                         "Height of chip different from the expected."
-                        << "\nExpected: " << 8406*drs::micrometer
+                        << "\nExpected: " << 4747*drs::micrometer
                         << "\nGot: " << ceil(chip.chipHeight));
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipArea) == 48*drs::millimeter_squared,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipArea) == 54*drs::square_millimeter,
                         "Area of chip different from the expected."
-                        << "\nExpected: " << 48*drs::millimeter_squared
+                        << "\nExpected: " << 54*drs::square_millimeter
                         << "\nGot: " << ceil(chip.chipArea));
 
 }
@@ -192,19 +192,19 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
                         << "\nExpected: " << 1*drs::gibibits
                         << "\nGot: " << chip.chipStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipWidth) == 1400*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipWidth) == 2799*drs::micrometer,
                         "Width of chip different from the expected."
-                        << "\nExpected: " << 1400*drs::micrometer
+                        << "\nExpected: " << 2799*drs::micrometer
                         << "\nGot: " << ceil(chip.chipWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipHeight) == 30061*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipHeight) == 15428*drs::micrometer,
                         "Height of chip different from the expected."
-                        << "\nExpected: " << 30061*drs::micrometer
+                        << "\nExpected: " << 15428*drs::micrometer
                         << "\nGot: " << ceil(chip.chipHeight));
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipArea) == 43*drs::millimeter_squared,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipArea) == 44*drs::square_millimeter,
                         "Area of chip different from the expected."
-                        << "\nExpected: " << 43*drs::millimeter_squared
+                        << "\nExpected: " << 44*drs::square_millimeter
                         << "\nGot: " << ceil(chip.chipArea));
 
     chip.nBanks = 2.0*drs::bank;
@@ -221,19 +221,19 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
                         << "\nExpected: " << 1*drs::gibibits
                         << "\nGot: " << chip.chipStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipWidth) == 2801*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipWidth) == 5599*drs::micrometer,
                         "Width of chip different from the expected."
-                        << "\nExpected: " << 2801*drs::micrometer
+                        << "\nExpected: " << 5599*drs::micrometer
                         << "\nGot: " << ceil(chip.chipWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipHeight) == 15428*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipHeight) == 8111*drs::micrometer,
                         "Height of chip different from the expected."
-                        << "\nExpected: " << 15428*drs::micrometer
+                        << "\nExpected: " << 8111*drs::micrometer
                         << "\nGot: " << ceil(chip.chipHeight));
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipArea) == 44*drs::millimeter_squared,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipArea) == 46*drs::square_millimeter,
                         "Area of chip different from the expected."
-                        << "\nExpected: " << 44*drs::millimeter_squared
+                        << "\nExpected: " << 46*drs::square_millimeter
                         << "\nGot: " << ceil(chip.chipArea));
 
     chip.nBanks = 4.0*drs::bank;
@@ -250,19 +250,19 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
                         << "\nExpected: " << 1*drs::gibibits
                         << "\nGot: " << chip.chipStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipWidth) == 2801*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipWidth) == 5599*drs::micrometer,
                         "Width of chip different from the expected."
-                        << "\nExpected: " << 2801*drs::micrometer
+                        << "\nExpected: " << 5599*drs::micrometer
                         << "\nGot: " << ceil(chip.chipWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipHeight) == 15722*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipHeight) == 8406*drs::micrometer,
                         "Height of chip different from the expected."
-                        << "\nExpected: " << 15722*drs::micrometer
+                        << "\nExpected: " << 8406*drs::micrometer
                         << "\nGot: " << ceil(chip.chipHeight));
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipArea) == 45*drs::millimeter_squared,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipArea) == 48*drs::square_millimeter,
                         "Area of chip different from the expected."
-                        << "\nExpected: " << 45*drs::millimeter_squared
+                        << "\nExpected: " << 48*drs::square_millimeter
                         << "\nGot: " << ceil(chip.chipArea));
 
     chip.nBanks = 6.0*drs::bank;
@@ -279,19 +279,19 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
                         << "\nExpected: " << 1*drs::gibibits
                         << "\nGot: " << chip.chipStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipWidth) == 4202*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipWidth) == 8399*drs::micrometer,
                         "Width of chip different from the expected."
-                        << "\nExpected: " << 4202*drs::micrometer
+                        << "\nExpected: " << 8399*drs::micrometer
                         << "\nGot: " << ceil(chip.chipWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipHeight) == 10844*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipHeight) == 5967*drs::micrometer,
                         "Height of chip different from the expected."
-                        << "\nExpected: " << 10844*drs::micrometer
+                        << "\nExpected: " << 5967*drs::micrometer
                         << "\nGot: " << ceil(chip.chipHeight));
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipArea) == 46*drs::millimeter_squared,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipArea) == 51*drs::square_millimeter,
                         "Area of chip different from the expected."
-                        << "\nExpected: " << 46*drs::millimeter_squared
+                        << "\nExpected: " << 51*drs::square_millimeter
                         << "\nGot: " << ceil(chip.chipArea));
 
     chip.nBanks = 8.0*drs::bank;
@@ -308,19 +308,19 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
                         << "\nExpected: " << 1*drs::gibibits
                         << "\nGot: " << chip.chipStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipWidth) == 5603*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipWidth) == 11199*drs::micrometer,
                         "Width of chip different from the expected."
-                        << "\nExpected: " << 5603*drs::micrometer
+                        << "\nExpected: " << 11199*drs::micrometer
                         << "\nGot: " << ceil(chip.chipWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipHeight) == 8406*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipHeight) == 4747*drs::micrometer,
                         "Height of chip different from the expected."
-                        << "\nExpected: " << 8406*drs::micrometer
+                        << "\nExpected: " << 4747*drs::micrometer
                         << "\nGot: " << ceil(chip.chipHeight));
 
-    BOOST_CHECK_MESSAGE( ceil(chip.chipArea) == 48*drs::millimeter_squared,
+    BOOST_CHECK_MESSAGE( ceil(chip.chipArea) == 54*drs::square_millimeter,
                         "Area of chip different from the expected."
-                        << "\nExpected: " << 48*drs::millimeter_squared
+                        << "\nExpected: " << 54*drs::square_millimeter
                         << "\nGot: " << ceil(chip.chipArea));
 
 }

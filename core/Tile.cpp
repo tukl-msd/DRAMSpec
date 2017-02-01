@@ -105,10 +105,10 @@ Tile::tileLenghtCalc()
     }
 
     nSubArraysPerArrayBlock =
-            static_cast<bu::quantity<drs::information_per_tile_unit>>
-                             (pageStorage * pageSpanningFactor)
-                             / subArrayRowStorage
-                             / subArrayToPageFactor;
+            SCALE_QUANTITY(pageStorage, drs::information_per_page_unit)
+                             * pageSpanningFactor
+                             * subArrayToPageFactor
+                             / subArrayRowStorage;
 
     tileWidth = nSubArraysPerArrayBlock * subArrayWidth + WLDriverWidth/drs::tile;
 

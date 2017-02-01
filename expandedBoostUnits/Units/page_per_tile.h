@@ -32,8 +32,8 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_PAGE_PER_BANK_UNIT_H
-#define DRAMSPEC_PAGE_PER_BANK_UNIT_H
+#ifndef DRAMSPEC_PAGE_PER_TILE_UNIT_H
+#define DRAMSPEC_PAGE_PER_TILE_UNIT_H
 
 #include "../dramSpecUnitsSystem.h"
 #include "../DerivedDimensions/page_per_tile.h"
@@ -57,4 +57,4 @@ inline std::string symbol_string(const reduce_unit<dramspec::page_per_tile_unit>
 
 } // namespace boost
 
-#endif // DRAMSPEC_PAGE_PER_BANK_UNIT_H
+#endif // DRAMSPEC_PAGE_PER_TILE_UNIT_H

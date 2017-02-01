@@ -41,12 +41,12 @@ mac {
 INCLUDEPATH += /users/chinazzo/libs/boost_1_62_0
 
 #DRAMSpec HEADERS
-HEADERS += ../core/Chip.h
-HEADERS += ../core/Bank.h
-HEADERS += ../core/Tile.h
 HEADERS += ../core/SubArray.h
-#HEADERS += ../core/Current.h
+HEADERS += ../core/Tile.h
+HEADERS += ../core/Bank.h
+HEADERS += ../core/Chip.h
 #HEADERS += ../core/Timing.h
+#HEADERS += ../core/Current.h
 
 HEADERS += ../parser/ArgumentsParser.h
 HEADERS += ../parser/TechnologyValues.h
@@ -135,12 +135,12 @@ HEADERS += ../expandedBoostUnits/expanded_make_system.hpp
 HEADERS += ../expandedBoostUnits/dramSpecUnitsSystem.h
 
 #DRAMSpec SOURCE files
-SOURCES += ../core/Chip.cpp
-SOURCES += ../core/Bank.cpp
-SOURCES += ../core/Tile.cpp
 SOURCES += ../core/SubArray.cpp
-#SOURCES += ../core/Current.cpp
+SOURCES += ../core/Tile.cpp
+SOURCES += ../core/Bank.cpp
+SOURCES += ../core/Chip.cpp
 #SOURCES += ../core/Timing.cpp
+#SOURCES += ../core/Current.cpp
 
 #DRAMSpec parser source files
 SOURCES += ../parser/ArgumentsParser.cpp
