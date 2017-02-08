@@ -44,25 +44,25 @@
 
 #include "Bank.h"
 
+namespace bu=boost::units;
+namespace si=boost::units::si;
+namespace inf=boost::units::information;
+namespace drs=boost::units::dramspec;
+
 class Chip : public Bank
 {
   public:
     Chip() : //Empty constructor for test proposes
-        Bank(),
-        chipStorage(0*drs::bit),
-        chipWidth(0*drs::micrometer),
-        chipHeight(0*drs::micrometer),
-        chipArea(0*drs::square_millimeter)
-    {}
-
-    Chip(const std::string& techname,const std::string& paraname) :
-        Bank(techname,paraname),
-        chipStorage(0*drs::bit),
-        chipWidth(0*drs::micrometer),
-        chipHeight(0*drs::micrometer),
-        chipArea(0*drs::square_millimeter)
+        Bank()
     {
         chipInitialize();
+    }
+
+    Chip(const std::string& techname,const std::string& paraname) :
+        Bank(techname,paraname)
+    {
+        chipInitialize();
+        chipCompute();
     }
 
     // Size in number of bits of the chip
@@ -76,13 +76,15 @@ class Chip : public Bank
     // Area in micrometer squared of the chip
     bu::quantity<drs::square_millimeter_unit> chipArea;
 
+    void chipInitialize();
+
     void chipStorageCalc();
 
     void chipLenghtCalc();
 
     void chipAreaCalc();
 
-    void chipInitialize();
+    void chipCompute();
 
 };
 

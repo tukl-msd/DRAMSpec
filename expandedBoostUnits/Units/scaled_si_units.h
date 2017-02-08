@@ -85,6 +85,9 @@ typedef make_scaled_unit<si::time,scale<10, static_rational<-12>>>::type picosec
 BOOST_UNITS_STATIC_CONSTANT(picosecond,picosecond_unit);
 BOOST_UNITS_STATIC_CONSTANT(picoseconds,picosecond_unit);
 
+typedef make_scaled_unit<si::capacitance,scale<10, static_rational<-9>>>::type nanofarad_unit;
+BOOST_UNITS_STATIC_CONSTANT(nanofarad,nanofarad_unit);
+BOOST_UNITS_STATIC_CONSTANT(nanofarads,nanofarad_unit);
 typedef make_scaled_unit<si::capacitance,scale<10, static_rational<-15>>>::type femtofarad_unit;
 BOOST_UNITS_STATIC_CONSTANT(femtofarad,femtofarad_unit);
 BOOST_UNITS_STATIC_CONSTANT(femtofarads,femtofarad_unit);

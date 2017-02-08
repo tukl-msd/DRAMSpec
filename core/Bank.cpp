@@ -39,6 +39,14 @@
 #include "Bank.h"
 
 void
+Bank::bankInitialize()
+{
+    bankStorage = 0*drs::bit_per_bank;
+    bankWidth = 0*drs::micrometer_per_bank;
+    bankHeight = 0*drs::micrometer_per_bank;
+}
+
+void
 Bank::bankStorageCalc()
 {
     bankStorage =  SCALE_QUANTITY(dramSize, drs::bit_unit) / nBanks;
@@ -75,7 +83,7 @@ Bank::bankLenghtCalc()
 }
 
 void
-Bank::bankInitialize()
+Bank::bankCompute()
 {
     bankStorageCalc();
 

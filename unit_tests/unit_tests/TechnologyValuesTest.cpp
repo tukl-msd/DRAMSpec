@@ -72,8 +72,8 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
     TechnologyValues techValues(inputFileName.technologyFileName[0],
                                 inputFileName.architectureFileName[0]);
 
-    techValues.readjson(techValues.Techname ,
-                        techValues.Paraname);
+    techValues.readjson(techValues.techName ,
+                        techValues.paraName);
 
     BOOST_CHECK_MESSAGE( techValues.technologyNode == 58*drs::nanometer,
                         "Technology node different from the expected."
@@ -308,9 +308,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 3.9*drs::nanosecond
                         << "\nGot: " << techValues.tRef1Required);
 
-    BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 1,
+    BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 1*drs::bank,
                          "Bank refresh factor different from the expected."
-                        << "\nExpected: " << 1
+                        << "\nExpected: " << 1*drs::bank
                         << "\nGot: " << techValues.banksRefreshFactor);
 
     BOOST_CHECK_MESSAGE( techValues.rowRefreshRate == 0.5,
@@ -372,8 +372,8 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
     TechnologyValues techValues(inputFileName.technologyFileName[0],
                                 inputFileName.architectureFileName[0]);
 
-    techValues.readjson(techValues.Techname ,
-                        techValues.Paraname);
+    techValues.readjson(techValues.techName ,
+                        techValues.paraName);
 
     BOOST_CHECK_MESSAGE( techValues.technologyNode == 1*drs::nanometer,
                         "Technology node different from the expected."
@@ -608,9 +608,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 112*drs::nanosecond
                         << "\nGot: " << techValues.tRef1Required);
 
-    BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 113,
+    BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 113*drs::bank,
                         "Bank refresh factor different from the expected."
-                        << "\nExpected: " << 113
+                        << "\nExpected: " << 113*drs::bank
                         << "\nGot: " << techValues.banksRefreshFactor);
 
     BOOST_CHECK_MESSAGE( techValues.rowRefreshRate == 114,

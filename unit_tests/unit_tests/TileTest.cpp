@@ -174,7 +174,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     tile.tilesPerBank = 1*drs::tiles_per_bank;
     tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
     try {
-        tile.tileInitialize();
+        tile.tileCompute();
     }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
@@ -188,7 +188,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
 
     tile.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
-        tile.tileInitialize();
+        tile.tileCompute();
     }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
@@ -222,7 +222,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     tile.tilesPerBank = 2*drs::tiles_per_bank;
     tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
     try {
-        tile.tileInitialize();
+        tile.tileCompute();
     }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
@@ -235,7 +235,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
 
     tile.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
-        tile.tileInitialize();
+        tile.tileCompute();
     }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
@@ -268,7 +268,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
 
     tile.pageSpanningFactor = 0.5*drs::pages_per_tile;
     try {
-        tile.tileInitialize();
+        tile.tileCompute();
     }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
@@ -302,7 +302,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     tile.tilesPerBank = 4*drs::tiles_per_bank;
     tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
     try {
-        tile.tileInitialize();
+        tile.tileCompute();
     }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
@@ -316,7 +316,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
 
     tile.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
-        tile.tileInitialize();
+        tile.tileCompute();
     }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
@@ -349,7 +349,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
 
     tile.pageSpanningFactor = 0.5*drs::pages_per_tile;
     try {
-        tile.tileInitialize();
+        tile.tileCompute();
     }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
@@ -382,7 +382,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
 
     tile.pageSpanningFactor = 0.25*drs::pages_per_tile;
     try {
-        tile.tileInitialize();
+        tile.tileCompute();
     }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }

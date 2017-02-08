@@ -44,30 +44,26 @@
 
 #include "SubArray.h"
 
+namespace bu=boost::units;
+namespace si=boost::units::si;
+namespace inf=boost::units::information;
+namespace drs=boost::units::dramspec;
+
 class Tile : public SubArray
 {
   public:
     Tile() : //Empty constructor for test proposes
-        SubArray(),
-        tileStorage(0*drs::bit_per_tile),
-        tileWidth(0*drs::micrometer_per_tile),
-        tileHeight(0*drs::micrometer_per_tile),
-
-        nSubArraysPerArrayBlock(0*drs::subarray_per_tile),
-        nArrayBlocksPerTile(0*drs::subarray_per_tile)
-    {}
+        SubArray()
+    {
+        tileInitialize();
+    }
 
     Tile(const std::string& techname,const std::string& paraname):
-        SubArray(techname,paraname),
-        tileStorage(0*drs::bit_per_tile),
-        tileWidth(0*drs::micrometer_per_tile),
-        tileHeight(0*drs::micrometer_per_tile),
-
-        nSubArraysPerArrayBlock(0*drs::subarray_per_tile),
-        nArrayBlocksPerTile(0*drs::subarray_per_tile)
+        SubArray(techname,paraname)
     {
+        tileInitialize();
         try {
-            tileInitialize();
+            tileCompute();
         }catch (std::string exceptionMsgThrown){
             throw exceptionMsgThrown;
         }
@@ -86,12 +82,14 @@ class Tile : public SubArray
     // Number of subarrays per tile in the bitline direction
     bu::quantity<drs::subarray_per_tile_unit> nArrayBlocksPerTile;
 
+    void tileInitialize();
+
     void tileStorageCalc();
 
     void checkTileDataConsistency();
     void tileLenghtCalc();
 
-    void tileInitialize();
+    void tileCompute();
 
 };
 

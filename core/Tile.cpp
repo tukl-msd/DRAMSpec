@@ -39,6 +39,17 @@
 #include "Tile.h"
 
 void
+Tile::tileInitialize()
+{
+    tileStorage = 0*drs::bit_per_tile;
+    tileWidth = 0*drs::micrometer_per_tile;
+    tileHeight = 0*drs::micrometer_per_tile;
+
+    nSubArraysPerArrayBlock = 0*drs::subarray_per_tile;
+    nArrayBlocksPerTile = 0*drs::subarray_per_tile;
+}
+
+void
 Tile::tileStorageCalc()
 {
     bu::quantity<drs::information_per_bank_unit> bankStorage(dramSize/nBanks);
@@ -141,7 +152,7 @@ Tile::tileLenghtCalc()
 }
 
 void
-Tile::tileInitialize()
+Tile::tileCompute()
 {
     tileStorageCalc();
 

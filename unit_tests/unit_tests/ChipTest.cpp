@@ -136,7 +136,7 @@ BOOST_AUTO_TEST_CASE( checkChip_dummy_input )
     chip.readjson(inputFileName.technologyFileName[0],
                   inputFileName.architectureFileName[0]);
     try {
-        chip.chipInitialize();
+        chip.chipCompute();
     }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
@@ -180,12 +180,12 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
 
     chip.nBanks = 1.0*drs::bank;
     try {
-        chip.tileInitialize();
+        chip.tileCompute();
     }catch (std::string exceptionMsgThrown){
         std::cerr << exceptionMsgThrown << std::endl;
     }
-    chip.bankInitialize();
-    chip.chipInitialize();
+    chip.bankCompute();
+    chip.chipCompute();
 
     BOOST_CHECK_MESSAGE( chip.chipStorage == 1*drs::gibibits,
                         "Chip storage size different from the expected."
@@ -209,12 +209,12 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
 
     chip.nBanks = 2.0*drs::bank;
     try {
-        chip.tileInitialize();
+        chip.tileCompute();
     }catch (std::string exceptionMsgThrown){
         std::cerr << exceptionMsgThrown << std::endl;
     }
-    chip.bankInitialize();
-    chip.chipInitialize();
+    chip.bankCompute();
+    chip.chipCompute();
 
     BOOST_CHECK_MESSAGE( chip.chipStorage == 1*drs::gibibits,
                         "Chip storage size different from the expected."
@@ -238,12 +238,12 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
 
     chip.nBanks = 4.0*drs::bank;
     try {
-        chip.tileInitialize();
+        chip.tileCompute();
     }catch (std::string exceptionMsgThrown){
         std::cerr << exceptionMsgThrown << std::endl;
     }
-    chip.bankInitialize();
-    chip.chipInitialize();
+    chip.bankCompute();
+    chip.chipCompute();
 
     BOOST_CHECK_MESSAGE( chip.chipStorage == 1*drs::gibibits,
                         "Chip storage size different from the expected."
@@ -267,12 +267,12 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
 
     chip.nBanks = 6.0*drs::bank;
     try {
-        chip.tileInitialize();
+        chip.tileCompute();
     }catch (std::string exceptionMsgThrown){
         std::cerr << exceptionMsgThrown << std::endl;
     }
-    chip.bankInitialize();
-    chip.chipInitialize();
+    chip.bankCompute();
+    chip.chipCompute();
 
     BOOST_CHECK_MESSAGE( chip.chipStorage == 1*drs::gibibits,
                         "Chip storage size different from the expected."
@@ -296,12 +296,12 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
 
     chip.nBanks = 8.0*drs::bank;
     try {
-        chip.tileInitialize();
+        chip.tileCompute();
     }catch (std::string exceptionMsgThrown){
         std::cerr << exceptionMsgThrown << std::endl;
     }
-    chip.bankInitialize();
-    chip.chipInitialize();
+    chip.bankCompute();
+    chip.chipCompute();
 
     BOOST_CHECK_MESSAGE( chip.chipStorage == 1*drs::gibibits,
                         "Chip storage size different from the expected."

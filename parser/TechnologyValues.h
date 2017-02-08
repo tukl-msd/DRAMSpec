@@ -54,127 +54,23 @@ class TechnologyValues
 {
   public:
 
-    TechnologyValues() : //Empty constructor for test proposes
-        Techname(""),
-        Paraname(""),
-
-        technologyNode(0*drs::nanometer),
-        capacitancePerBLCell(0*drs::attofarads_per_cell),
-        resistancePerBLCell(0*drs::ohm_per_cell),
-        capacitancePerWLCell(0*drs::attofarads_per_cell),
-        resistancePerWLCell(0*drs::ohm_per_cell),
-        capacitancePerCell(0*drs::picofarads_per_cell),
-        resistancePerCell(0*drs::ohm_per_cell),
-        wireResistance(0*drs::ohm_per_millimeter),
-        wireCapacitance(0*drs::femtofarad_per_millimeter),
-        cellWidth(0*drs::micrometer_per_cell),
-        cellHeight(0*drs::micrometer_per_cell),
-        cellsPerLWL(0*drs::cell_per_subarray),
-        cellsPerLWLRedundancy(0*drs::cell_per_subarray),
-        cellsPerLBL(0*drs::cell_per_subarray),
-        cellsPerLBLRedundancy(0*drs::cell_per_subarray),
-        BLSenseAmpHeight(0*drs::micrometer),
-        WLDriverWidth(0*drs::micrometer),
-        GWLDriverResistance(0*si::ohm),
-        LWLDriverResistance(0*drs::ohm_per_subarray),
-        WRResistance(0*drs::ohm_per_subarray),
-        CSLDriverResistance(0*si::ohm),
-        GDLDriverResistance(0*si::ohm),
-        DQDriverResistance(0*si::ohm),
-        Issa(0*drs::microampere),
-        Vpp(0*si::volt),
-        Vcc(0*si::volt),
-        backgroundCurrentSlope(0*drs::milliamperes_per_megahertz),
-        backgroundCurrentOffset(0*drs::microampere),
-        IddOcdRcv(0*drs::microampere),
-
-        dramType(""),
-        ThreeD(""),
-        vaultsPerLayer(0),
-        dramSize(0*drs::gibibit),
-        nBanks(0*drs::bank),
-        Interface(16),
-        dramFreq(0*drs::megahertz_clock),
-        dramCoreFreq(0*drs::megahertz_clock),
-        Prefetch(0),
-        additionalLatencyTrl(0*drs::clock),
-        pageStorage(0*drs::kibibit_per_page),
-        DLL(""),
-        tRef1Required(0*drs::nanosecond),
-        banksRefreshFactor(0),
-        rowRefreshRate(0),
-        subArrayToPageFactor(0),
-        retentionTime(0*drs::millisecond),
-        tilesPerBank(0*drs::tile_per_bank),
-        pageSpanningFactor(0*drs::page_per_tile),
-        BLArchitecture("")
-    {}
+    TechnologyValues() //Empty constructor for test proposes
+    {
+        technologyValuesInitialize();
+    }
 
     TechnologyValues(const std::string& techname,
-                     const std::string& paraname) :
-        Techname(""),
-        Paraname(""),
-
-        technologyNode(0*drs::nanometer),
-        capacitancePerBLCell(0*drs::attofarads_per_cell),
-        resistancePerBLCell(0*drs::ohm_per_cell),
-        capacitancePerWLCell(0*drs::attofarads_per_cell),
-        resistancePerWLCell(0*drs::ohm_per_cell),
-        capacitancePerCell(0*drs::picofarads_per_cell),
-        resistancePerCell(0*drs::ohm_per_cell),
-        wireResistance(0*drs::ohm_per_millimeter),
-        wireCapacitance(0*drs::femtofarad_per_millimeter),
-        cellWidth(0*drs::micrometer_per_cell),
-        cellHeight(0*drs::micrometer_per_cell),
-        cellsPerLWL(0*drs::cell_per_subarray),
-        cellsPerLWLRedundancy(0*drs::cell_per_subarray),
-        cellsPerLBL(0*drs::cell_per_subarray),
-        cellsPerLBLRedundancy(0*drs::cell_per_subarray),
-        BLSenseAmpHeight(0*drs::micrometer),
-        WLDriverWidth(0*drs::micrometer),
-        GWLDriverResistance(0*si::ohm),
-        LWLDriverResistance(0*drs::ohm_per_subarray),
-        WRResistance(0*drs::ohm_per_subarray),
-        CSLDriverResistance(0*si::ohm),
-        GDLDriverResistance(0*si::ohm),
-        DQDriverResistance(0*si::ohm),
-        Issa(0*drs::microampere),
-        Vpp(0*si::volt),
-        Vcc(0*si::volt),
-        backgroundCurrentSlope(0*drs::milliamperes_per_megahertz),
-        backgroundCurrentOffset(0*drs::microampere),
-        IddOcdRcv(0*drs::microampere),
-
-        dramType(""),
-        ThreeD(""),
-        vaultsPerLayer(0),
-        dramSize(0*drs::gibibit),
-        nBanks(0*drs::bank),
-        Interface(16),
-        dramFreq(0*drs::megahertz_clock),
-        dramCoreFreq(0*drs::megahertz_clock),
-        Prefetch(0),
-        additionalLatencyTrl(0*drs::clock),
-        pageStorage(0*drs::kibibit_per_page),
-        DLL(""),
-        tRef1Required(0*drs::nanosecond),
-        banksRefreshFactor(0),
-        rowRefreshRate(0),
-        subArrayToPageFactor(0),
-        retentionTime(0*drs::millisecond),
-        tilesPerBank(0*drs::tile_per_bank),
-        pageSpanningFactor(0*drs::page_per_tile),
-        BLArchitecture("")
+                     const std::string& paraname)
     {
-       Techname = techname;
-       Paraname = paraname;
+        technologyValuesInitialize();
+        readjson(techname, paraname);
     }
 
     // Technologyfile name to be read
-    std::string Techname;
+    std::string techName;
 
     // Parameter file name to be read
-    std::string Paraname;
+    std::string paraName;
 
     //Technology node in nm
     bu::quantity<drs::nanometer_unit> technologyNode;
@@ -293,7 +189,7 @@ class TechnologyValues
     bu::quantity<drs::bank_unit> nBanks;
 
     //Interface
-    int Interface;
+    double Interface;
 
     //DRAM Frequency
     bu::quantity<drs::megahertz_clock_unit> dramFreq;
@@ -304,7 +200,7 @@ class TechnologyValues
     bu::quantity<drs::megahertz_clock_unit> dramCoreFreq;
 
     //Number of Prefetch
-    int Prefetch;
+    double Prefetch;
 
     //additional latency required for trl calculation
     bu::quantity<drs::clock_unit> additionalLatencyTrl;
@@ -319,7 +215,7 @@ class TechnologyValues
     bu::quantity<drs::nanosecond_unit> tRef1Required;
 
     // Factor for number of banks refreshed pro command
-    double banksRefreshFactor;
+    bu::quantity<drs::bank_unit> banksRefreshFactor;
 
     // Number of times a row is refreshed in retention time
     double rowRefreshRate;
@@ -338,6 +234,8 @@ class TechnologyValues
 
     // DRAM Bitline Architecture: OPEN or FOLDED bit-line
     std::string BLArchitecture;
+
+    void technologyValuesInitialize();
 
     void readjson(const std::string& t,const std::string& p);
 

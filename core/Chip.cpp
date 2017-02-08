@@ -38,6 +38,16 @@
 
 #include "Chip.h"
 
+
+void
+Chip::chipInitialize()
+{
+    chipStorage = 0*drs::gibibit;
+    chipWidth = 0*drs::micrometer;
+    chipHeight = 0*drs::micrometer;
+    chipArea = 0*drs::square_millimeter;
+}
+
 void
 Chip::chipStorageCalc()
 {
@@ -104,7 +114,7 @@ Chip::chipAreaCalc()
 }
 
 void
-Chip::chipInitialize()
+Chip::chipCompute()
 {
     chipStorageCalc();
 

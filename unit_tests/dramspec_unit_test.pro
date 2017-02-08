@@ -45,7 +45,7 @@ HEADERS += ../core/SubArray.h
 HEADERS += ../core/Tile.h
 HEADERS += ../core/Bank.h
 HEADERS += ../core/Chip.h
-#HEADERS += ../core/Timing.h
+HEADERS += ../core/Timing.h
 #HEADERS += ../core/Current.h
 
 HEADERS += ../parser/ArgumentsParser.h
@@ -155,7 +155,7 @@ SOURCES += unit_tests/SubArrayTest.cpp
 SOURCES += unit_tests/TileTest.cpp
 SOURCES += unit_tests/BankTest.cpp
 SOURCES += unit_tests/ChipTest.cpp
-#SOURCES += unit_tests/TimingTest.cpp
+SOURCES += unit_tests/TimingTest.cpp
 #SOURCES += unit_tests/CurrentTest.cpp
 
 #SOURCES += unit_tests/DramSpecTest.cpp

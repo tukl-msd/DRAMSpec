@@ -40,24 +40,26 @@
 
 #include "../parser/TechnologyValues.h"
 
+namespace bu=boost::units;
+namespace si=boost::units::si;
+namespace inf=boost::units::information;
+namespace drs=boost::units::dramspec;
+
 class SubArray : public TechnologyValues
 {
   public:
     SubArray() : //Empty constructor for test proposes
-        TechnologyValues(),
-        subArrayRowStorage(0*drs::bit_per_subarray),
-        subArrayWidth(0*drs::micrometer_per_subarray),
-        subArrayHeight(0*drs::micrometer_per_subarray)
-    {}
-
-    SubArray(const std::string& techname, const std::string& paraname) :
-        TechnologyValues(techname,paraname),
-        subArrayRowStorage(0*drs::bit_per_subarray),
-        subArrayWidth(0*drs::micrometer_per_subarray),
-        subArrayHeight(0*drs::micrometer_per_subarray)
+        TechnologyValues()
     {
         subArrayInitialize();
-        driversInitialize();
+    }
+
+    SubArray(const std::string& techname, const std::string& paraname) :
+        TechnologyValues(techname,paraname)
+    {
+        subArrayInitialize();
+        subArrayCompute();
+        driverUpdate();
     }
 
     // Size in number of bits of a single subarray
@@ -72,16 +74,14 @@ class SubArray : public TechnologyValues
     //the height of the subarray which should be calculated
     bu::quantity<drs::micrometer_per_subarray_unit>  subArrayHeight;
 
-    // function which calculates the height and width of the subarray
-    void subArrayStorageCalc();
-
-    // function which calculates the height and width of the subarray
-    void subArrayLengthCalc();
-
-    //function to init subarray
     void subArrayInitialize();
 
-    //function to initialize the drivers resistances
-    void driversInitialize();
+    void subArrayStorageCalc();
+
+    void subArrayLengthCalc();
+
+    void subArrayCompute();
+
+    void driverUpdate();
 };
 #endif//SUBARRAY_H

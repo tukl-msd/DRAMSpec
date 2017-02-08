@@ -158,11 +158,11 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
     bank.tilesPerBank = 1.0*drs::tiles_per_bank;
     bank.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
-        bank.tileInitialize();
+        bank.tileCompute();
     }catch (std::string exceptionMsgThrown){
         std::cerr << exceptionMsgThrown << std::endl;
     }
-    bank.bankInitialize();
+    bank.bankCompute();
 
     BOOST_CHECK_MESSAGE( bank.bankStorage == 134217728*drs::bits_per_bank,
                         "Bank storage size different from the expected."
@@ -182,11 +182,11 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
     bank.tilesPerBank = 2.0*drs::tiles_per_bank;
     bank.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
-        bank.tileInitialize();
+        bank.tileCompute();
     }catch (std::string exceptionMsgThrown){
         std::cerr << exceptionMsgThrown << std::endl;
     }
-    bank.bankInitialize();
+    bank.bankCompute();
 
     BOOST_CHECK_MESSAGE( bank.bankStorage == 134217728*drs::bits_per_bank,
                         "Bank storage size different from the expected."
@@ -206,11 +206,11 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
     bank.tilesPerBank = 4.0*drs::tiles_per_bank;
     bank.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
-        bank.tileInitialize();
+        bank.tileCompute();
     }catch (std::string exceptionMsgThrown){
         std::cerr << exceptionMsgThrown << std::endl;
     }
-    bank.bankInitialize();
+    bank.bankCompute();
 
     BOOST_CHECK_MESSAGE( bank.bankStorage == 134217728*drs::bits_per_bank,
                         "Bank storage size different from the expected."

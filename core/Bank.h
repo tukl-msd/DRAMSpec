@@ -44,23 +44,25 @@
 
 #include "Tile.h"
 
+namespace bu=boost::units;
+namespace si=boost::units::si;
+namespace inf=boost::units::information;
+namespace drs=boost::units::dramspec;
+
 class Bank : public Tile
 {
   public:
     Bank() : //Empty constructor for test proposes
-        Tile(),
-        bankStorage(0*drs::bit_per_bank),
-        bankWidth(0*drs::micrometer_per_bank),
-        bankHeight(0*drs::micrometer_per_bank)
-    {}
-
-    Bank(const std::string& techname,const std::string& paraname):
-        Tile(techname,paraname),
-        bankStorage(0*drs::bit_per_bank),
-        bankWidth(0*drs::micrometer_per_bank),
-        bankHeight(0*drs::micrometer_per_bank)
+        Tile()
     {
         bankInitialize();
+    }
+
+    Bank(const std::string& techname,const std::string& paraname):
+        Tile(techname,paraname)
+    {
+        bankInitialize();
+        bankCompute();
     }
 
     // Size in number of bits of a single bank
@@ -71,11 +73,11 @@ class Bank : public Tile
     // Height in micrometer of a single bank
     bu::quantity<drs::micrometer_per_bank_unit> bankHeight;
 
-    void bankStorageCalc();
-
-    void bankLenghtCalc();
-
     void bankInitialize();
+
+    void bankCompute();
+    void bankStorageCalc();
+    void bankLenghtCalc();
 
 };
 

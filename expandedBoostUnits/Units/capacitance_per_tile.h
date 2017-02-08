@@ -49,14 +49,14 @@ namespace dramspec {
 typedef unit<capacitance_per_tile_dimension,dramspec::system> capacitance_per_tile_unit;
 
 typedef make_scaled_unit<capacitance_per_tile_unit,scale<10, static_rational<-9>>>::type nanofarad_per_tile_unit;
-BOOST_UNITS_STATIC_CONSTANT(nanofarad_per_bl_tile,nanofarad_per_tile_unit);
-BOOST_UNITS_STATIC_CONSTANT(nanofarads_per_bl_tile,nanofarad_per_tile_unit);
+BOOST_UNITS_STATIC_CONSTANT(nanofarad_per_tile,nanofarad_per_tile_unit);
+BOOST_UNITS_STATIC_CONSTANT(nanofarads_per_tile,nanofarad_per_tile_unit);
 typedef make_scaled_unit<capacitance_per_tile_unit,scale<10, static_rational<-12>>>::type picofarad_per_tile_unit;
-BOOST_UNITS_STATIC_CONSTANT(picofarad_per_bl_tile,picofarad_per_tile_unit);
-BOOST_UNITS_STATIC_CONSTANT(picofarads_per_bl_tile,picofarad_per_tile_unit);
+BOOST_UNITS_STATIC_CONSTANT(picofarad_per_tile,picofarad_per_tile_unit);
+BOOST_UNITS_STATIC_CONSTANT(picofarads_per_tile,picofarad_per_tile_unit);
 typedef make_scaled_unit<capacitance_per_tile_unit,scale<10, static_rational<-15>>>::type femtofarad_per_tile_unit;
-BOOST_UNITS_STATIC_CONSTANT(femtofarad_per_bl_tile,femtofarad_per_tile_unit);
-BOOST_UNITS_STATIC_CONSTANT(femtofarads_per_bl_tile,femtofarad_per_tile_unit);
+BOOST_UNITS_STATIC_CONSTANT(femtofarad_per_tile,femtofarad_per_tile_unit);
+BOOST_UNITS_STATIC_CONSTANT(femtofarads_per_tile,femtofarad_per_tile_unit);
 typedef make_scaled_unit<capacitance_per_tile_unit,scale<10, static_rational<-18>>>::type attofarad_per_tile_unit;
 BOOST_UNITS_STATIC_CONSTANT(attofarad_per_tile,attofarad_per_tile_unit);
 BOOST_UNITS_STATIC_CONSTANT(attofarads_per_tile,attofarad_per_tile_unit);

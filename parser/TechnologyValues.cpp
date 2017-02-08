@@ -34,24 +34,72 @@
 
 #include "TechnologyValues.h"
 
-namespace bu=boost::units;
-namespace si=boost::units::si;
-namespace inf=boost::units::information;
-namespace drs=boost::units::dramspec;
+void
+TechnologyValues::technologyValuesInitialize()
+{
+    techName = "";
+    paraName = "";
+
+    technologyNode = 0*drs::nanometer;
+    capacitancePerBLCell = 0*drs::attofarads_per_cell;
+    resistancePerBLCell = 0*drs::ohm_per_cell;
+    capacitancePerWLCell = 0*drs::attofarads_per_cell;
+    resistancePerWLCell = 0*drs::ohm_per_cell;
+    capacitancePerCell = 0*drs::picofarads_per_cell;
+    resistancePerCell = 0*drs::ohm_per_cell;
+    wireResistance = 0*drs::ohm_per_millimeter;
+    wireCapacitance = 0*drs::femtofarad_per_millimeter;
+    cellWidth = 0*drs::micrometer_per_cell;
+    cellHeight = 0*drs::micrometer_per_cell;
+    cellsPerLWL = 0*drs::cell_per_subarray;
+    cellsPerLWLRedundancy = 0*drs::cell_per_subarray;
+    cellsPerLBL = 0*drs::cell_per_subarray;
+    cellsPerLBLRedundancy = 0*drs::cell_per_subarray;
+    BLSenseAmpHeight = 0*drs::micrometer;
+    WLDriverWidth = 0*drs::micrometer;
+    GWLDriverResistance = 0*si::ohm;
+    LWLDriverResistance = 0*drs::ohm_per_subarray;
+    WRResistance = 0*drs::ohm_per_subarray;
+    CSLDriverResistance = 0*si::ohm;
+    GDLDriverResistance = 0*si::ohm;
+    DQDriverResistance = 0*si::ohm;
+    Issa = 0*drs::microampere;
+    Vpp = 0*si::volt;
+    Vcc = 0*si::volt;
+    backgroundCurrentSlope = 0*drs::milliamperes_per_megahertz;
+    backgroundCurrentOffset = 0*drs::microampere;
+    IddOcdRcv = 0*drs::microampere;
+
+    dramType = "";
+    ThreeD = "";
+    vaultsPerLayer = 0;
+    dramSize = 0*drs::gibibit;
+    nBanks = 0*drs::bank;
+    Interface = 16;
+    dramFreq = 0*drs::megahertz_clock;
+    dramCoreFreq = 0*drs::megahertz_clock;
+    Prefetch = 0;
+    additionalLatencyTrl = 0*drs::clock;
+    pageStorage = 0*drs::kibibit_per_page;
+    DLL = "";
+    tRef1Required = 0*drs::nanosecond;
+    banksRefreshFactor = 0;
+    rowRefreshRate = 0;
+    subArrayToPageFactor = 0;
+    retentionTime = 0*drs::millisecond;
+    tilesPerBank = 0*drs::tile_per_bank;
+    pageSpanningFactor = 0*drs::page_per_tile;
+    BLArchitecture = "";
+}
 
 void 
 TechnologyValues::readjson(const std::string& t,const std::string& p)
 {
-    //technology file
-    std::string techname;
-
-    //parameter file
-    std::string paraname;
-    techname = t;
-    paraname = p;
+    techName = t;
+    paraName = p;
 
     //load the technology json file and put it into a single string:
-    std::ifstream techin(techname.c_str());
+    std::ifstream techin(techName.c_str());
     std::stringstream techbuffer;
     techbuffer << techin.rdbuf();
     if (techbuffer.bad()) {
@@ -269,7 +317,7 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     bankSpacingWidth = bankSpacingWidth_value*drs::micrometer;
 
     //load the parameter file and put in into a single string
-    std::ifstream parain(paraname.c_str());
+    std::ifstream parain(paraName.c_str());
     std::stringstream parabuffer;
     parabuffer << parain.rdbuf();
     if (parabuffer.bad()) {
@@ -370,7 +418,8 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     // Factor for number of banks refreshed pro command
     assert(paradocument.HasMember("banksrefreshfactor"));
     assert(paradocument["banksrefreshfactor"].IsNumber());
-    banksRefreshFactor = paradocument["banksrefreshfactor"].GetDouble();
+    double banksRefreshFactor_value = paradocument["banksrefreshfactor"].GetDouble();
+    banksRefreshFactor = banksRefreshFactor_value * drs::bank;
 
     // Number of times a row is refreshed in retention time
     assert(paradocument.HasMember("rowrefreshrate"));
