@@ -50,9 +50,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../technology_input/techddr3_5x.json",
+                        "../technology_input/test_technology.json",
                         "-p",
-                        "../architecture_input/parddr3.json"};
+                        "../architecture_input/test_architecture.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
@@ -273,9 +273,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 16
                         << "\nGot: " << techValues.Interface);
 
-    BOOST_CHECK_MESSAGE( techValues.dramFreq == 1066*drs::megahertz_clock,
+    BOOST_CHECK_MESSAGE( techValues.dramFreq == 800*drs::megahertz_clock,
                          "DRAM frequency different from the expected."
-                        << "\nExpected: " << 1066*drs::megahertz_clock
+                        << "\nExpected: " << 800*drs::megahertz_clock
                         << "\nGot: " << techValues.dramFreq);
 
     BOOST_CHECK_MESSAGE( techValues.dramCoreFreq == 0*drs::megahertz_clock,

@@ -186,13 +186,11 @@ Timing::trcdCalc()
            * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit);
 
     // Calculating delay through global wordline driver and wiring
-//   [ns]   [ns]              [ohm]         [fF]
     globalWordlineDelay = driverOffset +
             timeToPercentage(90) * GWLDriverResistance * globalWordlineCapacitance * drs::tile +
             timeToPercentage(63) * globalWordlineResistance * drs::tile * globalWordlineCapacitance * drs::tile;
     
     // Calculating trcd
-//  [ns]    [ns]    [ns]     [ns]     [ns]    [ns]
     trcd = globalWordlineDelay + localWordlineDelay + cellDelay + bitlineDelay + SSADelay;
 
 }
@@ -249,11 +247,20 @@ Timing::trasCalc()
     // when the number of banks increases this distance from bank to
     // DQ should increas. We do not model this yet due to lack of input.
     // This should be changed in the future.
+    std::string exceptionMsgThrown;
     if (ThreeD == "ON") {
-//          [mm]      [mm]
         DQWireLength = 1 * drs::millimeters;
     } else {
-        if (bankWidthFactor == 8 * drs::kibibits_per_page) {
+        if (bankWidthFactor < 4 * drs::kibibits_per_page) {
+            DQWireLength = 5 * drs::millimeters;
+
+            exceptionMsgThrown.append("WARNING: Your ");
+            exceptionMsgThrown.append("pageSize * subArrayToPageFactor ");
+            exceptionMsgThrown.append("is too small!!\n");
+        }
+        else if(bankWidthFactor == 4 * drs::kibibits_per_page) {
+            DQWireLength = 2 * drs::millimeters;
+        } else if (bankWidthFactor == 8 * drs::kibibits_per_page) {
             DQWireLength = 3 * drs::millimeters;
         } else if (bankWidthFactor == 16 * drs::kibibits_per_page) {
             DQWireLength = 5 * drs::millimeters;
@@ -261,11 +268,15 @@ Timing::trasCalc()
             DQWireLength = 7 * drs::millimeters;
         } else if(bankWidthFactor == 64 * drs::kibibits_per_page) {
             DQWireLength = 9 * drs::millimeters;
-        } else if(bankWidthFactor == 4 * drs::kibibits_per_page) {
-            DQWireLength = 2 * drs::millimeters;
-        } else {
+        } else if (bankWidthFactor > 64 * drs::kibibits_per_page) {
             DQWireLength = 5 * drs::millimeters;
-            std::cout<<"WARNING: YOUR PAGESIZE*Subarray2rowbuffer SEEMS to be too big!!"<<"\n";
+
+            exceptionMsgThrown.append("WARNING: Your ");
+            exceptionMsgThrown.append("pageSize * subArrayToPageFactor ");
+            exceptionMsgThrown.append("is too big!!\n");
+        } else {
+            exceptionMsgThrown.append("[ERROR] Unexpected behaviour!!\n");
+            exceptionMsgThrown.append("Could not define the length of DQ wire!");
         }
     }
 
@@ -310,6 +321,9 @@ Timing::trasCalc()
     // Calculating twr + 2 (command decoding) + 1 (security margin):
     twr = cmdDecoderLatency + bitlineDelay + tgdl + securityMargin;
 
+    if ( !exceptionMsgThrown.empty() ) {
+     throw exceptionMsgThrown;
+    }
 }
 
 void
@@ -318,7 +332,6 @@ Timing::trpCalc()
     //calculating trp
     //trp = Master wordline delay ( discharging ) + local wordline delay
     // (discharging ) + 1 ns ( equalizer delay )
-//  [ns]    [ns]   [ns]  [ns]
     trp =  localWordlineDelay + bitlineDelay + equalizerDelay;
 }
 
@@ -326,7 +339,6 @@ void
 Timing::trcCalc()
 {
     //calculating trc
-//  [ns]  [ns]   [ns]
     trc = tras + trp;
 }
 
@@ -388,19 +400,6 @@ Timing::clkTiming()
         actualCoreFreq = dramFreq / (Prefetch / clockFactor);
     }
 
-    if( actualCoreFreq < maxCoreFreq ) {
-        std::cout<<"The Specified Frequency fits the DRAM Design!!!"<<"\n";
-    }
-    else {
-        std::cout<<"WARNING : Specified Frequency too high"
-                 <<"for DRAM DesigGo Down with Frequency!!"
-                 <<"\n";
-
-        std::cout<<"If User wants to keep the high frequency,"
-                 <<"try using a smaller bank or a higher "
-                 <<"subarray2rowbufferfactor"<<"\n";
-    }
-
     clk = 1.0 / SCALE_QUANTITY(dramFreq, drs::gigahertz_clock_unit);
     actualClk = 1.0 / SCALE_QUANTITY(actualCoreFreq, drs::gigahertz_clock_unit);
 
@@ -453,6 +452,17 @@ Timing::clkTiming()
     //tref1 in clk cycles
     tref1_clk = ceil(tref1/clk);
 
+    // If frequency is too high, do all calculations anyway but warn the user
+    if( actualCoreFreq > maxCoreFreq ) {
+        std::string exceptionMsgThrown("WARNING: Specified frequency ");
+        exceptionMsgThrown.append("too high for DRAM Desing. ");
+        exceptionMsgThrown.append("Go Down with Frequency!!\n");
+        exceptionMsgThrown.append("If user wants to keep the high frequency, ");
+        exceptionMsgThrown.append("try using a smaller bank or a higher ");
+        exceptionMsgThrown.append("subarray2rowbufferfactor\n");
+        throw exceptionMsgThrown;
+    }
+
 }
 
 void
@@ -470,7 +480,11 @@ Timing::timingCompute()
 
     tref1Calc();
 
-    clkTiming();
+    try {
+        clkTiming();
+    }catch (std::string exceptionMsgThrown){
+        throw exceptionMsgThrown;
+    }
 }
 
 //void

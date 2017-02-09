@@ -58,7 +58,11 @@ class Timing : public Chip
         Chip(techname, paraname)
     {
         timingInitialize();
-        timingCompute();
+        try {
+            timingCompute();
+        }catch (std::string exceptionMsgThrown){
+            throw exceptionMsgThrown;
+        }
     }
   
     //Delay of cell
@@ -207,9 +211,6 @@ class Timing : public Chip
     bu::quantity<drs::clock_unit> trfc_clk;
     //tref1 in number of clocks
     bu::quantity<drs::clock_unit> tref1_clk;
-
-
-  protected:
 
     void timingInitialize();
 

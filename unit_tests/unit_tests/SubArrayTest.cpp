@@ -51,9 +51,9 @@ BOOST_AUTO_TEST_CASE( checkSubArray_real_input)
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../technology_input/techddr3_5x.json",
+                        "../technology_input/test_technology.json",
                         "-p",
-                        "../architecture_input/parddr3.json"};
+                        "../architecture_input/test_architecture.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 

@@ -50,9 +50,9 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_wrong_first_flag )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-r", // Instead of "-t", user types "-r". Should throw an error.
-                        "../technology_input/techddr3_5x.json",
+                        "../technology_input/test_technology.json",
                         "-p",
-                        "../architecture_input/parddr3.json"};
+                        "../architecture_input/test_architecture.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
@@ -81,9 +81,9 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_wrong_second_flag1 )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../technology_input/techddr3_5x.json",
+                        "../technology_input/test_technology.json",
                         "-o", // Instead of "-p", user types "-o". Should throw an error.
-                        "../architecture_input/parddr3.json"};
+                        "../architecture_input/test_architecture.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
@@ -112,9 +112,9 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_wrong_second_flag2 )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-p",
-                        "../architecture_input/parddr3.json",
+                        "../architecture_input/test_architecture.json",
                         "-r", // Instead of "-t", user types "-r". Should throw an error.
-                        "../technology_input/techddr3_5x.json"};
+                        "../technology_input/test_technology.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
@@ -143,9 +143,9 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_1tech_1arch )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../technology_input/techddr3_5x.json",
+                        "../technology_input/test_technology.json",
                         "-p",
-                        "../architecture_input/parddr3.json"};
+                        "../architecture_input/test_architecture.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
@@ -186,10 +186,10 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_2tech_2arch )
     int sim_argc = 7;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../technology_input/techddr3_5x.json",
+                        "../technology_input/test_technology.json",
                         "../technology_input/techhmc_5x.json",
                         "-p",
-                        "../architecture_input/parddr3.json",
+                        "../architecture_input/test_architecture.json",
                         "../architecture_input/parhmc.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
@@ -243,9 +243,9 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_2tech_2arch_mixed )
     int sim_argc = 9;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../technology_input/techddr3_5x.json",
+                        "../technology_input/test_technology.json",
                         "-p",
-                        "../architecture_input/parddr3.json",
+                        "../architecture_input/test_architecture.json",
                         "-t",
                         "../technology_input/techhmc_5x.json",
                         "-p",
@@ -302,9 +302,9 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_2tech_2arch_term_mixed )
     int sim_argc = 10;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../technology_input/techddr3_5x.json",
+                        "../technology_input/test_technology.json",
                         "-p",
-                        "../architecture_input/parddr3.json",
+                        "../architecture_input/test_architecture.json",
                         "-term",
                         "-t",
                         "../technology_input/techhmc_5x.json",
@@ -361,9 +361,9 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_different_number )
     int sim_argc = 11;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../technology_input/techddr3_5x.json",
+                        "../technology_input/test_technology.json",
                         "-p",
-                        "../architecture_input/parddr3.json",
+                        "../architecture_input/test_architecture.json",
                         "-term",
                         "-t",
                         "../technology_input/techhmc_5x.json",
