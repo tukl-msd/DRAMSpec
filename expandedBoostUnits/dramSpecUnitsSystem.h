@@ -61,7 +61,7 @@
 
 // Macro to round up quantities at a given decimal place
 #define ROUND_UP(number, nDecimalPlaces) \
-    ceil( pow(10, nDecimalPlaces) * number) / pow(10,nDecimalPlaces)
+    ( ceil( pow(10, nDecimalPlaces) * number) / pow(10,nDecimalPlaces) )
 
 namespace boost {
 

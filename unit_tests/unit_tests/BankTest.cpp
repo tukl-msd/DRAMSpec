@@ -41,7 +41,7 @@
 
 #include <boost/test/included/unit_test.hpp>
 
-#include "../core/Bank.h"
+#include "../../core/Bank.h"
 
 BOOST_AUTO_TEST_SUITE( testBank )
 
@@ -50,9 +50,9 @@ BOOST_AUTO_TEST_CASE( checkBank_real_input )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../technology_input/test_technology.json",
+                        "../../technology_input/test_technology.json",
                         "-p",
-                        "../architecture_input/test_architecture.json"};
+                        "../../architecture_input/test_architecture.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
@@ -93,9 +93,9 @@ BOOST_AUTO_TEST_CASE( checkBank_dummy_input )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../technology_input/tech_dummy_input.json",
+                        "../../technology_input/tech_dummy_input.json",
                         "-p",
-                        "../architecture_input/arch_dummy_input.json"};
+                        "../../architecture_input/arch_dummy_input.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
@@ -133,9 +133,9 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../technology_input/test_technology.json",
+                        "../../technology_input/test_technology.json",
                         "-p",
-                        "../architecture_input/test_architecture.json"};
+                        "../../architecture_input/test_architecture.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 

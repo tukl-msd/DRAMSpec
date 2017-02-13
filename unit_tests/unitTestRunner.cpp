@@ -46,4 +46,3 @@
 #include "unit_tests/BankTest.cpp"
 #include "unit_tests/ChipTest.cpp"
 #include "unit_tests/TimingTest.cpp"
-
