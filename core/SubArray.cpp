@@ -79,16 +79,16 @@ SubArray::driverUpdate()
     // give for a page size of 2 kB.If the page size becomes
     // smaller we will need a to drive less => bigger resistance
     // and if the page size gets
-    if ( pageStorage < 16*drs::kibibit_per_page ) {
+    if ( pageStorage < 2*drs::kibibytes_per_page ) {
         GWLDriverResistance = GWLDriverResistance + 200*si::ohm;
     }
-    else if ( pageStorage == 16*drs::kibibit_per_page ) {
+    else if ( pageStorage == 2*drs::kibibytes_per_page ) {
         GWLDriverResistance = GWLDriverResistance;
     }
-    else if( pageStorage == 32*drs::kibibit_per_page ) {
+    else if( pageStorage == 4*drs::kibibytes_per_page ) {
         GWLDriverResistance = GWLDriverResistance - 200*si::ohm;
     }
-    else if( pageStorage == 64*drs::kibibit_per_page ) {
+    else if( pageStorage == 8*drs::kibibytes_per_page ) {
         GWLDriverResistance = GWLDriverResistance - 300*si::ohm;
     }
     else {

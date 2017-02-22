@@ -46,7 +46,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<resistance_per_cell_dimension,dramspec::system> resistance_per_cell_unit;
+typedef unit<resistance_per_cell_dimension,dramspec::system_bit> resistance_per_cell_unit;
 
 BOOST_UNITS_STATIC_CONSTANT(ohm_per_cell,resistance_per_cell_unit);
 BOOST_UNITS_STATIC_CONSTANT(ohms_per_cell,resistance_per_cell_unit);

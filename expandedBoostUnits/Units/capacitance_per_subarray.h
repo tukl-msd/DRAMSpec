@@ -46,7 +46,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<capacitance_per_subarray_dimension,dramspec::system> capacitance_per_subarray_unit;
+typedef unit<capacitance_per_subarray_dimension,dramspec::system_bit> capacitance_per_subarray_unit;
 
 typedef make_scaled_unit<capacitance_per_subarray_unit,scale<10, static_rational<-9>>>::type nanofarad_per_subarray_unit;
 BOOST_UNITS_STATIC_CONSTANT(nanofarad_per_subarray,nanofarad_per_subarray_unit);

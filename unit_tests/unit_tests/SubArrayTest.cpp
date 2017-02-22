@@ -204,7 +204,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
 
 
     subarray.subArrayCompute();
-    subarray.pageStorage = 1*bu::conversion_factor(inf::byte,inf::bit)*drs::kibibit_per_page;
+    subarray.pageStorage = 1*drs::kibibytes_per_page;
     subarray. driverUpdate();
     BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 218*si::ohm,
                         "Resistance of global wordline driver different from the expected."
@@ -212,7 +212,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
                         << "\nGot: " << subarray.GWLDriverResistance);
 
     subarray.subArrayCompute();
-    subarray.pageStorage = 2*bu::conversion_factor(inf::byte,inf::bit)*drs::kibibit_per_page;
+    subarray.pageStorage = 2*drs::kibibytes_per_page;
     subarray. driverUpdate();
     BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 18*si::ohm,
                         "Resistance of global wordline driver different from the expected."
@@ -220,7 +220,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
                         << "\nGot: " << subarray.GWLDriverResistance);
 
     subarray.subArrayCompute();
-    subarray.pageStorage = 4*bu::conversion_factor(inf::byte,inf::bit)*drs::kibibit_per_page;
+    subarray.pageStorage = 4*drs::kibibytes_per_page;
     subarray. driverUpdate();
     BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == -182*si::ohm,
                         "Resistance of global wordline driver different from the expected."
@@ -228,7 +228,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
                         << "\nGot: " << subarray.GWLDriverResistance);
 
     subarray.subArrayCompute();
-    subarray.pageStorage = 8*bu::conversion_factor(inf::byte,inf::bit)*drs::kibibit_per_page;
+    subarray.pageStorage = 8*drs::kibibytes_per_page;
     subarray. driverUpdate();
     BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == -282*si::ohm,
                         "Resistance of global wordline driver different from the expected."
@@ -236,7 +236,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
                         << "\nGot: " << subarray.GWLDriverResistance);
 
     subarray.subArrayCompute();
-    subarray.pageStorage = 16*bu::conversion_factor(inf::byte,inf::bit)*drs::kibibit_per_page;
+    subarray.pageStorage = 16*drs::kibibytes_per_page;
     subarray. driverUpdate();
     BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == -382*si::ohm,
                         "Resistance of global wordline driver different from the expected."

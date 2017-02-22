@@ -45,7 +45,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<clock_dimension,dramspec::system>    clock_unit;
+typedef unit<clock_dimension,dramspec::system_bit>    clock_unit;
 
 BOOST_UNITS_STATIC_CONSTANT(clock,clock_unit);
 BOOST_UNITS_STATIC_CONSTANT(clocks,clock_unit);

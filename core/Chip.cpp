@@ -98,9 +98,17 @@ Chip::chipLenghtCalc()
                      + 1.0 * DQDriverHeight;
     }
 
+    else if ( nBanks == 16.0*drs::bank ) {
+        chipWidth = 8.0 * bankWidth * drs::bank
+                    + 7.0 * bankSpacingWidth;
+
+        chipHeight = 2.0 * bankHeight * drs::bank
+                     + 1.0 * DQDriverHeight;
+    }
+
     else {
         std::string exceptionMsgThrown("[ERROR] Architecture must have ");
-        exceptionMsgThrown.append("1, 2, 4, 6 or 8 banks.");
+        exceptionMsgThrown.append("1, 2, 4, 6, 8 or 16 banks.");
         throw exceptionMsgThrown;
     }
 }

@@ -63,12 +63,12 @@ TechnologyValues::technologyValuesInitialize()
     CSLDriverResistance = 0*si::ohm;
     GDLDriverResistance = 0*si::ohm;
     DQDriverResistance = 0*si::ohm;
-    Issa = 0*drs::microampere;
+    Issa = 0*drs::milliampere;
     Vpp = 0*si::volt;
     Vcc = 0*si::volt;
-    backgroundCurrentSlope = 0*drs::milliamperes_per_megahertz;
-    backgroundCurrentOffset = 0*drs::microampere;
-    IddOcdRcv = 0*drs::microampere;
+    backgroundCurrentSlope = 0*drs::milliamperes_per_megahertz_clock;
+    backgroundCurrentOffset = 0*drs::milliampere;
+    IddOcdRcv = 0*drs::milliampere;
 
     dramType = "";
     ThreeD = "";
@@ -80,11 +80,10 @@ TechnologyValues::technologyValuesInitialize()
     dramCoreFreq = 0*drs::megahertz_clock;
     Prefetch = 0;
     additionalLatencyTrl = 0*drs::clock;
-    pageStorage = 0*drs::kibibit_per_page;
+    pageStorage = 0*drs::kibibyte_per_page;
     DLL = "";
     tRef1Required = 0*drs::nanosecond;
     banksRefreshFactor = 0;
-    rowRefreshRate = 0;
     subArrayToPageFactor = 0;
     retentionTime = 0*drs::millisecond;
     tilesPerBank = 0*drs::tile_per_bank;
@@ -256,11 +255,11 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     double DQDriverResistance_value = techdocument["DQDresistance"].GetDouble();
     DQDriverResistance = DQDriverResistance_value*si::ohm;
 
-    //current of SSA in microamperes
+    //current of SSA in milliamperes
     assert(techdocument.HasMember("I_SSA"));
     assert(techdocument["I_SSA"].IsNumber());
     double Issa_value = techdocument["I_SSA"].GetDouble();
-    Issa = Issa_value*drs::microampere;
+    Issa = Issa_value*drs::milliampere;
 
     //voltage vpp
     assert(techdocument.HasMember("vpp"));
@@ -278,19 +277,19 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     assert(techdocument.HasMember("Backgroundcurrentslope"));
     assert(techdocument["Backgroundcurrentslope"].IsNumber()); 
     double backgroundCurrentSlope_value  = techdocument["Backgroundcurrentslope"].GetDouble();
-    backgroundCurrentSlope = backgroundCurrentSlope_value*drs::milliamperes_per_megahertz;
+    backgroundCurrentSlope = backgroundCurrentSlope_value*drs::milliamperes_per_megahertz_clock;
 
     //backgroundcurrentoffset
     assert(techdocument.HasMember("Backgroundcurrentoffset"));
     assert(techdocument["Backgroundcurrentoffset"].IsNumber());
     double backgroundCurrentOffset_value  = techdocument["Backgroundcurrentoffset"].GetDouble();
-    backgroundCurrentOffset = backgroundCurrentOffset_value*drs::microampere;
+    backgroundCurrentOffset = backgroundCurrentOffset_value*drs::milliampere;
 
     //IDD pro IO for OCD
     assert(techdocument.HasMember("IDD_OCD_RCV"));
     assert(techdocument["IDD_OCD_RCV"].IsNumber());
     double IddOcdRcv_value  = techdocument["IDD_OCD_RCV"].GetDouble();
-    IddOcdRcv = IddOcdRcv_value*drs::microampere;
+    IddOcdRcv = IddOcdRcv_value*drs::milliampere;
 
     //Row decoder (between tiles) width
     assert(techdocument.HasMember("rowDecoderWidth"));
@@ -399,9 +398,7 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     assert(paradocument.HasMember("Rowbuffersize"));
     assert(paradocument["Rowbuffersize"].IsNumber());
     double pageSize_value  = paradocument["Rowbuffersize"].GetDouble();
-    pageStorage = pageSize_value
-        *bu::conversion_factor(inf::byte, inf::bit)
-        *drs::kibibit_per_page;
+    pageStorage = pageSize_value*drs::kibibyte_per_page;
 
 
     // DLLON/OFF Feature
@@ -415,16 +412,10 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     double tRef1Required_value  = paradocument["Requiredrefreshperiod"].GetDouble();
     tRef1Required = tRef1Required_value*drs::nanosecond;
 
-    // Factor for number of banks refreshed pro command
+    // Ratio of banks refreshed pro command
     assert(paradocument.HasMember("banksrefreshfactor"));
     assert(paradocument["banksrefreshfactor"].IsNumber());
-    double banksRefreshFactor_value = paradocument["banksrefreshfactor"].GetDouble();
-    banksRefreshFactor = banksRefreshFactor_value * drs::bank;
-
-    // Number of times a row is refreshed in retention time
-    assert(paradocument.HasMember("rowrefreshrate"));
-    assert(paradocument["rowrefreshrate"].IsNumber());
-    rowRefreshRate = paradocument["rowrefreshrate"].GetDouble();
+    banksRefreshFactor = paradocument["banksrefreshfactor"].GetDouble();
 
     // Subarray to rowbuffer factor
     assert(paradocument.HasMember("subArrayToPageFactor"));
@@ -453,5 +444,80 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     assert(paradocument.HasMember("bitlineArchitecture"));
     assert(paradocument["bitlineArchitecture"].IsString());
     BLArchitecture = paradocument["bitlineArchitecture"].GetString();
+
+
+//  !!!!!!!! TIMING VARIABLES WHICH WHERE HARDCODED IN THE ORIGINAL VERSION !!!!!!!!
+    //Driver offset !!!  TODO: What exactly is it?  !!!
+    assert(paradocument.HasMember("driverOffset"));
+    assert(paradocument["driverOffset"].IsNumber());
+    double driverOffset_value = paradocument["driverOffset"].GetDouble();
+    driverOffset = driverOffset_value*drs::nanoseconds;
+
+    //SSA Delay !!!  TODO: Check value !!!
+    assert(paradocument.HasMember("SSADelay"));
+    assert(paradocument["SSADelay"].IsNumber());
+    double SSADelay_value = paradocument["SSADelay"].GetDouble();
+    SSADelay = SSADelay_value*drs::nanoseconds;
+
+    //Load capacitance !!!  TODO: What exactly is it?  !!!
+    assert(paradocument.HasMember("CSLLoadCapacitance"));
+    assert(paradocument["CSLLoadCapacitance"].IsNumber());
+    double CSLLoadCapacitance_value = paradocument["CSLLoadCapacitance"].GetDouble();
+    CSLLoadCapacitance = CSLLoadCapacitance_value*drs::femtofarads_per_bank;
+
+    //Command decoder latency !!!  TODO: What exactly is it?  !!!
+    assert(paradocument.HasMember("cmdDecoderLatency"));
+    assert(paradocument["cmdDecoderLatency"].IsNumber());
+    double cmdDecoderLatency_value = paradocument["cmdDecoderLatency"].GetDouble();
+    cmdDecoderLatency = cmdDecoderLatency_value*drs::nanoseconds;
+
+    //Internal latency !!!  TODO: What exactly is it?  !!!
+    assert(paradocument.HasMember("interfaceLatency"));
+    assert(paradocument["interfaceLatency"].IsNumber());
+    double interfaceLatency_value = paradocument["interfaceLatency"].GetDouble();
+    interfaceLatency = interfaceLatency_value*drs::nanoseconds;
+
+    //I/O latency !!!  TODO: What exactly is it?  !!!
+    assert(paradocument.HasMember("IODelay"));
+    assert(paradocument["IODelay"].IsNumber());
+    double IODelay_value = paradocument["IODelay"].GetDouble();
+    IODelay = IODelay_value*drs::nanoseconds;
+
+    //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
+    assert(paradocument.HasMember("SSAPrechargeDelay"));
+    assert(paradocument["SSAPrechargeDelay"].IsNumber());
+    double SSAPrechargeDelay_value = paradocument["SSAPrechargeDelay"].GetDouble();
+    SSAPrechargeDelay = SSAPrechargeDelay_value*drs::nanoseconds;
+
+    //Security margin !!!  TODO: What exactly is it?  !!!
+    assert(paradocument.HasMember("securityMargin"));
+    assert(paradocument["securityMargin"].IsNumber());
+    double securityMargin_value = paradocument["securityMargin"].GetDouble();
+    securityMargin = securityMargin_value*drs::nanoseconds;
+
+    //Equalizer delay !!!  TODO: What exactly is it?  !!!
+    assert(paradocument.HasMember("equalizerDelay"));
+    assert(paradocument["equalizerDelay"].IsNumber());
+    double equalizerDelay_value = paradocument["equalizerDelay"].GetDouble();
+    equalizerDelay = equalizerDelay_value*drs::nanoseconds;
+
+    //Act cmd delay !!!  TODO: What exactly is it?  !!!
+    assert(paradocument.HasMember("actCmdDelay"));
+    assert(paradocument["actCmdDelay"].IsNumber());
+    double actCmdDelay_value = paradocument["actCmdDelay"].GetDouble();
+    actCmdDelay = actCmdDelay_value*drs::nanoseconds;
+
+    //pre cmd delay !!!  TODO: What exactly is it?  !!!
+    assert(paradocument.HasMember("preCmdDelay"));
+    assert(paradocument["preCmdDelay"].IsNumber());
+    double preCmdDelay_value = paradocument["preCmdDelay"].GetDouble();
+    preCmdDelay = preCmdDelay_value*drs::nanoseconds;
+
+    //offset !!!  TODO: What exactly is it?  !!!
+    assert(paradocument.HasMember("offset"));
+    assert(paradocument["offset"].IsNumber());
+    double offset_value = paradocument["offset"].GetDouble();
+    offset = offset_value*drs::nanoseconds;
+
 
 }

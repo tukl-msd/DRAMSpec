@@ -47,7 +47,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<information_per_bank_dimension,dramspec::system>    information_per_bank_unit;
+typedef unit<information_per_bank_dimension,dramspec::system_bit>    information_per_bank_unit;
 
 BOOST_UNITS_STATIC_CONSTANT(bit_per_bank,information_per_bank_unit);
 BOOST_UNITS_STATIC_CONSTANT(bits_per_bank,information_per_bank_unit);

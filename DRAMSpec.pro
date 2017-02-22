@@ -46,7 +46,7 @@ HEADERS += core/Tile.h
 HEADERS += core/Bank.h
 HEADERS += core/Chip.h
 HEADERS += core/Timing.h
-#HEADERS += core/Current.h
+HEADERS += core/Current.h
 
 HEADERS += parser/ArgumentsParser.h
 HEADERS += parser/TechnologyValues.h
@@ -76,7 +76,8 @@ HEADERS += expandedBoostUnits/DerivedDimensions/capacitance_per_tile.h
 HEADERS += expandedBoostUnits/DerivedDimensions/cell_per_subarray.h
 HEADERS += expandedBoostUnits/DerivedDimensions/clock_frequency.h
 HEADERS += expandedBoostUnits/DerivedDimensions/clock_period.h
-HEADERS += expandedBoostUnits/DerivedDimensions/current_per_frequency.h
+HEADERS += expandedBoostUnits/DerivedDimensions/current_page_per_information.h
+HEADERS += expandedBoostUnits/DerivedDimensions/current_per_clock_frequency.h
 HEADERS += expandedBoostUnits/DerivedDimensions/information_per_bank.h
 HEADERS += expandedBoostUnits/DerivedDimensions/information_per_cell.h
 HEADERS += expandedBoostUnits/DerivedDimensions/information_per_page.h
@@ -107,7 +108,8 @@ HEADERS += expandedBoostUnits/Units/cell.h
 HEADERS += expandedBoostUnits/Units/clock_frequency.h
 HEADERS += expandedBoostUnits/Units/clock_period.h
 HEADERS += expandedBoostUnits/Units/clock.h
-HEADERS += expandedBoostUnits/Units/current_per_frequency.h
+HEADERS += expandedBoostUnits/Units/current_page_per_information.h
+HEADERS += expandedBoostUnits/Units/current_per_clock_frequency.h
 HEADERS += expandedBoostUnits/Units/information_per_bank.h
 HEADERS += expandedBoostUnits/Units/information_per_cell.h
 HEADERS += expandedBoostUnits/Units/information_per_page.h
@@ -140,7 +142,7 @@ SOURCES += core/Tile.cpp
 SOURCES += core/Bank.cpp
 SOURCES += core/Chip.cpp
 SOURCES += core/Timing.cpp
-#SOURCES += core/Current.cpp
+SOURCES += core/Current.cpp
 
 #DRAMSpec parser source files
 SOURCES += parser/ArgumentsParser.cpp

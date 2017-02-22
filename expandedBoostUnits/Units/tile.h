@@ -45,7 +45,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<tile_dimension,dramspec::system>    tile_unit;
+typedef unit<tile_dimension,dramspec::system_bit>    tile_unit;
 
 BOOST_UNITS_STATIC_CONSTANT(tile,tile_unit);
 BOOST_UNITS_STATIC_CONSTANT(tiles,tile_unit);

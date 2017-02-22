@@ -52,13 +52,9 @@ Timing::timingInitialize()
 
     globalWordlineResistance = 0*drs::ohms_per_tile;
     globalWordlineCapacitance = 0*drs::nanofarads_per_tile;
-    driverOffset = 0.6*drs::nanoseconds;
     globalWordlineDelay = 0*drs::nanoseconds;
 
-    SSADelay = 2*drs::nanoseconds;
     trcd = 0*drs::nanoseconds;
-
-    CSLLoadCapacitance = 8*drs::femtofarads_per_bank;
 
     tcsl = 0*drs::nanoseconds;
 
@@ -67,14 +63,10 @@ Timing::timingInitialize()
     tgdl = 0*drs::nanoseconds;
 
     DQWireLength = 0*drs::millimeters;
-    bankWidthFactor = 0*drs::kibibits_per_page;
+    bankWidthFactor = 0*drs::kibibytes_per_page;
     DQWireResistance = 0*si::ohms;
     DQWireCapacitance = 0*drs::nanofarads;
     tdq = 0*drs::nanoseconds;
-
-    cmdDecoderLatency = 2*drs::nanoseconds;
-    interfaceLatency = 1*drs::nanoseconds;
-    IODelay = 1*drs::nanoseconds;
 
     tcas = 0*drs::nanoseconds;
 
@@ -82,22 +74,14 @@ Timing::timingInitialize()
 
     tccd = 0*drs::nanoseconds;
 
-    SSAPrechargeDelay = 1*drs::nanoseconds;
-
     tras = 0*drs::nanoseconds;
-
-    securityMargin = 1*drs::nanoseconds;
 
     twr = 0*drs::nanoseconds;
 
-    equalizerDelay = 1*drs::nanoseconds;
     trp = 0*drs::nanoseconds;
 
     trc = 0*drs::nanoseconds;
 
-    actCmdDelay = 5*drs::nanoseconds;
-    preCmdDelay = 5*drs::nanoseconds;
-    offset = 10*drs::nanoseconds;
     trfc = 0*drs::nanoseconds;
 
     tref1 = 0*drs::nanoseconds;
@@ -251,24 +235,24 @@ Timing::trasCalc()
     if (ThreeD == "ON") {
         DQWireLength = 1 * drs::millimeters;
     } else {
-        if (bankWidthFactor < 4 * drs::kibibits_per_page) {
+        if (bankWidthFactor < 0.5 * drs::kibibytes_per_page) {
             DQWireLength = 5 * drs::millimeters;
 
             exceptionMsgThrown.append("WARNING: Your ");
             exceptionMsgThrown.append("pageSize * subArrayToPageFactor ");
             exceptionMsgThrown.append("is too small!!\n");
         }
-        else if(bankWidthFactor == 4 * drs::kibibits_per_page) {
+        else if(bankWidthFactor == 0.5 * drs::kibibytes_per_page) {
             DQWireLength = 2 * drs::millimeters;
-        } else if (bankWidthFactor == 8 * drs::kibibits_per_page) {
+        } else if (bankWidthFactor == 1 * drs::kibibytes_per_page) {
             DQWireLength = 3 * drs::millimeters;
-        } else if (bankWidthFactor == 16 * drs::kibibits_per_page) {
+        } else if (bankWidthFactor == 2 * drs::kibibytes_per_page) {
             DQWireLength = 5 * drs::millimeters;
-        } else if(bankWidthFactor == 32 * drs::kibibits_per_page) {
+        } else if(bankWidthFactor == 4 * drs::kibibytes_per_page) {
             DQWireLength = 7 * drs::millimeters;
-        } else if(bankWidthFactor == 64 * drs::kibibits_per_page) {
+        } else if(bankWidthFactor == 8 * drs::kibibytes_per_page) {
             DQWireLength = 9 * drs::millimeters;
-        } else if (bankWidthFactor > 64 * drs::kibibits_per_page) {
+        } else if (bankWidthFactor > 8 * drs::kibibytes_per_page) {
             DQWireLength = 5 * drs::millimeters;
 
             exceptionMsgThrown.append("WARNING: Your ");
@@ -356,8 +340,9 @@ Timing::trfcCalc()
 ////               [ns]   [ns]
 //                + 10  + trc;
     } else {
-        trfc = banksRefreshFactor / nBanks
-                * rowRefreshRate * (actCmdDelay + preCmdDelay)
+//        !!!!!! CHECK RELATION BETWEEN nBanks AND banksRefreshFactor !!!!!!
+        trfc = nBanks/drs::banks * banksRefreshFactor
+               * (actCmdDelay + preCmdDelay)
                + offset  + trc;
     }
 }
@@ -369,12 +354,13 @@ Timing::tref1Calc()
     //number of rows
     //number of rows = (DRAM SIZE/#ofbanks) / rowbuffer
 //     !!!! [page/bank] !!!!
-    double numberofrows = SCALE_QUANTITY(dramSize, drs::kibibit_unit)
+    double numberofrows = SCALE_QUANTITY(dramSize, drs::kibibyte_unit)
                         / nBanks
                         / pageStorage
                         *drs::bank / drs::page; // !!! Check dimension mismatch !!!
+
 //   [ns]    !!!! [??] !!!!            [ms]        [page/bank]
-    tref1 = rowRefreshRate
+    tref1 = banksRefreshFactor
             * SCALE_QUANTITY(retentionTime, drs::nanosecond_unit)
             / numberofrows;
 }
@@ -487,24 +473,19 @@ Timing::timingCompute()
     }
 }
 
-//void
-//Timing::printTiming()
-//{
-//    //print analog timings
-//    std::cout << "Timing Parameters in ns" << "\n";
-//    std::cout << "trcd"          << "\t"  << trcd     << ".\n";
-//    std::cout << "tcl"           << "\t"  << tcl      << ".\n";
-//    std::cout << "actual tcl"    << "\t"  << tcl_act  << ".\n";
-//    std::cout << "trtp" << "\t"  << trtp  << ".\n";
-//    std::cout << "tccd" << "\t"  << tccd  << ".\n";
-//    std::cout << "actual tccd"   << "\t"  << tccd_act << ".\n";
-//    std::cout << "tras" << "\t"  << tras  << ".\n";
-//    std::cout << "twr" << "\t"   << twr   << "\n" ;
-//    std::cout << "trp" << "\t"   << trp   << ".\n";
-//    std::cout << "trc" << "\t"   << trc   << ".\n";
-//    std::cout << "trl" << "\t"   << trl   << ".\n";
-//    std::cout << "actual trl"    << "\t"  << trl_act  << ".\n";
-//    std::cout << "trfc" << "\t"  << trfc  << "\n";
-//    std::cout << "tref1" << "\t" << tref1 << "\n";
-    
-//}
+void
+Timing::printTiming()
+{
+    //print analog timings
+    std::cout << "Timing Parameters in ns"      << "\n";
+    std::cout << "trcd"     << "\t" << trcd     << ".\n";
+    std::cout << "tcl"      << "\t" << tcas     << ".\n";
+    std::cout << "trtp"     << "\t" << trtp     << ".\n";
+    std::cout << "tccd"     << "\t" << tccd     << ".\n";
+    std::cout << "tras"     << "\t" << tras     << ".\n";
+    std::cout << "twr"      << "\t" << twr      << "\n" ;
+    std::cout << "trp"      << "\t" << trp      << ".\n";
+    std::cout << "trc"      << "\t" << trc      << ".\n";
+    std::cout << "trfc"     << "\t" << trfc     << "\n";
+    std::cout << "tref1"    << "\t" << tref1    << "\n";
+}

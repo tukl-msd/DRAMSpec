@@ -48,7 +48,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<clock_frequency_dimension,dramspec::system>    clock_frequency_unit;
+typedef unit<clock_frequency_dimension,dramspec::system_bit>    clock_frequency_unit;
 
 BOOST_UNITS_STATIC_CONSTANT(clock_per_second,clock_frequency_unit);
 BOOST_UNITS_STATIC_CONSTANT(clocks_per_second,clock_frequency_unit);

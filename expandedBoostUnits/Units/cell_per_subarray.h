@@ -44,7 +44,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<cell_per_subarray_dimension,dramspec::system> cell_per_subarray_unit;
+typedef unit<cell_per_subarray_dimension,dramspec::system_bit> cell_per_subarray_unit;
 BOOST_UNITS_STATIC_CONSTANT(cell_per_subarray,cell_per_subarray_unit);
 BOOST_UNITS_STATIC_CONSTANT(cells_per_subarray,cell_per_subarray_unit);
 

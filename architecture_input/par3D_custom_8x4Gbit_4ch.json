@@ -18,6 +18,18 @@
     "retentiontime": 64,
     "tilesperbank": 2,
     "pageSpanningFactor": 0.5,
-    "bitlineArchitecture": "OPEN"
+    "bitlineArchitecture": "OPEN",
+    "driverOffset": 0.6,
+    "SSADelay": 2,
+    "CSLLoadCapacitance": 8,
+    "cmdDecoderLatency": 2,
+    "interfaceLatency": 1,
+    "IODelay": 1,
+    "SSAPrechargeDelay": 1,
+    "securityMargin": 1,
+    "equalizerDelay": 1,
+    "actCmdDelay": 5,
+    "preCmdDelay": 5,
+    "offset": 10
 
 }

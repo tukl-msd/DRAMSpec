@@ -117,30 +117,15 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 4.43e-4*drs::nanofarads_per_tile
                         << "\nGot: " << timing.globalWordlineCapacitance);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.driverOffset, 3) == 0.6*drs::nanoseconds,
-                        "Driver offset time different from the expected."
-                        << "\nExpected around: " << 0.6*drs::nanoseconds
-                        << "\nGot: " << timing.driverOffset);
-
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineDelay, 3) == 1.059*drs::nanoseconds,
                         "Delay through global wordline different from the expected."
                         << "\nExpected around: " << 1.059*drs::nanoseconds
                         << "\nGot: " << timing.globalWordlineDelay);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.SSADelay, 3) == 2*drs::nanoseconds,
-                        "Secondary sense amplifier delay different from the expected."
-                        << "\nExpected around: " << 2*drs::nanoseconds
-                        << "\nGot: " << timing.SSADelay);
-
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trcd, 3) == 12.165*drs::nanoseconds,
                         "trcd different from the expected."
                         << "\nExpected around: " << 12.165*drs::nanoseconds
                         << "\nGot: " << timing.trcd);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.CSLLoadCapacitance, 3) == 8*drs::femtofarads_per_bank,
-                        "Load capacitance of CSL different from the expected."
-                        << "\nExpected around: " << 8*drs::femtofarads_per_bank
-                        << "\nGot: " << timing.CSLLoadCapacitance);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcsl, 3) == 1.905*drs::nanoseconds,
                         "tcsl different from the expected."
@@ -167,9 +152,9 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 5*drs::millimeters
                         << "\nGot: " << timing.DQWireLength);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 16*drs::kibibits_per_page,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 2*drs::kibibytes_per_page,
                         "Bank width factor different from the expected."
-                        << "\nExpected around: " << 16*drs::kibibits_per_page
+                        << "\nExpected around: " << 2*drs::kibibytes_per_page
                         << "\nGot: " << timing.bankWidthFactor);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 500*si::ohms,
@@ -187,21 +172,6 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 3.749*drs::nanoseconds
                         << "\nGot: " << timing.tdq);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.cmdDecoderLatency, 3) == 2*drs::nanoseconds,
-                        "Command decoder latency different from the expected."
-                        << "\nExpected around: " << 2*drs::nanoseconds
-                        << "\nGot: " << timing.cmdDecoderLatency);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.interfaceLatency, 3) == 1*drs::nanoseconds,
-                        "Interface latency different from the expected."
-                        << "\nExpected around: " << 1*drs::nanoseconds
-                        << "\nGot: " << timing.interfaceLatency);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.IODelay, 3) == 1*drs::nanoseconds,
-                        "IO Delay different from the expected."
-                        << "\nExpected around: " << 1*drs::nanoseconds
-                        << "\nGot: " << timing.IODelay);
-
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas, 3) == 13.546*drs::nanoseconds,
                         "tcas different from the expected."
                         << "\nExpected around: " << 13.546*drs::nanoseconds
@@ -217,30 +187,15 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 4.197*drs::nanoseconds
                         << "\nGot: " << timing.tccd);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.SSAPrechargeDelay, 3) == 1*drs::nanoseconds,
-                        "Delay of precharge SSA different from the expected."
-                        << "\nExpected around: " << 1*drs::nanoseconds
-                        << "\nGot: " << timing.SSAPrechargeDelay);
-
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.tras, 3) == 22.159*drs::nanoseconds,
                         "tras different from the expected."
                         << "\nExpected around: " << 22.159*drs::nanoseconds
                         << "\nGot: " << timing.tras);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.securityMargin, 3) == 1*drs::nanoseconds,
-                        "Security margin different from the expected."
-                        << "\nExpected around: " << 1*drs::nanoseconds
-                        << "\nGot: " << timing.securityMargin);
-
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.twr, 3) == 8.534*drs::nanoseconds,
                         "twr different from the expected."
                         << "\nExpected around: " << 8.534*drs::nanoseconds
                         << "\nGot: " << timing.twr);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.equalizerDelay, 3) == 1*drs::nanoseconds,
-                        "Equalizer delay different from the expected."
-                        << "\nExpected around: " << 1*drs::nanoseconds
-                        << "\nGot: " << timing.equalizerDelay);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trp, 3) == 9.186*drs::nanoseconds,
                         "trp different from the expected."
@@ -252,29 +207,14 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 31.344*drs::nanoseconds
                         << "\nGot: " << timing.trc);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.actCmdDelay, 3) == 5*drs::nanoseconds,
-                        "Act commmand delay different from the expected."
-                        << "\nExpected around: " << 5*drs::nanoseconds
-                        << "\nGot: " << timing.actCmdDelay);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.preCmdDelay, 3) == 5*drs::nanoseconds,
-                        "Pre command delay different from the expected."
-                        << "\nExpected around: " << 5*drs::nanoseconds
-                        << "\nGot: " << timing.preCmdDelay);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.offset, 3) == 10*drs::nanoseconds,
-                        "Offset time different from the expected."
-                        << "\nExpected around: " << 10*drs::nanoseconds
-                        << "\nGot: " << timing.offset);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc, 3) == 41.969*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc, 3) == 201.344*drs::nanoseconds,
                         "trfc different from the expected."
-                        << "\nExpected around: " << 41.969*drs::nanoseconds
+                        << "\nExpected around: " << 201.344*drs::nanoseconds
                         << "\nGot: " << timing.trfc);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tref1, 2) == 1953.13*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tref1, 2) == 7812.5*drs::nanoseconds,
                         "tref1 different from the expected."
-                        << "\nExpected around: " << 1953.13*drs::nanoseconds
+                        << "\nExpected around: " << 7812.5*drs::nanoseconds
                         << "\nGot: " << timing.tref1);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.maxCoreFreq, 3) == 238.291*drs::megahertz_clock,
@@ -362,14 +302,14 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 7*drs::clocks
                         << "\nGot: " << timing.twr_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc_clk, 3) == 34*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc_clk, 3) == 162*drs::clocks,
                         "trfc in number of clocks different from the expected."
-                        << "\nExpected around: " << 34*drs::clocks
+                        << "\nExpected around: " << 162*drs::clocks
                         << "\nGot: " << timing.trfc_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tref1_clk, 3) == 1563*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tref1_clk, 3) == 6250*drs::clocks,
                         "tref1 in number of clocks different from the expected."
-                        << "\nExpected around: " << 1563*drs::clocks
+                        << "\nExpected around: " << 6250*drs::clocks
                         << "\nGot: " << timing.tref1_clk);
 
     //Check for warning when there should be one
@@ -422,7 +362,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
     Timing timing(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
 
-    timing.pageStorage = 1 * drs::kibibits_per_page;
+    timing.pageStorage = 0.25 * drs::kibibytes_per_page;
     timing.subArrayToPageFactor = 1;
 
     exceptionMsg.clear();
@@ -446,9 +386,9 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
                         << "\nExpected around: " << 5*drs::millimeters
                         << "\nGot: " << timing.DQWireLength);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 1*drs::kibibits_per_page,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 0.25*drs::kibibytes_per_page,
                         "Bank width factor different from the expected."
-                        << "\nExpected around: " << 1*drs::kibibits_per_page
+                        << "\nExpected around: " << 0.25*drs::kibibytes_per_page
                         << "\nGot: " << timing.bankWidthFactor);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 500*si::ohms,
@@ -469,7 +409,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
 
 
 
-    timing.pageStorage = 4 * drs::kibibits_per_page;
+    timing.pageStorage = 0.5 * drs::kibibytes_per_page;
     timing.subArrayToPageFactor = 1;
 
     exceptionMsg.clear();
@@ -491,9 +431,9 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
                         << "\nExpected around: " << 2*drs::millimeters
                         << "\nGot: " << timing.DQWireLength);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 4*drs::kibibits_per_page,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 0.5*drs::kibibytes_per_page,
                         "Bank width factor different from the expected."
-                        << "\nExpected around: " << 4*drs::kibibits_per_page
+                        << "\nExpected around: " << 0.5*drs::kibibytes_per_page
                         << "\nGot: " << timing.bankWidthFactor);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 200*si::ohms,
@@ -514,7 +454,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
 
 
 
-    timing.pageStorage = 8 * drs::kibibits_per_page;
+    timing.pageStorage = 1 * drs::kibibytes_per_page;
     timing.subArrayToPageFactor = 1;
 
     exceptionMsg.clear();
@@ -536,9 +476,9 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
                         << "\nExpected around: " << 3*drs::millimeters
                         << "\nGot: " << timing.DQWireLength);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 8*drs::kibibits_per_page,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 1*drs::kibibytes_per_page,
                         "Bank width factor different from the expected."
-                        << "\nExpected around: " << 8*drs::kibibits_per_page
+                        << "\nExpected around: " << 1*drs::kibibytes_per_page
                         << "\nGot: " << timing.bankWidthFactor);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 300*si::ohms,
@@ -559,7 +499,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
 
 
 
-    timing.pageStorage = 8 * drs::kibibits_per_page;
+    timing.pageStorage = 1 * drs::kibibytes_per_page;
     timing.subArrayToPageFactor = 2;
 
     exceptionMsg.clear();
@@ -581,9 +521,9 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
                         << "\nExpected around: " << 5*drs::millimeters
                         << "\nGot: " << timing.DQWireLength);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 16*drs::kibibits_per_page,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 2*drs::kibibytes_per_page,
                         "Bank width factor different from the expected."
-                        << "\nExpected around: " << 16*drs::kibibits_per_page
+                        << "\nExpected around: " << 2*drs::kibibytes_per_page
                         << "\nGot: " << timing.bankWidthFactor);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 500*si::ohms,
@@ -604,7 +544,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
 
 
 
-    timing.pageStorage = 8 * drs::kibibits_per_page;
+    timing.pageStorage = 1 * drs::kibibytes_per_page;
     timing.subArrayToPageFactor = 4;
 
     exceptionMsg.clear();
@@ -626,9 +566,9 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
                         << "\nExpected around: " << 7*drs::millimeters
                         << "\nGot: " << timing.DQWireLength);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 32*drs::kibibits_per_page,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 4*drs::kibibytes_per_page,
                         "Bank width factor different from the expected."
-                        << "\nExpected around: " << 32*drs::kibibits_per_page
+                        << "\nExpected around: " << 4*drs::kibibytes_per_page
                         << "\nGot: " << timing.bankWidthFactor);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 700*si::ohms,
@@ -650,7 +590,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
 
 
 
-    timing.pageStorage = 8 * drs::kibibits_per_page;
+    timing.pageStorage = 1 * drs::kibibytes_per_page;
     timing.subArrayToPageFactor = 8;
 
     exceptionMsg.clear();
@@ -672,9 +612,9 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
                         << "\nExpected around: " << 9*drs::millimeters
                         << "\nGot: " << timing.DQWireLength);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 64*drs::kibibits_per_page,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 8*drs::kibibytes_per_page,
                         "Bank width factor different from the expected."
-                        << "\nExpected around: " << 64*drs::kibibits_per_page
+                        << "\nExpected around: " << 8*drs::kibibytes_per_page
                         << "\nGot: " << timing.bankWidthFactor);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 900*si::ohms,
@@ -696,7 +636,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
 
 
 
-    timing.pageStorage = 8 * drs::kibibits_per_page;
+    timing.pageStorage = 1 * drs::kibibytes_per_page;
     timing.subArrayToPageFactor = 16;
 
     exceptionMsg.clear();
@@ -720,9 +660,9 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
                         << "\nExpected around: " << 5*drs::millimeters
                         << "\nGot: " << timing.DQWireLength);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 128*drs::kibibits_per_page,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 16*drs::kibibytes_per_page,
                         "Bank width factor different from the expected."
-                        << "\nExpected around: " << 128*drs::kibibits_per_page
+                        << "\nExpected around: " << 16*drs::kibibytes_per_page
                         << "\nGot: " << timing.bankWidthFactor);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 500*si::ohms,

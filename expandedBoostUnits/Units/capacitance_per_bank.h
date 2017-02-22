@@ -46,7 +46,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<capacitance_per_bank_dimension,dramspec::system> capacitance_per_bank_unit;
+typedef unit<capacitance_per_bank_dimension,dramspec::system_bit> capacitance_per_bank_unit;
 
 typedef make_scaled_unit<capacitance_per_bank_unit,scale<10, static_rational<-9>>>::type nanofarad_per_bank_unit;
 BOOST_UNITS_STATIC_CONSTANT(nanofarad_per_bank,nanofarad_per_bank_unit);

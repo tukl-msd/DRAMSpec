@@ -32,13 +32,11 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_RESISTANCE_PER_SUBARRAY_UNIT_H
-#define DRAMSPEC_RESISTANCE_PER_SUBARRAY_UNIT_H
-
-#include <boost/units/make_scaled_unit.hpp>
+#ifndef DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_UNIT_H
+#define DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_UNIT_H
 
 #include "../dramSpecUnitsSystem.h"
-#include "../DerivedDimensions/resistance_per_subarray.h"
+#include "../DerivedDimensions/current_per_clock_frequency.h"
 
 namespace boost {
 
@@ -46,19 +44,20 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<resistance_per_subarray_dimension,dramspec::system_bit> resistance_per_subarray_unit;
+typedef unit<current_per_clock_frequency_dimension,dramspec::system_bit>    current_per_clock_frequency;
 
-BOOST_UNITS_STATIC_CONSTANT(ohm_per_subarray,resistance_per_subarray_unit);
-BOOST_UNITS_STATIC_CONSTANT(ohms_per_subarray,resistance_per_subarray_unit);
+BOOST_UNITS_STATIC_CONSTANT(ampere_per_clock_hertz,current_per_clock_frequency);
+BOOST_UNITS_STATIC_CONSTANT(amperes_per_clock_hertz,current_per_clock_frequency);
+
+// milliampere / (megahertz clock) = nanoampere / (hertz clock)
+typedef make_scaled_unit<current_per_clock_frequency,scale<10, static_rational<-9>>>::type milliampere_per_megahertz_clock_unit;
+BOOST_UNITS_STATIC_CONSTANT(milliampere_per_megahertz_clock,milliampere_per_megahertz_clock_unit);
+BOOST_UNITS_STATIC_CONSTANT(milliamperes_per_megahertz_clock,milliampere_per_megahertz_clock_unit);
 
 } // namespace dramspec
-
-inline std::string name_string(const reduce_unit<dramspec::resistance_per_subarray_unit>::type&)   { return "ohm/subarray"; }
-inline std::string symbol_string(const reduce_unit<dramspec::resistance_per_subarray_unit>::type&) { return "ohm/subarray"; }
 
 } // namespace units
 
 } // namespace boost
 
-
-#endif // DRAMSPEC_RESISTANCE_PER_SUBARRAY_UNIT_H
+#endif // DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_UNIT_H

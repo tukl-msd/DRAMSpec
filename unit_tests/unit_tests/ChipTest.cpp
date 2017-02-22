@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE( checkChip_dummy_input )
     }
 
     expectedMsg = "[ERROR] Architecture must have ";
-    expectedMsg.append("1, 2, 4, 6 or 8 banks.");
+    expectedMsg.append("1, 2, 4, 6, 8 or 16 banks.");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg

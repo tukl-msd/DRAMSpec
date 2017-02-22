@@ -39,6 +39,7 @@
 
 #include "../DerivedDimensions/information_per_page.h"
 
+#include <boost/units/base_units/information/byte.hpp>
 #include <boost/units/base_units/information/bit.hpp>
 
 namespace boost {
@@ -47,19 +48,33 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<information_per_page_dimension,dramspec::system>    information_per_page_unit;
+// IMPORTANT: Note the usage of the Byte as the information base unit!!
+typedef unit<information_per_page_dimension,dramspec::system_byte>    byte_per_page_unit;
 
-BOOST_UNITS_STATIC_CONSTANT(bit_per_page,information_per_page_unit);
-BOOST_UNITS_STATIC_CONSTANT(bits_per_page,information_per_page_unit);
+BOOST_UNITS_STATIC_CONSTANT(byte_per_page,byte_per_page_unit);
+BOOST_UNITS_STATIC_CONSTANT(bytes_per_page,byte_per_page_unit);
 
-typedef make_scaled_unit<information_per_page_unit,scale<2, static_rational<10>>>::type kibibit_per_page_unit;
+typedef make_scaled_unit<byte_per_page_unit,scale<2, static_rational<10>>>::type kibibyte_per_page_unit;
+BOOST_UNITS_STATIC_CONSTANT(kibibyte_per_page,kibibyte_per_page_unit);
+BOOST_UNITS_STATIC_CONSTANT(kibibytes_per_page,kibibyte_per_page_unit);
+
+// IMPORTANT: Note the usage of the bit as the information base unit!!
+typedef unit<information_per_page_dimension,dramspec::system_bit>    bit_per_page_unit;
+
+BOOST_UNITS_STATIC_CONSTANT(bit_per_page,bit_per_page_unit);
+BOOST_UNITS_STATIC_CONSTANT(bits_per_page,bit_per_page_unit);
+
+typedef make_scaled_unit<bit_per_page_unit,scale<2, static_rational<10>>>::type kibibit_per_page_unit;
 BOOST_UNITS_STATIC_CONSTANT(kibibit_per_page,kibibit_per_page_unit);
 BOOST_UNITS_STATIC_CONSTANT(kibibits_per_page,kibibit_per_page_unit);
 
 } // namespace dramspec
 
-inline std::string name_string(const reduce_unit<dramspec::information_per_page_unit>::type&)   { return "bit/page"; }
-inline std::string symbol_string(const reduce_unit<dramspec::information_per_page_unit>::type&) { return "bit/page"; }
+inline std::string name_string(const reduce_unit<dramspec::byte_per_page_unit>::type&)   { return "Byte/page"; }
+inline std::string symbol_string(const reduce_unit<dramspec::byte_per_page_unit>::type&) { return "Byte/page"; }
+
+inline std::string name_string(const reduce_unit<dramspec::bit_per_page_unit>::type&)   { return "bit/page"; }
+inline std::string symbol_string(const reduce_unit<dramspec::bit_per_page_unit>::type&) { return "bit/page"; }
 
 } // namespace units
 

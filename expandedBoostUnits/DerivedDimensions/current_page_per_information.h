@@ -32,24 +32,28 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_CURRENT_PER_FREQUENCY_DERIVED_DIMENSION_H
-#define DRAMSPEC_CURRENT_PER_FREQUENCY_DERIVED_DIMENSION_H
+#ifndef DRAMSPEC_CURRENT_PAGE_PER_INFORMATION_DERIVED_DIMENSION_H
+#define DRAMSPEC_CURRENT_PAGE_PER_INFORMATION_DERIVED_DIMENSION_H
 
 #include <boost/units/derived_dimension.hpp>
 
-#include <boost/units/physical_dimensions/time.hpp>
 #include <boost/units/physical_dimensions/current.hpp>
+#include "../BaseDimensions/page.h"
+#include <boost/units/systems/information/byte.hpp>
 
 namespace boost {
 
 namespace units {
 
-/// derived dimension for resistance per length: I^1 T^1
+/// derived dimension for current page per information
+/// I^1 PAGE^1 INF^-1
 typedef derived_dimension<current_base_dimension,1,
-                          time_base_dimension,1>::type current_per_frequency_dimension;
+                          page_base_dimension,1,
+                          information_base_dimension,-1>::type
+                                        current_page_per_information_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_CURRENT_PER_FREQUENCY_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_CURRENT_PAGE_PER_INFORMATION_DERIVED_DIMENSION_H

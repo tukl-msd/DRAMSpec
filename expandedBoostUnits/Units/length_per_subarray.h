@@ -46,7 +46,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<length_per_subarray_dimension,dramspec::system> length_per_subarray_unit;
+typedef unit<length_per_subarray_dimension,dramspec::system_bit> length_per_subarray_unit;
 
 typedef make_scaled_unit<length_per_subarray_unit,scale<10, static_rational<-6>>>::type micrometer_per_subarray_unit;
 BOOST_UNITS_STATIC_CONSTANT(micrometer_per_subarray,micrometer_per_subarray_unit);

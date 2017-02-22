@@ -46,7 +46,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<length_per_bank_dimension,dramspec::system> length_per_bank_unit;
+typedef unit<length_per_bank_dimension,dramspec::system_bit> length_per_bank_unit;
 
 typedef make_scaled_unit<length_per_bank_unit,scale<10, static_rational<-3>>>::type millimeter_per_bank_unit;
 BOOST_UNITS_STATIC_CONSTANT(millimeter_per_bank,millimeter_per_bank_unit);

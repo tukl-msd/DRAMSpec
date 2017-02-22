@@ -44,7 +44,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<subarray_per_tile_dimension,dramspec::system> subarray_per_tile_unit;
+typedef unit<subarray_per_tile_dimension,dramspec::system_bit> subarray_per_tile_unit;
 BOOST_UNITS_STATIC_CONSTANT(subarray_per_tile,subarray_per_tile_unit);
 BOOST_UNITS_STATIC_CONSTANT(subarrays_per_tile,subarray_per_tile_unit);
 

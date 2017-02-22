@@ -86,13 +86,9 @@ class Timing : public Chip
     bu::quantity<drs::resistance_per_tile_unit> globalWordlineResistance;
     //Capacitace of global wordline
     bu::quantity<drs::nanofarad_per_tile_unit> globalWordlineCapacitance;
-    //Driver offset !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> driverOffset;
     //Delay through global wordline driver and wiring
     bu::quantity<drs::nanosecond_unit> globalWordlineDelay;
 
-    //SSA Delay !!!  TODO: Check value !!!
-    bu::quantity<drs::nanosecond_unit> SSADelay;
     //t_rcd: ACT to internal read or write delay time
     bu::quantity<drs::nanosecond_unit> trcd;
 
@@ -100,8 +96,6 @@ class Timing : public Chip
     bu::quantity<drs::resistance_per_bank_unit> CSLResistance;
     //Capacitace of CSL wire
     bu::quantity<drs::nanofarad_per_bank_unit> CSLCapacitance;
-    //Load capacitance !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::femtofarad_per_bank_unit> CSLLoadCapacitance;
     //Delay through CSL driver and wiring
     bu::quantity<drs::nanosecond_unit> tcsl;
 
@@ -115,7 +109,7 @@ class Timing : public Chip
     //DQ wire length
     bu::quantity<drs::millimeter_unit> DQWireLength;
     // Factor which defines the page size * subArrayToPageFactor relation
-    bu::quantity<drs::kibibit_per_page_unit> bankWidthFactor;
+    bu::quantity<drs::kibibyte_per_page_unit> bankWidthFactor;
     //Resistance of DQ wire
     bu::quantity<si::resistance> DQWireResistance;
     //Capacitace of DQ wire
@@ -123,12 +117,6 @@ class Timing : public Chip
     //Delay through DQ driver and wiring
     bu::quantity<drs::nanosecond_unit> tdq;
 
-    //Command decoder latency !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> cmdDecoderLatency;
-    //Internal latency !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> interfaceLatency;
-    //I/O latency !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> IODelay;
 
     //tcl = tcas - Column Access Strobe latency
     bu::quantity<drs::nanosecond_unit> tcas;
@@ -139,32 +127,19 @@ class Timing : public Chip
     //tccd - Column-to-Column delay
     bu::quantity<drs::nanosecond_unit> tccd;
 
-    //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> SSAPrechargeDelay;
 
     //tras - Row Access Strobe latency
     bu::quantity<drs::nanosecond_unit> tras;
 
-    //Security margin !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> securityMargin;
-
     //twr - Write Recovery time
     bu::quantity<drs::nanosecond_unit> twr;
 
-    //Equalizer delay !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> equalizerDelay;
     //trp - Row Precharge time
     bu::quantity<drs::nanosecond_unit> trp;
 
     //trc - Row Cycle time
     bu::quantity<drs::nanosecond_unit> trc;
 
-    //Act cmd delay !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> actCmdDelay;
-    //pre cmd delay !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> preCmdDelay;
-    //offset !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> offset;
     //trfc - Refresh Cycle time
     bu::quantity<drs::nanosecond_unit> trfc;
 
@@ -231,6 +206,8 @@ class Timing : public Chip
     void clkTiming();
 
     void timingCompute();
+
+    void printTiming();
 };
 
 #endif

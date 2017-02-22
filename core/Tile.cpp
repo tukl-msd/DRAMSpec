@@ -116,7 +116,7 @@ Tile::tileLenghtCalc()
     }
 
     nSubArraysPerArrayBlock =
-            SCALE_QUANTITY(pageStorage, drs::information_per_page_unit)
+            SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)
                              * pageSpanningFactor
                              * subArrayToPageFactor
                              / subArrayRowStorage;

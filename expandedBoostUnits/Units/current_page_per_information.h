@@ -32,13 +32,14 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_RESISTANCE_PER_SUBARRAY_UNIT_H
-#define DRAMSPEC_RESISTANCE_PER_SUBARRAY_UNIT_H
-
-#include <boost/units/make_scaled_unit.hpp>
+#ifndef DRAMSPEC_CURRENT_PAGE_PER_INFORMATION_UNIT_H
+#define DRAMSPEC_CURRENT_PAGE_PER_INFORMATION_UNIT_H
 
 #include "../dramSpecUnitsSystem.h"
-#include "../DerivedDimensions/resistance_per_subarray.h"
+
+#include "../DerivedDimensions/current_page_per_information.h"
+
+#include <boost/units/base_units/information/byte.hpp>
 
 namespace boost {
 
@@ -46,19 +47,23 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<resistance_per_subarray_dimension,dramspec::system_bit> resistance_per_subarray_unit;
+typedef unit<current_page_per_information_dimension,dramspec::system_byte>    current_page_per_information_unit;
 
-BOOST_UNITS_STATIC_CONSTANT(ohm_per_subarray,resistance_per_subarray_unit);
-BOOST_UNITS_STATIC_CONSTANT(ohms_per_subarray,resistance_per_subarray_unit);
+BOOST_UNITS_STATIC_CONSTANT(ampere_page_per_byte,current_page_per_information_unit);
+BOOST_UNITS_STATIC_CONSTANT(amperes_page_per_byte,current_page_per_information_unit);
+
+typedef make_scaled_unit<current_page_per_information_unit,scale<2, static_rational<-10>>>::type ampere_page_per_kibibyte_unit;
+BOOST_UNITS_STATIC_CONSTANT(ampere_page_per_kibibyte,ampere_page_per_kibibyte_unit);
+BOOST_UNITS_STATIC_CONSTANT(amperes_page_per_kibibyte,ampere_page_per_kibibyte_unit);
+
+typedef make_scaled_unit<ampere_page_per_kibibyte_unit,scale<10, static_rational<-3>>>::type milliampere_page_per_kibibyte_unit;
+BOOST_UNITS_STATIC_CONSTANT(milliampere_page_per_kibibyte,milliampere_page_per_kibibyte_unit);
+BOOST_UNITS_STATIC_CONSTANT(milliamperes_page_per_kibibyte,milliampere_page_per_kibibyte_unit);
 
 } // namespace dramspec
-
-inline std::string name_string(const reduce_unit<dramspec::resistance_per_subarray_unit>::type&)   { return "ohm/subarray"; }
-inline std::string symbol_string(const reduce_unit<dramspec::resistance_per_subarray_unit>::type&) { return "ohm/subarray"; }
 
 } // namespace units
 
 } // namespace boost
 
-
-#endif // DRAMSPEC_RESISTANCE_PER_SUBARRAY_UNIT_H
+#endif // DRAMSPEC_CURRENT_PAGE_PER_INFORMATION_UNIT_H

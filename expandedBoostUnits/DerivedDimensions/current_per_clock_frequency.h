@@ -32,32 +32,26 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_CURRENT_PER_FREQUENCY_UNIT_H
-#define DRAMSPEC_CURRENT_PER_FREQUENCY_UNIT_H
+#ifndef DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_DERIVED_DIMENSION_H
+#define DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_DERIVED_DIMENSION_H
 
-#include "../dramSpecUnitsSystem.h"
-#include "../DerivedDimensions/current_per_frequency.h"
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/current.hpp>
+#include "../BaseDimensions/clock.h"
+#include <boost/units/physical_dimensions/time.hpp>
 
 namespace boost {
 
 namespace units {
 
-namespace dramspec {
-
-typedef unit<current_per_frequency_dimension,dramspec::system>    current_per_frequency;
-
-BOOST_UNITS_STATIC_CONSTANT(ampere_per_hertz,current_per_frequency);
-BOOST_UNITS_STATIC_CONSTANT(amperes_per_hertz,current_per_frequency);
-
-// milliampere / megahertz = nanoampere / hertz
-typedef make_scaled_unit<current_per_frequency,scale<10, static_rational<-9>>>::type milliampere_per_megahertz_unit;
-BOOST_UNITS_STATIC_CONSTANT(milliampere_per_megahertz,milliampere_per_megahertz_unit);
-BOOST_UNITS_STATIC_CONSTANT(milliamperes_per_megahertz,milliampere_per_megahertz_unit);
-
-} // namespace dramspec
+/// derived dimension for resistance per length: I^1 CLK^-1 T^1
+typedef derived_dimension<current_base_dimension,1,
+                          clock_base_dimension,-1,
+                          time_base_dimension,1>::type current_per_clock_frequency_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_CURRENT_PER_FREQUENCY_UNIT_H
+#endif // DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_DERIVED_DIMENSION_H

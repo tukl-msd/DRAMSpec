@@ -10,7 +10,7 @@
 	"wirecapa" : 368,
 	"cellwidth": 0.066 ,
 	"cellheight": 0.114 ,
-    "cellsperrow": 788,
+    "cellsperrow": 1044,
 	"cellsperrowredundancy": 20,
 	"cellspercolumn": 524,
 	"cellspercolumnredundancy": 12,

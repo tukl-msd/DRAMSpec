@@ -18,5 +18,17 @@
     "retentiontime" : 116,
     "tilesperbank" : 117,
     "pageSpanningFactor": 118,
-    "bitlineArchitecture": "119"
+    "bitlineArchitecture": "119",
+    "driverOffset": 120,
+    "SSADelay": 121,
+    "CSLLoadCapacitance": 122,
+    "cmdDecoderLatency": 123,
+    "interfaceLatency": 124,
+    "IODelay": 125,
+    "SSAPrechargeDelay": 126,
+    "securityMargin": 127,
+    "equalizerDelay": 128,
+    "actCmdDelay": 129,
+    "preCmdDelay": 130,
+    "offset": 131
 }

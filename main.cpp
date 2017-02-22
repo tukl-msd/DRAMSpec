@@ -37,17 +37,32 @@
  */
 
 
-#include "parser/DramSpec.h"
+#include "parser/ArgumentsParser.h"
+#include "core/Timing.h"
 
 int main(int argc, char** argv)
 {
-    DRAMSpec bankModellingTool(argc, argv);
+
+    ArgumentsParser inputFileName(argc, argv);
+
     try {
-        bankModellingTool.run();
-    } catch(string exceptionMsgThrown) {
-        cerr << exceptionMsgThrown;
+        inputFileName.runArgParser();
+    }catch (std::string exceptionMsgThrown){
+        std::cerr << exceptionMsgThrown << std::endl;
         return -1;
     }
+
+    Timing* timing;
+
+    try {
+        timing = new Timing(inputFileName.technologyFileName[0],
+                            inputFileName.architectureFileName[0]);
+    }catch (std::string exceptionMsgThrown){
+        std::cerr << exceptionMsgThrown << std::endl;
+        return -1;
+    }
+
+   timing->printTiming();
 
     return 0;
 }

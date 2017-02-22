@@ -142,7 +142,7 @@ class TechnologyValues
     bu::quantity<si::resistance> DQDriverResistance;
 
     //current of SSA in microamperes
-    bu::quantity<drs::microampere_unit> Issa;
+    bu::quantity<drs::milliampere_unit> Issa;
 
     //voltage vpp
     bu::quantity<si::electric_potential> Vpp;
@@ -151,13 +151,13 @@ class TechnologyValues
     bu::quantity<si::electric_potential> Vcc;
 
     //background current slope
-    bu::quantity<drs::milliampere_per_megahertz_unit> backgroundCurrentSlope;
+    bu::quantity<drs::milliampere_per_megahertz_clock_unit> backgroundCurrentSlope;
 
     //background current offset
-    bu::quantity<drs::microampere_unit> backgroundCurrentOffset;
+    bu::quantity<drs::milliampere_unit> backgroundCurrentOffset;
 
     //IDD pro IO for OCD
-    bu::quantity<drs::microampere_unit> IddOcdRcv;
+    bu::quantity<drs::milliampere_unit> IddOcdRcv;
 
     //Row decoder (between tiles) width
     bu::quantity<drs::micrometer_unit> rowDecoderWidth;
@@ -206,7 +206,7 @@ class TechnologyValues
     bu::quantity<drs::clock_unit> additionalLatencyTrl;
 
     // Row buffer size this value is given in KBytes (hard conversion needed)
-    bu::quantity<drs::kibibit_per_page_unit> pageStorage;
+    bu::quantity<drs::kibibyte_per_page_unit> pageStorage;
 
     // DLL ON/OFF Feature
     std::string DLL;
@@ -214,11 +214,8 @@ class TechnologyValues
     // Required tref by user
     bu::quantity<drs::nanosecond_unit> tRef1Required;
 
-    // Factor for number of banks refreshed pro command
-    bu::quantity<drs::bank_unit> banksRefreshFactor;
-
-    // Number of times a row is refreshed in retention time
-    double rowRefreshRate;
+    // Ratio of banks refreshed pro command
+    double banksRefreshFactor;
 
     // Subarray to rowbuffer factor
     double subArrayToPageFactor;
@@ -234,6 +231,34 @@ class TechnologyValues
 
     // DRAM Bitline Architecture: OPEN or FOLDED bit-line
     std::string BLArchitecture;
+
+//  !!!!!!!! TIMING VARIABLES WHICH WHERE HARDCODED IN THE ORIGINAL VERSION !!!!!!!!
+    //Driver offset !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> driverOffset;
+    //SSA Delay !!!  TODO: Check value !!!
+    bu::quantity<drs::nanosecond_unit> SSADelay;
+    //Load capacitance !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::femtofarad_per_bank_unit> CSLLoadCapacitance;
+    //Command decoder latency !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> cmdDecoderLatency;
+    //Internal latency !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> interfaceLatency;
+    //I/O latency !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> IODelay;
+    //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> SSAPrechargeDelay;
+    //Security margin !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> securityMargin;
+    //Equalizer delay !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> equalizerDelay;
+    //Act cmd delay !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> actCmdDelay;
+    //pre cmd delay !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> preCmdDelay;
+    //offset !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> offset;
+
+
 
     void technologyValuesInitialize();
 

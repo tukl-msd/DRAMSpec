@@ -44,7 +44,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<resistance_per_length_dimension,dramspec::system>    resistance_per_length;
+typedef unit<resistance_per_length_dimension,dramspec::system_bit>    resistance_per_length;
 
 BOOST_UNITS_STATIC_CONSTANT(ohm_per_meter,resistance_per_length);
 BOOST_UNITS_STATIC_CONSTANT(ohms_per_meter,resistance_per_length);

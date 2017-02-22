@@ -45,7 +45,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<cell_dimension,dramspec::system>    cell_unit;
+typedef unit<cell_dimension,dramspec::system_bit>    cell_unit;
 
 BOOST_UNITS_STATIC_CONSTANT(cell,cell_unit);
 BOOST_UNITS_STATIC_CONSTANT(cells,cell_unit);

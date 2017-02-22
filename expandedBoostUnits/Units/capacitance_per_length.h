@@ -44,7 +44,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<capacitance_per_length_dimension,dramspec::system>    capacitance_per_length;
+typedef unit<capacitance_per_length_dimension,dramspec::system_bit>    capacitance_per_length;
 
 BOOST_UNITS_STATIC_CONSTANT(farad_per_meter,capacitance_per_length);
 BOOST_UNITS_STATIC_CONSTANT(farads_per_meter,capacitance_per_length);

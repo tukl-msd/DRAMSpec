@@ -45,7 +45,7 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<page_dimension,dramspec::system>    page_unit;
+typedef unit<page_dimension,dramspec::system_bit>    page_unit;
 
 BOOST_UNITS_STATIC_CONSTANT(page,page_unit);
 BOOST_UNITS_STATIC_CONSTANT(pages,page_unit);

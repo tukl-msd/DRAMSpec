@@ -70,6 +70,7 @@ namespace units {
 namespace dramspec {
 
 /// placeholder class defining dramspec unit system
+///  with information base unit being bit
 typedef make_system<clock_base_unit,
                     cell_base_unit,
                     subarray_base_unit,
@@ -80,7 +81,21 @@ typedef make_system<clock_base_unit,
                     boost::units::si::kilogram_base_unit,
                     boost::units::si::second_base_unit,
                     boost::units::si::ampere_base_unit,
-                    boost::units::information::bit_base_unit>::type system;
+                    boost::units::information::bit_base_unit>::type system_bit;
+
+/// placeholder class defining dramspec unit system
+///  with information base unit being Byte
+typedef make_system<clock_base_unit,
+                    cell_base_unit,
+                    subarray_base_unit,
+                    tile_base_unit,
+                    bank_base_unit,
+                    page_base_unit,
+                    boost::units::si::meter_base_unit,
+                    boost::units::si::kilogram_base_unit,
+                    boost::units::si::second_base_unit,
+                    boost::units::si::ampere_base_unit,
+                    boost::units::information::byte_base_unit>::type system_byte;
 
 } // namespace dramspec
 
