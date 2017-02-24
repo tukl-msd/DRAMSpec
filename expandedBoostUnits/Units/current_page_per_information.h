@@ -62,6 +62,9 @@ BOOST_UNITS_STATIC_CONSTANT(milliamperes_page_per_kibibyte,milliampere_page_per_
 
 } // namespace dramspec
 
+inline std::string name_string(const reduce_unit<dramspec::milliampere_page_per_kibibyte_unit>::type&)   { return "mA/KiB page"; }
+inline std::string symbol_string(const reduce_unit<dramspec::milliampere_page_per_kibibyte_unit>::type&) { return "milliampere/KibiByte page"; }
+
 } // namespace units
 
 } // namespace boost

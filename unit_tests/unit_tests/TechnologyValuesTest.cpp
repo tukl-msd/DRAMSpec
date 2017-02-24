@@ -190,20 +190,20 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 500*si::ohm
                         << "\nGot: " << techValues.DQDriverResistance);
 
-    BOOST_CHECK_MESSAGE( techValues.Issa == 300*drs::milliampere,
+    BOOST_CHECK_MESSAGE( techValues.Issa == 300*drs::microampere,
                          "SSA current different from the expected."
-                        << "\nExpected: " << 300*drs::milliampere
+                        << "\nExpected: " << 300*drs::microampere
                         << "\nGot: " << techValues.Issa);
 
-    BOOST_CHECK_MESSAGE( techValues.Vpp == 2.8*si::volt,
+    BOOST_CHECK_MESSAGE( techValues.vpp == 2.8*si::volt,
                          "VPP different from the expected."
                         << "\nExpected: " << 2.8*si::volt
-                        << "\nGot: " << techValues.Vpp);
+                        << "\nGot: " << techValues.vpp);
 
-    BOOST_CHECK_MESSAGE( techValues.Vcc == 1.1*si::volt,
+    BOOST_CHECK_MESSAGE( techValues.vcc == 1.1*si::volt,
                          "VCC different from the expected."
                         << "\nExpected: " << 1.1*si::volt
-                        << "\nGot: " << techValues.Vcc);
+                        << "\nGot: " << techValues.vcc);
 
     BOOST_CHECK_MESSAGE( techValues.backgroundCurrentSlope == 0.025*drs::milliamperes_per_megahertz_clock,
                          "Background current slope different from the expected."
@@ -303,9 +303,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << "ON"
                         << "\nGot: " << techValues.DLL);
 
-    BOOST_CHECK_MESSAGE( techValues.tRef1Required == 3.9*drs::nanosecond,
+    BOOST_CHECK_MESSAGE( techValues.tRef1Required == 3.9*drs::microsecond,
                          "Required tRef1 different from the expected."
-                        << "\nExpected: " << 3.9*drs::nanosecond
+                        << "\nExpected: " << 3.9*drs::microsecond
                         << "\nGot: " << techValues.tRef1Required);
 
     BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 2,
@@ -546,20 +546,20 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 23*si::ohm
                         << "\nGot: " << techValues.DQDriverResistance);
 
-    BOOST_CHECK_MESSAGE( techValues.Issa == 24*drs::milliampere,
+    BOOST_CHECK_MESSAGE( techValues.Issa == 24*drs::microampere,
                         "SSA current different from the expected."
-                        << "\nExpected: " << 24*drs::milliampere
+                        << "\nExpected: " << 24*drs::microampere
                         << "\nGot: " << techValues.Issa);
 
-    BOOST_CHECK_MESSAGE( techValues.Vpp == 25*si::volt,
+    BOOST_CHECK_MESSAGE( techValues.vpp == 25*si::volt,
                         "VPP different from the expected."
                         << "\nExpected: " << 25*si::volt
-                        << "\nGot: " << techValues.Vpp);
+                        << "\nGot: " << techValues.vpp);
 
-    BOOST_CHECK_MESSAGE( techValues.Vcc == 26*si::volt,
+    BOOST_CHECK_MESSAGE( techValues.vcc == 26*si::volt,
                         "VCC different from the expected."
                         << "\nExpected: " << 26*si::volt
-                        << "\nGot: " << techValues.Vcc);
+                        << "\nGot: " << techValues.vcc);
 
     BOOST_CHECK_MESSAGE( techValues.backgroundCurrentSlope == 27*drs::milliamperes_per_megahertz_clock,
                         "Background current slope different from the expected."
@@ -656,9 +656,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << "111"
                         << "\nGot: " << techValues.DLL);
 
-    BOOST_CHECK_MESSAGE( techValues.tRef1Required == 112*drs::nanosecond,
+    BOOST_CHECK_MESSAGE( techValues.tRef1Required == 112*drs::microsecond,
                         "Required tRef1 different from the expected."
-                        << "\nExpected: " << 112*drs::nanosecond
+                        << "\nExpected: " << 112*drs::microsecond
                         << "\nGot: " << techValues.tRef1Required);
 
     BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 113,

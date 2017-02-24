@@ -48,12 +48,14 @@ SubArray::subArrayInitialize()
 void
 SubArray::subArrayStorageCalc()
 {
-    subArrayRowStorage = (cellsPerLBL - cellsPerLBLRedundancy)
+    subArrayRowStorage = (cellsPerLWL - cellsPerLWLRedundancy)
                          * drs::bit_per_cell;
 
-    subArrayStorage = subArrayRowStorage
-                      * (cellsPerLWL - cellsPerLWLRedundancy)
-                      / drs::cell_per_subarray;
+    subArrayColumnStorage = (cellsPerLBL - cellsPerLBLRedundancy)
+                         * drs::bit_per_cell;
+
+    subArrayStorage = subArrayRowStorage * subArrayColumnStorage
+                      / drs::bits_per_subarray;
 }
 
 void
@@ -95,19 +97,19 @@ SubArray::driverUpdate()
         GWLDriverResistance = GWLDriverResistance - 400*si::ohm;
     }
 
-    if((cellsPerLWL - cellsPerLWLRedundancy) < 256*drs::cells_per_subarray ) {
+    if(subArrayRowStorage < 256*drs::bits_per_subarray ) {
         LWLDriverResistance = LWLDriverResistance + 200*drs::ohms_per_subarray ;
         WRResistance = WRResistance + 200*drs::ohms_per_subarray;
     }
-    else if((cellsPerLWL - cellsPerLWLRedundancy) == 256*drs::cells_per_subarray ) {
+    else if(subArrayRowStorage < 512*drs::bits_per_subarray ) {
         LWLDriverResistance = LWLDriverResistance + 100*drs::ohms_per_subarray;
         WRResistance = WRResistance + 100*drs::ohms_per_subarray ;
     }
-    else if((cellsPerLWL - cellsPerLWLRedundancy) == 512*drs::cells_per_subarray) {
+    else if(subArrayRowStorage < 1024*drs::bits_per_subarray ) {
         LWLDriverResistance = LWLDriverResistance;
         WRResistance = WRResistance;    
     }
-    else if((cellsPerLWL - cellsPerLWLRedundancy) == 1024*drs::cells_per_subarray) {
+    else if(subArrayRowStorage < 1025*drs::bits_per_subarray ) {
         LWLDriverResistance = LWLDriverResistance  - 100*drs::ohms_per_subarray ;
         WRResistance = WRResistance - 100*drs::ohms_per_subarray ;
 

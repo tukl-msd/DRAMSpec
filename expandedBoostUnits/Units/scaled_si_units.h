@@ -66,6 +66,9 @@ BOOST_UNITS_STATIC_CONSTANT(micrometers_squared,micrometer_squared_unit);
 typedef make_scaled_unit<si::current,scale<10, static_rational<-3>>>::type milliampere_unit;
 BOOST_UNITS_STATIC_CONSTANT(milliampere,milliampere_unit);
 BOOST_UNITS_STATIC_CONSTANT(milliamperes,milliampere_unit);
+typedef make_scaled_unit<si::current,scale<10, static_rational<-6>>>::type microampere_unit;
+BOOST_UNITS_STATIC_CONSTANT(microampere,microampere_unit);
+BOOST_UNITS_STATIC_CONSTANT(microamperes,microampere_unit);
 
 typedef make_scaled_unit<si::frequency,scale<10, static_rational<6>>>::type megahertz_unit;
 BOOST_UNITS_STATIC_CONSTANT(megahertz,megahertz_unit);
@@ -91,6 +94,10 @@ BOOST_UNITS_STATIC_CONSTANT(nanofarads,nanofarad_unit);
 typedef make_scaled_unit<si::capacitance,scale<10, static_rational<-15>>>::type femtofarad_unit;
 BOOST_UNITS_STATIC_CONSTANT(femtofarad,femtofarad_unit);
 BOOST_UNITS_STATIC_CONSTANT(femtofarads,femtofarad_unit);
+
+typedef make_scaled_unit<si::electric_charge,scale<10, static_rational<-9>>>::type nanocoulomb_unit;
+BOOST_UNITS_STATIC_CONSTANT(nanocoulomb,nanocoulomb_unit);
+BOOST_UNITS_STATIC_CONSTANT(nanocoulombs,nanocoulomb_unit);
 
 } // namespace dramspec
 

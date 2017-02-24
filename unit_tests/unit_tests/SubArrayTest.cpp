@@ -83,6 +83,11 @@ BOOST_AUTO_TEST_CASE( checkSubArray_real_input)
                         << "\nExpected: " << 512*drs::bits_per_subarray
                         << "\nGot: " << subarray.subArrayRowStorage);
 
+    BOOST_CHECK_MESSAGE( subarray.subArrayColumnStorage == 512*drs::bits_per_subarray,
+                         "Size of subarray row different from the expected."
+                        << "\nExpected: " << 512*drs::bits_per_subarray
+                        << "\nGot: " << subarray.subArrayColumnStorage);
+
     BOOST_CHECK_MESSAGE( subarray.subArrayWidth == 71.88*drs::micrometer_per_subarray,
                         "Width of subarray different from the expected."
                         << "\nExpected: " << 71.88*drs::micrometer_per_subarray
@@ -146,6 +151,11 @@ BOOST_AUTO_TEST_CASE( checkSubArray_dummy_input )
                         "Size of subarray row different from the expected."
                         << "\nExpected: " << -1*drs::bits_per_subarray
                         << "\nGot: " << subarray.subArrayRowStorage);
+
+    BOOST_CHECK_MESSAGE( subarray.subArrayColumnStorage == -1*drs::bits_per_subarray,
+                         "Size of subarray row different from the expected."
+                        << "\nExpected: " << -1*drs::bits_per_subarray
+                        << "\nGot: " << subarray.subArrayColumnStorage);
 
     BOOST_CHECK_MESSAGE( subarray.subArrayWidth == 137*drs::micrometer_per_subarray,
                         "Width of subarray different from the expected."
@@ -274,8 +284,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
 
 
     subarray.subArrayCompute();
-    subarray.cellsPerLWL = (255+24)*drs::cells_per_subarray; // < 256
-    subarray.cellsPerLWLRedundancy = 24*drs::cells_per_subarray;
+    subarray.subArrayRowStorage = 255*drs::bits_per_subarray; // < 256
     subarray. driverUpdate();
     BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 219*drs::ohms_per_subarray,
                         "Resistance of local wordline driver different from the expected."
@@ -289,8 +298,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
 
 
     subarray.subArrayCompute();
-    subarray.cellsPerLWL = (256+24)*drs::cells_per_subarray;
-    subarray.cellsPerLWLRedundancy = 24*drs::cells_per_subarray;
+    subarray.subArrayRowStorage = 256*drs::bits_per_subarray;
     subarray. driverUpdate();
     BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 119*drs::ohms_per_subarray,
                         "Resistance of local wordline driver different from the expected."
@@ -304,8 +312,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
 
 
     subarray.subArrayCompute();
-    subarray.cellsPerLWL = (512+24)*drs::cells_per_subarray;
-    subarray.cellsPerLWLRedundancy = 24*drs::cells_per_subarray;
+    subarray.subArrayRowStorage = 512*drs::bits_per_subarray;
     subarray. driverUpdate();
     BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 19*drs::ohms_per_subarray,
                         "Resistance of local wordline driver different from the expected."
@@ -319,8 +326,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
 
 
     subarray.subArrayCompute();
-    subarray.cellsPerLWL = (1024+24)*drs::cells_per_subarray;
-    subarray.cellsPerLWLRedundancy = 24*drs::cells_per_subarray;
+    subarray.subArrayRowStorage = 1024*drs::bits_per_subarray;
     subarray. driverUpdate();
     BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == -81*drs::ohms_per_subarray,
                         "Resistance of local wordline driver different from the expected."
@@ -334,8 +340,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
 
 
     subarray.subArrayCompute();
-    subarray.cellsPerLWL = (1025+24)*drs::cells_per_subarray; // > 1024
-    subarray.cellsPerLWLRedundancy = 24*drs::cells_per_subarray;
+    subarray.subArrayRowStorage = 1025*drs::bits_per_subarray; // > 1024
     subarray. driverUpdate();
     BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == -181*drs::ohms_per_subarray,
                         "Resistance of local wordline driver different from the expected."

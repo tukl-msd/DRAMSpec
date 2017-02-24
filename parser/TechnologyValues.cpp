@@ -63,9 +63,9 @@ TechnologyValues::technologyValuesInitialize()
     CSLDriverResistance = 0*si::ohm;
     GDLDriverResistance = 0*si::ohm;
     DQDriverResistance = 0*si::ohm;
-    Issa = 0*drs::milliampere;
-    Vpp = 0*si::volt;
-    Vcc = 0*si::volt;
+    Issa = 0*drs::microampere;
+    vpp = 0*si::volt;
+    vcc = 0*si::volt;
     backgroundCurrentSlope = 0*drs::milliamperes_per_megahertz_clock;
     backgroundCurrentOffset = 0*drs::milliampere;
     IddOcdRcv = 0*drs::milliampere;
@@ -82,7 +82,7 @@ TechnologyValues::technologyValuesInitialize()
     additionalLatencyTrl = 0*drs::clock;
     pageStorage = 0*drs::kibibyte_per_page;
     DLL = "";
-    tRef1Required = 0*drs::nanosecond;
+    tRef1Required = 0*drs::microsecond;
     banksRefreshFactor = 0;
     subArrayToPageFactor = 0;
     retentionTime = 0*drs::millisecond;
@@ -259,19 +259,19 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     assert(techdocument.HasMember("I_SSA"));
     assert(techdocument["I_SSA"].IsNumber());
     double Issa_value = techdocument["I_SSA"].GetDouble();
-    Issa = Issa_value*drs::milliampere;
+    Issa = Issa_value*drs::microampere;
 
     //voltage vpp
     assert(techdocument.HasMember("vpp"));
     assert(techdocument["vpp"].IsNumber());
     double Vpp_value  = techdocument["vpp"].GetDouble() ;
-    Vpp = Vpp_value*si::volt;
+    vpp = Vpp_value*si::volt;
 
     //voltage vcc
     assert(techdocument.HasMember("vcc"));
     assert(techdocument["vcc"].IsNumber());
     double Vcc_value  = techdocument["vcc"].GetDouble();
-    Vcc = Vcc_value*si::volt;
+    vcc = Vcc_value*si::volt;
 
     //backgroundcurrentslope    
     assert(techdocument.HasMember("Backgroundcurrentslope"));
@@ -410,7 +410,7 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     assert(paradocument.HasMember("Requiredrefreshperiod"));
     assert(paradocument["Requiredrefreshperiod"].IsNumber());
     double tRef1Required_value  = paradocument["Requiredrefreshperiod"].GetDouble();
-    tRef1Required = tRef1Required_value*drs::nanosecond;
+    tRef1Required = tRef1Required_value*drs::microseconds;
 
     // Ratio of banks refreshed pro command
     assert(paradocument.HasMember("banksrefreshfactor"));

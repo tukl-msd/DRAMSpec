@@ -76,11 +76,11 @@ class Timing : public Chip
     bu::quantity<drs::nanosecond_unit> localWordlineDelay;
 
     //Resistance of local bitline
-    bu::quantity<drs::resistance_per_subarray_unit> bitlineResistance;
+    bu::quantity<drs::resistance_per_subarray_unit> localBitlineResistance;
     //Capacitace of local bitline
-    bu::quantity<drs::nanofarad_per_subarray_unit> bitlineCapacitance;
+    bu::quantity<drs::nanofarad_per_subarray_unit> localBitlineCapacitance;
     //Delay of local bitline
-    bu::quantity<drs::nanosecond_unit> bitlineDelay;
+    bu::quantity<drs::nanosecond_unit> localBitlineDelay;
 
     //Resistance of global wordline
     bu::quantity<drs::resistance_per_tile_unit> globalWordlineResistance;
@@ -150,6 +150,8 @@ class Timing : public Chip
     bu::quantity<drs::megahertz_clock_unit> maxCoreFreq;
     //Actual core frequency
     bu::quantity<drs::megahertz_clock_unit> actualCoreFreq;
+    //Double clock frequency if is DDR
+    double clockFactor;
 
     //Clock
     bu::quantity<drs::nanosecond_per_clock_unit> clk;

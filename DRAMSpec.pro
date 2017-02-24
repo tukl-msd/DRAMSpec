@@ -182,7 +182,7 @@ CONFIG(debug, debug|release) {
     SOURCES += unit_tests/unit_tests/BankTest.cpp
     SOURCES += unit_tests/unit_tests/ChipTest.cpp
     SOURCES += unit_tests/unit_tests/TimingTest.cpp
-    #SOURCES += unit_tests/unit_tests/CurrentTest.cpp
+    SOURCES += unit_tests/unit_tests/CurrentTest.cpp
     #SOURCES += unit_tests/unit_tests/DramSpecTest.cpp
 
     SOURCES += unit_tests/unitTestRunner.cpp

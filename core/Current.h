@@ -49,10 +49,13 @@ class Current : public Timing
           currentInitialize();
       }
 
-      Current(const std::string& techname, const std::string& paraname) :
+      Current(const std::string& techname,
+              const std::string& paraname,
+              const bool IOTerminationCurrentFlag) :
           Timing(techname, paraname)
       {
           currentInitialize();
+          includeIOTerminationCurrent = IOTerminationCurrentFlag;
           try {
               currentCompute();
           }catch (std::string exceptionMsgThrown){
@@ -60,8 +63,32 @@ class Current : public Timing
           }
       }
 
+    // !! Hard-coded values converted to variables !!
+    double IDD2nPercentageIfNotDll;
+    double vppPumpsEfficiency;
     bu::quantity<drs::milliampere_page_per_kibibyte_unit> currentPerPageSizeSlope;
+    bu::quantity<drs::nanosecond_unit> SSAActiveTime;
+    double bitProCSL;
+    bu::quantity<drs::megahertz_clock_unit> IddOcdRcvScalingFactor;
 
+    // Intermediate values added as variables for code cleanness
+    double nActiveSubarrays;
+    double nLocalBitlines;
+    bu::quantity<drs::nanocoulomb_unit> IDD0TotalCharge;
+    bu::quantity<drs::nanosecond_unit> effectiveTrc;
+    bu::quantity<si::current> IDD0ChargingCurrent;
+    bu::quantity<drs::nanocoulomb_unit> IDD1TotalCharge;
+    bu::quantity<si::current> IDD1ChargingCurrent;
+    bu::quantity<drs::nanocoulomb_unit> IDD4TotalCharge;
+    bu::quantity<drs::milliampere_unit> ioTermRdCurrent;
+    bu::quantity<si::current> IDD4ChargingCurrent;
+    bu::quantity<drs::milliampere_unit> ioTermWrCurrent;
+    bu::quantity<drs::nanocoulomb_unit> refreshCharge;
+    bu::quantity<drs::nanosecond_unit> effectiveTrfc;
+    bu::quantity<si::current> IDD5ChargingCurrent;
+    int nRowActivation;
+
+    // Main variables
     //current IDD0 in mA ( ACT-PRE )
     bu::quantity<drs::milliampere_unit> IDD0;
 
@@ -83,32 +110,32 @@ class Current : public Timing
     //calculate the refresh current
     bu::quantity<drs::milliampere_unit> IDD5;
 
-    // bool for including IO termination current
-    bool includeTerm;
-
     //charges for MWL ( Master wordline )
-    double Q_MWL;
+    bu::quantity<drs::nanocoulomb_unit> masterWordlineCharge;
 
     //charges for LWL ( local wordline )
-    double Q_LWL;
+    bu::quantity<drs::nanocoulomb_unit> localWordlineCharge;
 
     //charges for Local bitline + blsa
-    double Q_LBL;
+    bu::quantity<drs::nanocoulomb_unit> localBitlineCharge;
 
     //charges for SSA ( Secondary sense amp )
-    double Q_SSA;
+    bu::quantity<drs::nanocoulomb_unit> SSACharge;
 
     //charges for CSL (column select line )
-    double Q_CSL;
+    bu::quantity<drs::nanocoulomb_unit> CSLCharge;
 
     //charges for MDL ( master dataline )
-    double Q_MDL;
-
-    //charges for reading
-    double Q_READ;
+    bu::quantity<drs::nanocoulomb_unit> masterDatalineCharge;
 
     //charges for DQ
-    double Q_DQ;
+    bu::quantity<drs::nanocoulomb_unit> DQWireCharge;
+
+    //charges for reading
+    bu::quantity<drs::nanocoulomb_unit> readingCharge;
+
+    // Termination current flag
+    bool includeIOTerminationCurrent;
 
     void currentInitialize();
 
@@ -116,19 +143,19 @@ class Current : public Timing
     void backgroundCurrentCalc();
 
     //function for calculation of IDD0
-    void calcIDD0();
+    void IDD0Calc();
 
     //function for calculation of IDD1
-    void calcIDD1();
+    void IDD1Calc();
 
     //function for calculation of IDD4R
-    void calcIDD4R();
+    void IDD4RCalc();
 
     //function for calculation of IDD4W
-    void calcIDD4W();
+    void IDD4WCalc();
 
     //function for calculation of IDD5
-    void calcIDD5();
+    void IDD5Calc();
 
     void currentCompute();
 

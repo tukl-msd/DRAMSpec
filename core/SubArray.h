@@ -68,6 +68,9 @@ class SubArray : public TechnologyValues
     // Size in number of bits of a single row of a subarray
     bu::quantity<drs::information_per_subarray_unit> subArrayRowStorage;
 
+    // Size in number of bits of a single column of a subarray
+    bu::quantity<drs::information_per_subarray_unit> subArrayColumnStorage;
+
     //the width of the subarray which should be calculated
     bu::quantity<drs::micrometer_per_subarray_unit> subArrayWidth;
 

@@ -142,13 +142,13 @@ class TechnologyValues
     bu::quantity<si::resistance> DQDriverResistance;
 
     //current of SSA in microamperes
-    bu::quantity<drs::milliampere_unit> Issa;
+    bu::quantity<drs::microampere_unit> Issa;
 
     //voltage vpp
-    bu::quantity<si::electric_potential> Vpp;
+    bu::quantity<si::electric_potential> vpp;
 
     //voltage vcc
-    bu::quantity<si::electric_potential> Vcc;
+    bu::quantity<si::electric_potential> vcc;
 
     //background current slope
     bu::quantity<drs::milliampere_per_megahertz_clock_unit> backgroundCurrentSlope;
@@ -212,7 +212,7 @@ class TechnologyValues
     std::string DLL;
 
     // Required tref by user
-    bu::quantity<drs::nanosecond_unit> tRef1Required;
+    bu::quantity<drs::microsecond_unit> tRef1Required;
 
     // Ratio of banks refreshed pro command
     double banksRefreshFactor;

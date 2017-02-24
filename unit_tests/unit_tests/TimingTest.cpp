@@ -92,20 +92,20 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 4.544*drs::nanoseconds
                         << "\nGot: " << timing.localWordlineDelay);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bitlineResistance, 3) == 18864*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.localBitlineResistance, 3) == 18864*drs::ohms_per_subarray,
                         "Bitline resistance different from the expected."
                         << "\nExpected around: " << 18864*drs::ohms_per_subarray
-                        << "\nGot: " << timing.bitlineResistance);
+                        << "\nGot: " << timing.localBitlineResistance);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bitlineCapacitance, 9) == 8.384e-05*drs::nanofarads_per_subarray,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.localBitlineCapacitance, 9) == 8.384e-05*drs::nanofarads_per_subarray,
                         "Bitline capacitance different from the expected."
                         << "\nExpected around: " << 8.384e-05*drs::nanofarads_per_subarray
-                        << "\nGot: " << timing.bitlineCapacitance);
+                        << "\nGot: " << timing.localBitlineCapacitance);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bitlineDelay, 3) == 3.642*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.localBitlineDelay, 3) == 3.642*drs::nanoseconds,
                         "Delay through bitline different from the expected."
                         << "\nExpected around: " << 3.642*drs::nanoseconds
-                        << "\nGot: " << timing.bitlineDelay);
+                        << "\nGot: " << timing.localBitlineDelay);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineResistance, 3) == 115.908*drs::ohms_per_tile,
                         "Resistance of global wordline different from the expected."
@@ -226,6 +226,11 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         "Actual core frequency different from the expected."
                         << "\nExpected around: " << 200*drs::megahertz_clock
                         << "\nGot: " << timing.actualCoreFreq);
+
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.clockFactor, 3) == 2,
+                        "Clock factor different from the expected."
+                        << "\nExpected around: " << 2
+                        << "\nGot: " << timing.clockFactor);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.clk, 3) == 1.25*drs::nanoseconds_per_clock,
                         "Clock different from the expected."

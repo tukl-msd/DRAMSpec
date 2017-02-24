@@ -46,9 +46,9 @@ Timing::timingInitialize()
     localWordlineCapacitance = 0*drs::nanofarads_per_subarray;
     localWordlineDelay = 0*drs::nanoseconds;
 
-    bitlineResistance = 0*drs::ohms_per_subarray;
-    bitlineCapacitance = 0*drs::nanofarads_per_subarray;
-    bitlineDelay = 0*drs::nanoseconds;
+    localBitlineResistance = 0*drs::ohms_per_subarray;
+    localBitlineCapacitance = 0*drs::nanofarads_per_subarray;
+    localBitlineDelay = 0*drs::nanoseconds;
 
     globalWordlineResistance = 0*drs::ohms_per_tile;
     globalWordlineCapacitance = 0*drs::nanofarads_per_tile;
@@ -148,18 +148,18 @@ Timing::trcdCalc()
             * drs::subarray * drs::subarray;
 
     // Calculating bitline total resistance
-    bitlineResistance = cellsPerLBL * resistancePerBLCell;
+    localBitlineResistance = cellsPerLBL * resistancePerBLCell;
 
     // Calculating bitline total capacitance
-    bitlineCapacitance = cellsPerLBL
+    localBitlineCapacitance = cellsPerLBL
           * SCALE_QUANTITY(capacitancePerBLCell, drs::nanofarad_per_cell_unit);
 
     // Calculating the bltau( in ns )
     // for timing of bitline, the voltage should reach 90% of the value
     // or else the BLSA can kipp to the wrong value => tau*2.3
-    bitlineDelay = timeToPercentage(90)
-            * bitlineResistance * drs::subarray
-            * bitlineCapacitance * drs::subarray;
+    localBitlineDelay = timeToPercentage(90)
+            * localBitlineResistance * drs::subarray
+            * localBitlineCapacitance * drs::subarray;
 
     //calculating GWL decoder + wiring femtofarad_per_bank_unitdelay
     //calculating global wordline total capa in fF
@@ -175,7 +175,7 @@ Timing::trcdCalc()
             timeToPercentage(63) * globalWordlineResistance * drs::tile * globalWordlineCapacitance * drs::tile;
     
     // Calculating trcd
-    trcd = globalWordlineDelay + localWordlineDelay + cellDelay + bitlineDelay + SSADelay;
+    trcd = globalWordlineDelay + localWordlineDelay + cellDelay + localBitlineDelay + SSADelay;
 
 }
 
@@ -303,7 +303,7 @@ Timing::trasCalc()
     tras = trcd + tccd + trtp;
 
     // Calculating twr + 2 (command decoding) + 1 (security margin):
-    twr = cmdDecoderLatency + bitlineDelay + tgdl + securityMargin;
+    twr = cmdDecoderLatency + localBitlineDelay + tgdl + securityMargin;
 
     if ( !exceptionMsgThrown.empty() ) {
      throw exceptionMsgThrown;
@@ -316,7 +316,7 @@ Timing::trpCalc()
     //calculating trp
     //trp = Master wordline delay ( discharging ) + local wordline delay
     // (discharging ) + 1 ns ( equalizer delay )
-    trp =  localWordlineDelay + bitlineDelay + equalizerDelay;
+    trp =  localWordlineDelay + localBitlineDelay + equalizerDelay;
 }
 
 void
@@ -376,7 +376,6 @@ Timing::clkTiming()
         actualCoreFreq = dramCoreFreq;
     }
     else {
-        double clockFactor;
         if (dramType == "DDR") {
             clockFactor = 2;
         } else {

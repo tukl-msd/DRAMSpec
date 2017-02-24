@@ -37,6 +37,54 @@
 #include <iostream>
 #include <fstream>
 
+void
+Current::currentInitialize()
+{
+    IDD2nPercentageIfNotDll = 0.6;
+    vppPumpsEfficiency = 0.3;
+    currentPerPageSizeSlope = 2.0*drs::milliamperes_page_per_kibibyte;
+    SSAActiveTime = 1.5*drs::nanoseconds;
+    bitProCSL = 8;
+    IddOcdRcvScalingFactor = 533*drs::megahertz_clock;
+
+    // Intermediate values added as variables for code cleanness
+    nActiveSubarrays = 0;
+    nLocalBitlines = 0;
+    IDD0TotalCharge = 0*drs::nanocoulomb;
+    effectiveTrc = 0*drs::nanosecond;
+    IDD0ChargingCurrent = 0*si::amperes;
+    IDD1TotalCharge = 0*drs::nanocoulomb;
+    IDD1ChargingCurrent = 0*si::amperes;
+    IDD4TotalCharge = 0*drs::nanocoulomb;
+    ioTermRdCurrent = 0*drs::milliamperes;
+    IDD4ChargingCurrent = 0*si::amperes;
+    ioTermWrCurrent = 0*drs::milliamperes;
+    refreshCharge = 0*drs::nanocoulomb;
+    effectiveTrfc = 0*drs::nanosecond;
+    IDD5ChargingCurrent = 0*si::amperes;
+    nRowActivation = 0;
+
+    // Main variables
+    IDD0 = 0*drs::milliamperes;
+    IDD1 = 0*drs::milliamperes;
+    IDD4R = 0*drs::milliamperes;
+    IDD4W = 0*drs::milliamperes;
+    IDD2n = 0*drs::milliamperes;
+    IDD3n = 0*drs::milliamperes;
+    IDD5 = 0*drs::milliamperes;
+
+    masterWordlineCharge = 0*drs::nanocoulomb;
+    localWordlineCharge = 0*drs::nanocoulomb;
+    localBitlineCharge = 0*drs::nanocoulomb;
+    SSACharge = 0*drs::nanocoulomb;
+    CSLCharge = 0*drs::nanocoulomb;
+    masterDatalineCharge = 0*drs::nanocoulomb;
+    DQWireCharge = 0*drs::nanocoulomb;
+    readingCharge = 0*drs::nanocoulomb;
+
+    includeIOTerminationCurrent = false;
+}
+
 // Background current calculation
 void
 Current::backgroundCurrentCalc()
@@ -46,8 +94,7 @@ Current::backgroundCurrentCalc()
             + backgroundCurrentOffset;
 
     if (DLL =="OFF") {
-        // !!! TODO: WHY ONLY 60% ? !!!
-        IDD2n = IDD2n - IDD2n*0.4;
+        IDD2n = IDD2nPercentageIfNotDll * IDD2n;
     }
 
     // Active background current:
@@ -58,175 +105,242 @@ Current::backgroundCurrentCalc()
 
 }
 
-//bool
-//Current::calcIDD0()
-//{
-//    // Number of active subarrays
-//    int numberofactivesubarrays = (pageSize * 8 * 1024)
-//    / (cellsPerLWL - cellsPerLWLRedundancy);
+void
+Current::IDD0Calc()
+{
+    //   !!! CHECK !!!
+    // Number of active subarrays
+    //    [subarray / page] ???
+    nActiveSubarrays = SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit) * drs::page
+                                  / subArrayRowStorage / drs::subarray;
 
-//    // Charge of master wordline //3.3 is efficiency factor of the vpp pumps
-//    Q_MWL = GWDC *  Vpp * 3.3;
+    // Charge of master wordline
+    masterWordlineCharge = globalWordlineCapacitance * 1.0*drs::tile
+                           *  vpp / vppPumpsEfficiency;
 
-//    // Charge of local wordline
-//    Q_LWL = wlc *  Vpp * numberofactivesubarrays * 3.3 ;
+    // Charge of local wordline
+    localWordlineCharge = localWordlineCapacitance * 1.0*drs::subarray
+                          * vpp
+                          * nActiveSubarrays
+                          / vppPumpsEfficiency ;
 
-//    //charge of local bitline//8 bytes to bits // 1024 kbits to bits
-//    Q_LBL = (float)blc * (float)Vcc/2 * (float)pageSize * 8 * 1024;
+    //charge of local bitline
+    nLocalBitlines = SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)*drs::page/drs::bit;
+    localBitlineCharge = localBitlineCapacitance * 1.0*drs::subarray
+                         * vcc / 2.0 // <<-- WHY DIVIDED BY 2??
+                         * nLocalBitlines;
  
-//    //Extra charge added as the number of tiles per bank is changed
-//    float Q_tilesperbank = 0;
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
+    // !!!! TODO: DISCUSS THESE VALUES WITH CHRISTIAN IN FURTHER MEETINGS !!!! //
+    //Extra charge added as the number of tiles per bank is changed
+    bu::quantity<drs::nanocoulomb_unit> Q_tilesperbank = 0;
 
-//    //If it is a halfbank, Charge = wire capacitance * number of wires * length of wire * voltage
-//    if(tilesPerBank == 2)
-//    Q_tilesperbank = wireCapacitance * 13 * 0.25 * Vcc/2;
-//    //If it is a quarterbank, Charge = wire capacitance * number of wires * length of wire * voltage * 2
-//    if(tilesPerBank == 4)
-//    Q_tilesperbank = wireCapacitance * 13 * 0.25 * Vcc/2 * 2;
- 
-//    // Total charges in pC
-//    float Q_total0 = (( Q_MWL + Q_LWL + Q_LBL + Q_tilesperbank) * 2) / 1000 ;
+    //If it is a halfbank, Charge = wire capacitance * number of wires * length of wire * voltage
+    if(tilesPerBank == 2*drs::tiles_per_bank) {
+        Q_tilesperbank = SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+                         * vcc / 2.0
+                         * 13.0
+                         * 0.25 * drs::millimeters;
+    }
+    //If it is a quarterbank, Charge = wire capacitance * number of wires * length of wire * voltage * 2
+    if(tilesPerBank == 4*drs::tiles_per_bank) {
+        Q_tilesperbank = SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+                         * vcc / 2.0
+                         * 13.0
+                         * 0.25 * drs::millimeters
+                         * 2.0;
+    }
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
 
-//    // Current caused by charging and discharging of capas in mA
-//    // Clock cycles of trc in ns
-//    float Trc = trc_clk * clk;
-//    float IDD_Q = Q_total0/Trc;
+    IDD0TotalCharge = ( masterWordlineCharge
+                      + localWordlineCharge
+                      + localBitlineCharge
+                      + Q_tilesperbank)
+                            * 2.0 ; // !! Why times 2? Maybe number of tiles?
 
-//    IDD0 = IDD_Q + IDD3n;
+    // Clock cycles of trc in ns
+    effectiveTrc = trc_clk * clk;
+    // Current caused by charging and discharging of capas in mA
+    IDD0ChargingCurrent = IDD0TotalCharge / effectiveTrc;
 
-//    return true;
-//}
+    IDD0 = IDD3n
+           + SCALE_QUANTITY(IDD0ChargingCurrent, drs::milliampere_unit);
 
-//bool
-//Current::calcIDD1()
-//{
-//    // Charges of SSA / SSA active for 1.5 ns
-//    Q_SSA = (float)(Interface * Prefetch * Issa) * 1.5;
+}
 
-//    // Charges for CSL// 8 bits pro CSL
-//    Q_CSL = CSLcapa *  Vcc * ((Interface *
-//    Prefetch) / 8 );
+void
+Current::IDD1Calc()
+{
+    // Charges of SSA / SSA active for 1.5 ns
+    SSACharge = Interface
+                * Prefetch
+                * SCALE_QUANTITY(Issa, si::current)
+                * SSAActiveTime;
 
-//    // Charge of global Dataline
-//    Q_MDL = GDLcapa *  Vcc * Interface * Prefetch;
+    // Charges for CSL// 8 bits pro CSL
+    CSLCharge = CSLCapacitance * 1.0*drs::bank
+                * vcc
+                * Interface
+                * Prefetch
+                / bitProCSL ;
 
-//    // Charges for Dataqueue // 1 Read is done for interface x prefetch
+    // Charge of global Dataline
+    masterDatalineCharge = globalDatalineCapacitance * 1.0*drs::bank
+                           * vcc
+                           * Interface
+                           * Prefetch;
 
-//    Q_DQ =(float) ( Interface * Prefetch * DQcapa
-//    * Vcc );
-     
-//    // read charges in pC
-//    Q_READ = (Q_SSA + 2*Q_CSL + 2*Q_MDL + Q_DQ) ;
-//    float Q_total1 = ( (Q_MWL + Q_LWL + Q_LBL + Q_READ)*2 ) / 1000;
-//    float Trc = trc_clk * clk;
-//    IDD1 =  Q_total1 / Trc + IDD3n;
+    // Charges for Dataqueue // 1 Read is done for interface x prefetch
+    DQWireCharge = DQWireCapacitance
+                   * vcc
+                   * Interface
+                   * Prefetch;
 
-//    return true;
-//}
+    // read charges in pC
+    readingCharge = SSACharge
+                    + 2.0*CSLCharge // !! Why times 2? Maybe number of tiles?
+                    + 2.0*masterDatalineCharge // !! Why times 2? Maybe number of tiles?
+                    + DQWireCharge;
+    IDD1TotalCharge = (masterWordlineCharge
+                       + localWordlineCharge
+                       + localBitlineCharge
+                       + readingCharge)
+                            * 2.0; // !! Why times 2? Maybe number of tiles?
 
-//bool
-//Current::calcIDD4R()
-//{
-//    // Scale the IDD_OCD_RCV with frequency linearly
-//    // ( I = 2.5 mA for 533 MHz, 0 for 0 MHz )
-//    IddOcdRcv = (IddOcdRcv/533) * dramFreq;
-//    float clkconstant;
+    IDD1ChargingCurrent = IDD1TotalCharge / effectiveTrc;
 
-//    // Charges for 4 Reads
-//    if(DramType == "DDR") {
-//        clkconstant = 2;
-//    } else {
-//        clkconstant = 1;
-//    }
+    IDD1 = IDD3n
+           + SCALE_QUANTITY(IDD1ChargingCurrent, drs::milliampere_unit);
 
-//    float Q_tilesperbank = 0;
+}
 
-//    if(tilesPerBank == 2)
-//    Q_tilesperbank = wireCapacitance * 13 * 0.25 * Vcc * 10;
- 
-//    if(tilesPerBank == 4)
-//    Q_tilesperbank = wireCapacitance * 13 * 0.25 * Vcc * 2 * 10;
+void
+Current::IDD4RCalc()
+{
+    // Scale the IDD_OCD_RCV with frequency linearly
+    // ( I = 2.5 mA for 533 MHz, 0 for 0 MHz )
+    IddOcdRcv = IddOcdRcv * dramFreq / IddOcdRcvScalingFactor;
 
-//    float Q_total4R = (Q_READ + Q_tilesperbank) / 1000;
-//    // Number of output signals for read = interface number
-//    // + 1 datastrobe signal pro 4 bits
-//    float ioTermRdCurrent;
-//    if (includeTerm) {
-//       ioTermRdCurrent = (Interface + Interface/4) * IddOcdRcv;
-//    }
-//    else {
-//       ioTermRdCurrent = 0;
-//    }
-//    //DRAM core freq
-//    float core_freq = 0;
-//    if (dramCoreFreq != 0) {
-//        // 1/core_freq in ns
-//        core_freq = (float)dramCoreFreq / 1000;
-//        std::cout<<"core freq"<< core_freq << std::endl;
-//    } else {
-//        core_freq = 1/((Prefetch / clkconstant) * clk);
-//    }
-//    //current IDD4R ;
-//    IDD4R = Q_total4R * core_freq + IDD3n + ioTermRdCurrent;
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
+    // !!!! TODO: DISCUSS THESE VALUES WITH CHRISTIAN IN FURTHER MEETINGS !!!! //
+    //Extra charge added as the number of tiles per bank is changed
+    bu::quantity<drs::nanocoulomb_unit> Q_tilesperbank = 0;
 
-//    return true;
-//}
+    if(tilesPerBank == 2*drs::tiles_per_bank) {
+        Q_tilesperbank = SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+                         * vcc
+                         * 13.0
+                         * 0.25 * drs::millimeters
+                         * 10.0;
+    }
+    if(tilesPerBank == 4*drs::tiles_per_bank) {
+        Q_tilesperbank = SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+                         * vcc
+                         * 13.0
+                         * 0.25 * drs::millimeters
+                         * 2.0
+                         * 10.0;
+    }
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
 
-//bool
-//Current::calcIDD4W()
-//{
-//    //number of signals for write is number of signals for read
-//    //+ 1 extra signal for rcv per 8 bits
-//    int rcvconst;
-//    if(Interface/8 < 1) {
-//        rcvconst = 1 ;
-//    } else {
-//        rcvconst = 0 ;
-//    }
-//    //additional IO term current for Writes
-//    float ioTermWraddCurrent;
-//    if (includeTerm) {
-//        ioTermWraddCurrent = (Interface/8 + rcvconst) * IddOcdRcv;
-//    }
-//    else {
-//        ioTermWraddCurrent = 0;
-//    }
-//    IDD4W = IDD4R + ioTermWraddCurrent;
+    IDD4TotalCharge = readingCharge + Q_tilesperbank;
+    // Number of output signals for read = interface number
+    // + 1 datastrobe signal pro 4 bits
+    if (includeIOTerminationCurrent) {
+       ioTermRdCurrent = (Interface + Interface/4) * IddOcdRcv;
+    }
+    else {
+       ioTermRdCurrent = 0*drs::milliamperes;
+    }
 
-//    return true;
-//}
+    IDD4ChargingCurrent = IDD4TotalCharge
+                          * SCALE_QUANTITY(actualCoreFreq, drs::gigahertz_clock_unit)
+                          / (1.0*drs::clock);
 
-//bool
-//Current::calcIDD5()
-//{
-//    // Charges for refresh
-//    // Charges of IDD0 x 2 ( 2 rows pro command)x # of banksrefreshed pro
-//    // x # of rows pro command
-//    float Q_refresh = ((( Q_MWL + Q_LWL + Q_LBL ) * 2) / 1000) * 2 *
-//    banksRefreshFactor *rowRefreshRate* nBanks;
+    IDD4R = IDD3n
+            + ioTermRdCurrent
+            + SCALE_QUANTITY(IDD4ChargingCurrent, drs::milliampere_unit);
 
-//    // Refresh current
-//    float Trfc = trfc_clk * clk;
-//    IDD5 = Q_refresh / Trfc + IDD3n;
+}
 
-//    // Checking the current for the required refresh period
-//    // Calculate the number of times each row if refreshed in 64 ms
-//    // retention time
-//    //        []                   [ns]          [us]
-//    int numberofrowactivation = tref1/(tRef1Required*1000);
+void
+Current::IDD4WCalc()
+{
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
+    // !!!! TODO: DISCUSS THESE VALUES WITH CHRISTIAN IN FURTHER MEETINGS !!!! //
+    //number of signals for write is number of signals for read
+    //+ 1 extra signal for rcv per 8 bits
+    int rcvconst;
+    if(Interface/8 < 1) {
+        rcvconst = 1 ;
+    } else {
+        rcvconst = 0 ;
+    }
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
 
-//    // Calculate the refresh current for the required period
-//    std::cout<<"Remark: for the required refresh time of " <<
-//    tRef1Required << " us, each row will be refreshed"
-//    <<"\t"<<numberofrowactivation
-//    <<"\t"<< "times more than required for a retention time of "<<retentionTime<< " ms"
-//    <<"\n";
-//    return true;
-//}
+    //additional IO term current for Writes
+    if (includeIOTerminationCurrent) {
+        ioTermWrCurrent = (Interface/8 + rcvconst) * IddOcdRcv;
+    }
+    else {
+        ioTermWrCurrent = 0*drs::milliamperes;
+    }
 
-//void
-//Current::printCurrent()
-//{
-	
+    IDD4W = IDD4R + ioTermWrCurrent;
 
-//}
+}
+
+void
+Current::IDD5Calc()
+{
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
+    // !!!! TODO: DISCUSS THESE VALUES WITH CHRISTIAN IN FURTHER MEETINGS !!!! //
+    // Charges for refresh
+    // Charges of IDD0 x 2 ( 2 rows pro command)x # of banksrefreshed pro
+    // x # of rows pro command
+    refreshCharge = ( masterWordlineCharge
+                      + localWordlineCharge    // <- Should't it be IDD0ChargingCurrent?
+                      + localBitlineCharge )
+                    * 2.0
+                    * 2.0
+                    * banksRefreshFactor
+                    * nBanks / (1.0*drs::bank);
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
+
+    // Refresh current
+    effectiveTrfc = trfc_clk * clk;
+
+    IDD5ChargingCurrent = refreshCharge / effectiveTrfc;
+
+    IDD5 = IDD3n
+           + SCALE_QUANTITY(IDD5ChargingCurrent, drs::milliampere_unit);
+
+    // Checking the current for the required refresh period
+    // Calculate the number of times each row if refreshed in 64 ms
+    // retention time
+    nRowActivation = SCALE_QUANTITY(tref1, drs::microsecond_unit)
+                    / tRef1Required;
+
+    // ????? //
+    // Calculate the refresh current for the required period
+
+    std::cout << "Remark: for the required refresh time of "
+              << tRef1Required
+              << ", each row will be refreshed "
+              << nRowActivation
+              << " times more than required for a retention time of "
+              << retentionTime
+              << std::endl;
+
+}
+
+void
+Current::currentCompute()
+{
+    backgroundCurrentCalc();
+    IDD0Calc();
+    IDD1Calc();
+    IDD4RCalc();
+    IDD4WCalc();
+    IDD5Calc();
+}
