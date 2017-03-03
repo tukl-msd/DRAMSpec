@@ -36,33 +36,19 @@
  *          Andr'e Lucas Chinazzo
  */
 
-
-#include "parser/ArgumentsParser.h"
-#include "core/Timing.h"
+#include "parser/DramSpec.h"
 
 int main(int argc, char** argv)
 {
+   DRAMSpec * dramSpec;
 
-    ArgumentsParser inputFileName(argc, argv);
+   try {
+       dramSpec = new DRAMSpec(argc, argv);
+       std::cout << dramSpec->output.str();
+   } catch(string exceptionMsgThrown) {
+       std::cerr << exceptionMsgThrown;
+       return -1;
+   }
 
-    try {
-        inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
-        std::cerr << exceptionMsgThrown << std::endl;
-        return -1;
-    }
-
-    Timing* timing;
-
-    try {
-        timing = new Timing(inputFileName.technologyFileName[0],
-                            inputFileName.architectureFileName[0]);
-    }catch (std::string exceptionMsgThrown){
-        std::cerr << exceptionMsgThrown << std::endl;
-        return -1;
-    }
-
-   timing->printTiming();
-
-    return 0;
+   return 0;
 }

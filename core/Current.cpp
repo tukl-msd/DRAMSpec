@@ -62,7 +62,7 @@ Current::currentInitialize()
     refreshCharge = 0*drs::nanocoulomb;
     effectiveTrfc = 0*drs::nanosecond;
     IDD5ChargingCurrent = 0*si::amperes;
-    nRowActivation = 0;
+    nRowActivations = 0;
 
     // Main variables
     IDD0 = 0*drs::milliamperes;
@@ -318,19 +318,17 @@ Current::IDD5Calc()
     // Checking the current for the required refresh period
     // Calculate the number of times each row if refreshed in 64 ms
     // retention time
-    nRowActivation = SCALE_QUANTITY(tref1, drs::microsecond_unit)
+    nRowActivations = SCALE_QUANTITY(tref1, drs::microsecond_unit)
                     / tRef1Required;
 
-    // ????? //
-    // Calculate the refresh current for the required period
-
-    std::cout << "Remark: for the required refresh time of "
-              << tRef1Required
-              << ", each row will be refreshed "
-              << nRowActivation
-              << " times more than required for a retention time of "
-              << retentionTime
-              << std::endl;
+     //TODO: Is this remark important? If so, should be the dealt with in the DRAMSpec class.
+//    std::cout << "Remark: for the required refresh time of "
+//              << tRef1Required
+//              << ", each row will be refreshed "
+//              << nRowActivation
+//              << " times more than required for a retention time of "
+//              << retentionTime
+//              << std::endl;
 
 }
 

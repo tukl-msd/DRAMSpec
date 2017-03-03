@@ -176,10 +176,10 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 0.248*si::amperes
                         << "\nGot: " << current.IDD5ChargingCurrent);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.nRowActivation, 3) == 2,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.nRowActivations, 3) == 2,
                         "nRowActivation different from the expected."
                         << "\nExpected around: " << 2
-                        << "\nGot: " << current.nRowActivation);
+                        << "\nGot: " << current.nRowActivations);
 
     // Main variables
     BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0, 3) == 89.234*drs::milliampere,

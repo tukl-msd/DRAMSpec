@@ -50,8 +50,7 @@ HEADERS += core/Current.h
 
 HEADERS += parser/ArgumentsParser.h
 HEADERS += parser/TechnologyValues.h
-#HEADERS += parser/ResultParser.h
-#HEADERS += parser/DramSpec.h
+HEADERS += parser/DramSpec.h
 
 # Expanded BOOST/UNITS
 HEADERS += expandedBoostUnits/BaseDimensions/bank.h
@@ -147,8 +146,7 @@ SOURCES += core/Current.cpp
 #DRAMSpec parser source files
 SOURCES += parser/ArgumentsParser.cpp
 SOURCES += parser/TechnologyValues.cpp
-#SOURCES += parser/ResultParser.cpp
-#SOURCES += parser/DramSpec.cpp
+SOURCES += parser/DramSpec.cpp
 
 #Choose output directories
 # and source files to be compiled

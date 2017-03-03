@@ -14,7 +14,7 @@ public:
 
     vector<string> technologyFileName;
     vector<string> architectureFileName;
-    unsigned int numberOfConfigurations;
+    unsigned int nConfigurations;
     bool IOTerminationCurrentFlag;
 
     void runArgParser();

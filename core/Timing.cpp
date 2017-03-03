@@ -238,7 +238,8 @@ Timing::trasCalc()
         if (bankWidthFactor < 0.5 * drs::kibibytes_per_page) {
             DQWireLength = 5 * drs::millimeters;
 
-            exceptionMsgThrown.append("WARNING: Your ");
+            exceptionMsgThrown.append("[WARNING] ");
+            exceptionMsgThrown.append("Your ");
             exceptionMsgThrown.append("pageSize * subArrayToPageFactor ");
             exceptionMsgThrown.append("is too small!!\n");
         }
@@ -255,11 +256,13 @@ Timing::trasCalc()
         } else if (bankWidthFactor > 8 * drs::kibibytes_per_page) {
             DQWireLength = 5 * drs::millimeters;
 
-            exceptionMsgThrown.append("WARNING: Your ");
+            exceptionMsgThrown.append("[WARNING] ");
+            exceptionMsgThrown.append("Your ");
             exceptionMsgThrown.append("pageSize * subArrayToPageFactor ");
             exceptionMsgThrown.append("is too big!!\n");
         } else {
-            exceptionMsgThrown.append("[ERROR] Unexpected behaviour!!\n");
+            exceptionMsgThrown.append("[ERROR] ");
+            exceptionMsgThrown.append("Unexpected behaviour!!\n");
             exceptionMsgThrown.append("Could not define the length of DQ wire!");
         }
     }
@@ -439,7 +442,8 @@ Timing::clkTiming()
 
     // If frequency is too high, do all calculations anyway but warn the user
     if( actualCoreFreq > maxCoreFreq ) {
-        std::string exceptionMsgThrown("WARNING: Specified frequency ");
+        std::string exceptionMsgThrown("[WARNING] ");
+        exceptionMsgThrown.append("Specified frequency ");
         exceptionMsgThrown.append("too high for DRAM Desing. ");
         exceptionMsgThrown.append("Go Down with Frequency!!\n");
         exceptionMsgThrown.append("If user wants to keep the high frequency, ");

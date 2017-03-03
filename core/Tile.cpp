@@ -64,7 +64,8 @@ Tile::checkTileDataConsistency()
     if ( tilesPerBank == 1.0*drs::tile_per_bank ) {
         if (   pageSpanningFactor != 1.0*drs::page_per_tile)
         {
-            std::string exceptionMsgThrown("[ERROR] If architecture has ");
+            std::string exceptionMsgThrown("[ERROR] ");
+            exceptionMsgThrown.append("If architecture has ");
             exceptionMsgThrown.append("1 tile per bank, ");
             exceptionMsgThrown.append("the page spanning factor ");
             exceptionMsgThrown.append("across the tile must be 1.");
@@ -77,7 +78,8 @@ Tile::checkTileDataConsistency()
                && pageSpanningFactor != 0.5*drs::page_per_tile
                )
         {
-            std::string exceptionMsgThrown("[ERROR] If architecture has ");
+            std::string exceptionMsgThrown("[ERROR] ");
+            exceptionMsgThrown.append("If architecture has ");
             exceptionMsgThrown.append("2 tile per bank, ");
             exceptionMsgThrown.append("the page spanning factor ");
             exceptionMsgThrown.append("across the tile must be 1 or 0.5.");
@@ -90,7 +92,8 @@ Tile::checkTileDataConsistency()
             && pageSpanningFactor != 0.5*drs::page_per_tile
             && pageSpanningFactor != 0.25*drs::page_per_tile)
         {
-            std::string exceptionMsgThrown("[ERROR] If architecture has ");
+            std::string exceptionMsgThrown("[ERROR] ");
+            exceptionMsgThrown.append("If architecture has ");
             exceptionMsgThrown.append("4 tile per bank, ");
             exceptionMsgThrown.append("the page spanning factor ");
             exceptionMsgThrown.append("across the tile must be 1, 0.5 or 0.25.");
@@ -99,7 +102,8 @@ Tile::checkTileDataConsistency()
     }
 
     else {
-        std::string exceptionMsgThrown("[ERROR] Architecture must have ");
+        std::string exceptionMsgThrown("[ERROR] ");
+        exceptionMsgThrown.append("Architecture must have ");
         exceptionMsgThrown.append("1, 2 or 4 tile per bank.");
         throw exceptionMsgThrown;
     }
@@ -145,7 +149,8 @@ Tile::tileLenghtCalc()
     }
 
     else {
-        std::string exceptionMsgThrown("[ERROR] Bitline architecture must be ");
+        std::string exceptionMsgThrown("[ERROR] ");
+        exceptionMsgThrown.append("Bitline architecture must be ");
         exceptionMsgThrown.append("either \'OPEN\' or \'FOLDED\'.");
         throw exceptionMsgThrown;
     }

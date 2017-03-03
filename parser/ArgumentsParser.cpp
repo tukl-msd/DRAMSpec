@@ -45,7 +45,7 @@ ArgumentsParser::ArgumentsParser(int argc, char** argv)
     cpargc = argc;
     cpargv = argv;
     argvID = 1;
-    numberOfConfigurations = 0;
+    nConfigurations = 0;
     IOTerminationCurrentFlag = false;
 }
 
@@ -54,7 +54,8 @@ void ArgumentsParser::runArgParser()
     if( string(cpargv[argvID]) == "-t") {
         argvID++;
         if(!getTechFileName()) {
-            string exceptionMsgThrown("Unexpected argument \'");
+            string exceptionMsgThrown("[ERROR] ");
+            exceptionMsgThrown.append("Unexpected argument \'");
             exceptionMsgThrown.append(cpargv[argvID]);
             exceptionMsgThrown.append("\'.\nUse \'-t\' and \'-p\' before the ");
             exceptionMsgThrown.append("Technology and Archtecture file names, respectively.\n");
@@ -66,7 +67,8 @@ void ArgumentsParser::runArgParser()
     else if( string(cpargv[argvID]) == "-p") {
         argvID++;
         if(!getArchFileName()) {
-            string exceptionMsgThrown("Unexpected argument \'");
+            string exceptionMsgThrown("[ERROR] ");
+            exceptionMsgThrown.append("Unexpected argument \'");
             exceptionMsgThrown.append(cpargv[argvID]);
             exceptionMsgThrown.append("\'.\nUse \'-t\' and \'-p\' before the ");
             exceptionMsgThrown.append("Technology and Archtecture file names, respectively.\n");
@@ -81,7 +83,8 @@ void ArgumentsParser::runArgParser()
         runArgParser();
     }
     else {
-        string exceptionMsgThrown("Unexpected argument \'");
+        string exceptionMsgThrown("[ERROR] ");
+        exceptionMsgThrown.append("Unexpected argument \'");
         exceptionMsgThrown.append(cpargv[argvID]);
         exceptionMsgThrown.append("\'.\nUse \'-t\' and \'-p\' before the ");
         exceptionMsgThrown.append("Technology and Archtecture file names, respectively.\n");
@@ -92,11 +95,12 @@ void ArgumentsParser::runArgParser()
 
     if( technologyFileName.size() == architectureFileName.size() )
     {
-        numberOfConfigurations = technologyFileName.size();
+        nConfigurations = technologyFileName.size();
     }
     else
     {
-        string exceptionMsgThrown("Number of technology files (");
+        string exceptionMsgThrown("[ERROR] ");
+        exceptionMsgThrown.append("Number of technology files (");
         exceptionMsgThrown.append(to_string(technologyFileName.size()));
         exceptionMsgThrown.append(") is different from ");
         exceptionMsgThrown.append("the number of archtecture files (");

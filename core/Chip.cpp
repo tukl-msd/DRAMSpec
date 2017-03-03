@@ -107,7 +107,8 @@ Chip::chipLenghtCalc()
     }
 
     else {
-        std::string exceptionMsgThrown("[ERROR] Architecture must have ");
+        std::string exceptionMsgThrown("[ERROR] ");
+        exceptionMsgThrown.append("Architecture must have ");
         exceptionMsgThrown.append("1, 2, 4, 6, 8 or 16 banks.");
         throw exceptionMsgThrown;
     }
