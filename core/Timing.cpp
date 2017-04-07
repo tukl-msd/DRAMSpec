@@ -175,7 +175,7 @@ Timing::trcdCalc()
             timeToPercentage(63) * globalWordlineResistance * drs::tile * globalWordlineCapacitance * drs::tile;
     
     // Calculating trcd
-    trcd = globalWordlineDelay + localWordlineDelay + cellDelay + localBitlineDelay + SSADelay;
+    trcd = globalWordlineDelay + localWordlineDelay + cellDelay + localBitlineDelay;
 
 }
 
@@ -231,17 +231,16 @@ Timing::trasCalc()
     // when the number of banks increases this distance from bank to
     // DQ should increas. We do not model this yet due to lack of input.
     // This should be changed in the future.
-    std::string exceptionMsgThrown;
     if (ThreeD == "ON") {
         DQWireLength = 1 * drs::millimeters;
     } else {
         if (bankWidthFactor < 0.5 * drs::kibibytes_per_page) {
             DQWireLength = 5 * drs::millimeters;
 
-            exceptionMsgThrown.append("[WARNING] ");
-            exceptionMsgThrown.append("Your ");
-            exceptionMsgThrown.append("pageSize * subArrayToPageFactor ");
-            exceptionMsgThrown.append("is too small!!\n");
+            std::cerr << "[WARNING] ";
+            std::cerr << "Your ";
+            std::cerr << "pageSize * subArrayToPageFactor ";
+            std::cerr << "is too small!!!" << std::endl;
         }
         else if(bankWidthFactor == 0.5 * drs::kibibytes_per_page) {
             DQWireLength = 2 * drs::millimeters;
@@ -256,14 +255,16 @@ Timing::trasCalc()
         } else if (bankWidthFactor > 8 * drs::kibibytes_per_page) {
             DQWireLength = 5 * drs::millimeters;
 
-            exceptionMsgThrown.append("[WARNING] ");
-            exceptionMsgThrown.append("Your ");
-            exceptionMsgThrown.append("pageSize * subArrayToPageFactor ");
-            exceptionMsgThrown.append("is too big!!\n");
+            std::cerr << "[WARNING] ";
+            std::cerr << "Your ";
+            std::cerr << "pageSize * subArrayToPageFactor ";
+            std::cerr << "is too big!!!" << std::endl;
         } else {
+            std::string exceptionMsgThrown;
             exceptionMsgThrown.append("[ERROR] ");
             exceptionMsgThrown.append("Unexpected behaviour!!\n");
             exceptionMsgThrown.append("Could not define the length of DQ wire!");
+            throw exceptionMsgThrown;
         }
     }
 
@@ -283,7 +284,7 @@ Timing::trasCalc()
     // command decoding latency (consider for now 2ns) +
     // ( readout-sensing of SSA ) + tDQ + 1 ns (interface delay)
     tcas = cmdDecoderLatency + tcsl + interfaceLatency
-          + tgdl + SSADelay + tdq + IODelay;
+          + tgdl + BitlineSenseAmpDelay + tdq + IODelay;
     
     // Calculating trtp:
     // read to precharge
@@ -292,7 +293,7 @@ Timing::trasCalc()
     // std::cout<<"bltau"<<bltau<<std::endl;
     // std::cout<<"tCSL"<<tCSL<<std::endl;
     // remove the command decoding latency
-    trtp = tcsl + tgdl + SSADelay;
+    trtp = tcsl + tgdl + BitlineSenseAmpDelay;
     
     // Calculating tccd:
     // tccd ( column to column delay) is equal time to select another CSL
@@ -308,9 +309,6 @@ Timing::trasCalc()
     // Calculating twr + 2 (command decoding) + 1 (security margin):
     twr = cmdDecoderLatency + localBitlineDelay + tgdl + securityMargin;
 
-    if ( !exceptionMsgThrown.empty() ) {
-     throw exceptionMsgThrown;
-    }
 }
 
 void
@@ -440,16 +438,15 @@ Timing::clkTiming()
     //tref1 in clk cycles
     tref1_clk = ceil(tref1/clk);
 
-    // If frequency is too high, do all calculations anyway but warn the user
+    // If frequency is too high,  warn the user but do all calculations anyway
     if( actualCoreFreq > maxCoreFreq ) {
-        std::string exceptionMsgThrown("[WARNING] ");
-        exceptionMsgThrown.append("Specified frequency ");
-        exceptionMsgThrown.append("too high for DRAM Desing. ");
-        exceptionMsgThrown.append("Go Down with Frequency!!\n");
-        exceptionMsgThrown.append("If user wants to keep the high frequency, ");
-        exceptionMsgThrown.append("try using a smaller bank or a higher ");
-        exceptionMsgThrown.append("subarray2rowbufferfactor\n");
-        throw exceptionMsgThrown;
+        std::cerr << "[WARNING] ";
+        std::cerr << "Specified frequency ";
+        std::cerr << "too high for DRAM Desing. ";
+        std::cerr << "Go Down with Frequency!!" << std::endl;
+        std::cerr << "If user wants to keep the high frequency, ";
+        std::cerr << "try using a smaller bank or a higher ";
+        std::cerr << "subarray2rowbufferfactor" << std::endl;
     }
 
 }

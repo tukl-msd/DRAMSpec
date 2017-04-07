@@ -121,14 +121,14 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 1.568*drs::nanocoulombs
                         << "\nGot: " << current.IDD0TotalCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.effectiveTrc, 3) == 32.5*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.effectiveTrc, 3) == 30*drs::nanoseconds,
                         "Effective Trc different from the expected."
-                        << "\nExpected around: " << 32.5*drs::nanoseconds
+                        << "\nExpected around: " << 30*drs::nanoseconds
                         << "\nGot: " << current.effectiveTrc);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0ChargingCurrent, 3) == 0.049*si::amperes,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0ChargingCurrent, 3) == 0.053*si::amperes,
                         "Part of IDD0 for charging lines different from the expected."
-                        << "\nExpected around: " << 0.049*si::amperes
+                        << "\nExpected around: " << 0.053*si::amperes
                         << "\nGot: " << current.IDD0ChargingCurrent);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1TotalCharge, 3) == 2.734*drs::nanocoulombs,
@@ -136,9 +136,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 2.734*drs::nanocoulombs
                         << "\nGot: " << current.IDD1TotalCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1ChargingCurrent, 3) == 0.085*si::amperes,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1ChargingCurrent, 3) == 0.092*si::amperes,
                         "Part of IDD1 for charging lines different from the expected."
-                        << "\nExpected around: " << 0.085*si::amperes
+                        << "\nExpected around: " << 0.092*si::amperes
                         << "\nGot: " << current.IDD1ChargingCurrent);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4TotalCharge, 3) == 0.598*drs::nanocoulombs,
@@ -166,14 +166,14 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 50.119*drs::nanocoulombs
                         << "\nGot: " << current.refreshCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.effectiveTrfc, 3) == 202.5*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.effectiveTrfc, 3) == 200.0*drs::nanoseconds,
                         "Effective Trfc different from the expected."
-                        << "\nExpected around: " << 202.5*drs::nanoseconds
+                        << "\nExpected around: " << 200.0*drs::nanoseconds
                         << "\nGot: " << current.effectiveTrfc);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD5ChargingCurrent, 3) == 0.248*si::amperes,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD5ChargingCurrent, 3) == 0.251*si::amperes,
                         "Part of IDD5 for charging lines different from the expected."
-                        << "\nExpected around: " << 0.248*si::amperes
+                        << "\nExpected around: " << 0.251*si::amperes
                         << "\nGot: " << current.IDD5ChargingCurrent);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.nRowActivations, 3) == 2,
@@ -182,14 +182,14 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nGot: " << current.nRowActivations);
 
     // Main variables
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0, 3) == 89.234*drs::milliampere,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0, 3) == 93.253*drs::milliampere,
                         "IDD0 different from the expected."
-                        << "\nExpected around: " << 89.234*drs::milliampere
+                        << "\nExpected around: " << 93.253*drs::milliampere
                         << "\nGot: " << current.IDD0);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1, 3) == 125.117*drs::milliampere,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1, 3) == 132.126*drs::milliampere,
                         "IDD1 different from the expected."
-                        << "\nExpected around: " << 125.117*drs::milliampere
+                        << "\nExpected around: " << 132.126*drs::milliampere
                         << "\nGot: " << current.IDD1);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4R, 3) == 160.488*drs::milliampere,
@@ -212,9 +212,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 41*drs::milliampere
                         << "\nGot: " << current.IDD3n);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD5, 3) == 288.501*drs::milliampere,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD5, 3) == 291.595*drs::milliampere,
                         "IDD5 different from the expected."
-                        << "\nExpected around: " << 288.501*drs::milliampere
+                        << "\nExpected around: " << 291.595*drs::milliampere
                         << "\nGot: " << current.IDD5);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.masterWordlineCharge, 6) == 0.004133*drs::nanocoulombs,

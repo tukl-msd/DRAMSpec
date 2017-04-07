@@ -20,7 +20,7 @@
     "pageSpanningFactor": 118,
     "bitlineArchitecture": "119",
     "driverOffset": 120,
-    "SSADelay": 121,
+    "BLSADelay": 121,
     "CSLLoadCapacitance": 122,
     "cmdDecoderLatency": 123,
     "interfaceLatency": 124,

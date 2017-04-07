@@ -454,10 +454,10 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     driverOffset = driverOffset_value*drs::nanoseconds;
 
     //SSA Delay !!!  TODO: Check value !!!
-    assert(paradocument.HasMember("SSADelay"));
-    assert(paradocument["SSADelay"].IsNumber());
-    double SSADelay_value = paradocument["SSADelay"].GetDouble();
-    SSADelay = SSADelay_value*drs::nanoseconds;
+    assert(paradocument.HasMember("BLSADelay"));
+    assert(paradocument["BLSADelay"].IsNumber());
+    double BLSADelay_value = paradocument["BLSADelay"].GetDouble();
+    BitlineSenseAmpDelay = BLSADelay_value*drs::nanoseconds;
 
     //Load capacitance !!!  TODO: What exactly is it?  !!!
     assert(paradocument.HasMember("CSLLoadCapacitance"));

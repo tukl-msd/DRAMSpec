@@ -122,9 +122,9 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 1.059*drs::nanoseconds
                         << "\nGot: " << timing.globalWordlineDelay);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trcd, 3) == 12.165*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trcd, 3) == 10.165*drs::nanoseconds,
                         "trcd different from the expected."
-                        << "\nExpected around: " << 12.165*drs::nanoseconds
+                        << "\nExpected around: " << 10.165*drs::nanoseconds
                         << "\nGot: " << timing.trcd);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcsl, 3) == 1.905*drs::nanoseconds,
@@ -187,9 +187,9 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 4.197*drs::nanoseconds
                         << "\nGot: " << timing.tccd);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tras, 3) == 22.159*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tras, 3) == 20.159*drs::nanoseconds,
                         "tras different from the expected."
-                        << "\nExpected around: " << 22.159*drs::nanoseconds
+                        << "\nExpected around: " << 20.159*drs::nanoseconds
                         << "\nGot: " << timing.tras);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.twr, 3) == 8.534*drs::nanoseconds,
@@ -202,14 +202,14 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 9.186*drs::nanoseconds
                         << "\nGot: " << timing.trp);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trc, 3) == 31.344*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trc, 3) == 29.344*drs::nanoseconds,
                         "trc different from the expected."
-                        << "\nExpected around: " << 31.344*drs::nanoseconds
+                        << "\nExpected around: " << 29.344*drs::nanoseconds
                         << "\nGot: " << timing.trc);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc, 3) == 201.344*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc, 3) == 199.344*drs::nanoseconds,
                         "trfc different from the expected."
-                        << "\nExpected around: " << 201.344*drs::nanoseconds
+                        << "\nExpected around: " << 199.344*drs::nanoseconds
                         << "\nGot: " << timing.trfc);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.tref1, 2) == 7812.5*drs::nanoseconds,
@@ -242,9 +242,9 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 5*drs::nanoseconds_per_clock
                         << "\nGot: " << timing.actualClk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trcd_clk, 3) == 10*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trcd_clk, 3) == 9*drs::clocks,
                         "trcd in number of clocks different from the expected."
-                        << "\nExpected around: " << 10*drs::clocks
+                        << "\nExpected around: " << 9*drs::clocks
                         << "\nGot: " << timing.trcd_clk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas_clk, 3) == 11*drs::clocks,
@@ -257,9 +257,9 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 3*drs::clocks
                         << "\nGot: " << timing.tcas_actualClk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tras_clk, 3) == 18*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tras_clk, 3) == 17*drs::clocks,
                         "tras in number of clocks different from the expected."
-                        << "\nExpected around: " << 18*drs::clocks
+                        << "\nExpected around: " << 17*drs::clocks
                         << "\nGot: " << timing.tras_clk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trp_clk, 3) == 8*drs::clocks,
@@ -267,9 +267,9 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 8*drs::clocks
                         << "\nGot: " << timing.trp_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trc_clk, 3) == 26*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trc_clk, 3) == 24*drs::clocks,
                         "trc in number of clocks different from the expected."
-                        << "\nExpected around: " << 26*drs::clocks
+                        << "\nExpected around: " << 24*drs::clocks
                         << "\nGot: " << timing.trc_clk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl_clk, 3) == 11*drs::clocks,
@@ -307,9 +307,9 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 7*drs::clocks
                         << "\nGot: " << timing.twr_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc_clk, 3) == 162*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc_clk, 3) == 160*drs::clocks,
                         "trfc in number of clocks different from the expected."
-                        << "\nExpected around: " << 162*drs::clocks
+                        << "\nExpected around: " << 160*drs::clocks
                         << "\nGot: " << timing.trfc_clk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.tref1_clk, 3) == 6250*drs::clocks,
@@ -317,27 +317,6 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 6250*drs::clocks
                         << "\nGot: " << timing.tref1_clk);
 
-    //Check for warning when there should be one
-    timing.dramCoreFreq = 9e9 * drs::megahertz_clock;
-    exceptionMsg.clear();
-    exceptionMsg = "Empty";
-    try {
-        timing.timingCompute();
-    }catch (std::string exceptionMsgThrown){
-        exceptionMsg = exceptionMsgThrown;
-    }
-
-    expectedMsg.clear();
-    expectedMsg = "WARNING: Specified frequency ";
-    expectedMsg.append("too high for DRAM Desing. ");
-    expectedMsg.append("Go Down with Frequency!!\n");
-    expectedMsg.append("If user wants to keep the high frequency, ");
-    expectedMsg.append("try using a smaller bank or a higher ");
-    expectedMsg.append("subarray2rowbufferfactor\n");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
 }
 
 BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
@@ -378,9 +357,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
         exceptionMsg = exceptionMsgThrown;
     }
     expectedMsg.clear();
-    expectedMsg.append("WARNING: Your ");
-    expectedMsg.append("pageSize * subArrayToPageFactor ");
-    expectedMsg.append("is too small!!\n");
+    expectedMsg = "Empty";
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -652,9 +629,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
         exceptionMsg = exceptionMsgThrown;
     }
     expectedMsg.clear();
-    expectedMsg.append("WARNING: Your ");
-    expectedMsg.append("pageSize * subArrayToPageFactor ");
-    expectedMsg.append("is too big!!\n");
+    expectedMsg = "Empty";
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg

@@ -51,6 +51,9 @@ ArgumentsParser::ArgumentsParser(int argc, char** argv)
 
 void ArgumentsParser::runArgParser()
 {
+    if ( argvID >= cpargc ) {
+        return;
+    }
     if( string(cpargv[argvID]) == "-t") {
         argvID++;
         if(!getTechFileName()) {
@@ -108,6 +111,19 @@ void ArgumentsParser::runArgParser()
         exceptionMsgThrown.append("). Could not proceed.");
         throw exceptionMsgThrown;
     }
+
+     if ( nConfigurations == 0 )
+     {
+         string exceptionMsgThrown("[ERROR] ");
+         exceptionMsgThrown.append("No technology nor architecture ");
+         exceptionMsgThrown.append("file provided!\n");
+         exceptionMsgThrown.append("Use \'-t\' and \'-p\' before the ");
+         exceptionMsgThrown.append("Technology and Archtecture file names, respectively.\n");
+         exceptionMsgThrown.append("Use \'-term\' to include the");
+         exceptionMsgThrown.append(" OI Termination Current calculation.\n");
+         throw exceptionMsgThrown;
+
+     }
 
 }
 

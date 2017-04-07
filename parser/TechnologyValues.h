@@ -236,7 +236,7 @@ class TechnologyValues
     //Driver offset !!!  TODO: What exactly is it?  !!!
     bu::quantity<drs::nanosecond_unit> driverOffset;
     //SSA Delay !!!  TODO: Check value !!!
-    bu::quantity<drs::nanosecond_unit> SSADelay;
+    bu::quantity<drs::nanosecond_unit> BitlineSenseAmpDelay;
     //Load capacitance !!!  TODO: What exactly is it?  !!!
     bu::quantity<drs::femtofarad_per_bank_unit> CSLLoadCapacitance;
     //Command decoder latency !!!  TODO: What exactly is it?  !!!

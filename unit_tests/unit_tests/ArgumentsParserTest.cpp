@@ -63,7 +63,8 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_wrong_first_flag )
         exceptionMsg = exceptionMsgThrown;
     }
 
-    std::string expectedMsg("Unexpected argument \'");
+    string expectedMsg("[ERROR] ");
+    expectedMsg.append("Unexpected argument \'");
     expectedMsg.append("-r"); // Same flag error: "-r" instead of "-t".
     expectedMsg.append("\'.\nUse \'-t\' and \'-p\' before the ");
     expectedMsg.append("Technology and Archtecture file names, respectively.\n");
@@ -94,7 +95,8 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_wrong_second_flag1 )
         exceptionMsg = exceptionMsgThrown;
     }
 
-    std::string expectedMsg("Unexpected argument \'");
+    string expectedMsg("[ERROR] ");
+    expectedMsg.append("Unexpected argument \'");
     expectedMsg.append("-o"); // Same flag error: "-o" instead of "-p".
     expectedMsg.append("\'.\nUse \'-t\' and \'-p\' before the ");
     expectedMsg.append("Technology and Archtecture file names, respectively.\n");
@@ -125,7 +127,8 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_wrong_second_flag2 )
         exceptionMsg = exceptionMsgThrown;
     }
 
-    std::string expectedMsg("Unexpected argument \'");
+    string expectedMsg("[ERROR] ");
+    expectedMsg.append("Unexpected argument \'");
     expectedMsg.append("-r"); // Same flag error: "-r" instead of "-t".
     expectedMsg.append("\'.\nUse \'-t\' and \'-p\' before the ");
     expectedMsg.append("Technology and Archtecture file names, respectively.\n");
@@ -380,7 +383,8 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_different_number )
         exceptionMsg = exceptionMsgThrown;
     }
 
-    std::string expectedMsg("Number of technology files (");
+    string expectedMsg("[ERROR] ");
+    expectedMsg.append("Number of technology files (");
     expectedMsg.append("2");
     expectedMsg.append(") is different from ");
     expectedMsg.append("the number of archtecture files (");

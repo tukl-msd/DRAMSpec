@@ -263,6 +263,10 @@ DRAMSpec::arrangeOutput(const bool isCsv)
     << BUILD_LINE("IDD3n [mA]", dram->IDD3n.value())
     << BUILD_LINE("IDD5 [mA]", dram->IDD5.value())
 
+    << BUILD_LINE("Subarray height [um]", dram->subArrayHeight.value())
+    << BUILD_LINE("Subarray width [um]", dram->subArrayWidth.value())
+    << BUILD_LINE("Tile height [um]", dram->tileHeight.value())
+    << BUILD_LINE("Tile width [um]", dram->tileWidth.value())
     << BUILD_LINE("Bank height [um]", dram->bankHeight.value())
     << BUILD_LINE("Bank width [um]", dram->bankWidth.value())
     << BUILD_LINE("Chip height [um]", dram->chipHeight.value())
@@ -321,16 +325,6 @@ void DRAMSpec::runDramSpec(int argc, char** argv)
                                arg->architectureFileName[configID],
                                arg->IOTerminationCurrentFlag);
         } catch(string exceptionMsgThrown) {
-            // If an error was thrown, finish the program
-            if ( exceptionMsgThrown.find("[ERROR]") != string::npos ) {
-                throw exceptionMsgThrown;
-            }
-            // If a warning was thrown, inform the user but keep the program running.
-            else if (exceptionMsgThrown.find("[WARNING]") != string::npos) {
-                output << exceptionMsgThrown << endl;
-            }
-            // TODO: Warning handling not working as expected.
-            // Throwing everything to avoid seg. fault for now
             throw exceptionMsgThrown;
         }
         jsonOutputWrite(configID+1);

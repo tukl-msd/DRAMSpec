@@ -343,10 +343,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected around: " << 0.6*drs::nanoseconds
                         << "\nGot: " << techValues.driverOffset);
 
-    BOOST_CHECK_MESSAGE( techValues.SSADelay == 2*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.BitlineSenseAmpDelay == 2*drs::nanoseconds,
                         "Secondary sense amplifier delay different from the expected."
                         << "\nExpected around: " << 2*drs::nanoseconds
-                        << "\nGot: " << techValues.SSADelay);
+                        << "\nGot: " << techValues.BitlineSenseAmpDelay);
 
     BOOST_CHECK_MESSAGE( techValues.CSLLoadCapacitance == 8*drs::femtofarads_per_bank,
                         "Load capacitance of CSL different from the expected."
@@ -696,10 +696,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected around: " << 120*drs::nanoseconds
                         << "\nGot: " << techValues.driverOffset);
 
-    BOOST_CHECK_MESSAGE( techValues.SSADelay == 121*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.BitlineSenseAmpDelay == 121*drs::nanoseconds,
                         "Secondary sense amplifier delay different from the expected."
                         << "\nExpected around: " << 121*drs::nanoseconds
-                        << "\nGot: " << techValues.SSADelay);
+                        << "\nGot: " << techValues.BitlineSenseAmpDelay);
 
     BOOST_CHECK_MESSAGE( techValues.CSLLoadCapacitance == 122*drs::femtofarads_per_bank,
                         "Load capacitance of CSL different from the expected."
