@@ -101,6 +101,17 @@ BOOST_AUTO_TEST_CASE( checkTile_real_input )
                         << "\nExpected: " << 17*drs::subarray_per_tile
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
+    BOOST_CHECK_MESSAGE( tile.nTileRowAddressLines == 13,
+                        "Number of lines for row addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 13
+                        << "\nGot: " << tile.nTileRowAddressLines);
+
+    BOOST_CHECK_MESSAGE( tile.nTileColumnAddressLines == 9,
+                        "Number of lines for column addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 9
+                        << "\nGot: " << tile.nTileColumnAddressLines);
 
 }
 
@@ -219,6 +230,18 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 17*drs::subarray_per_tile
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
+    BOOST_CHECK_MESSAGE( tile.nTileRowAddressLines == 13,
+                        "Number of lines for row addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 13
+                        << "\nGot: " << tile.nTileRowAddressLines);
+
+    BOOST_CHECK_MESSAGE( tile.nTileColumnAddressLines == 10,
+                        "Number of lines for column addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 10
+                        << "\nGot: " << tile.nTileColumnAddressLines);
+
     tile.tilesPerBank = 2*drs::tiles_per_bank;
     tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
     try {
@@ -266,6 +289,18 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 9*drs::subarray_per_tile
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
+    BOOST_CHECK_MESSAGE( tile.nTileRowAddressLines == 12,
+                        "Number of lines for row addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 12
+                        << "\nGot: " << tile.nTileRowAddressLines);
+
+    BOOST_CHECK_MESSAGE( tile.nTileColumnAddressLines == 10,
+                        "Number of lines for column addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 10
+                        << "\nGot: " << tile.nTileColumnAddressLines);
+
     tile.pageSpanningFactor = 0.5*drs::pages_per_tile;
     try {
         tile.tileCompute();
@@ -298,6 +333,18 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "different from the expected."
                         << "\nExpected: " << 17*drs::subarray_per_tile
                         << "\nGot: " << tile.nArrayBlocksPerTile);
+
+    BOOST_CHECK_MESSAGE( tile.nTileRowAddressLines == 13,
+                        "Number of lines for row addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 13
+                        << "\nGot: " << tile.nTileRowAddressLines);
+
+    BOOST_CHECK_MESSAGE( tile.nTileColumnAddressLines == 9,
+                        "Number of lines for column addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 9
+                        << "\nGot: " << tile.nTileColumnAddressLines);
 
     tile.tilesPerBank = 4*drs::tiles_per_bank;
     tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
@@ -347,6 +394,18 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 5*drs::subarray_per_tile
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
+    BOOST_CHECK_MESSAGE( tile.nTileRowAddressLines == 11,
+                        "Number of lines for row addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 11
+                        << "\nGot: " << tile.nTileRowAddressLines);
+
+    BOOST_CHECK_MESSAGE( tile.nTileColumnAddressLines == 10,
+                        "Number of lines for column addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 10
+                        << "\nGot: " << tile.nTileColumnAddressLines);
+
     tile.pageSpanningFactor = 0.5*drs::pages_per_tile;
     try {
         tile.tileCompute();
@@ -380,6 +439,18 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 9*drs::subarray_per_tile
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
+    BOOST_CHECK_MESSAGE( tile.nTileRowAddressLines == 12,
+                        "Number of lines for row addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 12
+                        << "\nGot: " << tile.nTileRowAddressLines);
+
+    BOOST_CHECK_MESSAGE( tile.nTileColumnAddressLines == 9,
+                        "Number of lines for column addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 9
+                        << "\nGot: " << tile.nTileColumnAddressLines);
+
     tile.pageSpanningFactor = 0.25*drs::pages_per_tile;
     try {
         tile.tileCompute();
@@ -412,6 +483,18 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "different from the expected."
                         << "\nExpected: " << 17*drs::subarray_per_tile
                         << "\nGot: " << tile.nArrayBlocksPerTile);
+
+    BOOST_CHECK_MESSAGE( tile.nTileRowAddressLines == 13,
+                        "Number of lines for row addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 13
+                        << "\nGot: " << tile.nTileRowAddressLines);
+
+    BOOST_CHECK_MESSAGE( tile.nTileColumnAddressLines == 8,
+                        "Number of lines for column addressing within a tile "
+                        << "different from the expected."
+                        << "\nExpected: " << 8
+                        << "\nGot: " << tile.nTileColumnAddressLines);
 
 }
 

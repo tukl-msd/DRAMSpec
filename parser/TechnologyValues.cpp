@@ -68,7 +68,8 @@ TechnologyValues::technologyValuesInitialize()
     vcc = 0*si::volt;
     backgroundCurrentSlope = 0*drs::milliamperes_per_megahertz_clock;
     backgroundCurrentOffset = 0*drs::milliampere;
-    IddOcdRcv = 0*drs::milliampere;
+    IddOcdRcvAtFrequencyPoint = 0*drs::milliampere;
+    IddOcdRcvFrequencyPoint = 0*drs::megahertz_clock;
 
     dramType = "";
     ThreeD = "";
@@ -285,11 +286,17 @@ TechnologyValues::readjson(const std::string& t,const std::string& p)
     double backgroundCurrentOffset_value  = techdocument["Backgroundcurrentoffset"].GetDouble();
     backgroundCurrentOffset = backgroundCurrentOffset_value*drs::milliampere;
 
+    //Current per IO pin (Off Chip Driver)
+    assert(techdocument.HasMember("idd_ocd"));
+    assert(techdocument["idd_ocd"].IsNumber());
+    double IddOcdRcvAtFrequencyPoint_value  = techdocument["idd_ocd"].GetDouble();
+    IddOcdRcvAtFrequencyPoint = IddOcdRcvAtFrequencyPoint_value*drs::milliampere;
+
     //IDD pro IO for OCD
-    assert(techdocument.HasMember("IDD_OCD_RCV"));
-    assert(techdocument["IDD_OCD_RCV"].IsNumber());
-    double IddOcdRcv_value  = techdocument["IDD_OCD_RCV"].GetDouble();
-    IddOcdRcv = IddOcdRcv_value*drs::milliampere;
+    assert(techdocument.HasMember("idd_ocd_freq"));
+    assert(techdocument["idd_ocd_freq"].IsNumber());
+    double IddOcdRcvFrequencyPoint_value  = techdocument["idd_ocd_freq"].GetDouble();
+    IddOcdRcvFrequencyPoint = IddOcdRcvFrequencyPoint_value*drs::megahertz_clock;
 
     //Row decoder (between tiles) width
     assert(techdocument.HasMember("rowDecoderWidth"));

@@ -156,8 +156,11 @@ class TechnologyValues
     //background current offset
     bu::quantity<drs::milliampere_unit> backgroundCurrentOffset;
 
-    //IDD pro IO for OCD
-    bu::quantity<drs::milliampere_unit> IddOcdRcv;
+    //Current per IO pin at a given frequency (measurement or estimation)
+    bu::quantity<drs::milliampere_unit> IddOcdRcvAtFrequencyPoint;
+
+    //Frequency at which the current per IO pin was measured/estimated at
+    bu::quantity<drs::megahertz_clock_unit> IddOcdRcvFrequencyPoint;
 
     //Row decoder (between tiles) width
     bu::quantity<drs::micrometer_unit> rowDecoderWidth;

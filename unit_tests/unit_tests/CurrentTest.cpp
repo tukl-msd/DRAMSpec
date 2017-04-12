@@ -47,12 +47,13 @@ BOOST_AUTO_TEST_SUITE( testCurrent )
 
 BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
 {
-    int sim_argc = 5;
+    int sim_argc = 6;
     char* sim_argv[] = {"./executable",
                         "-t",
                         "../../technology_input/test_technology.json",
                         "-p",
-                        "../../architecture_input/test_architecture.json"};
+                        "../../architecture_input/test_architecture.json",
+                        "-term"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
@@ -62,7 +63,6 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
     }catch (std::string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-
     std::string expectedMsg("Empty");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
@@ -70,8 +70,8 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nGot: " << exceptionMsg);
 
     Current current(inputFileName.technologyFileName[0],
-                      inputFileName.architectureFileName[0],
-                      inputFileName.IOTerminationCurrentFlag);
+                    inputFileName.architectureFileName[0],
+                    inputFileName.IOTerminationCurrentFlag);
 
     // !! Hard-coded values converted to variables !!
     BOOST_CHECK_MESSAGE( current.IDD2nPercentageIfNotDll == 0.6,
@@ -100,10 +100,10 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 8
                         << "\nGot: " << current.bitProCSL);
 
-    BOOST_CHECK_MESSAGE( current.IddOcdRcvScalingFactor == 533*drs::megahertz_clock,
+    BOOST_CHECK_MESSAGE( current.IddOcdRcvFrequencyPoint == 533*drs::megahertz_clock,
                         "IddOcdRcvScalingFactor different from the expected."
                         << "\nExpected around: " << 533*drs::megahertz_clock
-                        << "\nGot: " << current.IddOcdRcvScalingFactor);
+                        << "\nGot: " << current.IddOcdRcvFrequencyPoint);
 
     // Intermediate values added as variables for code cleanness
     BOOST_CHECK_MESSAGE( ROUND_UP(current.nActiveSubarrays, 3) == 32,
@@ -116,9 +116,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 16384
                         << "\nGot: " << current.nLocalBitlines);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0TotalCharge, 3) == 1.568*drs::nanocoulombs,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0TotalCharge, 3) == 1.609*drs::nanocoulombs,
                         "Total charge accounted for IDD0 different from the expected."
-                        << "\nExpected around: " << 1.568*drs::nanocoulombs
+                        << "\nExpected around: " << 1.609*drs::nanocoulombs
                         << "\nGot: " << current.IDD0TotalCharge);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.effectiveTrc, 3) == 30*drs::nanoseconds,
@@ -126,9 +126,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 30*drs::nanoseconds
                         << "\nGot: " << current.effectiveTrc);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0ChargingCurrent, 3) == 0.053*si::amperes,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0ChargingCurrent, 3) == 0.054*si::amperes,
                         "Part of IDD0 for charging lines different from the expected."
-                        << "\nExpected around: " << 0.053*si::amperes
+                        << "\nExpected around: " << 0.054*si::amperes
                         << "\nGot: " << current.IDD0ChargingCurrent);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1TotalCharge, 3) == 2.734*drs::nanocoulombs,
@@ -141,24 +141,24 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 0.092*si::amperes
                         << "\nGot: " << current.IDD1ChargingCurrent);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4TotalCharge, 3) == 0.598*drs::nanocoulombs,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4TotalCharge, 3) == 0.593*drs::nanocoulombs,
                         "Total charge accounted for IDD4 different from the expected."
-                        << "\nExpected around: " << 0.598*drs::nanocoulombs
+                        << "\nExpected around: " << 0.593*drs::nanocoulombs
                         << "\nGot: " << current.IDD4TotalCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.ioTermRdCurrent, 3) == 0*drs::milliampere,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.ioTermRdCurrent, 3) == 60*drs::milliampere,
                         "I/O Termination current for reading different from the expected."
-                        << "\nExpected around: " << 0*drs::milliampere
+                        << "\nExpected around: " << 60*drs::milliampere
                         << "\nGot: " << current.ioTermRdCurrent);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4ChargingCurrent, 3) == 0.120*si::amperes,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4ChargingCurrent, 3) == 0.119*si::amperes,
                         "Part of IDD4 for charging lines different from the expected."
-                        << "\nExpected around: " << 0.120*si::amperes
+                        << "\nExpected around: " << 0.119*si::amperes
                         << "\nGot: " << current.IDD4ChargingCurrent);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.ioTermWrCurrent, 3) == 0*drs::milliampere,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.ioTermWrCurrent, 3) == 6*drs::milliampere,
                         "I/O Termination current for writing different from the expected."
-                        << "\nExpected around: " << 0*drs::milliampere
+                        << "\nExpected around: " << 6*drs::milliampere
                         << "\nGot: " << current.ioTermWrCurrent);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.refreshCharge, 3) == 50.119*drs::nanocoulombs,
@@ -182,9 +182,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nGot: " << current.nRowActivations);
 
     // Main variables
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0, 3) == 93.253*drs::milliampere,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0, 3) == 94.609*drs::milliampere,
                         "IDD0 different from the expected."
-                        << "\nExpected around: " << 93.253*drs::milliampere
+                        << "\nExpected around: " << 94.609*drs::milliampere
                         << "\nGot: " << current.IDD0);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1, 3) == 132.126*drs::milliampere,
@@ -192,14 +192,14 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 132.126*drs::milliampere
                         << "\nGot: " << current.IDD1);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4R, 3) == 160.488*drs::milliampere,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4R, 3) == 219.511*drs::milliampere,
                         "IDD4R different from the expected."
-                        << "\nExpected around: " << 160.488*drs::milliampere
+                        << "\nExpected around: " << 219.511*drs::milliampere
                         << "\nGot: " << current.IDD4R);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4W, 3) == 160.488*drs::milliampere,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4W, 3) == 225.511*drs::milliampere,
                         "IDD4W different from the expected."
-                        << "\nExpected around: " << 160.488*drs::milliampere
+                        << "\nExpected around: " << 225.511*drs::milliampere
                         << "\nGot: " << current.IDD4W);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD2n, 3) == 37*drs::milliampere,
@@ -257,9 +257,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 0.584*drs::nanocoulombs
                         << "\nGot: " << current.readingCharge);
 
-    BOOST_CHECK_MESSAGE( current.includeIOTerminationCurrent == false,
+    BOOST_CHECK_MESSAGE( current.includeIOTerminationCurrent == true,
                         "I/O termination current flag different from the expected."
-                        << "\nExpected: " << false
+                        << "\nExpected: " << true
                         << "\nGot: " << current.includeIOTerminationCurrent);
 
 }

@@ -209,18 +209,18 @@ DRAMSpec::jsonOutputWrite(int dramConfigID)
 
 //function for writing results in csv file or cout
 string
-DRAMSpec::arrangeOutput(const bool isCsv)
+DRAMSpec::arrangeOutput(const string outputType)
 {
     int lineWidth;
     string separator;
     // If outputing to csv file, keep the lines as short as possible
     //  and add a comma separator between label and value
-    if (isCsv == true) {
+    if (outputType == "csv") {
         lineWidth = 0;
         separator = ",";
     }
     // If outputing to terminal, build a more human readable table
-    else {
+    else if (outputType == "stdout") {
         lineWidth = 30;
         separator = "";
     }
@@ -304,7 +304,7 @@ void DRAMSpec::runDramSpec(int argc, char** argv)
         ofstream csvResultFile;
         string csvResultFileName("results_for_config_");
         csvResultFileName.append(to_string(configID));
-        csvResultFileName.append(".txt");
+        csvResultFileName.append(".csv");
         csvResultFile.open(csvResultFileName, ofstream::trunc);
 
         output << "DRAM Configuration: "
@@ -334,10 +334,10 @@ void DRAMSpec::runDramSpec(int argc, char** argv)
                       << "  Parameter filename: " << arg->architectureFileName[configID]
                       << endl;
 
-        csvResultFile << arrangeOutput(true);
+        csvResultFile << arrangeOutput("csv");
         csvResultFile.close();
 
-        output << arrangeOutput(false) << endl;
+        output << arrangeOutput("stdout") << endl;
         output  << "_______________________________________________________"
                 << "_______________________________________________________"
                 << "_______________________________________________________"

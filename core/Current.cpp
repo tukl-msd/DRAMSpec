@@ -40,12 +40,13 @@
 void
 Current::currentInitialize()
 {
+    // TODO: Find appropriate var. names and whether it should or not be an user input
     IDD2nPercentageIfNotDll = 0.6;
     vppPumpsEfficiency = 0.3;
     currentPerPageSizeSlope = 2.0*drs::milliamperes_page_per_kibibyte;
     SSAActiveTime = 1.5*drs::nanoseconds;
     bitProCSL = 8;
-    IddOcdRcvScalingFactor = 533*drs::megahertz_clock;
+    IddOcdRcvFrequencyPoint = 533*drs::megahertz_clock;
 
     // Intermediate values added as variables for code cleanness
     nActiveSubarrays = 0;
@@ -111,8 +112,9 @@ Current::IDD0Calc()
     //   !!! CHECK !!!
     // Number of active subarrays
     //    [subarray / page] ???
-    nActiveSubarrays = SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit) * drs::page
-                                  / subArrayRowStorage / drs::subarray;
+    nActiveSubarrays =
+            SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit) * 1.0*drs::page
+            / ( subArrayRowStorage * 1.0*drs::subarray );
 
     // Charge of master wordline
     masterWordlineCharge = globalWordlineCapacitance * 1.0*drs::tile
@@ -129,33 +131,18 @@ Current::IDD0Calc()
     localBitlineCharge = localBitlineCapacitance * 1.0*drs::subarray
                          * vcc / 2.0 // <<-- WHY DIVIDED BY 2??
                          * nLocalBitlines;
- 
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
-    // !!!! TODO: DISCUSS THESE VALUES WITH CHRISTIAN IN FURTHER MEETINGS !!!! //
-    //Extra charge added as the number of tiles per bank is changed
-    bu::quantity<drs::nanocoulomb_unit> Q_tilesperbank = 0;
 
-    //If it is a halfbank, Charge = wire capacitance * number of wires * length of wire * voltage
-    if(tilesPerBank == 2*drs::tiles_per_bank) {
-        Q_tilesperbank = SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
-                         * vcc / 2.0
-                         * 13.0
-                         * 0.25 * drs::millimeters;
-    }
-    //If it is a quarterbank, Charge = wire capacitance * number of wires * length of wire * voltage * 2
-    if(tilesPerBank == 4*drs::tiles_per_bank) {
-        Q_tilesperbank = SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
-                         * vcc / 2.0
-                         * 13.0
-                         * 0.25 * drs::millimeters
-                         * 2.0;
-    }
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
+    rowAddrsLinesCharge =
+            SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+            * SCALE_QUANTITY(tileHeight, drs::millimeter_per_tile_unit)
+            * tilesPerBank * 1.0*drs::bank
+            * nTileRowAddressLines
+            * vcc;
 
     IDD0TotalCharge = ( masterWordlineCharge
                       + localWordlineCharge
                       + localBitlineCharge
-                      + Q_tilesperbank)
+                      + rowAddrsLinesCharge)
                             * 2.0 ; // !! Why times 2? Maybe number of tiles?
 
     // Clock cycles of trc in ns
@@ -218,36 +205,20 @@ void
 Current::IDD4RCalc()
 {
     // Scale the IDD_OCD_RCV with frequency linearly
-    // ( I = 2.5 mA for 533 MHz, 0 for 0 MHz )
-    IddOcdRcv = IddOcdRcv * dramFreq / IddOcdRcvScalingFactor;
+    IddOcdRcv = IddOcdRcvAtFrequencyPoint * dramFreq / IddOcdRcvFrequencyPoint;
 
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
-    // !!!! TODO: DISCUSS THESE VALUES WITH CHRISTIAN IN FURTHER MEETINGS !!!! //
-    //Extra charge added as the number of tiles per bank is changed
-    bu::quantity<drs::nanocoulomb_unit> Q_tilesperbank = 0;
+    colAddrsLinesCharge =
+            SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+            * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit)
+            * tilesPerBank * 1.0*drs::bank
+            * nTileColumnAddressLines
+            * vcc;
 
-    if(tilesPerBank == 2*drs::tiles_per_bank) {
-        Q_tilesperbank = SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
-                         * vcc
-                         * 13.0
-                         * 0.25 * drs::millimeters
-                         * 10.0;
-    }
-    if(tilesPerBank == 4*drs::tiles_per_bank) {
-        Q_tilesperbank = SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
-                         * vcc
-                         * 13.0
-                         * 0.25 * drs::millimeters
-                         * 2.0
-                         * 10.0;
-    }
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
-
-    IDD4TotalCharge = readingCharge + Q_tilesperbank;
+    IDD4TotalCharge = readingCharge + colAddrsLinesCharge;
     // Number of output signals for read = interface number
     // + 1 datastrobe signal pro 4 bits
     if (includeIOTerminationCurrent) {
-       ioTermRdCurrent = (Interface + Interface/4) * IddOcdRcv;
+       ioTermRdCurrent = (Interface + Interface/4) * IddOcdRcvAtFrequencyPoint;
     }
     else {
        ioTermRdCurrent = 0*drs::milliamperes;
@@ -280,7 +251,7 @@ Current::IDD4WCalc()
 
     //additional IO term current for Writes
     if (includeIOTerminationCurrent) {
-        ioTermWrCurrent = (Interface/8 + rcvconst) * IddOcdRcv;
+        ioTermWrCurrent = (Interface/8 + rcvconst) * IddOcdRcvAtFrequencyPoint;
     }
     else {
         ioTermWrCurrent = 0*drs::milliamperes;

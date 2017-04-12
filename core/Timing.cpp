@@ -40,6 +40,7 @@
 void
 Timing::timingInitialize()
 {
+
     cellDelay = 0*drs::nanoseconds;
 
     localWordlineResistance = 0*drs::ohms_per_subarray;

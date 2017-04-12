@@ -109,7 +109,6 @@ Tile::checkTileDataConsistency()
     }
 }
 
-
 void
 Tile::tileLenghtCalc()
 {
@@ -157,6 +156,36 @@ Tile::tileLenghtCalc()
 }
 
 void
+Tile::tileLogicAssess()
+{
+
+    if ( BLArchitecture == "OPEN" ) {
+        nTileRowAddressLines = ceil (log2 ( subArrayColumnStorage
+                                            * ( nArrayBlocksPerTile
+                                                - 1.0*drs::subarray_per_tile
+                                              )
+                                            * 1.0*drs::tile/inf::bit
+                                          )
+                                    );
+    }
+    else if ( BLArchitecture == "FOLDED" ) {
+        nTileRowAddressLines = ceil (log2 ( subArrayColumnStorage
+                                            * nArrayBlocksPerTile
+                                            * 1.0*drs::tile/inf::bit
+                                          )
+                                    );
+    }
+
+    nTileColumnAddressLines = ceil (log2 ( subArrayRowStorage
+                                           * nSubArraysPerArrayBlock
+                                           * 1.0*drs::tile/inf::bit
+                                           / Interface
+                                         )
+                                   );
+
+}
+
+void
 Tile::tileCompute()
 {
     tileStorageCalc();
@@ -166,5 +195,7 @@ Tile::tileCompute()
     }catch (std::string exceptionMsgThrown){
         throw exceptionMsgThrown;
     }
+
+    tileLogicAssess();
 }
 

@@ -82,12 +82,17 @@ class Tile : public SubArray
     // Number of subarrays per tile in the bitline direction
     bu::quantity<drs::subarray_per_tile_unit> nArrayBlocksPerTile;
 
+    double nTileRowAddressLines;
+    double nTileColumnAddressLines;
+
     void tileInitialize();
 
     void tileStorageCalc();
 
     void checkTileDataConsistency();
     void tileLenghtCalc();
+
+    void tileLogicAssess();
 
     void tileCompute();
 

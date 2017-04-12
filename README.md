@@ -1,7 +1,7 @@
 # DRAMSpec [1]
 a DRAM Current and Timing Generator
 
-## LICENSE 
+## LICENSE
 Copyright (c) 2015, University of Kaiserslautern
 All rights reserved.
 
@@ -32,46 +32,55 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-Author: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
+Author: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andre Lucas Chinazzo
 
 ## Installing
 
 ### Cloning from github (recursive to get submodules!)
 ``` bash
-	git clone --recursive <URL>
+    git clone --recursive <URL>
 ```
 
-### compiling DRAMSpec
+### Building DRAMSpec
+
+1. To be sure DRAMSpec repository was properly cloned, build and run the program in test mode:
+
 ``` bash
-    mkdir build
-    cd build
-    qmake ../DRAMSpec.pro
-	make
+    ./runTests.sh
 ```
+
+2. After getting the "No errors detected" message, you are ready to build DRAMSpec itself. To do that, simply run the [buildDRAMSpec.sh](buildDRAMSpec.sh) script:
+
+``` bash
+    ./buildDRAMSpec.sh
+```
+
+The executable is now available under `build/release/` by the name `dramspec`.
 
 ### Running DRAMSpec
-running DRAMSpec (use -term if you want to add IO termination Current)
-If you do not want to add IO termination current then do not add -term
-parameter
+
+The program expect as parameters (at least) one technology and one achitecture description files. The flags `-t` and `-p` precede the technology and architecture description files, respectively. The optional `-term` flag will include the IO termination currents for read and write operations of the DRAM.
 
 ``` bash
-	./dramspec -t technologyfilename -p parameterfilename -term
+    ./build/release/dramspec -t <path/to/technologyfilename> -p <path/to/parameterfilename> [-term]
 ```
 
-#### Example:
+#### Examples:
+
 ``` bash
-	./dramspec -t ../technology_input/techddr3_5x.json -p ../architecture_input/parddr3.json
+    ./build/release/dramspec -t technology_input/techddr3_5x.json -p architecture_input/parddr3.json
 ```
 
 It is also possible to run multiple input files at once:
 
 ``` bash
-	./dramspec -t t1.json t2.json -p p1.json p1.json
+    ./build/release/dramspec -t t1.json t2.json -p p1.json p1.json -term
 ```
-Note: the number of input files on the -t and -p side must be equal.
+Note: the number of technology and architecture description files must be equal.
 
 ## Reference
 [1] A High-Level DRAM Timing, Power and Area Exploration Tool
 O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn. Accepted for publication, IEEE
 International Conference on Embedded Computer Systems Architectures Modeling
 and Simulation (SAMOS), July, 2015, Samos Island, Greece
+

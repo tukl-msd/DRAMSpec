@@ -172,6 +172,8 @@ CONFIG(debug, debug|release) {
     RCC_DIR = build/debug/.rcc
     UI_DIR = build/debug/.ui
 
+    QMAKE_CXXFLAGS += -w
+
     #UNIT TEST using Boost/Test HEADERS and SOURCE files // Degub only
     SOURCES += unit_tests/unit_tests/ArgumentsParserTest.cpp
     SOURCES += unit_tests/unit_tests/TechnologyValuesTest.cpp
@@ -189,4 +191,10 @@ CONFIG(debug, debug|release) {
 
 }
 
+OTHER_FILES += technology_input/*
+OTHER_FILES += architecture_input/*
+OTHER_FILES += Makefile
+OTHER_FILES += README.md
+OTHER_FILES += runTests.sh
+OTHER_FILES += buildDRAMSpec.sh
 

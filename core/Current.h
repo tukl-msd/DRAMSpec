@@ -69,16 +69,17 @@ class Current : public Timing
     bu::quantity<drs::milliampere_page_per_kibibyte_unit> currentPerPageSizeSlope;
     bu::quantity<drs::nanosecond_unit> SSAActiveTime;
     double bitProCSL;
-    bu::quantity<drs::megahertz_clock_unit> IddOcdRcvScalingFactor;
 
     // Intermediate values added as variables for code cleanness
     double nActiveSubarrays;
     double nLocalBitlines;
+    bu::quantity<drs::nanocoulomb_unit> rowAddrsLinesCharge;
     bu::quantity<drs::nanocoulomb_unit> IDD0TotalCharge;
     bu::quantity<drs::nanosecond_unit> effectiveTrc;
     bu::quantity<si::current> IDD0ChargingCurrent;
     bu::quantity<drs::nanocoulomb_unit> IDD1TotalCharge;
     bu::quantity<si::current> IDD1ChargingCurrent;
+    bu::quantity<drs::nanocoulomb_unit> colAddrsLinesCharge;
     bu::quantity<drs::nanocoulomb_unit> IDD4TotalCharge;
     bu::quantity<drs::milliampere_unit> ioTermRdCurrent;
     bu::quantity<si::current> IDD4ChargingCurrent;
@@ -133,6 +134,9 @@ class Current : public Timing
 
     //charges for reading
     bu::quantity<drs::nanocoulomb_unit> readingCharge;
+
+    //Current per IO pin
+    bu::quantity<drs::milliampere_unit> IddOcdRcv;
 
     // Termination current flag
     bool includeIOTerminationCurrent;

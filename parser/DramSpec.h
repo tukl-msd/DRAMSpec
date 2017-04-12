@@ -57,7 +57,7 @@
 
 using namespace std;
 
-// Very specific macro to be used inside arrangeOutput function
+// Very specific macro to be used inside arrangeOutput() function
 #define BUILD_LINE(label, value) \
     setw(lineWidth) \
     << left << label \
@@ -71,7 +71,7 @@ public:
     DRAMSpec(int argc, char** argv);
 
     void jsonOutputWrite(int dramConfigID);
-    string arrangeOutput(const bool isCsv);
+    string arrangeOutput(const string isCsv);
 
     void runDramSpec(int argc, char** argv);
 

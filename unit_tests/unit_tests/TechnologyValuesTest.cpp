@@ -215,10 +215,15 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 17*drs::milliampere
                         << "\nGot: " << techValues.backgroundCurrentOffset);
 
-    BOOST_CHECK_MESSAGE( techValues.IddOcdRcv == 3.0*drs::milliampere,
-                         "IDD pro IO for OCD different from the expected."
+    BOOST_CHECK_MESSAGE( techValues.IddOcdRcvAtFrequencyPoint == 3.0*drs::milliampere,
+                         "Current per IO pin at given frequency different from the expected."
                         << "\nExpected: " << 3.0*drs::milliampere
-                        << "\nGot: " << techValues.IddOcdRcv);
+                        << "\nGot: " << techValues.IddOcdRcvAtFrequencyPoint);
+
+    BOOST_CHECK_MESSAGE( techValues.IddOcdRcvFrequencyPoint == 533*drs::megahertz_clock,
+                         "Current per IO pin frequency point different from the expected."
+                        << "\nExpected: " << 533*drs::megahertz_clock
+                        << "\nGot: " << techValues.IddOcdRcvFrequencyPoint);
 
     BOOST_CHECK_MESSAGE( techValues.rowDecoderWidth == 240*drs::micrometer,
                          "Row decoder (between tiles) width different from the expected."
@@ -329,7 +334,7 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nGot: " << techValues.tilesPerBank);
 
     BOOST_CHECK_MESSAGE( techValues.pageSpanningFactor == 0.5*drs::page_per_tile,
-                         "Pages per bank different from the expected."
+                         "Pages per tile different from the expected."
                         << "\nExpected: " << 0.5*drs::page_per_tile
                         << "\nGot: " << techValues.pageSpanningFactor);
 
@@ -571,29 +576,34 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 28*drs::milliampere
                         << "\nGot: " << techValues.backgroundCurrentOffset);
 
-    BOOST_CHECK_MESSAGE( techValues.IddOcdRcv == 29*drs::milliampere,
+    BOOST_CHECK_MESSAGE( techValues.IddOcdRcvAtFrequencyPoint == 29*drs::milliampere,
                         "IDD pro IO for OCD different from the expected."
                         << "\nExpected: " << 29*drs::milliampere
-                        << "\nGot: " << techValues.IddOcdRcv);
+                        << "\nGot: " << techValues.IddOcdRcvAtFrequencyPoint);
 
-    BOOST_CHECK_MESSAGE( techValues.rowDecoderWidth == 30*drs::micrometer,
+    BOOST_CHECK_MESSAGE( techValues.IddOcdRcvFrequencyPoint == 30*drs::megahertz_clock,
+                         "Current per IO pin frequency point different from the expected."
+                        << "\nExpected: " << 30*drs::megahertz_clock
+                        << "\nGot: " << techValues.IddOcdRcvFrequencyPoint);
+
+    BOOST_CHECK_MESSAGE( techValues.rowDecoderWidth == 31*drs::micrometer,
                          "Row decoder (between tiles) width different from the expected."
-                        << "\nExpected: " << 30*drs::micrometer
+                        << "\nExpected: " << 31*drs::micrometer
                         << "\nGot: " << techValues.rowDecoderWidth);
 
-    BOOST_CHECK_MESSAGE( techValues.colDecoderHeight == 31*drs::micrometer,
+    BOOST_CHECK_MESSAGE( techValues.colDecoderHeight == 32*drs::micrometer,
                          "Column decoder (between tiles) width different from the expected."
-                        << "\nExpected: " << 31*drs::micrometer
+                        << "\nExpected: " << 32*drs::micrometer
                         << "\nGot: " << techValues.colDecoderHeight);
 
-    BOOST_CHECK_MESSAGE( techValues.DQDriverHeight == 32*drs::micrometer,
+    BOOST_CHECK_MESSAGE( techValues.DQDriverHeight == 33*drs::micrometer,
                          "DQ driver (between banks) height different from the expected."
-                        << "\nExpected: " << 32*drs::micrometer
+                        << "\nExpected: " << 33*drs::micrometer
                         << "\nGot: " << techValues.DQDriverHeight);
 
-    BOOST_CHECK_MESSAGE( techValues.bankSpacingWidth == 33*drs::micrometer,
+    BOOST_CHECK_MESSAGE( techValues.bankSpacingWidth == 34*drs::micrometer,
                          "Space between banks driver in width direction different from the expected."
-                        << "\nExpected: " << 33*drs::micrometer
+                        << "\nExpected: " << 34*drs::micrometer
                         << "\nGot: " << techValues.bankSpacingWidth);
 
     BOOST_CHECK_MESSAGE( techValues.dramType == "100",
@@ -682,7 +692,7 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nGot: " << techValues.tilesPerBank);
 
     BOOST_CHECK_MESSAGE( techValues.pageSpanningFactor == 118*drs::page_per_tile,
-                        "Pages per bank different from the expected."
+                        "Pages per tile different from the expected."
                         << "\nExpected: " << 118*drs::page_per_tile
                         << "\nGot: " << techValues.pageSpanningFactor);
 
