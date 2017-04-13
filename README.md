@@ -36,6 +36,8 @@ Author: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andre Lucas Chin
 
 ## Installing
 
+DRAMSpec requires some libraries from [boost](http://www.boost.org/). If you do not have it or the version you have is older than the 1.58, please follow the first four (4) steps from their [getting started](http://www.boost.org/doc/libs/1_63_0/more/getting_started/unix-variants.html) section.
+
 ### Cloning from github (recursive to get submodules!)
 ``` bash
     git clone --recursive <URL>
@@ -74,7 +76,7 @@ The program expect as parameters (at least) one technology and one achitecture d
 It is also possible to run multiple input files at once:
 
 ``` bash
-    ./build/release/dramspec -t t1.json t2.json -p p1.json p1.json -term
+    ./build/release/dramspec -t <t1.json> <t2.json> -p <p1.json> <p1.json> [-term]
 ```
 Note: the number of technology and architecture description files must be equal.
 
