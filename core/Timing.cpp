@@ -11,11 +11,11 @@
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
+ *    documentation and/or other materials provided with the distributio
  *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
+ *    this software without specific prior written permissio
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -37,283 +37,389 @@
 #include <iostream>
 #include <fstream>
 
-bool 
-Timing::calctrcd()
+void
+Timing::timingInitialize()
+{
+
+    cellDelay = 0*drs::nanoseconds;
+
+    localWordlineResistance = 0*drs::ohms_per_subarray;
+    localWordlineCapacitance = 0*drs::nanofarads_per_subarray;
+    localWordlineDelay = 0*drs::nanoseconds;
+
+    localBitlineResistance = 0*drs::ohms_per_subarray;
+    localBitlineCapacitance = 0*drs::nanofarads_per_subarray;
+    localBitlineDelay = 0*drs::nanoseconds;
+
+    globalWordlineResistance = 0*drs::ohms_per_tile;
+    globalWordlineCapacitance = 0*drs::nanofarads_per_tile;
+    globalWordlineDelay = 0*drs::nanoseconds;
+
+    trcd = 0*drs::nanoseconds;
+
+    tcsl = 0*drs::nanoseconds;
+
+    globalDatalineResistance = 0*drs::ohms_per_bank;
+    globalDatalineCapacitance = 0*drs::nanofarads_per_bank;
+    tgdl = 0*drs::nanoseconds;
+
+    DQWireLength = 0*drs::millimeters;
+    bankWidthFactor = 0*drs::kibibytes_per_page;
+    DQWireResistance = 0*si::ohms;
+    DQWireCapacitance = 0*drs::nanofarads;
+    tdq = 0*drs::nanoseconds;
+
+    tcas = 0*drs::nanoseconds;
+
+    trtp = 0*drs::nanoseconds;
+
+    tccd = 0*drs::nanoseconds;
+
+    tras = 0*drs::nanoseconds;
+
+    twr = 0*drs::nanoseconds;
+
+    trp = 0*drs::nanoseconds;
+
+    trc = 0*drs::nanoseconds;
+
+    trfc = 0*drs::nanoseconds;
+
+    tref1 = 0*drs::nanoseconds;
+
+    maxCoreFreq = 0*drs::megahertz_clock;
+    actualCoreFreq = 0*drs::megahertz_clock;
+
+    clk = 0*drs::nanoseconds_per_clock;
+    actualClk = 0*drs::nanoseconds_per_clock;
+
+    trcd_clk = 0*drs::clocks;
+    tcas_clk = 0*drs::clocks;
+    tcas_actualClk = 0*drs::clocks;
+    tras_clk = 0*drs::clocks;
+    trp_clk = 0*drs::clocks;
+    trc_clk = 0*drs::clocks;
+    trl_clk = 0*drs::clocks;
+    trl_actualClk = 0*drs::clocks;
+    twl_clk = 0*drs::clocks;
+    trtp_clk = 0*drs::clocks;
+    tccd_clk = 0*drs::clocks;
+    tccd_actualClk = 0*drs::clocks;
+    twr_clk = 0*drs::clocks;
+    trfc_clk = 0*drs::clocks;
+    tref1_clk = 0*drs::clocks;
+}
+
+double
+Timing::timeToPercentage(double percentage)
+{
+    return -log(1.0 - percentage/100.0);
+}
+
+void
+Timing::trcdCalc()
 {
     // Trcd is divided as following:
     // the first part is for wordline driver delay estimated as 2 ns
-    // the second part is the delay throught the local wordline and 
+    // the second part is the delay throught the local wordline and
     // local bitline and delay coming from cell itself
     // the 3rd part is the delay of the ssa and is estimated to 2 ns
-    // calculating thau for wl
+    // calculating tau for wl
     // calculating wordline total resistance ( value in Ohm )
     // local wordline resistance equals resistance of local wordline driver+
     // resistance of cells in wordline direction
-    float wlr = n.LWDresistance + (n.cellsperrow * n. Wlpercellresistance);
+
+    // Calculating tau for cell celltau ( in ns )
+    cellDelay = timeToPercentage(90)
+              * SCALE_QUANTITY(capacitancePerCell, drs::nanofarad_per_cell_unit)
+              * resistancePerCell
+              * drs::cell * drs::cell;
+
+    localWordlineResistance = LWLDriverResistance
+                              + (cellsPerLWL *  resistancePerWLCell);
 
     // Calculating wordline total capacitance ( value in ff)
-    wlc = (n.cellsperrow * n.Wlpercellcapa)*(1/pow(10.0,3.0));
+    localWordlineCapacitance = cellsPerLWL
+            * SCALE_QUANTITY(capacitancePerWLCell, drs::nanofarad_per_cell_unit);
 
-    // Calculating wlthau( in ns ) 
-    wlthau =   2.2 * wlr * wlc * (1/pow(10.0,6.0));
+    // Calculating wltau( in ns )
+    localWordlineDelay = timeToPercentage(90)
+            * localWordlineCapacitance
+            * localWordlineResistance
+            * drs::subarray * drs::subarray;
 
-    // Calculating bitline total resistance  
-    float blr = (n.cellspercolumn * n.Blpercellresistance);
+    // Calculating bitline total resistance
+    localBitlineResistance = cellsPerLBL * resistancePerBLCell;
 
-    // Calculating bitline total capacitance 
-    blc = (n.cellspercolumn * n.Blpercellcapa)*(1/pow(10.0,3.0));
+    // Calculating bitline total capacitance
+    localBitlineCapacitance = cellsPerLBL
+          * SCALE_QUANTITY(capacitancePerBLCell, drs::nanofarad_per_cell_unit);
 
-    // Calculating the blthau( in ns )
-    // for timing of bitline, the voltage should reach 90% of the value 
-    // or else the BLSA can kipp to the wrong value => thau*2.3
-    blthau = 2.3 * blr * blc * (1/pow(10.0,6.0));
+    // Calculating the bltau( in ns )
+    // for timing of bitline, the voltage should reach 90% of the value
+    // or else the BLSA can kipp to the wrong value => tau*2.3
+    localBitlineDelay = timeToPercentage(90)
+            * localBitlineResistance * drs::subarray
+            * localBitlineCapacitance * drs::subarray;
 
-    // Calculating thau for cell cellthau ( in ns )
-    float cellthau = 2.2 * n.cellcapa * n.cellresistance * (1/pow(10.0,3.0));
-
-    //calculating GWL decoder + wiring delay
+    //calculating GWL decoder + wiring femtofarad_per_bank_unitdelay
     //calculating global wordline total capa in fF
-    GWDC = n.wirecapa*n.MemoryArraywidth*(1/pow(10.0,3.0));
+    globalWordlineResistance = wireResistance
+           * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit);
+
+    globalWordlineCapacitance = SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+           * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit);
 
     // Calculating delay through global wordline driver and wiring
-    tGWLD =0.6 + (2.2 * n.GWLDresistance*GWDC +  n.wireresistance 
-    * n.wirecapa * n.MemoryArraywidth * n.MemoryArraywidth 
-    * (1/pow(10.0,6.0)))*(1/pow(10.0,6.0));
+    globalWordlineDelay = driverOffset +
+            timeToPercentage(90) * GWLDriverResistance * globalWordlineCapacitance * drs::tile +
+            timeToPercentage(63) * globalWordlineResistance * drs::tile * globalWordlineCapacitance * drs::tile;
     
     // Calculating trcd
-    trcd = tGWLD + wlthau + blthau + cellthau + 2 ;
+    trcd = globalWordlineDelay + localWordlineDelay + cellDelay + localBitlineDelay;
 
-    return true;
 }
 
-bool
-Timing::calctras()
+void
+Timing::trasCalc()
 {
-    // tras is divided into 4 parts: trcd + tCAS + time for precharging
-    // SSA(~2ns) + time needed to restore the bits into the cells
-    // (thau bitline)
-    //
-    // Calculating tCAS:
-    // tCAS has delay from CSL driver + Wire ,Local Dataline driver 
-    // + wire (~1 ns ), Global Data line driver + wire, Delay from 
-    // SSA to Dataqueue(DQ)
+//     tras is divided into 4 parts: trcd + tCAS + time for precharging
+//     SSA(~2ns) + time needed to restore the bits into the cells
+//     (tau bitline)
+
+//     Calculating tCAS:
+//     tCAS has delay from CSL driver + Wire ,Local Dataline driver
+//     + wire (~1 ns ), Global Data line driver + wire, Delay from
+//     SSA to Dataqueue(DQ)
+
+
+    CSLResistance = SCALE_QUANTITY(bankHeight, drs::millimeter_per_bank_unit)
+                      * wireResistance;
+
+    CSLCapacitance = SCALE_QUANTITY(bankHeight, drs::millimeter_per_bank_unit)
+                      * SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+                     + SCALE_QUANTITY(CSLLoadCapacitance, drs::nanofarad_per_bank_unit);
+
     // delay through CSL
-    // CSL wire capacitane in fF + 8 fF for load
-    CSLcapa = n.Bankheight * n.wirecapa * (1/pow(10.0,3.0)) + 8;
+    tcsl = driverOffset
+           + timeToPercentage(90) * CSLDriverResistance
+            * CSLCapacitance * drs::bank
+           + timeToPercentage(63) * CSLResistance
+            * CSLCapacitance * drs::bank * drs::bank;
 
-    //thau CSL in ns
-    float tCSL = 0.6 +  (2.2 * (n.CSLDresistance * CSLcapa) + 
-    ( n.wireresistance * n.wirecapa * n.Bankheight * n.Bankheight)
-    *(1/pow(10.0,6.0)))*(1/pow(10.0,6.0));
 
-    //through global data line(voltage on dataline should reach 90%
-    GDLcapa = n.Bankheight * n.wirecapa * (1/pow(10.0,3.0));
-    float tGDL =  0.6 +  (2.2 * (n.GDLDresistance * GDLcapa) 
-    + ( n.wireresistance * n.wirecapa * n.Bankheight * n.Bankheight)
-    *(1/pow(10.0,6.0)))*(1/pow(10.0,6.0));
 
-    // Delay from SSA to DQ//assume wire length = 5mm 
+    globalDatalineResistance = SCALE_QUANTITY(bankHeight, drs::millimeter_per_bank_unit)
+                      * wireResistance;
+
+    globalDatalineCapacitance = SCALE_QUANTITY(bankHeight, drs::millimeter_per_bank_unit)
+                      * SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit);
+
+    // delay through global dataline
+    tgdl = driverOffset
+           + timeToPercentage(90) * GDLDriverResistance
+             * globalDatalineCapacitance * drs::bank
+           + timeToPercentage(63) * globalDatalineResistance
+             * globalDatalineCapacitance * drs::bank * drs::bank;
+
+
+    // Delay from SSA to DQ//assume wire length = 5mm
     // the length of the DQ wire depends on the width of the bank
-    int dqwirelength;
-    
     // Factor which defines the rowbuffer*subarray2rowbuffer relation
-    float bankwidthfactor;
-    bankwidthfactor = n.rowbuffersize * n.subarray2rowbufferfactor;
+    bankWidthFactor = pageStorage * subArrayToPageFactor;
 
     // Currently we assume 5 mm taken from a DDR3 ( 8 banks config)
-    // when the number of banks increases this distance from bank to 
+    // when the number of banks increases this distance from bank to
     // DQ should increas. We do not model this yet due to lack of input.
     // This should be changed in the future.
-    if (n.ThreeD == "ON") {
-        dqwirelength = 1;
+    if (ThreeD == "ON") {
+        DQWireLength = 1 * drs::millimeters;
     } else {
-        if (bankwidthfactor == 1) {
-            dqwirelength = 3;
-        } else if (bankwidthfactor == 2) {
-            dqwirelength = 5;
-        } else if(bankwidthfactor == 4) {
-            dqwirelength = 7;
-        } else if(bankwidthfactor == 8) {
-            dqwirelength = 9;
-        } else if(bankwidthfactor == 0.5) {
-            dqwirelength = 2;
+        if (bankWidthFactor < 0.5 * drs::kibibytes_per_page) {
+            DQWireLength = 5 * drs::millimeters;
+
+            std::cerr << "[WARNING] ";
+            std::cerr << "Your ";
+            std::cerr << "pageSize * subArrayToPageFactor ";
+            std::cerr << "is too small!!!" << std::endl;
+        }
+        else if(bankWidthFactor == 0.5 * drs::kibibytes_per_page) {
+            DQWireLength = 2 * drs::millimeters;
+        } else if (bankWidthFactor == 1 * drs::kibibytes_per_page) {
+            DQWireLength = 3 * drs::millimeters;
+        } else if (bankWidthFactor == 2 * drs::kibibytes_per_page) {
+            DQWireLength = 5 * drs::millimeters;
+        } else if(bankWidthFactor == 4 * drs::kibibytes_per_page) {
+            DQWireLength = 7 * drs::millimeters;
+        } else if(bankWidthFactor == 8 * drs::kibibytes_per_page) {
+            DQWireLength = 9 * drs::millimeters;
+        } else if (bankWidthFactor > 8 * drs::kibibytes_per_page) {
+            DQWireLength = 5 * drs::millimeters;
+
+            std::cerr << "[WARNING] ";
+            std::cerr << "Your ";
+            std::cerr << "pageSize * subArrayToPageFactor ";
+            std::cerr << "is too big!!!" << std::endl;
         } else {
-            dqwirelength = 5;
-            std::cout<<"WARNING: YOUR PAGESIZE*Subarray2rowbuffer SEEMS to be too big!!"<<"\n";
+            std::string exceptionMsgThrown;
+            exceptionMsgThrown.append("[ERROR] ");
+            exceptionMsgThrown.append("Unexpected behaviour!!\n");
+            exceptionMsgThrown.append("Could not define the length of DQ wire!");
+            throw exceptionMsgThrown;
         }
     }
-    DQcapa = dqwirelength * n.wirecapa;
-    float tDQ = 0.6 + (2.2 * (n.DQDresistance * DQcapa) + 
-    ( n.wireresistance * n.wirecapa * dqwirelength *
-    dqwirelength))*(1/pow(10.0,6.0));
+
+    DQWireResistance = DQWireLength * wireResistance;
+
+    DQWireCapacitance = DQWireLength
+                      * SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit);
+
+    // delay through global dataline
+    tdq = driverOffset
+           + timeToPercentage(90) * DQDriverResistance
+             * DQWireCapacitance
+           + timeToPercentage(63) * DQWireResistance
+             * DQWireCapacitance;
     
     // Calculating tcl:
-    // command decoding latency (consider for now 2ns) + 
+    // command decoding latency (consider for now 2ns) +
     // ( readout-sensing of SSA ) + tDQ + 1 ns (interface delay)
-    tcl = 2 + tCSL + 1 + tGDL + 2 + tDQ + 1;    
+    tcas = cmdDecoderLatency + tcsl + interfaceLatency
+          + tgdl + BitlineSenseAmpDelay + tdq + IODelay;
     
     // Calculating trtp:
     // read to precharge
     // trtp is tCSL + tGDL + delay for sense amps.
     // This is the point in time where precharging is allowed
-    // std::cout<<"blthau"<<blthau<<std::endl; 
+    // std::cout<<"bltau"<<bltau<<std::endl;
     // std::cout<<"tCSL"<<tCSL<<std::endl;
-    // remove the command decoding latency 
-    trtp = tcl - 2 - tDQ - 1 - 1; 
+    // remove the command decoding latency
+    trtp = tcsl + tgdl + BitlineSenseAmpDelay;
     
     // Calculating tccd:
     // tccd ( column to column delay) is equal time to select another CSL
-    //  + precharging secondary SSA + Global Dataline delay... 
+    //  + precharging secondary SSA + Global Dataline delay...
     // - 0.5(delay of CSL driver isnot in the critical path)
-    tccd = tCSL + 1 + tGDL - 0.5;
+    tccd = tcsl + SSAPrechargeDelay + tgdl - driverOffset;
     
     // Calculating tras:
-    tras = trcd + tcl + blthau - tDQ - 1;
+//    tras = trcd + tcas + bitlineDelay - tdq - 1; TODO - Discuss with Christian about this timing!!!!
+    // From Matthias thesis pg. 20 Fig. 2.5: Basic DRAM protocol -> tras = trcd + tccd + trtp
+    tras = trcd + tccd + trtp;
 
     // Calculating twr + 2 (command decoding) + 1 (security margin):
-    twr = 2 + blthau + tGDL + 1;
+    twr = cmdDecoderLatency + localBitlineDelay + tgdl + securityMargin;
 
-    return true;
 }
 
-bool 
-Timing::calctrp()
+void
+Timing::trpCalc()
 {
     //calculating trp
     //trp = Master wordline delay ( discharging ) + local wordline delay
-    // (discharging ) + 1 ns ( equalizer delay ) 
-    trp =  wlthau + 1 + blthau;
-
-    return true;          
+    // (discharging ) + 1 ns ( equalizer delay )
+    trp =  localWordlineDelay + localBitlineDelay + equalizerDelay;
 }
 
-bool 
-Timing::calctrc()
+void
+Timing::trcCalc()
 {
     //calculating trc
-    // trc = tras + trp 
     trc = tras + trp;
-
-    return true;
 }
 
-bool 
-Timing::calctrl()
-{
-    //calculating trl
-    //trl is equal to tcl
-    trl = tcl;
-
-    return true;
-}
-
-bool  
-Timing::calctwl()
-{
-    return true;
-}
-
-bool
-Timing::calctrfc()
+void
+Timing::trfcCalc()
 {
     //time for refresh cycle
-    //numberofbanks refreshed*(5(Act cmd delay ) + 
+    //numberofbanks refreshed*(5(Act cmd delay ) +
     // 5(pre cmd delay)) + 10 ns (offset)) + trc
-    int numberbanks;
-    if (n.ThreeD == "ON") {
-        numberbanks = n.numberofbanks/n.vaultsperlayer;
+    if (ThreeD == "ON") {
+////      [ns]           [??]              [??/bank]
+//        trfc = rowRefreshRate * banksRefreshFactor
+////                     [bank]           []         [] []
+//                * nBanks/vaultsPerLayer*(5+5)
+////               [ns]   [ns]
+//                + 10  + trc;
     } else {
-        numberbanks = n.numberofbanks;
+//        !!!!!! CHECK RELATION BETWEEN nBanks AND banksRefreshFactor !!!!!!
+        trfc = nBanks/drs::banks * banksRefreshFactor
+               * (actCmdDelay + preCmdDelay)
+               + offset  + trc;
     }
-
-    trfc =  ( n.rowrefreshrate * n.banksrefreshfactor * numberbanks * (5 + 5) + 10 ) + trc;
-
-    return true;
 }
 
-bool
-Timing::calctref1()
+void
+Timing::tref1Calc()
 {
     //time for average refresh period
     //number of rows
     //number of rows = (DRAM SIZE/#ofbanks) / rowbuffer
-    int numberofrows = (n.dramsize * 1024 * 1024 / (n.numberofbanks) ) 
-    / (n.rowbuffersize * 8);
-    tref1 = (n.rowrefreshrate * n.retentiontime * 1000 * 1000) / (numberofrows);
+//     !!!! [page/bank] !!!!
+    double numberofrows = SCALE_QUANTITY(dramSize, drs::kibibyte_unit)
+                        / nBanks
+                        / pageStorage
+                        *drs::bank / drs::page; // !!! Check dimension mismatch !!!
 
-    return true;
+//   [ns]    !!!! [??] !!!!            [ms]        [page/bank]
+    tref1 = banksRefreshFactor
+            * SCALE_QUANTITY(retentionTime, drs::nanosecond_unit)
+            / numberofrows;
 }
 
-bool 
-Timing::Timingclk()
+void
+Timing::clkTiming()
 {
-    int clockfactor;
 
-    float freq = n.Freq;
-    float freq_core_max = (1/ tccd ) * 1000;
-   
-    if (n.DRAMType == "DDR") {
-        clockfactor = 2;
-    } else {
-        clockfactor = 1;
-    }
-    float freq_core_actual;
+   maxCoreFreq = drs::clock / SCALE_QUANTITY(tccd, drs::microsecond_unit);
+
     // if we specified a core Freq then take the value else calculate it
-    if (n.CoreFreq != 0) {
-        freq_core_actual = n.CoreFreq;
-    } else {
-        freq_core_actual = freq/(n.Prefetch/clockfactor);
+    if (dramCoreFreq != 0*drs::megahertz_clock) {
+        actualCoreFreq = dramCoreFreq;
     }
-	ActFreq = freq_core_actual;
-    // scale the actual tcl, tccd, trl to the actual core freq
-    tcl_act = tcl * (freq_core_max/freq_core_actual);
-    trl_act = tcl_act;
-    tccd_act = tccd * (freq_core_max/freq_core_actual);
+    else {
+        if (dramType == "DDR") {
+            clockFactor = 2;
+        } else {
+            clockFactor = 1;
+        }
 
-
-    if(freq_core_actual < freq_core_max ) {
-							  
-        std::cout<<"The Specified Frequency fits the DRAM Design!!!"<<"\n";
-    } else {
-        std::cout<<"WARNING : Specified Frequency too high"
-                 <<"for DRAM Design.Go Down with Frequency!!"
-                 <<"\n";
-
-        std::cout<<"If User wants to keep the high frequency," 
-                 <<"try using a smaller bank or a higher " 
-                 <<"subarray2rowbufferfactor"<<"\n";
+        actualCoreFreq = dramFreq / (Prefetch / clockFactor);
     }
-    clk = (1 / freq ) * 1000;
 
-    
+    clk = 1.0 / SCALE_QUANTITY(dramFreq, drs::gigahertz_clock_unit);
+    actualClk = 1.0 / SCALE_QUANTITY(actualCoreFreq, drs::gigahertz_clock_unit);
+
     //trcd in clk cycles round-up
     trcd_clk = ceil(trcd/clk);
 
     //tcl in clk cycles
-    tcl_clk = ceil(tcl/clk); 
+    tcas_clk = ceil(tcas/clk);
 
     //tcl_act in clk cycles
-    tcl_act_clk = ceil(tcl_act/clk);
+    tcas_actualClk = ceil(tcas/actualClk);
 
     //tras in clk cycles
     tras_clk = ceil(tras/clk);
 
-    //trp in clk cycles 
+    //trp in clk cycles
     trp_clk = ceil(trp/clk);
 
     //trc in clk cycles
     trc_clk = ceil(trc/clk);
     
-    //trl in clk cycles // tal is additional latency defined in tech. 
-    //parameter
-    trl_clk = ceil(tcl/clk) + n.tal;
+    //trl in clk cycles
+    //tal is additional latency defined in tech. parameter
+    trl_clk = ceil(tcas/clk);
+    trl_clk += additionalLatencyTrl;
 
-    //trl_act in clk cycles // tal is additional latency defined in tech.
-    //parameter
-    trl_act_clk = ceil(tcl_act/clk) + n.tal;
+    //trl_act in clk cycles
+    //tal is additional latency defined in tech. parameter
+    trl_actualClk = ceil(tcas/actualClk);
+    trl_actualClk +=  additionalLatencyTrl;
 
     //twl in clk cycles
-    twl_clk = trl_clk - 1;
+    twl_clk = trl_clk - 1*drs::clock;
 
     //trtp in clk cycles
     trtp_clk = ceil(trtp/clk);
@@ -322,7 +428,7 @@ Timing::Timingclk()
     tccd_clk = ceil(tccd/clk);
 
     //tccd_act in clk cycles
-    tccd_act_clk = ceil(tccd_act/clk);
+    tccd_actualClk = ceil(tccd/actualClk);
 
     //twr in clk cycles
     twr_clk = ceil(twr/clk);
@@ -333,27 +439,54 @@ Timing::Timingclk()
     //tref1 in clk cycles
     tref1_clk = ceil(tref1/clk);
 
-    return true;
+    // If frequency is too high,  warn the user but do all calculations anyway
+    if( actualCoreFreq > maxCoreFreq ) {
+        std::cerr << "[WARNING] ";
+        std::cerr << "Specified frequency ";
+        std::cerr << "too high for DRAM Desing. ";
+        std::cerr << "Go Down with Frequency!!" << std::endl;
+        std::cerr << "If user wants to keep the high frequency, ";
+        std::cerr << "try using a smaller bank or a higher ";
+        std::cerr << "subarray2rowbufferfactor" << std::endl;
+    }
+
+}
+
+void
+Timing::timingCompute()
+{
+    trcdCalc();
+
+    trasCalc();
+
+    trpCalc();
+
+    trcCalc();
+
+    trfcCalc();
+
+    tref1Calc();
+
+    try {
+        clkTiming();
+    }catch (std::string exceptionMsgThrown){
+        throw exceptionMsgThrown;
+    }
 }
 
 void
 Timing::printTiming()
 {
     //print analog timings
-    std::cout << "Timing Parameters in ns" << "\n";
-    std::cout << "trcd"          << "\t"  << trcd     << ".\n";
-    std::cout << "tcl"           << "\t"  << tcl      << ".\n";
-    std::cout << "actual tcl"    << "\t"  << tcl_act  << ".\n";
-    std::cout << "trtp" << "\t"  << trtp  << ".\n";
-    std::cout << "tccd" << "\t"  << tccd  << ".\n";
-    std::cout << "actual tccd"   << "\t"  << tccd_act << ".\n";
-    std::cout << "tras" << "\t"  << tras  << ".\n";
-    std::cout << "twr" << "\t"   << twr   << "\n" ;
-    std::cout << "trp" << "\t"   << trp   << ".\n";
-    std::cout << "trc" << "\t"   << trc   << ".\n";
-    std::cout << "trl" << "\t"   << trl   << ".\n";
-    std::cout << "actual trl"    << "\t"  << trl_act  << ".\n";
-    std::cout << "trfc" << "\t"  << trfc  << "\n";
-    std::cout << "tref1" << "\t" << tref1 << "\n";
-    
+    std::cout << "Timing Parameters in ns"      << "\n";
+    std::cout << "trcd"     << "\t" << trcd     << ".\n";
+    std::cout << "tcl"      << "\t" << tcas     << ".\n";
+    std::cout << "trtp"     << "\t" << trtp     << ".\n";
+    std::cout << "tccd"     << "\t" << tccd     << ".\n";
+    std::cout << "tras"     << "\t" << tras     << ".\n";
+    std::cout << "twr"      << "\t" << twr      << "\n" ;
+    std::cout << "trp"      << "\t" << trp      << ".\n";
+    std::cout << "trc"      << "\t" << trc      << ".\n";
+    std::cout << "trfc"     << "\t" << trfc     << "\n";
+    std::cout << "tref1"    << "\t" << tref1    << "\n";
 }

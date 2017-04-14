@@ -38,182 +38,234 @@
 #define TECHNOLOGYVALUES_H
 #include <iostream>
 #include <string>
+#include "rapidjson/include/rapidjson/document.h"
+#include <sstream>
+#include <fstream>
+
+#include "../expandedBoostUnits/Units/dramSpec_units.h"
+#include <boost/units/conversion.hpp>
+
+namespace bu=boost::units;
+namespace si=boost::units::si;
+namespace inf=boost::units::information;
+namespace drs=boost::units::dramspec;
 
 class TechnologyValues
 {
   public:
-    TechnologyValues(const std::string& techname,const std::string&
-    paraname) : Techname(""), Paraname(""), DRAMType(""), dramsize(0),
-    Freq(0), CoreFreq(0), Prefetch(0), DLL(""), tref1required(0),
-    Blpercellcapa(0), Blpercellresistance(0), Wlpercellcapa(0),
-    Wlpercellresistance(0), cellcapa(0), cellresistance(0), 
-    wireresistance(0), wirecapa(0), cellwidth(0), cellheight(0),
-    cellsperrow(0), cellsperrowredundancy(0),cellspercolumn(0),
-    cellspercolumnredundancy(0), blsaheight(0), wldwidth(0),
-    subarray2rowbufferfactor(1), GWLDresistance(0), LWDresistance(0),
-    WRresistance(0), CSLDresistance(0), GDLDresistance(0), DQDresistance(0),
-    rowbuffersize(0), I_SSA(0), vpp(0), vcc(0), Interface(16),
-    backgroundcurrentslope(0), backgroundcurrentoffset(0), IDD_OCD_RCV(0),
-    banksrefreshfactor(0), rowrefreshrate(0), retentiontime(0), tilesperbank(0)
+
+    TechnologyValues() //Empty constructor for test proposes
     {
-       Techname = techname;
-       Paraname = paraname;
+        technologyValuesInitialize();
+    }
+
+    TechnologyValues(const std::string& techname,
+                     const std::string& paraname)
+    {
+        technologyValuesInitialize();
+        readjson(techname, paraname);
     }
 
     // Technologyfile name to be read
-    std::string Techname;
+    std::string techName;
 
     // Parameter file name to be read
-    std::string Paraname;
+    std::string paraName;
 
-    // type of the DRAM
-    std::string DRAMType;
+    //Technology node in nm
+    bu::quantity<drs::nanometer_unit> technologyNode;
 
-    // technology node
-    int technologynode;
+    //Bitline per cell capa
+    bu::quantity<drs::attofarad_per_cell_unit> capacitancePerBLCell;
 
-    // size of DRAM
-    int dramsize;
+    //Bitline per cell resistance
+    bu::quantity<drs::resistance_per_cell_unit> resistancePerBLCell;
 
-    // # of banks 
-    int numberofbanks; 
+    //Wordline per cell capa
+    bu::quantity<drs::attofarad_per_cell_unit> capacitancePerWLCell;
 
-    // Frequency in MHz
-    int Freq;
+    //Wordline per cell resistance
+    bu::quantity<drs::resistance_per_cell_unit> resistancePerWLCell;
 
-    // Core Frequency in Mhz
-    int CoreFreq;
+    //cell capa
+    bu::quantity<drs::picofarad_per_cell_unit> capacitancePerCell;
 
-    // Prefetch number
-    int Prefetch;
+    //cell resistance
+    bu::quantity<drs::resistance_per_cell_unit> resistancePerCell;
 
-    // additional latency tal added to trl 
-     int tal;
+    //wire resistance in ohm/mm
+    bu::quantity<drs::ohm_per_millimeter_unit> wireResistance;
+
+    //wire capa in ff/mm
+    bu::quantity<drs::femtofarad_per_millimeter_unit> wireCapacitance;
+
+    //cell width
+    bu::quantity<drs::micrometer_per_cell_unit> cellWidth;
+
+    //cell height
+    bu::quantity<drs::micrometer_per_cell_unit> cellHeight;
+
+    //cells per subarray row
+    bu::quantity<drs::cell_per_subarray_unit> cellsPerLWL;
+
+    //cells per subarray row redundancy
+    bu::quantity<drs::cell_per_subarray_unit> cellsPerLWLRedundancy;
+
+    //cells per subarray column
+    bu::quantity<drs::cell_per_subarray_unit> cellsPerLBL;
+
+    //cells per subarray column redundancy
+    bu::quantity<drs::cell_per_subarray_unit> cellsPerLBLRedundancy;
+
+    //sense amp height
+    bu::quantity<drs::micrometer_unit> BLSenseAmpHeight;
+
+    //wordline driver width
+    bu::quantity<drs::micrometer_unit> WLDriverWidth;
+
+    //global wordline driver resistance in ohm
+    bu::quantity<si::resistance> GWLDriverResistance;
+
+    //Local wordline driver resistance in ohm
+    bu::quantity<drs::resistance_per_subarray_unit> LWLDriverResistance;
+
+    //WRrestore resistance
+    bu::quantity<drs::resistance_per_subarray_unit> WRResistance;
+
+    //CSL driver resistance in ohm
+    bu::quantity<si::resistance> CSLDriverResistance;
+
+    //GDL driver resistance in ohm
+    bu::quantity<si::resistance> GDLDriverResistance;
+
+    //DQ driver resistance in ohm
+    bu::quantity<si::resistance> DQDriverResistance;
+
+    //current of SSA in microamperes
+    bu::quantity<drs::microampere_unit> Issa;
+
+    //voltage vpp
+    bu::quantity<si::electric_potential> vpp;
+
+    //voltage vcc
+    bu::quantity<si::electric_potential> vcc;
+
+    //background current slope
+    bu::quantity<drs::milliampere_per_megahertz_clock_unit> backgroundCurrentSlope;
+
+    //background current offset
+    bu::quantity<drs::milliampere_unit> backgroundCurrentOffset;
+
+    //Current per IO pin at a given frequency (measurement or estimation)
+    bu::quantity<drs::milliampere_unit> IddOcdRcvAtFrequencyPoint;
+
+    //Frequency at which the current per IO pin was measured/estimated at
+    bu::quantity<drs::megahertz_clock_unit> IddOcdRcvFrequencyPoint;
+
+    //Row decoder (between tiles) width
+    bu::quantity<drs::micrometer_unit> rowDecoderWidth;
+
+    //Column decoder (between tiles) width
+    bu::quantity<drs::micrometer_unit> colDecoderHeight;
+
+    //DQ driver (between banks) height
+    bu::quantity<drs::micrometer_unit> DQDriverHeight;
+
+    //Space between banks driver in width direction
+    bu::quantity<drs::micrometer_unit> bankSpacingWidth;
+
+    //DRAM Type
+    std::string dramType;
+
+    //3D ON/OFF Feature
+    //set 3D on for HMC/WideIO
+    std::string ThreeD;
+
+    // vaults per layer
+    // set to 0 for non 3D DRAMs
+    double vaultsPerLayer;
+
+    //size of DRAM
+    bu::quantity<drs::gibibit_unit> dramSize;
+
+    //# of banks
+    bu::quantity<drs::bank_unit> nBanks;
+
+    //Interface
+    double Interface;
+
+    //DRAM Frequency
+    bu::quantity<drs::megahertz_clock_unit> dramFreq;
+
+    //DRAM Core Frequency
+    //if this value is not specified then calculate this value:
+    //Core Freq= Freq / (n.prefetch / n.DataRate)
+    bu::quantity<drs::megahertz_clock_unit> dramCoreFreq;
+
+    //Number of Prefetch
+    double Prefetch;
+
+    //additional latency required for trl calculation
+    bu::quantity<drs::clock_unit> additionalLatencyTrl;
+
+    // Row buffer size this value is given in KBytes (hard conversion needed)
+    bu::quantity<drs::kibibyte_per_page_unit> pageStorage;
 
     // DLL ON/OFF Feature
     std::string DLL;
 
-    //3D ON/OFF Feature
-    std::string ThreeD;
+    // Required tref by user
+    bu::quantity<drs::microsecond_unit> tRef1Required;
 
-    //Vaults per Layer 
-    int vaultsperlayer;
+    // Ratio of banks refreshed pro command
+    double banksRefreshFactor;
 
-    //required refresh period
-    //possibility to set the refresh period 
-    float tref1required;
+    // Subarray to rowbuffer factor
+    double subArrayToPageFactor;
 
-    //capacitance of bitline per cell
-    int Blpercellcapa ;
+    // Retention time
+    bu::quantity<drs::millisecond_unit> retentionTime;
 
-    //resistance of bitline per cell
-    int Blpercellresistance ;
+    // Number of tiles per bank
+    bu::quantity<drs::tile_per_bank_unit> tilesPerBank;
 
-    //capacitance of wordline per cell
-    int Wlpercellcapa;
+    // Spanning factor of pages across tiles
+    bu::quantity<drs::page_per_tile_unit> pageSpanningFactor;
 
-    //resistance of wordline per cell
-    int Wlpercellresistance;
+    // DRAM Bitline Architecture: OPEN or FOLDED bit-line
+    std::string BLArchitecture;
 
-    // capacitance per cell
-    int cellcapa;
+//  !!!!!!!! TIMING VARIABLES WHICH WHERE HARDCODED IN THE ORIGINAL VERSION !!!!!!!!
+    //Driver offset !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> driverOffset;
+    //SSA Delay !!!  TODO: Check value !!!
+    bu::quantity<drs::nanosecond_unit> BitlineSenseAmpDelay;
+    //Load capacitance !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::femtofarad_per_bank_unit> CSLLoadCapacitance;
+    //Command decoder latency !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> cmdDecoderLatency;
+    //Internal latency !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> interfaceLatency;
+    //I/O latency !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> IODelay;
+    //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> SSAPrechargeDelay;
+    //Security margin !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> securityMargin;
+    //Equalizer delay !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> equalizerDelay;
+    //Act cmd delay !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> actCmdDelay;
+    //pre cmd delay !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> preCmdDelay;
+    //offset !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> offset;
 
-    // resistance per cell 
-    int cellresistance;
 
-    // resistance of wire ohm/mm
-    int wireresistance;
 
-    // capa of wire ff/mm
-    int wirecapa;
+    void technologyValuesInitialize();
 
-    //the width of one cell
-    float cellwidth;
+    void readjson(const std::string& t,const std::string& p);
 
-    //the height of one cell
-    float cellheight;
-
-    //the number of cells per row per subarray
-    int cellsperrow;
-
-    //the number of cells in the cellsperrowvalue which are redundant
-    int cellsperrowredundancy;
-
-    //the number of cells per column per subarray
-    int cellspercolumn;
-
-    //the number of cells in the cellspercolumn which are redundant
-    int cellspercolumnredundancy;
-
-    //the height of the bitline sense amplifier
-    int blsaheight;
-
-    //the width of the wordline drive
-    int wldwidth;
-
-    //this factor decides if you are placing as many subarrays as the page 
-    //size in the horizantal direction or more or less
-    float subarray2rowbufferfactor;    
-
-    //the resistance of the global wordline driver (in Ohm)
-    //the resistance values should change with different page size and 
-    //different technologies(value for rowbuffer = 2kB )
-    float GWLDresistance;
-
-    //the resistance of the local wordline driver (in Ohm) for 
-    //512 x 512 subarray
-    float LWDresistance;
-
-    //the resistance of the WR ( wordline restor which selects one LWL for 
-    //512 x 512 subaarray
-    float WRresistance;
-
-    //the resistance of the CSL driver ( in Ohm )
-    float CSLDresistance;
-
-    //the resistance of the GDL driver ( in Ohm )
-    float GDLDresistance;
-
-    //the resistance of the DQ driver ( in Ohm )
-    float DQDresistance;
-    
-    //the row buffer size /page size
-    float rowbuffersize;
-    
-    //current of Secondary sense amp in microamperes
-    int I_SSA;
-
-    //voltage vpp 
-    float vpp;
-
-    //voltage vcc
-    float vcc;
-
-    //interface number in bits
-    int Interface;
-
-    //Backgroundcurrentslope
-    float backgroundcurrentslope;
-
-    //Backgroundcurrentoffset
-    float backgroundcurrentoffset;
-
-    //current pro IO OCD
-    float IDD_OCD_RCV;
-
-    //number of banks refreshred pro command factor
-    float banksrefreshfactor;
-
-    //number of times a row is refreshed in retention time
-    float rowrefreshrate;	
-
-    // retention time
-    float retentiontime;
-    
-    //number of tiles per bank
-    int tilesperbank;
-
-    //reading from json file
-    void readjson(const std::string& t,const std::string& p);    
 };
 #endif //TECHNOLOGYVALUES_H
