@@ -29,47 +29,45 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#include "MemoryArray.h"
-#include <math.h>
+#ifndef DRAMSPEC_SUBARRAY_BASE_DIMENSION_H
+#define DRAMSPEC_SUBARRAY_BASE_DIMENSION_H
 
-void 
-MemoryArray::calculateSubArrayxy()
-{
-    // Number of rowcells without redundant cells
-    int rowcells = cellsperrow - cellsperrowredundancy;
+#include <boost/units/config.hpp>
+#include <boost/units/base_dimension.hpp>
 
-    // Number of columncells without redundant cells
-    int columncells = cellspercolumn - cellspercolumnredundancy;
+namespace boost {
 
-    // Size of the subarray (value presented in Kbit)
-    int sizeofSubArray = (rowcells*columncells)/(1024);
+namespace units {
 
-    // Calculate number of subarrays in x direction (rowbuffersize is in
-    // kbytes) divided by 2 because half the page is opened per half bank!!
-    subproMemoryArrayx = (int)(((float)rowbuffersize*subarray2rowbufferfactor
-    *8*1024/2)/(float)rowcells);
+/// base dimension of #subarrays
+struct subarray_base_dimension :
+    boost::units::base_dimension<subarray_base_dimension,-32>
+{ };
 
-    // Size of memoryarray (subarrays in x direction size ) in Mbit
-    sizeofMemoryArray = (subproMemoryArrayx * sizeofSubArray)/1024;
-}
+} // namespace units
 
-void 
-MemoryArray::calculateSubArrayxylength()
-{
-    // calculate length of memory array in x direction assuming open
-    // bitline array structure
-    MemoryArraywidth = subproMemoryArrayx * SubArraywidth + wldwidth;
+} // namespace boost
 
-    // calculate length of memory array in y direction
-    MemoryArrayheight = 1 * SubArrayheight;
-}
+#if BOOST_UNITS_HAS_BOOST_TYPEOF
 
-void 
-MemoryArray::MemoryArrayinit()
-{
-    calculateSubArrayxy();
-    calculateSubArrayxylength();
-}
+#include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
+
+BOOST_TYPEOF_REGISTER_TYPE(boost::units::subarray_base_dimension)
+
+#endif
+
+namespace boost {
+
+namespace units {
+
+/// dimension of #subarrays
+typedef subarray_base_dimension::dimension_type     subarray_dimension;
+
+} // namespace units
+
+} // namespace boost
+
+#endif // DRAMSPEC_SUBARRAY_BASE_DIMENSION_H

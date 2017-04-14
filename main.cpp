@@ -29,75 +29,26 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji
+ *          Matthias Jung
+ *          Christian Weis
+ *          Kamal Haddad
+ *          Andr'e Lucas Chinazzo
  */
 
-#include "parser/ResultParser.h"
-#include <ctime>
-#include <iostream>
-#include <fstream>
-#include <sstream>
+#include "parser/DramSpec.h"
 
-int 
-main(int argc, char* argv[])
+int main(int argc, char** argv)
 {
-    std::string techname;
-    std::string paraname;
-    bool term = false;
+   DRAMSpec * dramSpec;
 
-    // check number of arguments!
-    if (argc != 6 && argc != 5)
-    {
-    	std::cout<< std::endl << "Number of arguments is incorrect" <<".\n";
-        return 0;
-    }
-    // Parse command line arguments:
-    for (int i = 1; i < argc; i++) 
-    {
-        if (std::string(argv[i]) == "-t")
-        {
-            techname = argv[i+1];
-            std::cout << "Technology filename" << "\t" << techname <<".\n"; 
-            // Check if technology filename correct:
-            std::ifstream tout(techname.c_str());
-            if(tout.fail())
-            {
-                std::cout << std::endl << " Technology File not specified! "
-                    << std::endl;
-                return -1;
-            }
-        }
-        if (std::string(argv[i]) == "-p")
-        {
-            paraname = argv[i+1];
-            std::cout << "Parameter filename" << "\t" << paraname <<".\n";
-            // Check if parameter filename correct:
-            std::ifstream pout(paraname.c_str());
-            if(pout.fail())
-            {
-                std::cout << std::endl << " Parameter File not specified! "
-                    << std::endl;
-                return -1;
-            } 
-        }
-        if (std::string(argv[i]) == "-term")
-        {
-            term = true;
-        }
+   try {
+       dramSpec = new DRAMSpec(argc, argv);
+       std::cout << dramSpec->output.str();
+   } catch(string exceptionMsgThrown) {
+       std::cerr << exceptionMsgThrown;
+       return -1;
+   }
 
-    }
-
-    // Calculating timing specification:
-    Timing t(techname, paraname);
-    // Calculating power specification ( currents ):
-    Current i(&t, term);
-
-    // Printing the results:
-    t.printTiming();
-    i.printCurrent();
-
-    // Result parser:
-    ResultParser result( t , i );
-    result.jsonwriter();
-    return 0;
+   return 0;
 }

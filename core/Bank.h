@@ -29,66 +29,56 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andr'e Lucas Chinazzo
  */
 
-//This class repesents the highest level of abstraction which the DRAM bank.
-//The DRAM Bank is a group of Memoryarrays in the horizantal direction. 
-//The class bank inherits from memoryarray class.
 #ifndef BANK_H
 #define BANK_H
-#include "MemoryArray.h"
-#include <iostream>
-class Bank:public MemoryArray
+
+//This class repesents the fourth level of abstraction of the DRAM structure,
+//being the bank a grouping of tile.
+
+#include "Tile.h"
+
+namespace bu=boost::units;
+namespace si=boost::units::si;
+namespace inf=boost::units::information;
+namespace drs=boost::units::dramspec;
+
+class Bank : public Tile
 {
   public:
-    Bank(const std::string& techname,const std::string& paraname)
-    :MemoryArray(techname,paraname), sizeofBank(0), sizeofhalfBank(0),
-    numberofMemoryArrays(0), Bankwidth(0), chipwidth(0), chiparea(0),
-    Bankheight(0)
+    Bank() : //Empty constructor for test proposes
+        Tile()
     {
-        //order of functions is important
-        bool BINIT = false;
-        BINIT = Bankinit();
-        if(BINIT == false)
-        {
-                std::cout<<"ERROR: Function for Bank Initialization not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-                throw(" Function for Bank Initialization not called");
-        }
-        bool AREAC = false;
-        AREAC = calcchiparea();
-        if(AREAC == false)
-        {
-                std::cout<<"ERROR: Function for area calculation not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-                throw(" Function for area calculation not called");
-        }    
+        bankInitialize();
     }
-  protected:    
-    //size of bank
-    int sizeofBank;
-    //size of halfbank
-    int sizeofhalfBank;
-    //number of memory arrays
-    int numberofMemoryArrays;
-    //width of bank    
-    float Bankwidth;
-    //width of chip
-    float chipwidth;
-    //height of chip
-    float chipheight;
-    //Area of chip
-    float chiparea;
-    //performing the half bank calc
-    //performing the bank init
-    bool 
-    Bankinit();
-    //calculate the area of the chip
-    bool 
-    calcchiparea();
-  public:
-    //height of bank
-    float Bankheight;
+
+    Bank(const std::string& techname,const std::string& paraname):
+        Tile(techname,paraname)
+    {
+        bankInitialize();
+        bankCompute();
+    }
+
+    // Size in number of bits of a single bank
+    bu::quantity<drs::information_per_bank_unit> bankStorage;
+
+    // Width in micrometer of a single bank
+    bu::quantity<drs::micrometer_per_bank_unit> bankWidth;
+    // Height in micrometer of a single bank
+    bu::quantity<drs::micrometer_per_bank_unit> bankHeight;
+
+    void bankInitialize();
+
+    void bankCompute();
+    void bankStorageCalc();
+    void bankLenghtCalc();
+
 };
-#endif //BANK_H
+
+#endif // BANK_H

@@ -29,54 +29,27 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-// This class repesents a memoryarray. The memory array is a matrix of 
-// subarrays in the horizantal and vertical direction. The memory array
-// class inherits from subarray class
+#ifndef DRAMSPEC_CLOCK_PERIOD_DERIVED_DIMENSION_H
+#define DRAMSPEC_CLOCK_PERIOD_DERIVED_DIMENSION_H
 
-#ifndef MEMORYARRAY_H
-#define MEMORYARRAY_H
-#include "SubArray.h"
-#include <iostream>
+#include <boost/units/derived_dimension.hpp>
 
-class MemoryArray:public SubArray
-{
-  public:
-    MemoryArray(const std::string& techname, const std::string& paraname)
-    :SubArray(techname,paraname), subproMemoryArrayx(0), sizeofMemoryArray(0),
-    MemoryArrayheight(0), MemoryArraywidth(0)
-    {
-        MemoryArrayinit();
-    }
-  protected:    
-    //The number of subarrays pro memory array(should be calculated)
-    //The number of subarrays in x direction 
-    int subproMemoryArrayx;
+#include <boost/units/physical_dimensions/time.hpp>
+#include "../BaseDimensions/clock.h"
 
-    // Size of memory array
-    int sizeofMemoryArray;
+namespace boost {
 
-    // The total height of the memory array
-    float MemoryArrayheight;
+namespace units {
 
-    // function which calculates the number of subarrays in x and y directions
-    void 
-    calculateSubArrayxy();
+/// derived dimension for time per clock: T^1 CLOCK^-1
+typedef derived_dimension<time_base_dimension,1,
+                          clock_base_dimension,-1>::type clock_period_dimension;
 
-    // function which calc the total width and height of the memory array
-    void 
-    calculateSubArrayxylength();
+} // namespace units
 
-    // Function which delivers all the missing parameter of the memory array
-    // needed for further calculations(x and y quadratic distribution)
-    // this function initializes the memory array
-    void 
-    MemoryArrayinit();
+} // namespace boost
 
-  public:
-    // The total width of the memory array
-    float  MemoryArraywidth;
-};
-#endif//MEMORYARRAY_H
+#endif // DRAMSPEC_CLOCK_PERIOD_DERIVED_DIMENSION_H

@@ -32,49 +32,59 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis
  */
 
-//This class presents the smallest structure of the DRAM which is a subarray.
-//The subarray is made of DRAM cells in the wordline direction (horizantal)
-// and DRAM cells in the Bitline Direction (vertical)
 #ifndef SUBARRAY_H
 #define SUBARRAY_H
+
+//This class presents the second level of abstraction of the DRAM structure,
+//of the DRAM which is a subarray.
+
 #include "../parser/TechnologyValues.h"
-class SubArray:public TechnologyValues
+
+namespace bu=boost::units;
+namespace si=boost::units::si;
+namespace inf=boost::units::information;
+namespace drs=boost::units::dramspec;
+
+class SubArray : public TechnologyValues
 {
   public:
-    //constructor for subarray class
-    SubArray(const std::string& techname,const std::string& paraname)
-    :TechnologyValues(techname,paraname), SubArraywidth(0), SubArrayheight(0)
+    SubArray() : //Empty constructor for test proposes
+        TechnologyValues()
     {
-        //Order of functions is important
-        bool SINIT = false;
-        SINIT = SubArrayinit();
-        if(SINIT == false){
-            std::cout<<"ERROR: Func. for subarray initialization not called"
-                <<"\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for subarry initialization not called");
-        }
-        bool DINIT = false;
-        DINIT = driversinit();
-        if(DINIT == false){
-            std::cout<<"ERROR: Function for driver initialization not called"
-                <<"\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for driver initialization not called");
-        }    
+        subArrayInitialize();
     }
-  protected:
+
+    SubArray(const std::string& techname, const std::string& paraname) :
+        TechnologyValues(techname,paraname)
+    {
+        subArrayInitialize();
+        subArrayCompute();
+        driverUpdate();
+    }
+
+    // Size in number of bits of a single subarray
+    bu::quantity<drs::information_per_subarray_unit> subArrayStorage;
+
+    // Size in number of bits of a single row of a subarray
+    bu::quantity<drs::information_per_subarray_unit> subArrayRowStorage;
+
+    // Size in number of bits of a single column of a subarray
+    bu::quantity<drs::information_per_subarray_unit> subArrayColumnStorage;
+
     //the width of the subarray which should be calculated
-    float SubArraywidth;
+    bu::quantity<drs::micrometer_per_subarray_unit> subArrayWidth;
 
     //the height of the subarray which should be calculated
-    float SubArrayheight;
+    bu::quantity<drs::micrometer_per_subarray_unit>  subArrayHeight;
 
-    // function which calculates the height and width of the subarray
-    bool SubArraycal();
+    void subArrayInitialize();
 
-    //function to initialize the drivers resistances
-    bool driversinit();
+    void subArrayStorageCalc();
 
-    //function to init subarray
-    bool SubArrayinit();
+    void subArrayLengthCalc();
+
+    void subArrayCompute();
+
+    void driverUpdate();
 };
 #endif//SUBARRAY_H

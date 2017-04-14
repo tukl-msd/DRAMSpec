@@ -33,243 +33,183 @@
  */
 
 //In this class the timing specification of DRAMs is done
-//The class uses an initialized DRAM Bank to compute the timing Specification
+//The class uses an initialized DRAM Chip to compute the timing specification
+
 #ifndef TIMING_H
 #define TIMING_H
-#include "Bank.h"
-class Timing
+
+#include "Chip.h"
+
+namespace bu=boost::units;
+namespace si=boost::units::si;
+namespace inf=boost::units::information;
+namespace drs=boost::units::dramspec;
+
+class Timing : public Chip
 {
   public:
-    Timing( const std::string& techname, const std::string& paraname )
-    :n(techname,paraname), wlc(0), blc(0), GWDC(0), CSLcapa(0), GDLcapa(0),
-    DQcapa(0), clk(0), trcd(0), tcl(0), tcl_act(0), tras(0), trp(0), trc(0),
-    trl(0), trl_act(0), twl(0), trtp(0), tccd(0), tccd_act(0), twr(0),
-    trfc(0), tref1(0), tGWLD(0), wlthau(0), blthau(0), trcd_clk(0),
-    tcl_clk(0), tcl_act_clk(0), tras_clk(0), trp_clk(0), trc_clk(0),
-    trl_clk(0), trl_act_clk(0), twl_clk(0), trtp_clk(0), tccd_clk(0),
-    tccd_act_clk(0), twr_clk(0), trfc_clk(0), tref1_clk(0) 
+    Timing() : //Empty constructor for test proposes
+        Chip()
     {
-        //do not change order of function
-        bool TRCD = false;
-        TRCD = calctrcd();
-        if (TRCD == false){
-            std::cout<<"ERROR: Function for trcd timing not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for trcd timing  not called");
+        timingInitialize();
+    }
+
+    Timing(const std::string& techname, const std::string& paraname) :
+        Chip(techname, paraname)
+    {
+        timingInitialize();
+        try {
+            timingCompute();
+        }catch (std::string exceptionMsgThrown){
+            throw exceptionMsgThrown;
         }
-        bool TRAS = false;
-        TRAS = calctras();
-        if (TRAS == false){
-            std::cout<<"ERROR: Function for tras timing not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for tras timing not called");
-        }  
-        bool TRP = false;
-        TRP = calctrp();
-        if (TRP == false){
-            std::cout<<"ERROR: Function for trp timing not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for trp timing not called");
-        }
-        bool TRC = false;
-        TRC = calctrc();
-        if (TRC == false){
-            std::cout<<"ERROR: Function for trc timing not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for trc timing not called");
-        }
-        bool TRL = false;
-        TRL = calctrl();
-        if (TRL == false){
-            std::cout<<"ERROR: Function for trl timing not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for trl timing not called");
-        } 
-        bool TWL = false;
-        TWL = calctwl();
-        if (TWL == false){
-            std::cout<<"ERROR: Function for twl timing not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for twl timing not called");
-        }
-        bool TRFC = false;        
-        TRFC = calctrfc();
-        if (TRFC == false){
-            std::cout<<"ERROR: Function for trfc timing not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for trfc timing not called");
-        }
-        bool TREF1 = false;
-        TREF1 = calctref1();
-        if (TREF1 == false){
-            std::cout<<"ERROR: Function for tref1 timing not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for tref1 timing not called");
-        }
-        bool TCLK = false;
-        TCLK = Timingclk();
-        if (TCLK == false){
-            std::cout<<"ERROR: Function for clocked timings not called"<<
-                "\t"<<"Order of Functions is important"<<"\n";
-            throw(" Function for clocked timings not called");
-        }
-    }    
+    }
+  
+    //Delay of cell
+    bu::quantity<drs::nanosecond_unit> cellDelay;
 
-    //capacitace of local wordline
-    float wlc;
+    //Resistance of local wordline
+    bu::quantity<drs::resistance_per_subarray_unit> localWordlineResistance;
+    //Capacitace of local wordline
+    bu::quantity<drs::nanofarad_per_subarray_unit> localWordlineCapacitance;
+    //Delay of local wordline
+    bu::quantity<drs::nanosecond_unit> localWordlineDelay;
 
-    //capacitance of local bitline
-    float blc;
+    //Resistance of local bitline
+    bu::quantity<drs::resistance_per_subarray_unit> localBitlineResistance;
+    //Capacitace of local bitline
+    bu::quantity<drs::nanofarad_per_subarray_unit> localBitlineCapacitance;
+    //Delay of local bitline
+    bu::quantity<drs::nanosecond_unit> localBitlineDelay;
 
-    //capacitance of global wordline
-    float GWDC;
+    //Resistance of global wordline
+    bu::quantity<drs::resistance_per_tile_unit> globalWordlineResistance;
+    //Capacitace of global wordline
+    bu::quantity<drs::nanofarad_per_tile_unit> globalWordlineCapacitance;
+    //Delay through global wordline driver and wiring
+    bu::quantity<drs::nanosecond_unit> globalWordlineDelay;
 
-    //capacitanace of CSL
-    float CSLcapa;
+    //t_rcd: ACT to internal read or write delay time
+    bu::quantity<drs::nanosecond_unit> trcd;
 
-    //capacitance of GDL
-    float GDLcapa;
+    //Resistance of CSL wire
+    bu::quantity<drs::resistance_per_bank_unit> CSLResistance;
+    //Capacitace of CSL wire
+    bu::quantity<drs::nanofarad_per_bank_unit> CSLCapacitance;
+    //Delay through CSL driver and wiring
+    bu::quantity<drs::nanosecond_unit> tcsl;
 
-    //capacitance of wire to DQ
-    float DQcapa;
+    //Resistance of global dataline wire
+    bu::quantity<drs::resistance_per_bank_unit> globalDatalineResistance;
+    //Capacitace of global dataline wire
+    bu::quantity<drs::nanofarad_per_bank_unit> globalDatalineCapacitance;
+    //Delay through global dataline driver and wiring
+    bu::quantity<drs::nanosecond_unit> tgdl;
 
-    //clk in ns
-    float clk;
+    //DQ wire length
+    bu::quantity<drs::millimeter_unit> DQWireLength;
+    // Factor which defines the page size * subArrayToPageFactor relation
+    bu::quantity<drs::kibibyte_per_page_unit> bankWidthFactor;
+    //Resistance of DQ wire
+    bu::quantity<si::resistance> DQWireResistance;
+    //Capacitace of DQ wire
+    bu::quantity<drs::nanofarad_unit> DQWireCapacitance;
+    //Delay through DQ driver and wiring
+    bu::quantity<drs::nanosecond_unit> tdq;
 
-    //row-column delay
-    float trcd;
 
-    //column latency (column access strobe delay)
-    float tcl;
+    //tcl = tcas - Column Access Strobe latency
+    bu::quantity<drs::nanosecond_unit> tcas;
 
-    //actual column latency scaled according to the actual core Freq
-    float tcl_act;
+    //trtp - Read to Precharge time
+    bu::quantity<drs::nanosecond_unit> trtp;
 
-    //row access strobe delay
-    float tras;
+    //tccd - Column-to-Column delay
+    bu::quantity<drs::nanosecond_unit> tccd;
 
-    //row precharge delay
-    float trp;
 
-    //row cycle delay
-    float trc;
+    //tras - Row Access Strobe latency
+    bu::quantity<drs::nanosecond_unit> tras;
 
-    //read latency delay
-    float trl;
+    //twr - Write Recovery time
+    bu::quantity<drs::nanosecond_unit> twr;
 
-    //actual read latency scaled according to the actual core Freq
-    float trl_act;
+    //trp - Row Precharge time
+    bu::quantity<drs::nanosecond_unit> trp;
 
-    //write latency delay
-    float twl;
+    //trc - Row Cycle time
+    bu::quantity<drs::nanosecond_unit> trc;
 
-    //read to precharge delay
-    float trtp;
+    //trfc - Refresh Cycle time
+    bu::quantity<drs::nanosecond_unit> trfc;
 
-    //column to column delay
-    float tccd;
+    //tref1 - Refresh Interval time
+    bu::quantity<drs::nanosecond_unit> tref1;
 
-    //actual column to column delay latency scared according to the actual
-    //core Freq
-    float tccd_act;
+    //Maximum core frequency
+    bu::quantity<drs::megahertz_clock_unit> maxCoreFreq;
+    //Actual core frequency
+    bu::quantity<drs::megahertz_clock_unit> actualCoreFreq;
+    //Double clock frequency if is DDR
+    double clockFactor;
 
-    //write recovery delay
-    float twr;
+    //Clock
+    bu::quantity<drs::nanosecond_per_clock_unit> clk;
+    //Actual clock (high and low edge)
+    bu::quantity<drs::nanosecond_per_clock_unit> actualClk;
 
-    //refresh cycle time
-    float trfc;
+    //trcd in number of clocks
+    bu::quantity<drs::clock_unit> trcd_clk;
+    //tcas in number of clocks
+    bu::quantity<drs::clock_unit> tcas_clk;
+    //tcas in number of clocks by the actual clock
+    bu::quantity<drs::clock_unit> tcas_actualClk;
+    //tras in number of clocks
+    bu::quantity<drs::clock_unit> tras_clk;
+    //trp in number of clocks
+    bu::quantity<drs::clock_unit> trp_clk;
+    //trc in number of clocks
+    bu::quantity<drs::clock_unit> trc_clk;
+    //trl in number of clocks
+    bu::quantity<drs::clock_unit> trl_clk;
+    //trl in number of clocks by the actual clock
+    bu::quantity<drs::clock_unit> trl_actualClk;
+    //twl in number of clocks
+    bu::quantity<drs::clock_unit> twl_clk;
+    //trtp in number of clocks
+    bu::quantity<drs::clock_unit> trtp_clk;
+    //tccd in number of clocks
+    bu::quantity<drs::clock_unit> tccd_clk;
+    //tccd in number of clocks by the actual clock
+    bu::quantity<drs::clock_unit> tccd_actualClk;
+    //twr in number of clocks
+    bu::quantity<drs::clock_unit> twr_clk;
+    //trfc in number of clocks
+    bu::quantity<drs::clock_unit> trfc_clk;
+    //tref1 in number of clocks
+    bu::quantity<drs::clock_unit> tref1_clk;
 
-    //average refresh period
-    float tref1;
+    void timingInitialize();
 
-    //timing for Global wordline 
-    float tGWLD;
+    double timeToPercentage(double percentage);
 
-    //timing for local wordline
-    float wlthau;
+    void trcdCalc();
 
-    //timing for local bitline
-    float blthau;
+    void trasCalc();
 
-    //timing parameters in clk cycles
-    //tcl in clk
-    int tcl_clk;
+    void trpCalc();
 
-    //tcl_act in clk
-    int tcl_act_clk;
+    void trcCalc();
 
-    //trch in clk
-    int trcd_clk;
+    void trfcCalc();
 
-    //tras in clk
-    int tras_clk;
+    void tref1Calc();
 
-    //trp in clk
-    int trp_clk;
+    void clkTiming();
 
-    //trc in clk
-    int trc_clk;
+    void timingCompute();
 
-    //trl in clk
-    int trl_clk;
-
-    //trl_act in clk
-    int trl_act_clk;
-
-    //twl in clk
-    int twl_clk;
-
-    //trtp in clk
-    int trtp_clk;
-
-    //tccd in clk
-    int tccd_clk;
-
-    //tccd_act in clk
-    int tccd_act_clk;
-
-    //twr in clk
-    int twr_clk;
-
-    //trfc in clk
-    int trfc_clk;
-
-    //tref1 in clk
-    int tref1_clk;
-
-    //bank used for the timing calculation
-    Bank n;
-
-    //function for printing timing results
     void printTiming();
-
-  private:
-
-    //function used for trcd calculation
-    bool calctrcd();
-
-    //function used for tras calculation
-    bool calctras();
-
-    //function used for trp calculation
-    bool calctrp();
-
-    //function used for trc calculation
-    bool calctrc();
-
-    //function used for trl calculation
-    bool calctrl();
-
-    //function used for twl calculation
-    bool calctwl();
-
-    //function for calculating refresh cycle time
-    bool calctrfc();
-
-    //function for calculating average refresh period
-    bool calctref1();
-
-    //function changing timing parameters to clock cycles
-    bool Timingclk();
 };
+
 #endif

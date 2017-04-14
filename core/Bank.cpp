@@ -29,69 +29,63 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andr'e Lucas Chinazzo
  */
 
 #include "Bank.h"
-#include <iostream>
 
-bool 
-Bank::Bankinit()
+void
+Bank::bankInitialize()
 {
-    // Calculate size of bank * 1024 (transform to MBits)
-    sizeofBank = dramsize * 1024 / numberofbanks;
-
-    // Calculate size of halfbank
-    sizeofhalfBank = sizeofBank/2;
-
-    // Calculate number of memoryarrays pro halfbank + 1
-    // (open-bit array structure)
-    numberofMemoryArrays = sizeofhalfBank/sizeofMemoryArray + 1;
-
-    // Calculate bank height required for CSL and MDQ...
-    // 5u space btw subarrays
-    Bankheight = numberofMemoryArrays * MemoryArrayheight + 
-    (numberofMemoryArrays - 1)*5;
-    std::cout << "AREA of DRAM"<<"\n";
-    std::cout <<"height of bank in micrometers"<<"\t" <<  
-    Bankheight << ".\n";
-    return true;
+    bankStorage = 0*drs::bit_per_bank;
+    bankWidth = 0*drs::micrometer_per_bank;
+    bankHeight = 0*drs::micrometer_per_bank;
 }
 
-bool 
-Bank::calcchiparea()
+void
+Bank::bankStorageCalc()
 {
-    // Calculate number of subarrrays in the width
-    // direction * 1024 (to Bytes) * 8 (to bits)
-    int numbersubarraysinx = ((float)0.5*1024*8 / 
-    //int numbersubarraysinx = ((float)rowbuffersize*1024*8 / 
-    (float)(cellsperrow - cellsperrowredundancy)) * subarray2rowbufferfactor;
+    bankStorage =  SCALE_QUANTITY(dramSize, drs::bit_unit) / nBanks;
+}
 
-    // mwldwidth//master wordline driver width ( value taken from a real
-    // chip designed)
-    float mwldwidth = 240;
+void
+Bank::bankLenghtCalc()
+{
 
-    // Width of bank ... 10u space btw subarrays
-    Bankwidth = numbersubarraysinx * SubArraywidth + wldwidth + mwldwidth ;
-    std::cout<<"bank width in micrometers" << "\t"<<Bankwidth<<"\n";
+    if ( tilesPerBank == 1*drs::tiles_per_bank ) {
+        bankWidth = 1.0 * tileWidth * drs::tile_per_bank
+                    + 1.0 * rowDecoderWidth / drs::bank;
 
-    // Chipwidth ( half of the banks are placed above the Dataqueues and
-    // the other half below)
-    chipwidth = (numberofbanks/2)*Bankwidth;
-    std::cout<<"chip width in micrometers"<< "\t" << chipwidth <<"\n";
+        bankHeight = 1.0 * tileHeight * drs::tile_per_bank
+                     + 1.0 * colDecoderHeight / drs::bank;
+    }
 
-    // columnlogicwidth values taken from a real chip design
-    float columnlogicwidth = 200;
+    else if ( tilesPerBank == 2*drs::tiles_per_bank ) {
+        bankWidth = tileWidth * 2.0 * drs::tile_per_bank
+                     + 2.0 * rowDecoderWidth / drs::bank;
 
-    // dq width values taken from a real chip design
-    float dqwidth = 500;
+        bankHeight = tileHeight * 1.0 * drs::tile_per_bank
+                     + 1.0 * colDecoderHeight / drs::bank;
+    }
 
-    //chip heigth
-    chipheight = Bankheight *2 + columnlogicwidth + dqwidth;
-    std::cout<<"chip height in micrometers"<<"\t"<<chipheight<<"\n";
+    else if ( tilesPerBank == 4*drs::tiles_per_bank ) {
+        bankWidth = tileWidth * 2.0 * drs::tile_per_bank
+                     + 2.0 * rowDecoderWidth / drs::bank;
 
-    //chip area in mm^2
-    chiparea = chipwidth * chipheight/1000000;
-    std::cout<<"chip area in mm^2"<<"\t"<<chiparea<<"\n";
-    return true; 
+        bankHeight = tileHeight * 2.0 * drs::tile_per_bank
+                     + 2.0 * colDecoderHeight / drs::bank;
+    }
+
+}
+
+void
+Bank::bankCompute()
+{
+    bankStorageCalc();
+
+    bankLenghtCalc();
 }
