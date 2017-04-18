@@ -45,7 +45,7 @@ DRAMSpec requires some libraries from [boost](http://www.boost.org/). If you do 
 
 ### Building DRAMSpec
 
-1. To be sure DRAMSpec repository was properly cloned, build and run the program in test mode:
+1. To be sure DRAMSpec repository was properly cloned, build and run the program in test mode either by using the script below or compiling and running the debug version of the program manually. If chosen to do manually, make sure you run the executable directly from within the directory `build/debug`!
 
 ``` bash
     ./runTests.sh
