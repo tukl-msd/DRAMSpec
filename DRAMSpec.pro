@@ -159,6 +159,8 @@ CONFIG(release, debug|release) {
     RCC_DIR = build/release/.rcc
     UI_DIR = build/release/.ui
 
+    QMAKE_CXXFLAGS += -Wextra -Wall
+
     SOURCES += main.cpp
 
     TARGET = dramspec
