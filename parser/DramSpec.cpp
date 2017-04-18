@@ -297,6 +297,11 @@ void DRAMSpec::runDramSpec(int argc, char** argv)
         throw exceptionMsgThrown;
     }
 
+    if ( !arg->helpMessage.str().empty() ) {
+        output << arg->helpMessage.str();
+        return;
+    }
+
     output << "_______________________________________________________"
            << "_______________________________________________________"
            << "_______________________________________________________"
