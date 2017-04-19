@@ -47,10 +47,33 @@ ArgumentsParser::ArgumentsParser(int argc, char** argv)
     argvID = 1;
     nConfigurations = 0;
     IOTerminationCurrentFlag = false;
+    helpMessage.str("");
 }
 
 void ArgumentsParser::runArgParser()
 {
+    // Help run
+    if ( cpargc == 1 ) {
+        helpMessage << "Parameters:"
+                    << endl;
+        helpMessage << "  Mandatory:"
+                    << endl;
+        helpMessage << "    -t    <path/to/technologyfile.json>   "
+                    << "(Specify which technology description file should be used.)"
+                    << endl;
+        helpMessage << "    -p    <path/to/architecturefile.json> "
+                    << "(Specify which architecture description file should be used.)"
+                    << endl;
+        helpMessage << "  Optional:"
+                    << endl;
+        helpMessage << "    -term                                 "
+                    << "(Include IO termination currents for read and write operations.)"
+                    << endl;
+        helpMessage << "For more information, see README.md."
+                    << endl;
+    }
+
+    // Normal run
     if ( argvID >= cpargc ) {
         return;
     }

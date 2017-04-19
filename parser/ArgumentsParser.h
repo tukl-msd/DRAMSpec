@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <vector>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -16,6 +17,8 @@ public:
     vector<string> architectureFileName;
     unsigned int nConfigurations;
     bool IOTerminationCurrentFlag;
+
+    ostringstream helpMessage;
 
     void runArgParser();
 

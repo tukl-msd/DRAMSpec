@@ -223,6 +223,11 @@ DRAMSpec::arrangeOutput(const string outputType)
     else if (outputType == "stdout") {
         lineWidth = 30;
         separator = "";
+    } else {
+        std::string exceptionMsgThrown("[ERROR] ");
+        exceptionMsgThrown.append("Unexpected behaviour - ");
+        exceptionMsgThrown.append("could not decide on output type.");
+        throw exceptionMsgThrown;
     }
 
     ostringstream resultTable;
@@ -292,6 +297,11 @@ void DRAMSpec::runDramSpec(int argc, char** argv)
         throw exceptionMsgThrown;
     }
 
+    if ( !arg->helpMessage.str().empty() ) {
+        output << arg->helpMessage.str();
+        return;
+    }
+
     output << "_______________________________________________________"
            << "_______________________________________________________"
            << "_______________________________________________________"
@@ -334,10 +344,18 @@ void DRAMSpec::runDramSpec(int argc, char** argv)
                       << "  Parameter filename: " << arg->architectureFileName[configID]
                       << endl;
 
-        csvResultFile << arrangeOutput("csv");
+        try {
+            csvResultFile << arrangeOutput("csv");
+        } catch(string exceptionMsgThrown) {
+            throw exceptionMsgThrown;
+        }
         csvResultFile.close();
 
-        output << arrangeOutput("stdout") << endl;
+        try {
+            output << arrangeOutput("stdout") << endl;
+        } catch(string exceptionMsgThrown) {
+            throw exceptionMsgThrown;
+        }
         output  << "_______________________________________________________"
                 << "_______________________________________________________"
                 << "_______________________________________________________"
