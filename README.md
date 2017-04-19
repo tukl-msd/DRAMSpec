@@ -2,7 +2,7 @@
 a DRAM Current and Timing Generator
 
 ## LICENSE
-Copyright (c) 2015, University of Kaiserslautern
+Copyright (c) 2015-2017, University of Kaiserslautern
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -82,7 +82,6 @@ Note: the number of technology and architecture description files must be equal.
 
 ## Reference
 [1] A High-Level DRAM Timing, Power and Area Exploration Tool
-O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn. Accepted for publication, IEEE
-International Conference on Embedded Computer Systems Architectures Modeling
-and Simulation (SAMOS), July, 2015, Samos Island, Greece
+O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn.,
+IEEE International Conference on Embedded Computer Systems Architectures Modeling and Simulation (SAMOS), July, 2015, Samos Island, Greece
 
