@@ -37,10 +37,14 @@
 #ifndef TECHNOLOGYVALUES_H
 #define TECHNOLOGYVALUES_H
 #include <iostream>
-#include <string>
-#include "rapidjson/include/rapidjson/document.h"
-#include <sstream>
 #include <fstream>
+#include <sstream>
+#include <iomanip>
+#include <vector>
+#include <stdio.h>
+#include <string>
+
+#include "rapidjson/include/rapidjson/document.h"
 
 #include "../expandedBoostUnits/Units/dramSpec_units.h"
 #include <boost/units/conversion.hpp>
@@ -268,6 +272,7 @@ class TechnologyValues
     //offset !!!  TODO: What exactly is it?  !!!
     bu::quantity<drs::nanosecond_unit> offset;
 
+    string warning;
 
 
     void technologyValuesInitialize();

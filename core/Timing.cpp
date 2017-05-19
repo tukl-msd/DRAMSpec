@@ -238,10 +238,10 @@ Timing::trasCalc()
         if (bankWidthFactor < 0.5 * drs::kibibytes_per_page) {
             DQWireLength = 5 * drs::millimeters;
 
-            std::cerr << "[WARNING] ";
-            std::cerr << "Your ";
-            std::cerr << "pageSize * subArrayToPageFactor ";
-            std::cerr << "is too small!!!" << std::endl;
+            warning.append("[WARNING] ");
+            warning.append("Your ");
+            warning.append("pageSize * subArrayToPageFactor ");
+            warning.append("is too small!!!\n");
         }
         else if(bankWidthFactor == 0.5 * drs::kibibytes_per_page) {
             DQWireLength = 2 * drs::millimeters;
@@ -256,10 +256,10 @@ Timing::trasCalc()
         } else if (bankWidthFactor > 8 * drs::kibibytes_per_page) {
             DQWireLength = 5 * drs::millimeters;
 
-            std::cerr << "[WARNING] ";
-            std::cerr << "Your ";
-            std::cerr << "pageSize * subArrayToPageFactor ";
-            std::cerr << "is too big!!!" << std::endl;
+            warning.append("[WARNING] ");
+            warning.append("Your ");
+            warning.append("pageSize * subArrayToPageFactor ");
+            warning.append("is too big!!!\n");
         } else {
             std::string exceptionMsgThrown;
             exceptionMsgThrown.append("[ERROR] ");
@@ -441,13 +441,13 @@ Timing::clkTiming()
 
     // If frequency is too high,  warn the user but do all calculations anyway
     if( actualCoreFreq > maxCoreFreq ) {
-        std::cerr << "[WARNING] ";
-        std::cerr << "Specified frequency ";
-        std::cerr << "too high for DRAM Desing. ";
-        std::cerr << "Go Down with Frequency!!" << std::endl;
-        std::cerr << "If user wants to keep the high frequency, ";
-        std::cerr << "try using a smaller bank or a higher ";
-        std::cerr << "subarray2rowbufferfactor" << std::endl;
+        warning.append("[WARNING] ");
+        warning.append("Specified frequency ");
+        warning.append("too high for DRAM Desing. ");
+        warning.append("Go Down with Frequency!!\n");
+        warning.append("If user wants to keep the high frequency, ");
+        warning.append("try using a smaller bank or a higher ");
+        warning.append("subarray2rowbufferfactor.\n");
     }
 
 }

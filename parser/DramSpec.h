@@ -41,6 +41,7 @@
 
 #include "ArgumentsParser.h"
 #include "../core/Current.h"
+
 #include <ctime>
 #include <cmath>
 #include <iostream>
