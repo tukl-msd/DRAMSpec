@@ -58,8 +58,9 @@ class Bank : public Tile
         bankInitialize();
     }
 
-    Bank(const std::string& techname,const std::string& paraname):
-        Tile(techname,paraname)
+    Bank(const std::string& technologyFileName,
+         const std::string& architectureFileName):
+        Tile(technologyFileName, architectureFileName)
     {
         bankInitialize();
         bankCompute();

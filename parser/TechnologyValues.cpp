@@ -37,8 +37,8 @@
 void
 TechnologyValues::technologyValuesInitialize()
 {
-    techName = "";
-    paraName = "";
+    techFileName = "";
+    archFileName = "";
 
     technologyNode = 0*drs::nanometer;
     capacitancePerBLCell = 0*drs::attofarads_per_cell;
@@ -92,439 +92,410 @@ TechnologyValues::technologyValuesInitialize()
     BLArchitecture = "";
 }
 
-void 
-TechnologyValues::readjson(const std::string& t,const std::string& p)
+double
+TechnologyValues::getJSONNumber(const rapidjson::Document& jsonDoc,
+                                const char* memberName)
 {
-    techName = t;
-    paraName = p;
-
-    //load the technology json file and put it into a single string:
-    std::ifstream techin(techName.c_str());
-    std::stringstream techbuffer;
-    techbuffer << techin.rdbuf();
-    if (techbuffer.bad()) {
-        std::cout<<"Error: filename does not exist"<<"\n";
+    if ( jsonDoc.HasMember( memberName ) == false )
+    {
+        string exceptionMsgThrown;
+        exceptionMsgThrown.append("[ERROR] ");
+        exceptionMsgThrown.append("Could not find member \"");
+        exceptionMsgThrown.append(memberName);
+        exceptionMsgThrown.append("\" in JSON document ");
+        exceptionMsgThrown.append(techFileName);
+        exceptionMsgThrown.append("!\n");
+        throw exceptionMsgThrown;
     }
-    std::string testtech = techbuffer.str();
-
-    //parsing the json file
-    //pointing to the string
-    const char* techjson = testtech.c_str();
-
-    //using the library for parsing
-    rapidjson::Document techdocument;
-    techdocument.Parse<0>(techjson);
-
-    //reading the values from the technology json file
-    assert(techdocument.IsObject());
-
-    //Technology node in nm
-    assert(techdocument.HasMember("Technologynode"));
-    assert(techdocument["Technologynode"].IsNumber());
-    double technologyNode_value = techdocument["Technologynode"].GetDouble();
-    technologyNode = technologyNode_value*drs::nanometer;
-
-    //Bitline per cell capa
-    assert(techdocument.HasMember("BLpercellcapa"));
-    assert(techdocument["BLpercellcapa"].IsNumber());
-    double capacitancePerBLCell_value = techdocument["BLpercellcapa"].GetDouble();
-    capacitancePerBLCell = capacitancePerBLCell_value*drs::attofarads_per_cell;
-
-    //Bitline per cell resistance
-    assert(techdocument.HasMember("BLpercellresistance")); 
-    assert(techdocument["BLpercellresistance"].IsNumber());
-    double resistancePerBLCell_value = techdocument["BLpercellresistance"].GetDouble();
-    resistancePerBLCell = resistancePerBLCell_value*drs::ohm_per_cell;
-
-    //Wordline per cell capa
-    assert(techdocument.HasMember("WLpercellcapa"));
-    assert(techdocument["WLpercellcapa"].IsNumber());
-    double capacitancePerWLCell_value = techdocument["WLpercellcapa"].GetDouble();
-    capacitancePerWLCell = capacitancePerWLCell_value*drs::attofarads_per_cell;
-
-    //Wordline per cell resistance
-    assert(techdocument.HasMember("WLpercellresistance"));
-    assert(techdocument["WLpercellresistance"].IsNumber());
-    double resistancePerWLCell_value = techdocument["WLpercellresistance"].GetDouble();
-    resistancePerWLCell = resistancePerWLCell_value*drs::ohm_per_cell;
-
-    //cell capa
-    assert(techdocument.HasMember("cellcapa"));
-    assert(techdocument["cellcapa"].IsNumber());
-    double capacitancePerCell_value = techdocument["cellcapa"].GetDouble();
-    capacitancePerCell = capacitancePerCell_value*drs::picofarads_per_cell;
-
-    //cell resistance
-    assert(techdocument.HasMember("cellresistance"));
-    assert(techdocument["cellresistance"].IsNumber());
-    double resistancePerCell_value = techdocument["cellresistance"].GetDouble();
-    resistancePerCell = resistancePerCell_value*drs::ohm_per_cell;
-
-    //wire resistance in ohm/mm
-    assert(techdocument.HasMember("wireresistance"));
-    assert(techdocument["wireresistance"].IsNumber());
-    double wireResistance_value = techdocument["wireresistance"].GetDouble();
-    wireResistance = wireResistance_value*drs::ohm_per_millimeter;
-
-    //wire capa in ff/mm
-    assert(techdocument.HasMember("wirecapa"));
-    assert(techdocument["wirecapa"].IsNumber());
-    double wireCapacitance_value = techdocument["wirecapa"].GetDouble();
-    wireCapacitance = wireCapacitance_value*drs::femtofarad_per_millimeter;
-
-    //cell width
-    assert(techdocument.HasMember("cellwidth"));
-    assert(techdocument["cellwidth"].IsNumber());
-    double cellWidth_value = techdocument["cellwidth"].GetDouble();
-    cellWidth = cellWidth_value*drs::micrometers_per_cell;
-
-    //cell height
-    assert(techdocument.HasMember("cellheight"));
-    assert(techdocument["cellheight"].IsNumber());
-    double cellHeight_value = techdocument["cellheight"].GetDouble();
-    cellHeight = cellHeight_value*drs::micrometers_per_cell;
-
-    //cells per subarray row
-    assert(techdocument.HasMember("cellsperrow"));
-    assert(techdocument["cellsperrow"].IsNumber());
-    double cellsPerLWL_value = techdocument["cellsperrow"].GetDouble();
-    cellsPerLWL = cellsPerLWL_value*drs::cell_per_subarray;
-
-    //cells per subarray row redundancy
-    assert(techdocument.HasMember("cellsperrowredundancy"));
-    assert(techdocument["cellsperrowredundancy"].IsNumber());
-    double cellsPerLWLRedundancy_value = techdocument["cellsperrowredundancy"].GetDouble();
-    cellsPerLWLRedundancy = cellsPerLWLRedundancy_value*drs::cell_per_subarray;
-
-    //cells per subarray column
-    assert(techdocument.HasMember("cellspercolumn"));
-    assert(techdocument["cellspercolumn"].IsNumber());
-    double cellsPerLBL_value = techdocument["cellspercolumn"].GetDouble();
-    cellsPerLBL = cellsPerLBL_value*drs::cell_per_subarray;
-
-    //cells per subarray column redundancy
-    assert(techdocument.HasMember("cellspercolumnredundancy"));
-    assert(techdocument["cellspercolumnredundancy"].IsNumber());
-    double cellsperLBLRedundancy_value = techdocument["cellspercolumnredundancy"].GetDouble();
-    cellsPerLBLRedundancy = cellsperLBLRedundancy_value*drs::cell_per_subarray;
-
-    //sense amp height
-    assert(techdocument.HasMember("blsa-height"));
-    assert(techdocument["blsa-height"].IsNumber());
-    double BLSenseAmpHeight_value = techdocument["blsa-height"].GetDouble();
-    BLSenseAmpHeight = BLSenseAmpHeight_value*drs::micrometer;
-
-    //wordline driver width 
-    assert(techdocument.HasMember("WL-driver"));
-    assert(techdocument["WL-driver"].IsNumber());
-    double WLDriverWidth_value = techdocument["WL-driver"].GetDouble();
-    WLDriverWidth = WLDriverWidth_value*drs::micrometer;
-
-    //global wordline driver resistance in ohm
-    assert(techdocument.HasMember("GWLDresistance"));
-    assert(techdocument["GWLDresistance"].IsNumber());
-    double GWLDriverResistance_value = techdocument["GWLDresistance"].GetDouble();
-    GWLDriverResistance = GWLDriverResistance_value*si::ohm;
-
-    //Local wordline driver resistance in ohm
-    assert(techdocument.HasMember("LWDresistance"));
-    assert(techdocument["LWDresistance"].IsNumber());
-    double LWLDriverResistance_value = techdocument["LWDresistance"].GetDouble();
-    LWLDriverResistance = LWLDriverResistance_value*drs::ohm_per_subarray;
-
-    //WRrestore resistance
-    assert(techdocument.HasMember("WRresistance"));
-    assert(techdocument["WRresistance"].IsNumber());
-    double WRResistance_value = techdocument["WRresistance"].GetDouble();
-    WRResistance = WRResistance_value*drs::ohm_per_subarray;
-
-    //CSL driver resistance in ohm
-    assert(techdocument.HasMember("CSLDresistance"));
-    assert(techdocument["CSLDresistance"].IsNumber());
-    double CSLDriverResistance_value = techdocument["CSLDresistance"].GetDouble();
-    CSLDriverResistance = CSLDriverResistance_value*si::ohm;
-
-    //GDL driver resistance in ohm
-    assert(techdocument.HasMember("GDLDresistance"));
-    assert(techdocument["GDLDresistance"].IsNumber());
-    double GDLDriverResistance_value = techdocument["GDLDresistance"].GetDouble();
-    GDLDriverResistance = GDLDriverResistance_value*si::ohm;
-
-    //DQ driver resistance in ohm
-    assert(techdocument.HasMember("DQDresistance"));
-    assert(techdocument["DQDresistance"].IsNumber());
-    double DQDriverResistance_value = techdocument["DQDresistance"].GetDouble();
-    DQDriverResistance = DQDriverResistance_value*si::ohm;
-
-    //current of SSA in milliamperes
-    assert(techdocument.HasMember("I_SSA"));
-    assert(techdocument["I_SSA"].IsNumber());
-    double Issa_value = techdocument["I_SSA"].GetDouble();
-    Issa = Issa_value*drs::microampere;
-
-    //voltage vpp
-    assert(techdocument.HasMember("vpp"));
-    assert(techdocument["vpp"].IsNumber());
-    double Vpp_value  = techdocument["vpp"].GetDouble() ;
-    vpp = Vpp_value*si::volt;
-
-    //voltage vcc
-    assert(techdocument.HasMember("vcc"));
-    assert(techdocument["vcc"].IsNumber());
-    double Vcc_value  = techdocument["vcc"].GetDouble();
-    vcc = Vcc_value*si::volt;
-
-    //backgroundcurrentslope    
-    assert(techdocument.HasMember("Backgroundcurrentslope"));
-    assert(techdocument["Backgroundcurrentslope"].IsNumber()); 
-    double backgroundCurrentSlope_value  = techdocument["Backgroundcurrentslope"].GetDouble();
-    backgroundCurrentSlope = backgroundCurrentSlope_value*drs::milliamperes_per_megahertz_clock;
-
-    //backgroundcurrentoffset
-    assert(techdocument.HasMember("Backgroundcurrentoffset"));
-    assert(techdocument["Backgroundcurrentoffset"].IsNumber());
-    double backgroundCurrentOffset_value  = techdocument["Backgroundcurrentoffset"].GetDouble();
-    backgroundCurrentOffset = backgroundCurrentOffset_value*drs::milliampere;
-
-    //Current per IO pin (Off Chip Driver)
-    assert(techdocument.HasMember("idd_ocd"));
-    assert(techdocument["idd_ocd"].IsNumber());
-    double IddOcdRcvAtFrequencyPoint_value  = techdocument["idd_ocd"].GetDouble();
-    IddOcdRcvAtFrequencyPoint = IddOcdRcvAtFrequencyPoint_value*drs::milliampere;
-
-    //IDD pro IO for OCD
-    assert(techdocument.HasMember("idd_ocd_freq"));
-    assert(techdocument["idd_ocd_freq"].IsNumber());
-    double IddOcdRcvFrequencyPoint_value  = techdocument["idd_ocd_freq"].GetDouble();
-    IddOcdRcvFrequencyPoint = IddOcdRcvFrequencyPoint_value*drs::megahertz_clock;
-
-    //Row decoder (between tiles) width
-    assert(techdocument.HasMember("rowDecoderWidth"));
-    assert(techdocument["rowDecoderWidth"].IsNumber());
-    double rowDecoderWidth_value = techdocument["rowDecoderWidth"].GetDouble();
-    rowDecoderWidth = rowDecoderWidth_value*drs::micrometer;
-
-    //Column decoder (between tiles) width
-    assert(techdocument.HasMember("colDecoderHeight"));
-    assert(techdocument["colDecoderHeight"].IsNumber());
-    double colDecoderHeight_value = techdocument["colDecoderHeight"].GetDouble();
-    colDecoderHeight = colDecoderHeight_value*drs::micrometer;
-
-    //DQ driver (between banks) height
-    assert(techdocument.HasMember("DQDriverHeight"));
-    assert(techdocument["DQDriverHeight"].IsNumber());
-    double DQDriverHeight_value = techdocument["DQDriverHeight"].GetDouble();
-    DQDriverHeight = DQDriverHeight_value*drs::micrometer;
-
-    //Space between banks driver in width direction
-    assert(techdocument.HasMember("bankSpacingWidth"));
-    assert(techdocument["bankSpacingWidth"].IsNumber());
-    double bankSpacingWidth_value = techdocument["bankSpacingWidth"].GetDouble();
-    bankSpacingWidth = bankSpacingWidth_value*drs::micrometer;
-
-    //load the parameter file and put in into a single string
-    std::ifstream parain(paraName.c_str());
-    std::stringstream parabuffer;
-    parabuffer << parain.rdbuf();
-    if (parabuffer.bad()) {
-    std::cout<<"Error: Parameter filename does not exist"<<"\n";
+    if ( jsonDoc[ memberName ].IsNumber() == false )
+    {
+        string exceptionMsgThrown;
+        exceptionMsgThrown.append("[ERROR] ");
+        exceptionMsgThrown.append("Member \"");
+        exceptionMsgThrown.append(memberName);
+        exceptionMsgThrown.append("\" in JSON document ");
+        exceptionMsgThrown.append(techFileName);
+        exceptionMsgThrown.append(" is expected to be a number!\n");
+        throw exceptionMsgThrown;
     }
-    std::string testpara = parabuffer.str();
 
-    //parsing the json file
-    //pointing to the string
-    const char* parajson = testpara.c_str();
+    return jsonDoc[ memberName ].GetDouble();
+}
 
-    //using the library for parsing
-    rapidjson::Document paradocument;
-    paradocument.Parse<0>(parajson);
+string
+TechnologyValues::getJSONString(const rapidjson::Document& jsonDoc,
+                                const char* memberName)
+{
+    if ( jsonDoc.HasMember( memberName ) == false )
+    {
+        string exceptionMsgThrown;
+        exceptionMsgThrown.append("[ERROR] ");
+        exceptionMsgThrown.append("Could not find member \"");
+        exceptionMsgThrown.append(memberName);
+        exceptionMsgThrown.append("\" in JSON document ");
+        exceptionMsgThrown.append(techFileName);
+        exceptionMsgThrown.append("!\n");
+        throw exceptionMsgThrown;
+    }
+    if ( jsonDoc[ memberName ].IsString() == false )
+    {
+        string exceptionMsgThrown;
+        exceptionMsgThrown.append("[ERROR] ");
+        exceptionMsgThrown.append("Member \"");
+        exceptionMsgThrown.append(memberName);
+        exceptionMsgThrown.append("\" in JSON document ");
+        exceptionMsgThrown.append(techFileName);
+        exceptionMsgThrown.append(" is expected to be a string!\n");
+        throw exceptionMsgThrown;
+    }
 
-    //reading the values from the parameter json file
-    assert(paradocument.IsObject());
+    return jsonDoc[ memberName ].GetString();
+}
 
-    //DRAM Type
-    assert(paradocument.HasMember("DRAMType"));
-    assert(paradocument["DRAMType"].IsString());
-    dramType = paradocument["DRAMType"].GetString();
+void 
+TechnologyValues::readjson(const string& t,const string& p)
+{
+    techFileName = t;
+    archFileName = p;
 
-    //3D ON/OFF Feature
-    //set 3D on for HMC/WideIO
-    assert(paradocument.HasMember("3D"));
-    assert(paradocument["3D"].IsString());
-    ThreeD = paradocument["3D"].GetString();
+    // Try to open technology file given by the user
+    ifstream techFile(techFileName);
+    // Test if file was (and still is) opened
+    if ( techFile.is_open() == false ) {
+        string exceptionMsgThrown;
+        exceptionMsgThrown.append("[ERROR] ");
+        exceptionMsgThrown.append("Could not open technology file: ");
+        exceptionMsgThrown.append(techFileName);
+        exceptionMsgThrown.append("!\n");
+        throw exceptionMsgThrown;
+    }
 
-    // vaults per layer
-    // set to 0 for non 3D DRAMs
-    assert(paradocument.HasMember("Vaultsperlayer"));
-    assert(paradocument["Vaultsperlayer"].IsNumber()); 
-    vaultsPerLayer = paradocument["Vaultsperlayer"].GetDouble();
+    // Find length of the file
+    int techFileLength;
+    techFile.seekg(0, ios::end);
+    techFileLength = techFile.tellg();
+    techFile.seekg(0, ios::beg);
 
-    //size of DRAM
-    assert(paradocument.HasMember("Size"));
-    assert(paradocument["Size"].IsNumber()); 
-    double dramSize_value = paradocument["Size"].GetDouble();
-    dramSize = dramSize_value*drs::gibibit;
+    // Create an internal copy as a C-style string
+    char* techFileText = new char[techFileLength + 1];
+    techFile.read(techFileText, techFileLength);
+    techFileText[ techFileLength ] = '\0';
 
-    //# of banks
-    assert(paradocument.HasMember("Numberofbanks"));
-    assert(paradocument["Numberofbanks"].IsNumber());
-    double nBanks_value = paradocument["Numberofbanks"].GetDouble();
-    nBanks = nBanks_value*drs::bank;
+    // Close the file
+    techFile.close();
 
-    //Interface
-    assert(paradocument.HasMember("Interface"));
-    assert(paradocument["Interface"].IsNumber());   
-    Interface = paradocument["Interface"].GetDouble();
+    // Parse the file as a JSON Document
+    rapidjson::Document techDocument;
+    techDocument.Parse(techFileText);
+    if ( techDocument.HasParseError() ) {
+        string exceptionMsgThrown;
+        exceptionMsgThrown.append("[ERROR] ");
+        exceptionMsgThrown.append("Could not parse ");
+        exceptionMsgThrown.append(techFileName);
+        exceptionMsgThrown.append(" as a JSON document.\n");
+        throw exceptionMsgThrown;
+    }
 
-    //DRAM Frequency
-    assert(paradocument.HasMember("Freq"));
-    assert(paradocument["Freq"].IsNumber());
-    double dramFreq_value = paradocument["Freq"].GetDouble();
-    dramFreq = dramFreq_value*drs::megahertz_clock;
+    try {
+        //Technology node in nm
+        technologyNode = getJSONNumber(techDocument, "Technologynode")
+                         * drs::nanometer;
 
-    //DRAM Core Frequency
-    //if this value is not specified then calculate this value:
-    //Core Freq= Freq / (n.prefetch / n.DataRate)
-    assert(paradocument.HasMember("CoreFreq"));
-    assert(paradocument["CoreFreq"].IsNumber());
-    double dramCoreFreq_value = paradocument["CoreFreq"].GetDouble();
-    dramCoreFreq = dramCoreFreq_value*drs::megahertz_clock;
+        //Bitline per cell capa
+        capacitancePerBLCell = getJSONNumber(techDocument, "BLpercellcapa")
+                               * drs::attofarads_per_cell;
 
-    //Number of Prefetch
-    assert(paradocument.HasMember("Prefetch"));
-    assert(paradocument["Prefetch"].IsNumber());
-    Prefetch = paradocument["Prefetch"].GetDouble();
+        //Bitline per cell resistance
+        resistancePerBLCell = getJSONNumber(techDocument, "BLpercellresistance")
+                              * drs::ohm_per_cell;
+        //Wordline per cell capa
+        capacitancePerWLCell = getJSONNumber(techDocument, "WLpercellcapa")
+                               * drs::attofarads_per_cell;
 
-    //additional latency required for trl calculation
-    assert(paradocument.HasMember("additionallatency"));
-    assert(paradocument["additionallatency"].IsNumber());
-    double additionalLatencyTrl_value = paradocument["additionallatency"].GetDouble();
-    additionalLatencyTrl = additionalLatencyTrl_value*drs::clock;
+        //Wordline per cell resistance
+        resistancePerWLCell = getJSONNumber(techDocument, "WLpercellresistance")
+                              * drs::ohm_per_cell;
 
-    // Row buffer size this value is given in KBytes (Hard conversion needed)
-    assert(paradocument.HasMember("Rowbuffersize"));
-    assert(paradocument["Rowbuffersize"].IsNumber());
-    double pageSize_value  = paradocument["Rowbuffersize"].GetDouble();
-    pageStorage = pageSize_value*drs::kibibyte_per_page;
+        //cell capa
+        capacitancePerCell = getJSONNumber(techDocument, "cellcapa")
+                             * drs::picofarads_per_cell;
+
+        //cell resistance
+        resistancePerCell = getJSONNumber(techDocument, "cellresistance")
+                            * drs::ohm_per_cell;
+
+        //wire resistance in ohm/mm
+        wireResistance = getJSONNumber(techDocument, "wireresistance")
+                         * drs::ohm_per_millimeter;
+
+        //wire capa in ff/mm
+        wireCapacitance = getJSONNumber(techDocument, "wirecapa")
+                          * drs::femtofarad_per_millimeter;
+
+        //cell width
+        cellWidth = getJSONNumber(techDocument, "cellwidth")
+                    * drs::micrometers_per_cell;
+
+        //cell height
+        cellHeight = getJSONNumber(techDocument, "cellheight")
+                     * drs::micrometers_per_cell;
+
+        //cells per subarray row
+        cellsPerLWL = getJSONNumber(techDocument, "cellsperrow")
+                      * drs::cell_per_subarray;
+
+        //cells per subarray row redundancy
+        cellsPerLWLRedundancy = getJSONNumber(techDocument, "cellsperrowredundancy")
+                                * drs::cell_per_subarray;
+
+        //cells per subarray column
+        cellsPerLBL = getJSONNumber(techDocument, "cellspercolumn")
+                      * drs::cell_per_subarray;
+
+        //cells per subarray column redundancy
+        cellsPerLBLRedundancy = getJSONNumber(techDocument, "cellspercolumnredundancy")
+                                * drs::cell_per_subarray;
+
+        //sense amp height
+        BLSenseAmpHeight = getJSONNumber(techDocument, "blsa-height")
+                           * drs::micrometer;
+
+        //wordline driver width
+        WLDriverWidth = getJSONNumber(techDocument, "WL-driver")
+                        * drs::micrometer;
+
+        //global wordline driver resistance in ohm
+        GWLDriverResistance = getJSONNumber(techDocument, "GWLDresistance")
+                              * si::ohm;
+
+        //Local wordline driver resistance in ohm
+        LWLDriverResistance = getJSONNumber(techDocument, "LWDresistance")
+                              * drs::ohm_per_subarray;
+
+        //WRrestore resistance
+        WRResistance = getJSONNumber(techDocument, "WRresistance")
+                       * drs::ohm_per_subarray;
+
+        //CSL driver resistance in ohm
+        CSLDriverResistance = getJSONNumber(techDocument, "CSLDresistance")
+                              * si::ohm;
+        //GDL driver resistance in ohm
+        GDLDriverResistance = getJSONNumber(techDocument, "GDLDresistance")
+                              * si::ohm;
+        //DQ driver resistance in ohm
+        DQDriverResistance = getJSONNumber(techDocument, "DQDresistance")
+                             * si::ohm;
+        //current of SSA in milliamperes
+        Issa = getJSONNumber(techDocument, "I_SSA")
+               * drs::microampere;
+        //voltage vpp
+        vpp = getJSONNumber(techDocument, "vpp")
+              * si::volt;
+        //voltage vcc
+        vcc = getJSONNumber(techDocument, "vcc")
+              * si::volt;
+        //backgroundcurrentslope
+        backgroundCurrentSlope = getJSONNumber(techDocument, "Backgroundcurrentslope")
+                                 * drs::milliamperes_per_megahertz_clock;
+
+        //backgroundcurrentoffset
+        backgroundCurrentOffset = getJSONNumber(techDocument, "Backgroundcurrentoffset")
+                                  * drs::milliampere;
+
+        //Current per IO pin (Off Chip Driver)
+        IddOcdRcvAtFrequencyPoint = getJSONNumber(techDocument, "idd_ocd")
+                                    * drs::milliampere;
+
+        //IDD pro IO for OCD
+        IddOcdRcvFrequencyPoint = getJSONNumber(techDocument, "idd_ocd_freq")
+                                  * drs::megahertz_clock;
+
+        //Row decoder (between tiles) width
+        rowDecoderWidth = getJSONNumber(techDocument, "rowDecoderWidth")
+                          * drs::micrometer;
+
+        //Column decoder (between tiles) width
+        colDecoderHeight = getJSONNumber(techDocument, "colDecoderHeight")
+                           * drs::micrometer;
+
+        //DQ driver (between banks) height
+        DQDriverHeight = getJSONNumber(techDocument, "DQDriverHeight")
+                         * drs::micrometer;
+
+        //Space between banks driver in width direction
+        bankSpacingWidth = getJSONNumber(techDocument, "bankSpacingWidth")
+                           * drs::micrometer;
+
+    } catch(string exceptionMsgThrown) {
+        throw exceptionMsgThrown;
+    }
 
 
-    // DLLON/OFF Feature
-    assert(paradocument.HasMember("DLL"));
-    assert(paradocument["DLL"].IsString());
-    DLL = paradocument["DLL"].GetString();
-
-    // Required tref by user
-    assert(paradocument.HasMember("Requiredrefreshperiod"));
-    assert(paradocument["Requiredrefreshperiod"].IsNumber());
-    double tRef1Required_value  = paradocument["Requiredrefreshperiod"].GetDouble();
-    tRef1Required = tRef1Required_value*drs::microseconds;
-
-    // Ratio of banks refreshed pro command
-    assert(paradocument.HasMember("banksrefreshfactor"));
-    assert(paradocument["banksrefreshfactor"].IsNumber());
-    banksRefreshFactor = paradocument["banksrefreshfactor"].GetDouble();
-
-    // Subarray to rowbuffer factor
-    assert(paradocument.HasMember("subArrayToPageFactor"));
-    assert(paradocument["subArrayToPageFactor"].IsNumber());
-    subArrayToPageFactor = paradocument["subArrayToPageFactor"].GetDouble();
-
-    // Retention time
-    assert(paradocument.HasMember("retentiontime"));
-    assert(paradocument["retentiontime"].IsNumber());
-    double retentionTime_value = paradocument["retentiontime"].GetDouble();
-    retentionTime = retentionTime_value*drs::millisecond;
-
-    // Number of tiles per bank
-    assert(paradocument.HasMember("tilesperbank"));
-    assert(paradocument["tilesperbank"].IsNumber());
-    double tilesPerBank_value = paradocument["tilesperbank"].GetDouble();
-    tilesPerBank = tilesPerBank_value*drs::tile_per_bank;
-
-    // Spanning factor of pages across tiles
-    assert(paradocument.HasMember("pageSpanningFactor"));
-    assert(paradocument["pageSpanningFactor"].IsNumber());
-    double pageSpanningFactor_value = paradocument["pageSpanningFactor"].GetDouble();
-    pageSpanningFactor = pageSpanningFactor_value*drs::page_per_tile;
-
-    // DRAM Bitline Architecture: OPEN or FOLDED bit-line
-    assert(paradocument.HasMember("bitlineArchitecture"));
-    assert(paradocument["bitlineArchitecture"].IsString());
-    BLArchitecture = paradocument["bitlineArchitecture"].GetString();
 
 
-//  !!!!!!!! TIMING VARIABLES WHICH WHERE HARDCODED IN THE ORIGINAL VERSION !!!!!!!!
-    //Driver offset !!!  TODO: What exactly is it?  !!!
-    assert(paradocument.HasMember("driverOffset"));
-    assert(paradocument["driverOffset"].IsNumber());
-    double driverOffset_value = paradocument["driverOffset"].GetDouble();
-    driverOffset = driverOffset_value*drs::nanoseconds;
+    // Try to open architecture file given by the user
+    ifstream archFile(archFileName);
+    // Test if file was (and still is) opened
+    if ( archFile.is_open() == false ) {
+        string exceptionMsgThrown;
+        exceptionMsgThrown.append("[ERROR] ");
+        exceptionMsgThrown.append("Could not open architecture file: ");
+        exceptionMsgThrown.append(archFileName);
+        exceptionMsgThrown.append("!\n");
+        throw exceptionMsgThrown;
+    }
 
-    //SSA Delay !!!  TODO: Check value !!!
-    assert(paradocument.HasMember("BLSADelay"));
-    assert(paradocument["BLSADelay"].IsNumber());
-    double BLSADelay_value = paradocument["BLSADelay"].GetDouble();
-    BitlineSenseAmpDelay = BLSADelay_value*drs::nanoseconds;
+    // Find length of the file
+    int archFileLength;
+    archFile.seekg(0, ios::end);
+    archFileLength = archFile.tellg();
+    archFile.seekg(0, ios::beg);
 
-    //Load capacitance !!!  TODO: What exactly is it?  !!!
-    assert(paradocument.HasMember("CSLLoadCapacitance"));
-    assert(paradocument["CSLLoadCapacitance"].IsNumber());
-    double CSLLoadCapacitance_value = paradocument["CSLLoadCapacitance"].GetDouble();
-    CSLLoadCapacitance = CSLLoadCapacitance_value*drs::femtofarads_per_bank;
+    // Create an internal copy as a C-style string
+    char* archFileText = new char[archFileLength + 1];
+    archFile.read(archFileText, archFileLength);
+    archFileText[ archFileLength ] = '\0';
 
-    //Command decoder latency !!!  TODO: What exactly is it?  !!!
-    assert(paradocument.HasMember("cmdDecoderLatency"));
-    assert(paradocument["cmdDecoderLatency"].IsNumber());
-    double cmdDecoderLatency_value = paradocument["cmdDecoderLatency"].GetDouble();
-    cmdDecoderLatency = cmdDecoderLatency_value*drs::nanoseconds;
+    // Close the file
+    archFile.close();
 
-    //Internal latency !!!  TODO: What exactly is it?  !!!
-    assert(paradocument.HasMember("interfaceLatency"));
-    assert(paradocument["interfaceLatency"].IsNumber());
-    double interfaceLatency_value = paradocument["interfaceLatency"].GetDouble();
-    interfaceLatency = interfaceLatency_value*drs::nanoseconds;
+    // Parse the file as a JSON Document
+    rapidjson::Document archDocument;
+    archDocument.Parse(archFileText);
+    if ( archDocument.HasParseError() ) {
+        string exceptionMsgThrown;
+        exceptionMsgThrown.append("[ERROR] ");
+        exceptionMsgThrown.append("Could not parse ");
+        exceptionMsgThrown.append(archFileName);
+        exceptionMsgThrown.append(" as a JSON document.\n");
+        throw exceptionMsgThrown;
+    }
 
-    //I/O latency !!!  TODO: What exactly is it?  !!!
-    assert(paradocument.HasMember("IODelay"));
-    assert(paradocument["IODelay"].IsNumber());
-    double IODelay_value = paradocument["IODelay"].GetDouble();
-    IODelay = IODelay_value*drs::nanoseconds;
+    try {
+        //DRAM Type
+        dramType = getJSONString(archDocument, "DRAMType");
 
-    //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
-    assert(paradocument.HasMember("SSAPrechargeDelay"));
-    assert(paradocument["SSAPrechargeDelay"].IsNumber());
-    double SSAPrechargeDelay_value = paradocument["SSAPrechargeDelay"].GetDouble();
-    SSAPrechargeDelay = SSAPrechargeDelay_value*drs::nanoseconds;
+        //3D ON/OFF Feature
+        //set 3D on for HMC/WideIO
+        ThreeD = getJSONString(archDocument, "3D");
 
-    //Security margin !!!  TODO: What exactly is it?  !!!
-    assert(paradocument.HasMember("securityMargin"));
-    assert(paradocument["securityMargin"].IsNumber());
-    double securityMargin_value = paradocument["securityMargin"].GetDouble();
-    securityMargin = securityMargin_value*drs::nanoseconds;
+        // vaults per layer
+        // set to 0 for non 3D DRAMs
+        vaultsPerLayer = getJSONNumber(archDocument, "Vaultsperlayer");
 
-    //Equalizer delay !!!  TODO: What exactly is it?  !!!
-    assert(paradocument.HasMember("equalizerDelay"));
-    assert(paradocument["equalizerDelay"].IsNumber());
-    double equalizerDelay_value = paradocument["equalizerDelay"].GetDouble();
-    equalizerDelay = equalizerDelay_value*drs::nanoseconds;
+        //size of DRAM
+        dramSize = getJSONNumber(archDocument, "Size")
+                         * drs::gibibit;
 
-    //Act cmd delay !!!  TODO: What exactly is it?  !!!
-    assert(paradocument.HasMember("actCmdDelay"));
-    assert(paradocument["actCmdDelay"].IsNumber());
-    double actCmdDelay_value = paradocument["actCmdDelay"].GetDouble();
-    actCmdDelay = actCmdDelay_value*drs::nanoseconds;
+        //# of banks
+        nBanks = getJSONNumber(archDocument, "Numberofbanks")
+                         * drs::bank;
 
-    //pre cmd delay !!!  TODO: What exactly is it?  !!!
-    assert(paradocument.HasMember("preCmdDelay"));
-    assert(paradocument["preCmdDelay"].IsNumber());
-    double preCmdDelay_value = paradocument["preCmdDelay"].GetDouble();
-    preCmdDelay = preCmdDelay_value*drs::nanoseconds;
+        //Interface
+        Interface = getJSONNumber(archDocument, "Interface");
 
-    //offset !!!  TODO: What exactly is it?  !!!
-    assert(paradocument.HasMember("offset"));
-    assert(paradocument["offset"].IsNumber());
-    double offset_value = paradocument["offset"].GetDouble();
-    offset = offset_value*drs::nanoseconds;
+        //DRAM Frequency
+        dramFreq = getJSONNumber(archDocument, "Freq")
+                         * drs::megahertz_clock;
 
+        //DRAM Core Frequency
+        //if this value is not specified then calculate this value:
+        //Core Freq= Freq / (n.prefetch / n.DataRate)
+        dramCoreFreq = getJSONNumber(archDocument, "CoreFreq")
+                         * drs::megahertz_clock;
+
+        //Number of Prefetch
+        Prefetch = getJSONNumber(archDocument, "Prefetch");
+
+        //additional latency required for trl calculation
+        additionalLatencyTrl = getJSONNumber(archDocument, "additionallatency")
+                         * drs::clock;
+
+        // Row buffer size this value is given in KBytes (Hard conversion needed)
+        pageStorage = getJSONNumber(archDocument, "Rowbuffersize")
+                         * drs::kibibyte_per_page;
+
+
+        // DLLON/OFF Feature
+        DLL = getJSONString(archDocument, "DLL");
+
+        // Required tref by user
+        tRef1Required = getJSONNumber(archDocument, "Requiredrefreshperiod")
+                         * drs::microseconds;
+
+        // Ratio of banks refreshed pro command
+        banksRefreshFactor = getJSONNumber(archDocument, "banksrefreshfactor");
+
+        // Subarray to rowbuffer factor
+        subArrayToPageFactor = getJSONNumber(archDocument, "subArrayToPageFactor");
+
+        // Retention time
+        retentionTime = getJSONNumber(archDocument, "retentiontime")
+                         * drs::millisecond;
+
+        // Number of tiles per bank
+        tilesPerBank = getJSONNumber(archDocument, "tilesperbank")
+                         * drs::tile_per_bank;
+
+        // Spanning factor of pages across tiles
+        pageSpanningFactor = getJSONNumber(archDocument, "pageSpanningFactor")
+                         * drs::page_per_tile;
+
+        // DRAM Bitline Architecture: OPEN or FOLDED bit-line
+        BLArchitecture = getJSONString(archDocument, "bitlineArchitecture");
+
+
+    //  !!!!!!!! TIMING VARIABLES WHICH WHERE HARDCODED IN THE ORIGINAL VERSION !!!!!!!!
+        //Driver offset !!!  TODO: What exactly is it?  !!!
+        driverOffset = getJSONNumber(archDocument, "driverOffset")
+                         * drs::nanoseconds;
+
+        //SSA Delay !!!  TODO: Check value !!!
+        BitlineSenseAmpDelay = getJSONNumber(archDocument, "BLSADelay")
+                         * drs::nanoseconds;
+
+        //Load capacitance !!!  TODO: What exactly is it?  !!!
+        CSLLoadCapacitance = getJSONNumber(archDocument, "CSLLoadCapacitance")
+                         * drs::femtofarads_per_bank;
+
+        //Command decoder latency !!!  TODO: What exactly is it?  !!!
+        cmdDecoderLatency = getJSONNumber(archDocument, "cmdDecoderLatency")
+                         * drs::nanoseconds;
+
+        //Internal latency !!!  TODO: What exactly is it?  !!!
+        interfaceLatency = getJSONNumber(archDocument, "interfaceLatency")
+                         * drs::nanoseconds;
+
+        //I/O latency !!!  TODO: What exactly is it?  !!!
+        IODelay = getJSONNumber(archDocument, "IODelay")
+                         * drs::nanoseconds;
+
+        //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
+        SSAPrechargeDelay = getJSONNumber(archDocument, "SSAPrechargeDelay")
+                         * drs::nanoseconds;
+
+        //Security margin !!!  TODO: What exactly is it?  !!!
+        securityMargin = getJSONNumber(archDocument, "securityMargin")
+                         * drs::nanoseconds;
+
+        //Equalizer delay !!!  TODO: What exactly is it?  !!!
+        equalizerDelay = getJSONNumber(archDocument, "equalizerDelay")
+                         * drs::nanoseconds;
+
+        //Act cmd delay !!!  TODO: What exactly is it?  !!!
+        actCmdDelay = getJSONNumber(archDocument, "actCmdDelay")
+                         * drs::nanoseconds;
+
+        //pre cmd delay !!!  TODO: What exactly is it?  !!!
+        preCmdDelay = getJSONNumber(archDocument, "preCmdDelay")
+                         * drs::nanoseconds;
+
+        //offset !!!  TODO: What exactly is it?  !!!
+        offset = getJSONNumber(archDocument, "offset")
+                         * drs::nanoseconds;
+
+    } catch(string exceptionMsgThrown) {
+        throw exceptionMsgThrown;
+    }
 
 }

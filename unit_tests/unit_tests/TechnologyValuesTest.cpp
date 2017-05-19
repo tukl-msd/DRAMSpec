@@ -56,24 +56,30 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
+
     string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-
     string expectedMsg("Empty");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
                         << "\nGot: " << exceptionMsg);
 
-    TechnologyValues techValues(inputFileName.technologyFileName[0],
-                                inputFileName.architectureFileName[0]);
-
-    techValues.readjson(techValues.techName ,
-                        techValues.paraName);
+    TechnologyValues techValues;
+    try {
+        techValues = TechnologyValues(inputFileName.technologyFileName[0],
+                         inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
     BOOST_CHECK_MESSAGE( techValues.technologyNode == 58*drs::nanometer,
                         "Technology node different from the expected."
@@ -423,18 +429,23 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-
     string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    TechnologyValues techValues(inputFileName.technologyFileName[0],
-                                inputFileName.architectureFileName[0]);
+    TechnologyValues techValues;
+    try {
+        techValues = TechnologyValues(inputFileName.technologyFileName[0],
+                         inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    techValues.readjson(techValues.techName ,
-                        techValues.paraName);
 
     BOOST_CHECK_MESSAGE( techValues.technologyNode == 1*drs::nanometer,
                         "Technology node different from the expected."
@@ -763,6 +774,164 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
 
 }
 
+
+BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_no_tech_file )
+{
+    int sim_argc = 5;
+    char* sim_argv[] = {"./executable",
+                        "-t",
+                        "../../technology_input/not_a_file.json",
+                        "-p",
+                        "../../architecture_input/test_architecture.json"};
+
+    ArgumentsParser inputFileName(sim_argc, sim_argv);
+    string exceptionMsg("Empty");
+    try {
+        inputFileName.runArgParser();
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    string expectedMsg("Empty");
+    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
+                        "Error message different from what was expected."
+                        << "\nExpected: " << expectedMsg
+                        << "\nGot: " << exceptionMsg);
+
+    TechnologyValues techValues;
+    try {
+        techValues = TechnologyValues(inputFileName.technologyFileName[0],
+                         inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("[ERROR] ");
+    expectedMsg.append("Could not open technology file: ");
+    expectedMsg.append(inputFileName.technologyFileName[0]);
+    expectedMsg.append("!\n");
+    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
+                        "Error message different from what was expected."
+                        << "\nExpected: " << expectedMsg
+                        << "\nGot: " << exceptionMsg);
+}
+
+BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_no_arch_file )
+{
+    int sim_argc = 5;
+    char* sim_argv[] = {"./executable",
+                        "-t",
+                        "../../technology_input/test_technology.json",
+                        "-p",
+                        "../../architecture_input/not_a_file.json"};
+
+    ArgumentsParser inputFileName(sim_argc, sim_argv);
+    string exceptionMsg("Empty");
+    try {
+        inputFileName.runArgParser();
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    string expectedMsg("Empty");
+    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
+                        "Error message different from what was expected."
+                        << "\nExpected: " << expectedMsg
+                        << "\nGot: " << exceptionMsg);
+
+    TechnologyValues techValues;
+    try {
+        techValues = TechnologyValues(inputFileName.technologyFileName[0],
+                                      inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("[ERROR] ");
+    expectedMsg.append("Could not open architecture file: ");
+    expectedMsg.append(inputFileName.architectureFileName[0]);
+    expectedMsg.append("!\n");
+    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
+                        "Error message different from what was expected."
+                        << "\nExpected: " << expectedMsg
+                        << "\nGot: " << exceptionMsg);
+
+}
+
+BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_bad_tech_file )
+{
+    int sim_argc = 5;
+    char* sim_argv[] = {"./executable",
+                        "-t",
+                        "../../main.cpp",
+                        "-p",
+                        "../../architecture_input/test_architecture.json"};
+
+    ArgumentsParser inputFileName(sim_argc, sim_argv);
+    string exceptionMsg("Empty");
+    try {
+        inputFileName.runArgParser();
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    string expectedMsg("Empty");
+    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
+                        "Error message different from what was expected."
+                        << "\nExpected: " << expectedMsg
+                        << "\nGot: " << exceptionMsg);
+
+    TechnologyValues techValues;
+    try {
+        techValues = TechnologyValues(inputFileName.technologyFileName[0],
+                                      inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("[ERROR] ");
+    expectedMsg.append("Could not parse ");
+    expectedMsg.append(inputFileName.technologyFileName[0]);
+    expectedMsg.append(" as a JSON document.\n");
+    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
+                        "Error message different from what was expected."
+                        << "\nExpected: " << expectedMsg
+                        << "\nGot: " << exceptionMsg);
+
+}
+
+BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_bad_arch_file )
+{
+    int sim_argc = 5;
+    char* sim_argv[] = {"./executable",
+                        "-t",
+                        "../../technology_input/test_technology.json",
+                        "-p",
+                        "../../main.cpp"};
+
+    ArgumentsParser inputFileName(sim_argc, sim_argv);
+    string exceptionMsg("Empty");
+    try {
+        inputFileName.runArgParser();
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    string expectedMsg("Empty");
+    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
+                        "Error message different from what was expected."
+                        << "\nExpected: " << expectedMsg
+                        << "\nGot: " << exceptionMsg);
+
+    TechnologyValues techValues;
+    try {
+        techValues = TechnologyValues(inputFileName.technologyFileName[0],
+                                      inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("[ERROR] ");
+    expectedMsg.append("Could not parse ");
+    expectedMsg.append(inputFileName.architectureFileName[0]);
+    expectedMsg.append(" as a JSON document.\n");
+    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
+                        "Error message different from what was expected."
+                        << "\nExpected: " << expectedMsg
+                        << "\nGot: " << exceptionMsg);
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 

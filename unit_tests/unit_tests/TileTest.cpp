@@ -58,21 +58,29 @@ BOOST_AUTO_TEST_CASE( checkTile_real_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    Tile tile;
+    try {
+        tile = Tile(inputFileName.technologyFileName[0],
+                    inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    Tile tile(inputFileName.technologyFileName[0],
-                      inputFileName.architectureFileName[0]);
 
     BOOST_CHECK_MESSAGE( tile.tileStorage == 134217728/2.0*drs::bits_per_tile,
                         "Tile storage size different from the expected."
@@ -126,26 +134,23 @@ BOOST_AUTO_TEST_CASE( checkTile_dummy_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
     try {
         Tile tile(inputFileName.technologyFileName[0],
                   inputFileName.architectureFileName[0]);
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-
     expectedMsg = "[ERROR] Architecture must have ";
     expectedMsg.append("1, 2 or 4 tile per bank.");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
@@ -166,27 +171,35 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    Tile tile;
+    try {
+        tile = Tile(inputFileName.technologyFileName[0],
+                    inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    Tile tile(inputFileName.technologyFileName[0],
-                      inputFileName.architectureFileName[0]);
 
     tile.tilesPerBank = 1*drs::tiles_per_bank;
     tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
     try {
         tile.tileCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
@@ -200,7 +213,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     tile.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
         tile.tileCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     BOOST_CHECK_MESSAGE( tile.tileStorage == 134217728*drs::bits_per_tile,
@@ -246,7 +259,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
     try {
         tile.tileCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     expectedMsg = "[ERROR] If architecture has 2 tile per bank, ";
@@ -259,7 +272,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     tile.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
         tile.tileCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     BOOST_CHECK_MESSAGE( tile.tileStorage == 67108864*drs::bits_per_tile,
@@ -304,7 +317,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     tile.pageSpanningFactor = 0.5*drs::pages_per_tile;
     try {
         tile.tileCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     BOOST_CHECK_MESSAGE( tile.tileStorage == 67108864*drs::bits_per_tile,
@@ -350,7 +363,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
     try {
         tile.tileCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
 
@@ -364,7 +377,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     tile.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
         tile.tileCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     BOOST_CHECK_MESSAGE( tile.tileStorage == 33554432*drs::bits_per_tile,
@@ -409,7 +422,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     tile.pageSpanningFactor = 0.5*drs::pages_per_tile;
     try {
         tile.tileCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     BOOST_CHECK_MESSAGE( tile.tileStorage == 33554432*drs::bits_per_tile,
@@ -454,7 +467,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     tile.pageSpanningFactor = 0.25*drs::pages_per_tile;
     try {
         tile.tileCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     BOOST_CHECK_MESSAGE( tile.tileStorage == 33554432*drs::bits_per_tile,

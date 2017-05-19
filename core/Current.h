@@ -49,16 +49,16 @@ class Current : public Timing
           currentInitialize();
       }
 
-      Current(const std::string& techname,
-              const std::string& paraname,
+      Current(const string& technologyFileName,
+              const string& architectureFileName,
               const bool IOTerminationCurrentFlag) :
-          Timing(techname, paraname)
+          Timing(technologyFileName, architectureFileName)
       {
           currentInitialize();
           includeIOTerminationCurrent = IOTerminationCurrentFlag;
           try {
               currentCompute();
-          }catch (std::string exceptionMsgThrown){
+          }catch (string exceptionMsgThrown){
               throw exceptionMsgThrown;
           }
       }

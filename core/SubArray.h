@@ -54,8 +54,9 @@ class SubArray : public TechnologyValues
         subArrayInitialize();
     }
 
-    SubArray(const std::string& techname, const std::string& paraname) :
-        TechnologyValues(techname,paraname)
+    SubArray(const string& technologyFileName,
+             const string& architectureFileName) :
+        TechnologyValues(technologyFileName, architectureFileName)
     {
         subArrayInitialize();
         subArrayCompute();

@@ -56,21 +56,29 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    Timing timing;
+    try {
+        timing = Timing(inputFileName.technologyFileName[0],
+                    inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    Timing timing(inputFileName.technologyFileName[0],
-                      inputFileName.architectureFileName[0]);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.cellDelay, 3) == 0.922*drs::nanoseconds,
                         "Delay inside cell different from the expected."
@@ -330,21 +338,29 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    Timing timing;
+    try {
+        timing = Timing(inputFileName.technologyFileName[0],
+                    inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    Timing timing(inputFileName.technologyFileName[0],
-                      inputFileName.architectureFileName[0]);
 
     timing.pageStorage = 0.25 * drs::kibibytes_per_page;
     timing.subArrayToPageFactor = 1;
@@ -353,7 +369,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
     exceptionMsg = "Empty";
     try {
         timing.timingCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     expectedMsg.clear();
@@ -398,7 +414,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
     exceptionMsg = "Empty";
     try {
         timing.timingCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     expectedMsg.clear();
@@ -443,7 +459,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
     exceptionMsg = "Empty";
     try {
         timing.timingCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     expectedMsg.clear();
@@ -488,7 +504,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
     exceptionMsg = "Empty";
     try {
         timing.timingCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     expectedMsg.clear();
@@ -533,7 +549,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
     exceptionMsg = "Empty";
     try {
         timing.timingCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     expectedMsg.clear();
@@ -579,7 +595,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
     exceptionMsg = "Empty";
     try {
         timing.timingCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     expectedMsg.clear();
@@ -625,7 +641,7 @@ BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
     exceptionMsg = "Empty";
     try {
         timing.timingCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
     expectedMsg.clear();

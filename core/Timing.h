@@ -54,13 +54,14 @@ class Timing : public Chip
         timingInitialize();
     }
 
-    Timing(const std::string& techname, const std::string& paraname) :
-        Chip(techname, paraname)
+    Timing(const string& technologyFileName,
+           const string& architectureFileName) :
+        Chip(technologyFileName, architectureFileName)
     {
         timingInitialize();
         try {
             timingCompute();
-        }catch (std::string exceptionMsgThrown){
+        }catch (string exceptionMsgThrown){
             throw exceptionMsgThrown;
         }
     }

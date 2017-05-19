@@ -57,21 +57,30 @@ BOOST_AUTO_TEST_CASE( checkSubArray_real_input)
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    SubArray subarray;
 
-    SubArray subarray(inputFileName.technologyFileName[0],
-                      inputFileName.architectureFileName[0]);
+    try {
+        subarray = SubArray(inputFileName.technologyFileName[0],
+                            inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
+
 
     BOOST_CHECK_MESSAGE( subarray.subArrayStorage == 262144*drs::bits_per_subarray,
                          "Size of subarray different from the expected."
@@ -126,21 +135,30 @@ BOOST_AUTO_TEST_CASE( checkSubArray_dummy_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    SubArray subarray;
 
-    SubArray subarray(inputFileName.technologyFileName[0],
-                      inputFileName.architectureFileName[0]);
+    try {
+        subarray = SubArray(inputFileName.technologyFileName[0],
+                            inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
+
 
     BOOST_CHECK_MESSAGE( subarray.subArrayStorage == 1*drs::bits_per_subarray,
                          "Size of subarray different from the expected."
@@ -196,23 +214,33 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    SubArray subarray;
 
-    SubArray subarray(inputFileName.technologyFileName[0],
+    try {
+        subarray = SubArray(inputFileName.technologyFileName[0],
+                            inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
+
+
+    subarray.readjson(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
-
-
     subarray.subArrayCompute();
     subarray.pageStorage = 1*drs::kibibytes_per_page;
     subarray. driverUpdate();
@@ -221,6 +249,8 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
                         << "\nExpected: " << 218*si::ohm
                         << "\nGot: " << subarray.GWLDriverResistance);
 
+    subarray.readjson(inputFileName.technologyFileName[0],
+                      inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
     subarray.pageStorage = 2*drs::kibibytes_per_page;
     subarray. driverUpdate();
@@ -229,6 +259,8 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
                         << "\nExpected: " << 18*si::ohm
                         << "\nGot: " << subarray.GWLDriverResistance);
 
+    subarray.readjson(inputFileName.technologyFileName[0],
+                      inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
     subarray.pageStorage = 4*drs::kibibytes_per_page;
     subarray. driverUpdate();
@@ -237,6 +269,8 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
                         << "\nExpected: " << -182*si::ohm
                         << "\nGot: " << subarray.GWLDriverResistance);
 
+    subarray.readjson(inputFileName.technologyFileName[0],
+                      inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
     subarray.pageStorage = 8*drs::kibibytes_per_page;
     subarray. driverUpdate();
@@ -245,6 +279,8 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
                         << "\nExpected: " << -282*si::ohm
                         << "\nGot: " << subarray.GWLDriverResistance);
 
+    subarray.readjson(inputFileName.technologyFileName[0],
+                      inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
     subarray.pageStorage = 16*drs::kibibytes_per_page;
     subarray. driverUpdate();
@@ -266,23 +302,33 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    SubArray subarray;
 
-    SubArray subarray(inputFileName.technologyFileName[0],
+    try {
+        subarray = SubArray(inputFileName.technologyFileName[0],
+                            inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
+
+
+    subarray.readjson(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
-
-
     subarray.subArrayCompute();
     subarray.subArrayRowStorage = 255*drs::bits_per_subarray; // < 256
     subarray. driverUpdate();
@@ -297,6 +343,8 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.WRResistance);
 
 
+    subarray.readjson(inputFileName.technologyFileName[0],
+                      inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
     subarray.subArrayRowStorage = 256*drs::bits_per_subarray;
     subarray. driverUpdate();
@@ -311,6 +359,8 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.WRResistance);
 
 
+    subarray.readjson(inputFileName.technologyFileName[0],
+                      inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
     subarray.subArrayRowStorage = 512*drs::bits_per_subarray;
     subarray. driverUpdate();
@@ -325,6 +375,8 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.WRResistance);
 
 
+    subarray.readjson(inputFileName.technologyFileName[0],
+                      inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
     subarray.subArrayRowStorage = 1024*drs::bits_per_subarray;
     subarray. driverUpdate();
@@ -339,6 +391,8 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.WRResistance);
 
 
+    subarray.readjson(inputFileName.technologyFileName[0],
+                      inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
     subarray.subArrayRowStorage = 1025*drs::bits_per_subarray; // > 1024
     subarray. driverUpdate();

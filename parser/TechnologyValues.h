@@ -50,6 +50,8 @@ namespace si=boost::units::si;
 namespace inf=boost::units::information;
 namespace drs=boost::units::dramspec;
 
+using namespace std;
+
 class TechnologyValues
 {
   public:
@@ -59,18 +61,23 @@ class TechnologyValues
         technologyValuesInitialize();
     }
 
-    TechnologyValues(const std::string& techname,
-                     const std::string& paraname)
+    TechnologyValues(const string& technologyFileName,
+                     const string& architectureFileName)
     {
         technologyValuesInitialize();
-        readjson(techname, paraname);
+        try {
+            readjson(technologyFileName, architectureFileName);
+        } catch(string exceptionMsgThrown) {
+            throw exceptionMsgThrown;
+        }
+
     }
 
     // Technologyfile name to be read
-    std::string techName;
+    string techFileName;
 
     // Parameter file name to be read
-    std::string paraName;
+    string archFileName;
 
     //Technology node in nm
     bu::quantity<drs::nanometer_unit> technologyNode;
@@ -175,11 +182,11 @@ class TechnologyValues
     bu::quantity<drs::micrometer_unit> bankSpacingWidth;
 
     //DRAM Type
-    std::string dramType;
+    string dramType;
 
     //3D ON/OFF Feature
     //set 3D on for HMC/WideIO
-    std::string ThreeD;
+    string ThreeD;
 
     // vaults per layer
     // set to 0 for non 3D DRAMs
@@ -212,7 +219,7 @@ class TechnologyValues
     bu::quantity<drs::kibibyte_per_page_unit> pageStorage;
 
     // DLL ON/OFF Feature
-    std::string DLL;
+    string DLL;
 
     // Required tref by user
     bu::quantity<drs::microsecond_unit> tRef1Required;
@@ -233,7 +240,7 @@ class TechnologyValues
     bu::quantity<drs::page_per_tile_unit> pageSpanningFactor;
 
     // DRAM Bitline Architecture: OPEN or FOLDED bit-line
-    std::string BLArchitecture;
+    string BLArchitecture;
 
 //  !!!!!!!! TIMING VARIABLES WHICH WHERE HARDCODED IN THE ORIGINAL VERSION !!!!!!!!
     //Driver offset !!!  TODO: What exactly is it?  !!!
@@ -265,7 +272,13 @@ class TechnologyValues
 
     void technologyValuesInitialize();
 
-    void readjson(const std::string& t,const std::string& p);
+    double getJSONNumber(const rapidjson::Document& jsonDoc,
+                         const char* memberName);
+
+    string getJSONString(const rapidjson::Document& jsonDoc,
+                         const char* memberName);
+
+    void readjson(const string& t,const string& p);
 
 };
 #endif //TECHNOLOGYVALUES_H

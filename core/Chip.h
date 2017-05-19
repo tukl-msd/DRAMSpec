@@ -58,8 +58,9 @@ class Chip : public Bank
         chipInitialize();
     }
 
-    Chip(const std::string& techname,const std::string& paraname) :
-        Bank(techname,paraname)
+    Chip(const string& technologyFileName,
+         const string& architectureFileName) :
+        Bank(technologyFileName, architectureFileName)
     {
         chipInitialize();
         chipCompute();
