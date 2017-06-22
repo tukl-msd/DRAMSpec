@@ -46,6 +46,8 @@
 
 #include "rapidjson/include/rapidjson/document.h"
 
+#include "../utils/utils.h"
+
 #include "../expandedBoostUnits/Units/dramSpec_units.h"
 #include <boost/units/conversion.hpp>
 
@@ -182,15 +184,15 @@ class TechnologyValues
     //DQ driver (between banks) height
     bu::quantity<drs::micrometer_unit> DQDriverHeight;
 
-    //Space between banks driver in width direction
-    bu::quantity<drs::micrometer_unit> bankSpacingWidth;
+    //Height of the TSV area needed for each bank I/O
+    bu::quantity<drs::micrometer_unit> TSVHeight;
 
     //DRAM Type
     string dramType;
 
     //3D ON/OFF Feature
     //set 3D on for HMC/WideIO
-    string ThreeD;
+    bool is3D;
 
     // vaults per layer
     // set to 0 for non 3D DRAMs
@@ -201,6 +203,12 @@ class TechnologyValues
 
     //# of banks
     bu::quantity<drs::bank_unit> nBanks;
+
+    //# of banks
+    bu::quantity<drs::bank_unit> nHorizontalBanks;
+
+    //# of banks
+    bu::quantity<drs::bank_unit> nVerticalBanks;
 
     //Interface
     double Interface;

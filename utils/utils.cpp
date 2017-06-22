@@ -11,11 +11,11 @@
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
+ *    documentation and/or other materials provided with the distributio
  *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
+ *    this software without specific prior written permissio
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -29,21 +29,31 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji
- *          Matthias Jung
- *          Christian Weis
- *          Kamal Haddad
- *          Andr'e Lucas Chinazzo
+ * Authors: Omar Naji, Matthias Jung, Christian Weis
  */
 
-#define BOOST_TEST_MODULE testDRAMSpec
-#include <boost/test/included/unit_test.hpp>
+#include "utils.h"
+#include <stdio.h>
+#include <iostream>
 
-#include "unit_tests/ArgumentsParserTest.cpp"
-#include "unit_tests/TechnologyValuesTest.cpp"
-#include "unit_tests/SubArrayTest.cpp"
-#include "unit_tests/TileTest.cpp"
-#include "unit_tests/BankTest.cpp"
-#include "unit_tests/ChannelTest.cpp"
-#include "unit_tests/TimingTest.cpp"
-#include "unit_tests/CurrentTest.cpp"
+bool isInteger( double dn )
+{
+    double intpart;
+    return ( modf(dn, &intpart) == 0 );
+}
+
+bool isPowerOfTwo( double dn )
+{
+    unsigned int n = (unsigned int) dn;
+
+    return ( (n & (n - 1)) == 0 );
+}
+
+double timeToPercentage(double percentage)
+{
+    // Compute the amount of time an exponetial signal,
+    //  of type V(t) = 1 - exp( - t/tau )
+    //  takes to reach a given percentage of the final value.
+    //  The returned amount is given in terms of number of tau's.
+    return -log(1.0 - percentage/100.0);
+}

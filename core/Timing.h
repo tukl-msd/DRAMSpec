@@ -33,30 +33,30 @@
  */
 
 //In this class the timing specification of DRAMs is done
-//The class uses an initialized DRAM Chip to compute the timing specification
+//The class uses an initialized DRAM Channel to compute the timing specification
 
 #ifndef TIMING_H
 #define TIMING_H
 
-#include "Chip.h"
+#include "Channel.h"
 
 namespace bu=boost::units;
 namespace si=boost::units::si;
 namespace inf=boost::units::information;
 namespace drs=boost::units::dramspec;
 
-class Timing : public Chip
+class Timing : public Channel
 {
   public:
     Timing() : //Empty constructor for test proposes
-        Chip()
+        Channel()
     {
         timingInitialize();
     }
 
     Timing(const string& technologyFileName,
            const string& architectureFileName) :
-        Chip(technologyFileName, architectureFileName)
+        Channel(technologyFileName, architectureFileName)
     {
         timingInitialize();
         try {
@@ -191,8 +191,6 @@ class Timing : public Chip
     bu::quantity<drs::clock_unit> tref1_clk;
 
     void timingInitialize();
-
-    double timeToPercentage(double percentage);
 
     void trcdCalc();
 

@@ -1,0 +1,146 @@
+/*
+ * Copyright (c) 2015, University of Kaiserslautern
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
+ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andr'e Lucas Chinazzo
+ */
+
+#include "Channel.h"
+
+void
+Channel::channelInitialize()
+{
+    channelStorage = 0*drs::gibibit;
+    channelWidth = 0*drs::micrometer;
+    channelHeight = 0*drs::micrometer;
+    channelArea = 0*drs::square_millimeter;
+}
+
+void
+Channel::channelStorageCalc()
+{
+    channelStorage = dramSize;
+}
+
+void
+Channel::channelBanksPlacementAssess()
+{
+    if ( isPowerOfTwo(nBanks.value()) == false ) {
+        std::string exceptionMsgThrown("[ERROR] ");
+        exceptionMsgThrown.append("Total number of banks ");
+        exceptionMsgThrown.append("must be a power of two.");
+        throw exceptionMsgThrown;
+    }
+
+    // Defining default bank placement on channel,
+    // executed when the number of banks in neither direction is defined
+    // in the input file
+    if ( nHorizontalBanks == 0 * drs::banks &&
+         nVerticalBanks == 0 * drs::banks )
+    {
+        nVerticalBanks = pow(2, floor(log(nBanks.value())/log(4.0)) ) * drs::bank;
+        nHorizontalBanks = nBanks / nVerticalBanks * drs::banks;
+    }
+
+    // If one direction only is defined
+    // define the other one.
+    else if ( nHorizontalBanks == 0 * drs::banks )
+    {
+        if ( isPowerOfTwo(nVerticalBanks.value()) == false
+             || nVerticalBanks > nBanks ) {
+            std::string exceptionMsgThrown("[ERROR] ");
+            exceptionMsgThrown.append("Number of banks in either direction ");
+            exceptionMsgThrown.append("must be a power of two and ");
+            exceptionMsgThrown.append("less than or equal to the ");
+            exceptionMsgThrown.append("total number of banks.");
+            throw exceptionMsgThrown;
+        }
+
+        nHorizontalBanks = nBanks / nVerticalBanks * drs::banks;
+    }
+    else if ( nVerticalBanks == 0 * drs::banks )
+    {
+        if ( isPowerOfTwo(nHorizontalBanks.value()) == false
+             || nVerticalBanks > nBanks ) {
+            std::string exceptionMsgThrown("[ERROR] ");
+            exceptionMsgThrown.append("Number of banks in either direction ");
+            exceptionMsgThrown.append("must be a power of two and ");
+            exceptionMsgThrown.append("less than or equal to the ");
+            exceptionMsgThrown.append("total number of banks.");
+            throw exceptionMsgThrown;
+        }
+
+        nVerticalBanks = nBanks / nHorizontalBanks * drs::banks;
+    }
+
+    // If number of banks in both directions is defined
+    // make sure it matched with the defined total number of banks
+    else if ( nBanks * drs::bank != nHorizontalBanks * nVerticalBanks ) {
+        std::string exceptionMsgThrown("[ERROR] ");
+        exceptionMsgThrown.append("Total number of banks does not match with ");
+        exceptionMsgThrown.append("the number of banks in both directions.");
+        throw exceptionMsgThrown;
+    }
+}
+
+void
+Channel::channelLenghtCalc()
+{
+    channelWidth = nHorizontalBanks * bankWidth;
+
+    channelHeight = nVerticalBanks * bankHeight;
+}
+
+
+void
+Channel::channelAreaCalc()
+{
+    channelArea =  SCALE_QUANTITY(channelWidth, drs::millimeter_unit)
+                   * SCALE_QUANTITY(channelHeight, drs::millimeter_unit);
+}
+
+void
+Channel::channelCompute()
+{
+    channelStorageCalc();
+
+    try {
+        channelBanksPlacementAssess();
+        channelLenghtCalc();
+    }catch (string exceptionMsgThrown){
+        throw exceptionMsgThrown;
+    }
+
+    channelAreaCalc();
+}

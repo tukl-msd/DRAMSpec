@@ -31,6 +31,6 @@
     "idd_ocd_freq": 533,
     "rowDecoderWidth": 240,
     "colDecoderHeight": 200,
-    "DQDriverHeight": 500,
-    "bankSpacingWidth": 2
+    "DQDriverHeight": 250,
+    "TSVHeight": 2
 }

@@ -44,10 +44,11 @@ INCLUDEPATH += /users/chinazzo/libs/boost_1_62_0
 HEADERS += core/SubArray.h
 HEADERS += core/Tile.h
 HEADERS += core/Bank.h
-HEADERS += core/Chip.h
+HEADERS += core/Channel.h
 HEADERS += core/Timing.h
 HEADERS += core/Current.h
 
+HEADERS += utils/utils.h
 HEADERS += parser/ArgumentsParser.h
 HEADERS += parser/TechnologyValues.h
 HEADERS += parser/DramSpec.h
@@ -139,11 +140,12 @@ HEADERS += expandedBoostUnits/dramSpecUnitsSystem.h
 SOURCES += core/SubArray.cpp
 SOURCES += core/Tile.cpp
 SOURCES += core/Bank.cpp
-SOURCES += core/Chip.cpp
+SOURCES += core/Channel.cpp
 SOURCES += core/Timing.cpp
 SOURCES += core/Current.cpp
 
-#DRAMSpec parser source files
+#DRAMSpec other source files
+SOURCES += utils/utils.cpp
 SOURCES += parser/ArgumentsParser.cpp
 SOURCES += parser/TechnologyValues.cpp
 SOURCES += parser/DramSpec.cpp
@@ -182,7 +184,7 @@ CONFIG(debug, debug|release) {
     SOURCES += unit_tests/unit_tests/SubArrayTest.cpp
     SOURCES += unit_tests/unit_tests/TileTest.cpp
     SOURCES += unit_tests/unit_tests/BankTest.cpp
-    SOURCES += unit_tests/unit_tests/ChipTest.cpp
+    SOURCES += unit_tests/unit_tests/ChannelTest.cpp
     SOURCES += unit_tests/unit_tests/TimingTest.cpp
     SOURCES += unit_tests/unit_tests/CurrentTest.cpp
     #SOURCES += unit_tests/unit_tests/DramSpecTest.cpp

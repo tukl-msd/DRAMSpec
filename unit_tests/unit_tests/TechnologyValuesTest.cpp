@@ -241,15 +241,15 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 200*drs::micrometer
                         << "\nGot: " << techValues.colDecoderHeight);
 
-    BOOST_CHECK_MESSAGE( techValues.DQDriverHeight == 500*drs::micrometer,
+    BOOST_CHECK_MESSAGE( techValues.DQDriverHeight == 250*drs::micrometer,
                          "DQ driver (between banks) height different from the expected."
-                        << "\nExpected: " << 500*drs::micrometer
+                        << "\nExpected: " << 250*drs::micrometer
                         << "\nGot: " << techValues.DQDriverHeight);
 
-    BOOST_CHECK_MESSAGE( techValues.bankSpacingWidth == 2*drs::micrometer,
-                         "Space between banks driver in width direction different from the expected."
+    BOOST_CHECK_MESSAGE( techValues.TSVHeight == 2*drs::micrometer,
+                         "Height of the TSV area needed for each bank I/O different from the expected."
                         << "\nExpected: " << 2*drs::micrometer
-                        << "\nGot: " << techValues.bankSpacingWidth);
+                        << "\nGot: " << techValues.TSVHeight);
 
 
 
@@ -259,10 +259,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << "DDR"
                         << "\nGot: " << techValues.dramType);
 
-    BOOST_CHECK_MESSAGE( techValues.ThreeD == "OFF",
+    BOOST_CHECK_MESSAGE( techValues.is3D == false,
                          "3D flag different from the expected."
-                        << "\nExpected: " << "OFF"
-                        << "\nGot: " << techValues.ThreeD);
+                        << "\nExpected: " << false
+                        << "\nGot: " << techValues.is3D);
 
     BOOST_CHECK_MESSAGE( techValues.vaultsPerLayer == 1,
                          "Vaults per layer different from the expected."
@@ -278,6 +278,16 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                          "Number of banks different from the expected."
                         << "\nExpected: " << 8*drs::bank
                         << "\nGot: " << techValues.nBanks);
+
+    BOOST_CHECK_MESSAGE( techValues.nHorizontalBanks == 0*drs::bank,
+                         "Number of banks in the row direction different from the expected."
+                        << "\nExpected: " << 0*drs::bank
+                        << "\nGot: " << techValues.nHorizontalBanks);
+
+    BOOST_CHECK_MESSAGE( techValues.nVerticalBanks == 0*drs::bank,
+                         "Number of banks in the column direction different from the expected."
+                        << "\nExpected: " << 0*drs::bank
+                        << "\nGot: " << techValues.nVerticalBanks);
 
     BOOST_CHECK_MESSAGE( techValues.Interface == 16,
                          "Interface different from the expected."
@@ -612,20 +622,20 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 33*drs::micrometer
                         << "\nGot: " << techValues.DQDriverHeight);
 
-    BOOST_CHECK_MESSAGE( techValues.bankSpacingWidth == 34*drs::micrometer,
-                         "Space between banks driver in width direction different from the expected."
+    BOOST_CHECK_MESSAGE( techValues.TSVHeight == 34*drs::micrometer,
+                         "Height of the TSV area needed for each bank I/O different from the expected."
                         << "\nExpected: " << 34*drs::micrometer
-                        << "\nGot: " << techValues.bankSpacingWidth);
+                        << "\nGot: " << techValues.TSVHeight);
 
     BOOST_CHECK_MESSAGE( techValues.dramType == "100",
                         "DRAM type different from the expected."
                         << "\nExpected: " << "100"
                         << "\nGot: " << techValues.dramType);
 
-    BOOST_CHECK_MESSAGE( techValues.ThreeD == "101",
+    BOOST_CHECK_MESSAGE( techValues.is3D == true,
                         "3D flag different from the expected."
-                        << "\nExpected: " << "101"
-                        << "\nGot: " << techValues.ThreeD);
+                        << "\nExpected: " << true
+                        << "\nGot: " << techValues.is3D);
 
     BOOST_CHECK_MESSAGE( techValues.vaultsPerLayer == 102,
                         "Vaults per layer different from the expected."
@@ -642,134 +652,154 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 104*drs::bank
                         << "\nGot: " << techValues.nBanks);
 
-    BOOST_CHECK_MESSAGE( techValues.Interface == 105,
+    BOOST_CHECK_MESSAGE( techValues.nHorizontalBanks == 105*drs::bank,
+                         "Number of banks in the row direction different from the expected."
+                        << "\nExpected: " << 105*drs::bank
+                        << "\nGot: " << techValues.nHorizontalBanks);
+
+    BOOST_CHECK_MESSAGE( techValues.nVerticalBanks == 106*drs::bank,
+                         "Number of banks in the column direction different from the expected."
+                        << "\nExpected: " << 106*drs::bank
+                        << "\nGot: " << techValues.nVerticalBanks);
+
+    BOOST_CHECK_MESSAGE( techValues.nHorizontalBanks == 105*drs::bank,
+                        "Number of banks different from the expected."
+                        << "\nExpected: " << 105*drs::bank
+                        << "\nGot: " << techValues.nBanks);
+
+    BOOST_CHECK_MESSAGE( techValues.nVerticalBanks == 106*drs::bank,
+                        "Number of banks different from the expected."
+                        << "\nExpected: " << 106*drs::bank
+                        << "\nGot: " << techValues.nBanks);
+
+    BOOST_CHECK_MESSAGE( techValues.Interface == 107,
                         "Interface different from the expected."
-                        << "\nExpected: " << 105
+                        << "\nExpected: " << 107
                         << "\nGot: " << techValues.Interface);
 
-    BOOST_CHECK_MESSAGE( techValues.dramFreq == 106*drs::megahertz_clock,
+    BOOST_CHECK_MESSAGE( techValues.dramFreq == 108*drs::megahertz_clock,
                         "DRAM frequency different from the expected."
-                        << "\nExpected: " << 106*drs::megahertz_clock
+                        << "\nExpected: " << 108*drs::megahertz_clock
                         << "\nGot: " << techValues.dramFreq);
 
-    BOOST_CHECK_MESSAGE( techValues.dramCoreFreq == 107*drs::megahertz_clock,
+    BOOST_CHECK_MESSAGE( techValues.dramCoreFreq == 109*drs::megahertz_clock,
                         "DRAM core frequency different from the expected."
-                        << "\nExpected: " << 107*drs::megahertz_clock
+                        << "\nExpected: " << 109*drs::megahertz_clock
                         << "\nGot: " << techValues.dramCoreFreq);
 
-    BOOST_CHECK_MESSAGE( techValues.Prefetch == 108,
+    BOOST_CHECK_MESSAGE( techValues.Prefetch == 110,
                         "Prefetch different from the expected."
-                        << "\nExpected: " << 108
+                        << "\nExpected: " << 110
                         << "\nGot: " << techValues.Prefetch);
 
-    BOOST_CHECK_MESSAGE( techValues.additionalLatencyTrl == 109*drs::clock,
+    BOOST_CHECK_MESSAGE( techValues.additionalLatencyTrl == 111*drs::clock,
                         "Additional latency to trl different from the expected."
-                        << "\nExpected: " << 109*drs::clock
+                        << "\nExpected: " << 111*drs::clock
                         << "\nGot: " << techValues.additionalLatencyTrl);
 
-    BOOST_CHECK_MESSAGE( techValues.pageStorage == 110*drs::kibibyte_per_page,
+    BOOST_CHECK_MESSAGE( techValues.pageStorage == 112*drs::kibibyte_per_page,
                         "Page size different from the expected."
-                        << "\nExpected: " << 110*drs::kibibyte_per_page
+                        << "\nExpected: " << 112*drs::kibibyte_per_page
                         << "\nGot: " << techValues.pageStorage);
 
-    BOOST_CHECK_MESSAGE( techValues.DLL == "111",
+    BOOST_CHECK_MESSAGE( techValues.DLL == "113",
                         "DLL flag different from the expected."
-                        << "\nExpected: " << "111"
+                        << "\nExpected: " << "113"
                         << "\nGot: " << techValues.DLL);
 
-    BOOST_CHECK_MESSAGE( techValues.tRef1Required == 112*drs::microsecond,
+    BOOST_CHECK_MESSAGE( techValues.tRef1Required == 114*drs::microsecond,
                         "Required tRef1 different from the expected."
-                        << "\nExpected: " << 112*drs::microsecond
+                        << "\nExpected: " << 114*drs::microsecond
                         << "\nGot: " << techValues.tRef1Required);
 
-    BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 113,
+    BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 115,
                         "Bank refresh factor different from the expected."
-                        << "\nExpected: " << 113
+                        << "\nExpected: " << 115
                         << "\nGot: " << techValues.banksRefreshFactor);
 
-    BOOST_CHECK_MESSAGE( techValues.subArrayToPageFactor == 115,
+    BOOST_CHECK_MESSAGE( techValues.subArrayToPageFactor == 117,
                         "Ratio of subarrays activated pro command different from the expected."
-                        << "\nExpected: " << 115
+                        << "\nExpected: " << 117
                         << "\nGot: " << techValues.subArrayToPageFactor);
 
-    BOOST_CHECK_MESSAGE( techValues.retentionTime == 116*drs::millisecond,
+    BOOST_CHECK_MESSAGE( techValues.retentionTime == 118*drs::millisecond,
                         "Retention time different from the expected."
-                        << "\nExpected: " << 116*drs::millisecond
+                        << "\nExpected: " << 118*drs::millisecond
                         << "\nGot: " << techValues.retentionTime);
 
-    BOOST_CHECK_MESSAGE( techValues.tilesPerBank == 117*drs::tile_per_bank,
+    BOOST_CHECK_MESSAGE( techValues.tilesPerBank == 119*drs::tile_per_bank,
                         "Tiles per bank different from the expected."
-                        << "\nExpected: " << 117*drs::tile_per_bank
+                        << "\nExpected: " << 119*drs::tile_per_bank
                         << "\nGot: " << techValues.tilesPerBank);
 
-    BOOST_CHECK_MESSAGE( techValues.pageSpanningFactor == 118*drs::page_per_tile,
+    BOOST_CHECK_MESSAGE( techValues.pageSpanningFactor == 120*drs::page_per_tile,
                         "Pages per tile different from the expected."
-                        << "\nExpected: " << 118*drs::page_per_tile
+                        << "\nExpected: " << 120*drs::page_per_tile
                         << "\nGot: " << techValues.pageSpanningFactor);
 
-    BOOST_CHECK_MESSAGE( techValues.BLArchitecture == "119",
+    BOOST_CHECK_MESSAGE( techValues.BLArchitecture == "121",
                         "Bitline architecture different from the expected."
-                        << "\nExpected: " << "119"
+                        << "\nExpected: " << "121"
                         << "\nGot: " << techValues.BLArchitecture);
 
-    BOOST_CHECK_MESSAGE( techValues.driverOffset == 120*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.driverOffset == 122*drs::nanoseconds,
                         "Driver offset time different from the expected."
-                        << "\nExpected around: " << 120*drs::nanoseconds
+                        << "\nExpected around: " << 122*drs::nanoseconds
                         << "\nGot: " << techValues.driverOffset);
 
-    BOOST_CHECK_MESSAGE( techValues.BitlineSenseAmpDelay == 121*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.BitlineSenseAmpDelay == 123*drs::nanoseconds,
                         "Secondary sense amplifier delay different from the expected."
-                        << "\nExpected around: " << 121*drs::nanoseconds
+                        << "\nExpected around: " << 123*drs::nanoseconds
                         << "\nGot: " << techValues.BitlineSenseAmpDelay);
 
-    BOOST_CHECK_MESSAGE( techValues.CSLLoadCapacitance == 122*drs::femtofarads_per_bank,
+    BOOST_CHECK_MESSAGE( techValues.CSLLoadCapacitance == 124*drs::femtofarads_per_bank,
                         "Load capacitance of CSL different from the expected."
-                        << "\nExpected around: " << 122*drs::femtofarads_per_bank
+                        << "\nExpected around: " << 124*drs::femtofarads_per_bank
                         << "\nGot: " << techValues.CSLLoadCapacitance);
 
-    BOOST_CHECK_MESSAGE( techValues.cmdDecoderLatency == 123*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.cmdDecoderLatency == 125*drs::nanoseconds,
                         "Command decoder latency different from the expected."
-                        << "\nExpected around: " << 123*drs::nanoseconds
+                        << "\nExpected around: " << 125*drs::nanoseconds
                         << "\nGot: " << techValues.cmdDecoderLatency);
 
-    BOOST_CHECK_MESSAGE( techValues.interfaceLatency == 124*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.interfaceLatency == 126*drs::nanoseconds,
                         "Interface latency different from the expected."
-                        << "\nExpected around: " << 124*drs::nanoseconds
+                        << "\nExpected around: " << 126*drs::nanoseconds
                         << "\nGot: " << techValues.interfaceLatency);
 
-    BOOST_CHECK_MESSAGE( techValues.IODelay == 125*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.IODelay == 127*drs::nanoseconds,
                         "IO Delay different from the expected."
-                        << "\nExpected around: " << 125*drs::nanoseconds
+                        << "\nExpected around: " << 127*drs::nanoseconds
                         << "\nGot: " << techValues.IODelay);
 
-    BOOST_CHECK_MESSAGE( techValues.SSAPrechargeDelay == 126*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.SSAPrechargeDelay == 128*drs::nanoseconds,
                         "Delay of precharge SSA different from the expected."
-                        << "\nExpected around: " << 126*drs::nanoseconds
+                        << "\nExpected around: " << 128*drs::nanoseconds
                         << "\nGot: " << techValues.SSAPrechargeDelay);
 
-    BOOST_CHECK_MESSAGE( techValues.securityMargin == 127*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.securityMargin == 129*drs::nanoseconds,
                         "Security margin different from the expected."
-                        << "\nExpected around: " << 127*drs::nanoseconds
+                        << "\nExpected around: " << 129*drs::nanoseconds
                         << "\nGot: " << techValues.securityMargin);
 
-    BOOST_CHECK_MESSAGE( techValues.equalizerDelay == 128*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.equalizerDelay == 130*drs::nanoseconds,
                         "Equalizer delay different from the expected."
-                        << "\nExpected around: " << 128*drs::nanoseconds
+                        << "\nExpected around: " << 130*drs::nanoseconds
                         << "\nGot: " << techValues.equalizerDelay);
 
-    BOOST_CHECK_MESSAGE( techValues.actCmdDelay == 129*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.actCmdDelay == 131*drs::nanoseconds,
                         "Act commmand delay different from the expected."
-                        << "\nExpected around: " << 129*drs::nanoseconds
+                        << "\nExpected around: " << 131*drs::nanoseconds
                         << "\nGot: " << techValues.actCmdDelay);
 
-    BOOST_CHECK_MESSAGE( techValues.preCmdDelay == 130*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.preCmdDelay == 132*drs::nanoseconds,
                         "Pre command delay different from the expected."
-                        << "\nExpected around: " << 130*drs::nanoseconds
+                        << "\nExpected around: " << 132*drs::nanoseconds
                         << "\nGot: " << techValues.preCmdDelay);
 
-    BOOST_CHECK_MESSAGE( techValues.offset == 131*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.offset == 133*drs::nanoseconds,
                         "Offset time different from the expected."
-                        << "\nExpected around: " << 131*drs::nanoseconds
+                        << "\nExpected around: " << 133*drs::nanoseconds
                         << "\nGot: " << techValues.offset);
 
 }

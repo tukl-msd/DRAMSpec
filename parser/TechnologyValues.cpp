@@ -72,10 +72,12 @@ TechnologyValues::technologyValuesInitialize()
     IddOcdRcvFrequencyPoint = 0*drs::megahertz_clock;
 
     dramType = "";
-    ThreeD = "";
+    is3D = false;
     vaultsPerLayer = 0;
     dramSize = 0*drs::gibibit;
     nBanks = 0*drs::bank;
+    nHorizontalBanks = 0*drs::bank;
+    nVerticalBanks = 0*drs::bank;
     Interface = 16;
     dramFreq = 0*drs::megahertz_clock;
     dramCoreFreq = 0*drs::megahertz_clock;
@@ -304,7 +306,7 @@ TechnologyValues::readjson(const string& t,const string& p)
         backgroundCurrentOffset = getJSONNumber(techDocument, "Backgroundcurrentoffset")
                                   * drs::milliampere;
 
-        //Current per IO pin (Off Chip Driver)
+        //Current per IO pin (Off Channel Driver)
         IddOcdRcvAtFrequencyPoint = getJSONNumber(techDocument, "idd_ocd")
                                     * drs::milliampere;
 
@@ -324,9 +326,9 @@ TechnologyValues::readjson(const string& t,const string& p)
         DQDriverHeight = getJSONNumber(techDocument, "DQDriverHeight")
                          * drs::micrometer;
 
-        //Space between banks driver in width direction
-        bankSpacingWidth = getJSONNumber(techDocument, "bankSpacingWidth")
-                           * drs::micrometer;
+        //Height of the TSV area needed for each bank I/O
+        TSVHeight = getJSONNumber(techDocument, "TSVHeight")
+                    * drs::micrometer;
 
     } catch(string exceptionMsgThrown) {
         throw exceptionMsgThrown;
@@ -379,7 +381,7 @@ TechnologyValues::readjson(const string& t,const string& p)
 
         //3D ON/OFF Feature
         //set 3D on for HMC/WideIO
-        ThreeD = getJSONString(archDocument, "3D");
+        is3D = ( getJSONString(archDocument, "3D") == "ON" );
 
         // vaults per layer
         // set to 0 for non 3D DRAMs
@@ -391,6 +393,14 @@ TechnologyValues::readjson(const string& t,const string& p)
 
         //# of banks
         nBanks = getJSONNumber(archDocument, "Numberofbanks")
+                         * drs::bank;
+
+        //# of banks in the row direction
+        nHorizontalBanks = getJSONNumber(archDocument, "Numberofhorizontalbanks")
+                         * drs::bank;
+
+        //# of banks in the column direction
+        nVerticalBanks = getJSONNumber(archDocument, "Numberofverticalbanks")
                          * drs::bank;
 
         //Interface

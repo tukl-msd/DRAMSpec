@@ -32,5 +32,5 @@
     "rowDecoderWidth": 31,
     "colDecoderHeight": 32,
     "DQDriverHeight": 33,
-    "bankSpacingWidth": 34
+    "TSVHeight": 34
 }

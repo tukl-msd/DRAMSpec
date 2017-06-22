@@ -29,21 +29,66 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji
- *          Matthias Jung
- *          Christian Weis
- *          Kamal Haddad
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
  *          Andr'e Lucas Chinazzo
  */
 
-#define BOOST_TEST_MODULE testDRAMSpec
-#include <boost/test/included/unit_test.hpp>
+#ifndef CHANNEL_H
+#define CHANNEL_H
 
-#include "unit_tests/ArgumentsParserTest.cpp"
-#include "unit_tests/TechnologyValuesTest.cpp"
-#include "unit_tests/SubArrayTest.cpp"
-#include "unit_tests/TileTest.cpp"
-#include "unit_tests/BankTest.cpp"
-#include "unit_tests/ChannelTest.cpp"
-#include "unit_tests/TimingTest.cpp"
-#include "unit_tests/CurrentTest.cpp"
+//This class repesents the fifth level of abstraction of the DRAM structure,
+//being the channel a grouping of banks.
+
+#include "Bank.h"
+
+namespace bu=boost::units;
+namespace si=boost::units::si;
+namespace inf=boost::units::information;
+namespace drs=boost::units::dramspec;
+
+class Channel : public Bank
+{
+  public:
+    Channel() : //Empty constructor for test proposes
+        Bank()
+    {
+        channelInitialize();
+    }
+
+    Channel(const string& technologyFileName,
+         const string& architectureFileName) :
+        Bank(technologyFileName, architectureFileName)
+    {
+        channelInitialize();
+        channelCompute();
+    }
+
+    // Size in number of bits of the channel
+    bu::quantity<drs::gibibit_unit> channelStorage;
+
+    // Width in micrometer of the channel
+    bu::quantity<drs::micrometer_unit> channelWidth;
+    // Height in micrometer of the channel
+    bu::quantity<drs::micrometer_unit> channelHeight;
+
+    // Area in micrometer squared of the channel
+    bu::quantity<drs::square_millimeter_unit> channelArea;
+
+    void channelInitialize();
+
+    void channelStorageCalc();
+
+    void channelBanksPlacementAssess();
+
+    void channelLenghtCalc();
+
+    void channelAreaCalc();
+
+    void channelCompute();
+
+};
+
+#endif // CHANNEL_H

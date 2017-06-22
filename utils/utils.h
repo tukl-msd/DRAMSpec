@@ -36,57 +36,14 @@
  *          Andr'e Lucas Chinazzo
  */
 
-#ifndef CHIP_H
-#define CHIP_H
+#ifndef UTILS_H
+#define UTILS_H
 
-//This class repesents the fifth level of abstraction of the DRAM structure,
-//being the chip a grouping of banks.
+#include <cmath>
 
-#include "Bank.h"
+bool isInteger( double dn );
+bool isPowerOfTwo( double n );
 
-namespace bu=boost::units;
-namespace si=boost::units::si;
-namespace inf=boost::units::information;
-namespace drs=boost::units::dramspec;
+double timeToPercentage(double percentage);
 
-class Chip : public Bank
-{
-  public:
-    Chip() : //Empty constructor for test proposes
-        Bank()
-    {
-        chipInitialize();
-    }
-
-    Chip(const string& technologyFileName,
-         const string& architectureFileName) :
-        Bank(technologyFileName, architectureFileName)
-    {
-        chipInitialize();
-        chipCompute();
-    }
-
-    // Size in number of bits of the chip
-    bu::quantity<drs::gibibit_unit> chipStorage;
-
-    // Width in micrometer of the chip
-    bu::quantity<drs::micrometer_unit> chipWidth;
-    // Height in micrometer of the chip
-    bu::quantity<drs::micrometer_unit> chipHeight;
-
-    // Area in micrometer squared of the chip
-    bu::quantity<drs::square_millimeter_unit> chipArea;
-
-    void chipInitialize();
-
-    void chipStorageCalc();
-
-    void chipLenghtCalc();
-
-    void chipAreaCalc();
-
-    void chipCompute();
-
-};
-
-#endif // CHIP_H
+#endif // UTILS_H

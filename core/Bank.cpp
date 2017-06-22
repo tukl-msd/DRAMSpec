@@ -56,28 +56,36 @@ void
 Bank::bankLenghtCalc()
 {
 
+    // Define tile placement on bank
     if ( tilesPerBank == 1*drs::tiles_per_bank ) {
-        bankWidth = 1.0 * tileWidth * drs::tile_per_bank
-                    + 1.0 * rowDecoderWidth / drs::bank;
+        bankWidth = 1.0 * tileWidth * drs::tile_per_bank;
 
-        bankHeight = 1.0 * tileHeight * drs::tile_per_bank
-                     + 1.0 * colDecoderHeight / drs::bank;
+        bankHeight = 1.0 * tileHeight * drs::tile_per_bank;
+
     }
 
     else if ( tilesPerBank == 2*drs::tiles_per_bank ) {
-        bankWidth = tileWidth * 2.0 * drs::tile_per_bank
-                     + 2.0 * rowDecoderWidth / drs::bank;
+        bankWidth = tileWidth * 2.0 * drs::tile_per_bank;
 
-        bankHeight = tileHeight * 1.0 * drs::tile_per_bank
-                     + 1.0 * colDecoderHeight / drs::bank;
+        bankHeight = tileHeight * 1.0 * drs::tile_per_bank;
     }
 
     else if ( tilesPerBank == 4*drs::tiles_per_bank ) {
-        bankWidth = tileWidth * 2.0 * drs::tile_per_bank
-                     + 2.0 * rowDecoderWidth / drs::bank;
+        bankWidth = tileWidth * 2.0 * drs::tile_per_bank;
 
-        bankHeight = tileHeight * 2.0 * drs::tile_per_bank
-                     + 2.0 * colDecoderHeight / drs::bank;
+        bankHeight = tileHeight * 2.0 * drs::tile_per_bank;
+
+    }
+
+    // Add I/O related height
+    if ( is3D ) {
+        bankHeight = bankHeight
+                     + 1.0 * DQDriverHeight / drs::bank
+                     + 1.0 * TSVHeight / drs::bank;
+    }
+    else {
+        bankHeight = bankHeight
+                     + 1.0 * DQDriverHeight / drs::bank;
     }
 
 }

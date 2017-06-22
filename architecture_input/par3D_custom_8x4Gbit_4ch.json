@@ -4,6 +4,8 @@
     "Vaultsperlayer": 8,
     "Size": 1,
     "Numberofbanks": 8,
+    "Numberofhorizontalbanks": 0,
+    "Numberofverticalbanks": 0,
     "Interface": 48,
     "Freq": 400,
     "CoreFreq": 0,

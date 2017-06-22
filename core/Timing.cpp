@@ -110,12 +110,6 @@ Timing::timingInitialize()
     tref1_clk = 0*drs::clocks;
 }
 
-double
-Timing::timeToPercentage(double percentage)
-{
-    return -log(1.0 - percentage/100.0);
-}
-
 void
 Timing::trcdCalc()
 {
@@ -138,7 +132,7 @@ Timing::trcdCalc()
     localWordlineResistance = LWLDriverResistance
                               + (cellsPerLWL *  resistancePerWLCell);
 
-    // Calculating wordline total capacitance ( value in ff)
+    // Calculating wordline total capacitance
     localWordlineCapacitance = cellsPerLWL
             * SCALE_QUANTITY(capacitancePerWLCell, drs::nanofarad_per_cell_unit);
 
@@ -163,7 +157,7 @@ Timing::trcdCalc()
             * localBitlineCapacitance * drs::subarray;
 
     //calculating GWL decoder + wiring femtofarad_per_bank_unitdelay
-    //calculating global wordline total capa in fF
+    //calculating global wordline total capa
     globalWordlineResistance = wireResistance
            * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit);
 
@@ -232,7 +226,7 @@ Timing::trasCalc()
     // when the number of banks increases this distance from bank to
     // DQ should increas. We do not model this yet due to lack of input.
     // This should be changed in the future.
-    if (ThreeD == "ON") {
+    if ( is3D ) {
         DQWireLength = 1 * drs::millimeters;
     } else {
         if (bankWidthFactor < 0.5 * drs::kibibytes_per_page) {
@@ -334,13 +328,16 @@ Timing::trfcCalc()
     //time for refresh cycle
     //numberofbanks refreshed*(5(Act cmd delay ) +
     // 5(pre cmd delay)) + 10 ns (offset)) + trc
-    if (ThreeD == "ON") {
+    if ( is3D ) {
 ////      [ns]           [??]              [??/bank]
 //        trfc = rowRefreshRate * banksRefreshFactor
 ////                     [bank]           []         [] []
 //                * nBanks/vaultsPerLayer*(5+5)
 ////               [ns]   [ns]
 //                + 10  + trc;
+        trfc = nBanks/drs::banks * banksRefreshFactor
+               * (actCmdDelay + preCmdDelay)
+               + offset  + trc;
     } else {
 //        !!!!!! CHECK RELATION BETWEEN nBanks AND banksRefreshFactor !!!!!!
         trfc = nBanks/drs::banks * banksRefreshFactor
