@@ -61,7 +61,7 @@ SubArray::subArrayStorageCalc()
 void
 SubArray::subArrayLengthCalc()
 {
-    subArrayWidth = cellsPerLWL * cellWidth + WLDriverWidth/drs::subarray;
+    subArrayWidth = cellsPerLWL * cellWidth + LWLDriverWidth/drs::subarray;
 
     subArrayHeight = cellsPerLBL * cellHeight + BLSenseAmpHeight/drs::subarray;
 }

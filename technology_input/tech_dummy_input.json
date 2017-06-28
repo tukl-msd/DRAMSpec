@@ -1,36 +1,48 @@
 {
-	"Technologynode": 1,
-	"BLpercellcapa": 2,
-	"BLpercellresistance": 3,
-	"WLpercellcapa": 4,
-	"WLpercellresistance": 5,
-	"cellcapa": 6,
-	"cellresistance": 7,
-	"wireresistance": 8,
-	"wirecapa" : 9,
-	"cellwidth": 10 ,
-	"cellheight": 11,
-	"cellsperrow": 12,
-	"cellsperrowredundancy": 13,
-	"cellspercolumn": 14,
-	"cellspercolumnredundancy": 15,
-	"blsa-height": 16,
-	"WL-driver": 17,
-	"GWLDresistance": 18,
-	"LWDresistance" : 19,
-	"WRresistance" : 20,
-	"CSLDresistance" : 21,
-	"GDLDresistance" : 22,
-	"DQDresistance" : 23,
-	"I_SSA": 24,
-	"vpp": 25,
-	"vcc": 26,
-	"Backgroundcurrentslope": 27,
-	"Backgroundcurrentoffset": 28,
-    "idd_ocd": 29,
-    "idd_ocd_freq": 30,
-    "rowDecoderWidth": 31,
-    "colDecoderHeight": 32,
-    "DQDriverHeight": 33,
-    "TSVHeight": 34
+	"TechnologyNode[nm]": 1,
+
+    "Vpp[V]": 2,
+    "Vcc[V]": 3,
+
+    "WireResistance[Ohm/mm]": 4,
+    "WireCapacitance[fF/mm]" : 5,
+
+    "CellCapacitance[fF]": 6,
+    "CellResistance[KOhm]": 7,
+    "CellWidth[um]": 8,
+    "CellHeight[um]": 9,
+    "CellsPerSubarrayRow[]": 10,
+    "RedundantCellsPerSubarrayRow[]": 11,
+    "CellsPerSubarrayColumn[]": 12,
+    "RedundantCellsPerSubarrayColumn[]": 13,
+
+    "BitlineCapacitancePerCell[aF]": 14,
+    "BitlineResistancePerCell[Ohm]": 15,
+
+    "WordlineCapacitancePerCell[aF]": 16,
+    "WordlineResistancePerCell[Ohm]": 17,
+
+    "PrimarySenseAmpHeight[um]": 18,
+
+    "LocalWordlineDriverWitdh[um]": 19,
+    "LocalWordlineDriverResistance[Ohm]" : 20,
+
+    "RowDecoderWidth[um]": 21,
+    "GlobalWordlineDriverResistance[Ohm]": 22,
+
+    "SecondarySenseAmpCurrent[uA]": 23,
+    "WriteDriverResistance[Ohm]" : 24,
+
+    "ColumnDecoderHeight[um]": 25,
+    "CSLDriverResistance[Ohm]" : 26,
+    "GlobalDataLineDriverResistance[Ohm]" : 27,
+
+    "DQDriverHeight[um]": 28,
+    "DQDriverResistance[Ohm]" : 29,
+
+    "BackgroundCurrentSlope[mA/MHz]": 30,
+    "BackgroundCurrentOffset[mA]": 31,
+    "OCDCurrentSlope[mA/MHz]": 32,
+
+    "TSVHeight[um]": 33
 }

@@ -126,7 +126,7 @@ Timing::trcdCalc()
     // Calculating tau for cell celltau ( in ns )
     cellDelay = timeToPercentage(90)
               * SCALE_QUANTITY(capacitancePerCell, drs::nanofarad_per_cell_unit)
-              * resistancePerCell
+              * SCALE_QUANTITY(resistancePerCell, drs::ohm_per_cell_unit)
               * drs::cell * drs::cell;
 
     localWordlineResistance = LWLDriverResistance

@@ -120,7 +120,7 @@ Tile::tileLenghtCalc()
                                    );
 
     tileWidth = nSubArraysPerArrayBlock * subArrayWidth
-                + 1.0 * WLDriverWidth / drs::tile
+                + 1.0 * LWLDriverWidth / drs::tile
                 + 1.0 * rowDecoderWidth / drs::tile;
 
 
@@ -181,7 +181,7 @@ Tile::tileLogicAssess()
 
     nTileColumnAddressLines = ceil (log2 ( subArrayRowStorage
                                            * nSubArraysPerArrayBlock
-                                           * 1.0*drs::tile/inf::bit
+                                           * 1.0*drs::tile
                                            / Interface
                                          )
                                    );

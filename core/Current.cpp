@@ -45,8 +45,7 @@ Current::currentInitialize()
     vppPumpsEfficiency = 0.3;
     currentPerPageSizeSlope = 2.0*drs::milliamperes_page_per_kibibyte;
     SSAActiveTime = 1.5*drs::nanoseconds;
-    bitProCSL = 8;
-    IddOcdRcvFrequencyPoint = 533*drs::megahertz_clock;
+    bitProCSL = 8 * drs::bits;
 
     // Intermediate values added as variables for code cleanness
     nActiveSubarrays = 0;
@@ -94,7 +93,7 @@ Current::backgroundCurrentCalc()
     IDD2n = backgroundCurrentSlope * dramFreq
             + backgroundCurrentOffset;
 
-    if (DLL =="OFF") {
+    if ( !isDLL ) {
         IDD2n = IDD2nPercentageIfNotDll * IDD2n;
     }
 
@@ -161,7 +160,7 @@ Current::IDD1Calc()
     // Charges of SSA / SSA active for 1.5 ns
     SSACharge = Interface
                 * Prefetch
-                * SCALE_QUANTITY(Issa, si::current)
+                * SCALE_QUANTITY(Issa, drs::ampere_per_bit_unit)
                 * SSAActiveTime;
 
     // Charges for CSL// 8 bits pro CSL
@@ -175,13 +174,15 @@ Current::IDD1Calc()
     masterDatalineCharge = globalDatalineCapacitance * 1.0*drs::bank
                            * vcc
                            * Interface
-                           * Prefetch;
+                           * Prefetch
+                            / drs::bit; // TODO: remove the work around
 
     // Charges for Dataqueue // 1 Read is done for interface x prefetch
     DQWireCharge = DQWireCapacitance
                    * vcc
                    * Interface
-                   * Prefetch;
+                   * Prefetch
+                    / drs::bit; // TODO: remove the work around
 
     // read charges in pC
     readingCharge = SSACharge
@@ -205,7 +206,7 @@ void
 Current::IDD4RCalc()
 {
     // Scale the IDD_OCD_RCV with frequency linearly
-    IddOcdRcv = IddOcdRcvAtFrequencyPoint * dramFreq / IddOcdRcvFrequencyPoint;
+    IddOcdRcv = IddOcdRcvSlope * dramFreq / drs::bit;
 
     colAddrsLinesCharge =
             SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
@@ -218,7 +219,8 @@ Current::IDD4RCalc()
     // Number of output signals for read = interface number
     // + 1 datastrobe signal pro 4 bits
     if (includeIOTerminationCurrent) {
-       ioTermRdCurrent = (Interface + Interface/4) * IddOcdRcvAtFrequencyPoint;
+       ioTermRdCurrent = (Interface + Interface/4.0)
+                         * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
     }
     else {
        ioTermRdCurrent = 0*drs::milliamperes;
@@ -242,7 +244,7 @@ Current::IDD4WCalc()
     //number of signals for write is number of signals for read
     //+ 1 extra signal for rcv per 8 bits
     int rcvconst;
-    if(Interface/8 < 1) {
+    if(Interface/8.0 < 1*drs::bit) {
         rcvconst = 1 ;
     } else {
         rcvconst = 0 ;
@@ -251,7 +253,8 @@ Current::IDD4WCalc()
 
     //additional IO term current for Writes
     if (includeIOTerminationCurrent) {
-        ioTermWrCurrent = (Interface/8 + rcvconst) * IddOcdRcvAtFrequencyPoint;
+        ioTermWrCurrent = (Interface/8.0 + rcvconst*drs::bit)
+                          * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
     }
     else {
         ioTermWrCurrent = 0*drs::milliamperes;

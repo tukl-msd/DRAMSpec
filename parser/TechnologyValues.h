@@ -92,19 +92,19 @@ class TechnologyValues
     bu::quantity<drs::attofarad_per_cell_unit> capacitancePerBLCell;
 
     //Bitline per cell resistance
-    bu::quantity<drs::resistance_per_cell_unit> resistancePerBLCell;
+    bu::quantity<drs::ohm_per_cell_unit> resistancePerBLCell;
 
     //Wordline per cell capa
     bu::quantity<drs::attofarad_per_cell_unit> capacitancePerWLCell;
 
     //Wordline per cell resistance
-    bu::quantity<drs::resistance_per_cell_unit> resistancePerWLCell;
+    bu::quantity<drs::ohm_per_cell_unit> resistancePerWLCell;
 
     //cell capa
-    bu::quantity<drs::picofarad_per_cell_unit> capacitancePerCell;
+    bu::quantity<drs::femtofarad_per_cell_unit> capacitancePerCell;
 
     //cell resistance
-    bu::quantity<drs::resistance_per_cell_unit> resistancePerCell;
+    bu::quantity<drs::kiloohm_per_cell_unit> resistancePerCell;
 
     //wire resistance in ohm/mm
     bu::quantity<drs::ohm_per_millimeter_unit> wireResistance;
@@ -134,7 +134,7 @@ class TechnologyValues
     bu::quantity<drs::micrometer_unit> BLSenseAmpHeight;
 
     //wordline driver width
-    bu::quantity<drs::micrometer_unit> WLDriverWidth;
+    bu::quantity<drs::micrometer_unit> LWLDriverWidth;
 
     //global wordline driver resistance in ohm
     bu::quantity<si::resistance> GWLDriverResistance;
@@ -155,7 +155,7 @@ class TechnologyValues
     bu::quantity<si::resistance> DQDriverResistance;
 
     //current of SSA in microamperes
-    bu::quantity<drs::microampere_unit> Issa;
+    bu::quantity<drs::microampere_per_bit_unit> Issa;
 
     //voltage vpp
     bu::quantity<si::electric_potential> vpp;
@@ -169,16 +169,13 @@ class TechnologyValues
     //background current offset
     bu::quantity<drs::milliampere_unit> backgroundCurrentOffset;
 
-    //Current per IO pin at a given frequency (measurement or estimation)
-    bu::quantity<drs::milliampere_unit> IddOcdRcvAtFrequencyPoint;
-
-    //Frequency at which the current per IO pin was measured/estimated at
-    bu::quantity<drs::megahertz_clock_unit> IddOcdRcvFrequencyPoint;
+    //Current slope per IO pin in relation to clock frequency
+    bu::quantity<drs::microampere_per_megahertz_clock_unit> IddOcdRcvSlope;
 
     //Row decoder (between tiles) width
     bu::quantity<drs::micrometer_unit> rowDecoderWidth;
 
-    //Column decoder (between tiles) width
+    //Column decoder (between tiles) height
     bu::quantity<drs::micrometer_unit> colDecoderHeight;
 
     //DQ driver (between banks) height
@@ -194,10 +191,6 @@ class TechnologyValues
     //set 3D on for HMC/WideIO
     bool is3D;
 
-    // vaults per layer
-    // set to 0 for non 3D DRAMs
-    double vaultsPerLayer;
-
     //size of DRAM
     bu::quantity<drs::gibibit_unit> dramSize;
 
@@ -211,7 +204,7 @@ class TechnologyValues
     bu::quantity<drs::bank_unit> nVerticalBanks;
 
     //Interface
-    double Interface;
+    bu::quantity<drs::bit_unit> Interface;
 
     //DRAM Frequency
     bu::quantity<drs::megahertz_clock_unit> dramFreq;
@@ -231,7 +224,7 @@ class TechnologyValues
     bu::quantity<drs::kibibyte_per_page_unit> pageStorage;
 
     // DLL ON/OFF Feature
-    string DLL;
+    bool isDLL;
 
     // Required tref by user
     bu::quantity<drs::microsecond_unit> tRef1Required;

@@ -104,15 +104,15 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 1.5*drs::nanoseconds
                         << "\nGot: " << current.SSAActiveTime);
 
-    BOOST_CHECK_MESSAGE( current.bitProCSL == 8,
-                        "Number of bits pro CSL different from the expected."
-                        << "\nExpected around: " << 8
+    BOOST_CHECK_MESSAGE( current.bitProCSL == 8*drs::bits,
+                        "Number of bits pro CSL different fgrom the expected."
+                        << "\nExpected around: " << 8*drs::bits
                         << "\nGot: " << current.bitProCSL);
 
-    BOOST_CHECK_MESSAGE( current.IddOcdRcvFrequencyPoint == 533*drs::megahertz_clock,
+    BOOST_CHECK_MESSAGE( current.IddOcdRcvSlope == 5.629*drs::microampere_per_megahertz_clock,
                         "IddOcdRcvScalingFactor different from the expected."
-                        << "\nExpected around: " << 533*drs::megahertz_clock
-                        << "\nGot: " << current.IddOcdRcvFrequencyPoint);
+                        << "\nExpected around: " << 5.629*drs::microampere_per_megahertz_clock
+                        << "\nGot: " << current.IddOcdRcvSlope);
 
     // Intermediate values added as variables for code cleanness
     BOOST_CHECK_MESSAGE( ROUND_UP(current.nActiveSubarrays, 3) == 32,
@@ -155,9 +155,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 0.625*drs::nanocoulombs
                         << "\nGot: " << current.IDD4TotalCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.ioTermRdCurrent, 3) == 60*drs::milliampere,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.ioTermRdCurrent, 3) == 90.064*drs::milliampere,
                         "I/O Termination current for reading different from the expected."
-                        << "\nExpected around: " << 60*drs::milliampere
+                        << "\nExpected around: " << 90.064*drs::milliampere
                         << "\nGot: " << current.ioTermRdCurrent);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4ChargingCurrent, 3) == 0.125*si::amperes,
@@ -165,9 +165,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 0.125*si::amperes
                         << "\nGot: " << current.IDD4ChargingCurrent);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.ioTermWrCurrent, 3) == 6*drs::milliampere,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.ioTermWrCurrent, 3) == 9.007*drs::milliampere,
                         "I/O Termination current for writing different from the expected."
-                        << "\nExpected around: " << 6*drs::milliampere
+                        << "\nExpected around: " << 9.007*drs::milliampere
                         << "\nGot: " << current.ioTermWrCurrent);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.refreshCharge, 3) == 50.174*drs::nanocoulombs,
@@ -201,14 +201,14 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                         << "\nExpected around: " << 130.473*drs::milliampere
                         << "\nGot: " << current.IDD1);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4R, 3) == 225.924*drs::milliampere,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4R, 3) == 255.988*drs::milliampere,
                         "IDD4R different from the expected."
-                        << "\nExpected around: " << 225.924*drs::milliampere
+                        << "\nExpected around: " << 255.988*drs::milliampere
                         << "\nGot: " << current.IDD4R);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4W, 3) == 231.924*drs::milliampere,
+    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4W, 3) == 264.995*drs::milliampere,
                         "IDD4W different from the expected."
-                        << "\nExpected around: " << 231.924*drs::milliampere
+                        << "\nExpected around: " << 264.995*drs::milliampere
                         << "\nGot: " << current.IDD4W);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD2n, 3) == 37*drs::milliampere,

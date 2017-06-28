@@ -1,36 +1,48 @@
 {
-    "Technologynode": 58,
-    "BLpercellcapa": 160,
-    "BLpercellresistance": 36,
-    "WLpercellcapa": 150 ,
-    "WLpercellresistance": 46,
-    "cellcapa": 20,
-    "cellresistance": 20,
-    "wireresistance": 100,
-    "wirecapa" : 382,
-    "cellwidth": 0.12 ,
-    "cellheight": 0.18,
-    "cellsperrow": 524,
-    "cellsperrowredundancy": 12,
-    "cellspercolumn": 524,
-    "cellspercolumnredundancy": 12,
-    "blsa-height": 20,
-    "WL-driver": 9,
-    "GWLDresistance": 400,
-    "LWDresistance" : 1000,
-    "WRresistance" : 600 ,
-    "CSLDresistance" : 600,
-    "GDLDresistance" : 600,
-    "DQDresistance" : 500,
-    "I_SSA": 300,
-    "vpp": 2.8,
-    "vcc": 1.1,
-    "Backgroundcurrentslope": 0.025,
-    "Backgroundcurrentoffset": 17,
-    "idd_ocd": 3.0,
-    "idd_ocd_freq": 533,
-    "rowDecoderWidth": 240,
-    "colDecoderHeight": 200,
-    "DQDriverHeight": 250,
-    "TSVHeight": 2
+    "TechnologyNode[nm]": 58,
+
+    "Vpp[V]": 2.8,
+    "Vcc[V]": 1.1,
+
+    "WireResistance[Ohm/mm]": 100,
+    "WireCapacitance[fF/mm]" : 382,
+
+    "CellCapacitance[fF]": 20,
+    "CellResistance[KOhm]": 20,
+    "CellWidth[um]": 0.12 ,
+    "CellHeight[um]": 0.18,
+    "CellsPerSubarrayRow[]": 524,
+    "RedundantCellsPerSubarrayRow[]": 12,
+    "CellsPerSubarrayColumn[]": 524,
+    "RedundantCellsPerSubarrayColumn[]": 12,
+
+    "BitlineCapacitancePerCell[aF]": 160,
+    "BitlineResistancePerCell[Ohm]": 36,
+
+    "WordlineCapacitancePerCell[aF]": 150 ,
+    "WordlineResistancePerCell[Ohm]": 46,
+
+    "PrimarySenseAmpHeight[um]": 20,
+
+    "LocalWordlineDriverWitdh[um]": 9,
+    "LocalWordlineDriverResistance[Ohm]" : 1000,
+
+    "RowDecoderWidth[um]": 240,
+    "GlobalWordlineDriverResistance[Ohm]": 400,
+
+    "SecondarySenseAmpCurrent[uA]": 300,
+    "WriteDriverResistance[Ohm]" : 600 ,
+
+    "ColumnDecoderHeight[um]": 200,
+    "CSLDriverResistance[Ohm]" : 600,
+    "GlobalDataLineDriverResistance[Ohm]" : 600,
+
+    "DQDriverHeight[um]": 250,
+    "DQDriverResistance[Ohm]" : 500,
+
+    "BackgroundCurrentSlope[mA/MHz]": 0.025,
+    "BackgroundCurrentOffset[mA]": 17,
+    "OCDCurrentSlope[mA/MHz]": 5.629,
+
+    "TSVHeight[um]": 2
 }
