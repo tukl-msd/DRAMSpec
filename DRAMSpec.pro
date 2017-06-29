@@ -201,6 +201,7 @@ OTHER_FILES += technology_input/*
 OTHER_FILES += architecture_input/*
 OTHER_FILES += Makefile
 OTHER_FILES += README.md
+OTHER_FILES += IODescription.md
 OTHER_FILES += runTests.sh
 OTHER_FILES += buildDRAMSpec.sh
 

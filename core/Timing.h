@@ -119,52 +119,54 @@ class Timing : public Channel
     bu::quantity<drs::nanosecond_unit> tdq;
 
 
-    //tcl = tcas - Column Access Strobe latency
+    //tcl = tcas - Column Access Strobe delay
     bu::quantity<drs::nanosecond_unit> tcas;
 
-    //trtp - Read to Precharge time
+    //trl = tcas + tal - Read (Latency) delay
+    bu::quantity<drs::nanosecond_unit> trl;
+
+    //trtp - Read to Precharge delay
     bu::quantity<drs::nanosecond_unit> trtp;
 
     //tccd - Column-to-Column delay
     bu::quantity<drs::nanosecond_unit> tccd;
 
 
-    //tras - Row Access Strobe latency
+    //tras - Row Access Strobe delay
     bu::quantity<drs::nanosecond_unit> tras;
 
-    //twr - Write Recovery time
+    //twr - Write Recovery delay
     bu::quantity<drs::nanosecond_unit> twr;
 
-    //trp - Row Precharge time
+    //trp - Row Precharge delay
     bu::quantity<drs::nanosecond_unit> trp;
 
-    //trc - Row Cycle time
+    //trc - Row Cycle delay
     bu::quantity<drs::nanosecond_unit> trc;
 
-    //trfc - Refresh Cycle time
+    //trfc - Refresh Cycle delay
     bu::quantity<drs::nanosecond_unit> trfc;
 
-    //tref1 - Refresh Interval time
-    bu::quantity<drs::nanosecond_unit> tref1;
+    //trefI - Refresh Interval delay
+    bu::quantity<drs::nanosecond_unit> trefI;
 
     //Maximum core frequency
     bu::quantity<drs::megahertz_clock_unit> maxCoreFreq;
-    //Actual core frequency
-    bu::quantity<drs::megahertz_clock_unit> actualCoreFreq;
-    //Double clock frequency if is DDR
+
+    //Ratio between bus and core frequencies
     double clockFactor;
 
-    //Clock
-    bu::quantity<drs::nanosecond_per_clock_unit> clk;
-    //Actual clock (high and low edge)
-    bu::quantity<drs::nanosecond_per_clock_unit> actualClk;
+    //Clock period
+    bu::quantity<drs::nanosecond_per_clock_unit> clkPeriod;
+    //Core clock period
+    bu::quantity<drs::nanosecond_per_clock_unit> coreClkPeriod;
 
     //trcd in number of clocks
     bu::quantity<drs::clock_unit> trcd_clk;
     //tcas in number of clocks
     bu::quantity<drs::clock_unit> tcas_clk;
-    //tcas in number of clocks by the actual clock
-    bu::quantity<drs::clock_unit> tcas_actualClk;
+    //tcas in number of core clocks
+    bu::quantity<drs::clock_unit> tcas_coreClk;
     //tras in number of clocks
     bu::quantity<drs::clock_unit> tras_clk;
     //trp in number of clocks
@@ -173,22 +175,22 @@ class Timing : public Channel
     bu::quantity<drs::clock_unit> trc_clk;
     //trl in number of clocks
     bu::quantity<drs::clock_unit> trl_clk;
-    //trl in number of clocks by the actual clock
-    bu::quantity<drs::clock_unit> trl_actualClk;
+    //trl in number of core clocks
+    bu::quantity<drs::clock_unit> trl_coreClk;
     //twl in number of clocks
     bu::quantity<drs::clock_unit> twl_clk;
     //trtp in number of clocks
     bu::quantity<drs::clock_unit> trtp_clk;
     //tccd in number of clocks
     bu::quantity<drs::clock_unit> tccd_clk;
-    //tccd in number of clocks by the actual clock
-    bu::quantity<drs::clock_unit> tccd_actualClk;
+    //tccd in number of core clocks
+    bu::quantity<drs::clock_unit> tccd_coreClk;
     //twr in number of clocks
     bu::quantity<drs::clock_unit> twr_clk;
     //trfc in number of clocks
     bu::quantity<drs::clock_unit> trfc_clk;
-    //tref1 in number of clocks
-    bu::quantity<drs::clock_unit> tref1_clk;
+    //trefI in number of clocks
+    bu::quantity<drs::clock_unit> trefI_clk;
 
     void timingInitialize();
 
@@ -202,7 +204,7 @@ class Timing : public Channel
 
     void trfcCalc();
 
-    void tref1Calc();
+    void trefICalc();
 
     void clkTiming();
 

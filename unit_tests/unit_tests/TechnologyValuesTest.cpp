@@ -241,9 +241,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 5.629*drs::microamperes_per_megahertz_clock
                         << "\nGot: " << techValues.IddOcdRcvSlope);
 
-    BOOST_CHECK_MESSAGE( techValues.TSVHeight == 2*drs::micrometer,
+    BOOST_CHECK_MESSAGE( techValues.TSVHeight == 0*drs::micrometer,
                          "Height of the TSV area needed for each bank I/O different from the expected."
-                        << "\nExpected: " << 2*drs::micrometer
+                        << "\nExpected: " << 0*drs::micrometer
                         << "\nGot: " << techValues.TSVHeight);
 
 
@@ -289,10 +289,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 16*drs::bit
                         << "\nGot: " << techValues.Interface);
 
-    BOOST_CHECK_MESSAGE( techValues.Prefetch == 8,
+    BOOST_CHECK_MESSAGE( techValues.prefetch == 8,
                          "Prefetch different from the expected."
                         << "\nExpected: " << 8
-                        << "\nGot: " << techValues.Prefetch);
+                        << "\nGot: " << techValues.prefetch);
 
     BOOST_CHECK_MESSAGE( techValues.dramFreq == 800*drs::megahertz_clock,
                          "DRAM frequency different from the expected."
@@ -334,19 +334,19 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 32*drs::millisecond
                         << "\nGot: " << techValues.retentionTime);
 
-    BOOST_CHECK_MESSAGE( techValues.tRef1Required == 3.9*drs::microsecond,
-                         "Required tRef1 different from the expected."
+    BOOST_CHECK_MESSAGE( techValues.requiredTrefI == 3.9*drs::microsecond,
+                         "Required trefI different from the expected."
                         << "\nExpected: " << 3.9*drs::microsecond
-                        << "\nGot: " << techValues.tRef1Required);
+                        << "\nGot: " << techValues.requiredTrefI);
 
     BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 2,
                          "Bank refresh factor different from the expected."
                         << "\nExpected: " << 2
                         << "\nGot: " << techValues.banksRefreshFactor);
 
-    BOOST_CHECK_MESSAGE( techValues.additionalLatencyTrl == 0*drs::clock,
+    BOOST_CHECK_MESSAGE( techValues.additionalLatencyTrl == 1*drs::clock,
                          "Additional latency to trl different from the expected."
-                        << "\nExpected: " << 0*drs::clock
+                        << "\nExpected: " << 1*drs::clock
                         << "\nGot: " << techValues.additionalLatencyTrl);
 
     BOOST_CHECK_MESSAGE( techValues.driverOffset == 0.6*drs::nanoseconds,
@@ -655,10 +655,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 104*drs::bit
                         << "\nGot: " << techValues.Interface);
 
-    BOOST_CHECK_MESSAGE( techValues.Prefetch == 105,
+    BOOST_CHECK_MESSAGE( techValues.prefetch == 105,
                          "Prefetch different from the expected."
                         << "\nExpected: " << 105
-                        << "\nGot: " << techValues.Prefetch);
+                        << "\nGot: " << techValues.prefetch);
 
     BOOST_CHECK_MESSAGE( techValues.dramFreq == 106*drs::megahertz_clock,
                          "DRAM frequency different from the expected."
@@ -700,10 +700,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 113*drs::millisecond
                         << "\nGot: " << techValues.retentionTime);
 
-    BOOST_CHECK_MESSAGE( techValues.tRef1Required == 114*drs::microsecond,
-                         "Required tRef1 different from the expected."
+    BOOST_CHECK_MESSAGE( techValues.requiredTrefI == 114*drs::microsecond,
+                         "Required trefI different from the expected."
                         << "\nExpected: " << 114*drs::microsecond
-                        << "\nGot: " << techValues.tRef1Required);
+                        << "\nGot: " << techValues.requiredTrefI);
 
     BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 115,
                          "Bank refresh factor different from the expected."

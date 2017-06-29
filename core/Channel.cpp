@@ -120,6 +120,10 @@ Channel::channelLenghtCalc()
     channelWidth = nHorizontalBanks * bankWidth;
 
     channelHeight = nVerticalBanks * bankHeight;
+    // Add TSV area if is 3D design
+    if ( is3D ) {
+        channelHeight = channelHeight + 1.0 * TSVHeight;
+    }
 }
 
 

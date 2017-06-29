@@ -78,15 +78,8 @@ Bank::bankLenghtCalc()
     }
 
     // Add I/O related height
-    if ( is3D ) {
-        bankHeight = bankHeight
-                     + 1.0 * DQDriverHeight / drs::bank
-                     + 1.0 * TSVHeight / drs::bank;
-    }
-    else {
-        bankHeight = bankHeight
-                     + 1.0 * DQDriverHeight / drs::bank;
-    }
+    bankHeight = bankHeight
+                 + 1.0 * DQDriverHeight / drs::bank;
 
 }
 

@@ -80,8 +80,98 @@ It is also possible to run multiple input files at once:
 ```
 Note: the number of technology and architecture description files must be equal.
 
+## Input Data
+
+### DRAM Technology related inputs
+
+| Abbreviation | Description | Unit |
+|:------------:|:-----------:|:----:|
+||||
+
+### DRAM Architecture related inputs
+
+| Abbreviation | Description | Unit |
+|:------------:|:-----------:|:----:|
+||||
+
+## Output Data
+
+### Timings [2]
+
+| Abbreviation | Description | Unit |
+|:------------:|:-----------:|:----:|
+||||
+|Frequency|Nominal Synchronous DRAM clock frequency.|MHz|
+|Core Frequency| DRAM core clock frequency.|MHz|
+|Max Core Frequency|Maximun DRAM core clock frequency.|MHz|
+||||
+||ESTIMATED ANALOG DELAYS||
+|tRCD|Row to Column command Delay. The time interval between row access and data ready at sense amplifiers.|ns|
+|tCL or tCAS| Column Access Strobe delay. The time interval between column access command and the start of data return by the DRAM device(s).|ns|
+|tRAS|Row Access Strobe delay. The time interval between a row access command and data restoration in a DRAM array.|ns|
+|tRP|Row Precharge delay. The time interval that it takes for a DRAM array to be precharged for another row access.|ns|
+|tRC|Row Cycle delay. The time interval between accesses to different rows in a bank. tRC = tRAS + tRP.|ns|
+|tRL|Read Latency delay. tRL = tCL + tAL, where tAL is the Added Latency to column accesses.|ns|
+|tRTP|Read to Precharge delay. The time interval between a read and a precharge command.|ns|
+|tCCD|Column-to-Column Delay. The minimum intra-device column-to-column command timing, determined by internal prefetch length.|ns|
+|tWR|Write Recovery delay. The minimum time interval between the end of write data burst and the start of a precharge command.|ns|
+|tRFC|Refresh Cycle delay. The time interval between Refresh and Activation commands.|ns|
+|tREFI|Refresh Interval. Average time interval in between Refresh commands. |ns|
+||||
+||ESTIMATED LATENCIES <br>(in minimum number of clock cycles)||
+|tRCD|Row to Column command Delay latency. The time interval between row access and data ready at sense amplifiers.|cc|
+|tCL or tCAS| Column Access Strobe latency. The time interval between column access command and the start of data return by the DRAM device(s).|cc|
+|Core tCL or tCAS| Column Access Strobe latency. The time interval between column access command and the start of data return by the DRAM device(s). Given in minimum number of clock cycles of the DRAM core.|cc|
+|tRAS|Row Access Strobe latency. The time interval between a row access command and data restoration in a DRAM array.|cc|
+|tRP|Row Precharge latency. The time interval that it takes for a DRAM array to be precharged for another row access.|cc|
+|tRC|Row Cycle latency. The time interval between accesses to different rows in a bank. tRC = tRAS + tRP.|cc|
+|tRL|Read Latency latency. tRL = tCL + tAL, where tAL is the Added Latency to column accesses.|cc|
+|Core tRL|Read Latency latency. tRL = tCL + tAL, where tAL is the Added Latency to column accesses.  Given in minimum number of clock cycles of the DRAM core.|cc|
+|tRTP|Read to Precharge latency. The time interval between a read and a precharge command.|cc|
+|tCCD|Column-to-Column Delay latency. The minimum intra-device column-to-column command timing, determined by internal prefetch length.|cc|
+|Core tCCD|Column-to-Column Delay latency. The minimum intra-device column-to-column command timing, determined by internal prefetch length. Given in minimum number of clock cycles of the DRAM core.|cc|
+|tWR|Write Recovery latency. The minimum time interval between the end of write data burst and the start of a precharge command.|cc|
+|tRFC|Refresh Cycle latency. The time interval between Refresh and Activation commands.|cc|
+|tREFI|Refresh Interval latency. Average time interval in between Refresh commands. |cc|
+
+### Currents [3]
+
+| Abbreviation | Description | Unit |
+|:------------:|:-----------:|:----:|
+||||
+|IDD0|Operating One Bank Active-Precharge Current.|mA|
+|IDD1|Operating One Bank Active-Read-Precharge Current.|mA|
+|IDD2N|Precharge Standby Current|mA|
+|IDD3N|Active Standby Current|mA|
+|IDD4R|Operating Burst Read Current|mA|
+|IDD4W|Operating Burst Write Current|mA|
+|IDD5B|Burst Refresh Current|mA|
+
+### Physical sizings
+
+| Abbreviation | Description | Unit |
+|:------------:|:-----------:|:----:|
+||||
+|Subarray height|Height (column direction) of one subarray including sense amplifier.|um|
+|Subarray width|Width (row direction) of one subarray including local wordline driver.|um|
+|Tile height|Height (column direction) of one tile (bank subsection) including column address decoder.|um|
+|Tile width|Width (row direction) of one tile (bank subsection) including row address decoder.|um|
+|Bank height|Height (column direction) of one bank including DQ driver.|um|
+|Bank width|Width (row direction) of one bank.|um|
+|Channel height|Height (column direction) of one channel including TSV if 3D design.|um|
+|Channel width|Width (row direction) of one channel.|um|
+|Channel area|Area of one channel.|(mm)^2|
+
+
 ## Reference
-[1] A High-Level DRAM Timing, Power and Area Exploration Tool
+[1] A High-Level DRAM Timing, Power and Area Exploration Tool,
 O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn.,
 IEEE International Conference on Embedded Computer Systems Architectures Modeling and Simulation (SAMOS), July, 2015, Samos Island, Greece
 
+[2] Memory Systems: Cache, DRAM, Disk,
+B. Jacob, S. Ng and D. Wang,
+Morgan Kaufmann, 2007
+
+[3] DDR3 SDRAM standard (revision F),
+JEDEC,
+July 2012.

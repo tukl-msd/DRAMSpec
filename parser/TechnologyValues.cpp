@@ -79,11 +79,11 @@ TechnologyValues::technologyValuesInitialize()
     Interface = 0*drs::bit;
     dramFreq = 0*drs::megahertz_clock;
     dramCoreFreq = 0*drs::megahertz_clock;
-    Prefetch = 0;
+    prefetch = 0;
     additionalLatencyTrl = 0*drs::clock;
     pageStorage = 0*drs::kibibyte_per_page;
     isDLL = false;
-    tRef1Required = 0*drs::microsecond;
+    requiredTrefI = 0*drs::microsecond;
     banksRefreshFactor = 0;
     subArrayToPageFactor = 0;
     retentionTime = 0*drs::millisecond;
@@ -407,7 +407,7 @@ TechnologyValues::readjson(const string& t,const string& p)
                     * drs::bits;
 
         //Number of Prefetch
-        Prefetch = getJSONNumber(archDocument, "Prefetch[]");
+        prefetch = getJSONNumber(archDocument, "Prefetch[]");
 
         //DRAM Frequency
         dramFreq = getJSONNumber(archDocument, "Frequency[MHz]")
@@ -442,7 +442,7 @@ TechnologyValues::readjson(const string& t,const string& p)
                          * drs::millisecond;
 
         // Required tref by user
-        tRef1Required = getJSONNumber(archDocument, "RequiredRefreshPeriod[us]")
+        requiredTrefI = getJSONNumber(archDocument, "RequiredRefreshPeriod[us]")
                          * drs::microseconds;
 
         // Ratio of banks refreshed pro command

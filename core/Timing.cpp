@@ -71,6 +71,8 @@ Timing::timingInitialize()
 
     tcas = 0*drs::nanoseconds;
 
+    trl = 0*drs::nanoseconds;
+
     trtp = 0*drs::nanoseconds;
 
     tccd = 0*drs::nanoseconds;
@@ -85,29 +87,29 @@ Timing::timingInitialize()
 
     trfc = 0*drs::nanoseconds;
 
-    tref1 = 0*drs::nanoseconds;
+    trefI = 0*drs::nanoseconds;
 
     maxCoreFreq = 0*drs::megahertz_clock;
-    actualCoreFreq = 0*drs::megahertz_clock;
+    dramCoreFreq = 0*drs::megahertz_clock;
 
-    clk = 0*drs::nanoseconds_per_clock;
-    actualClk = 0*drs::nanoseconds_per_clock;
+    clkPeriod = 0*drs::nanoseconds_per_clock;
+    coreClkPeriod = 0*drs::nanoseconds_per_clock;
 
     trcd_clk = 0*drs::clocks;
     tcas_clk = 0*drs::clocks;
-    tcas_actualClk = 0*drs::clocks;
+    tcas_coreClk = 0*drs::clocks;
     tras_clk = 0*drs::clocks;
     trp_clk = 0*drs::clocks;
     trc_clk = 0*drs::clocks;
     trl_clk = 0*drs::clocks;
-    trl_actualClk = 0*drs::clocks;
+    trl_coreClk = 0*drs::clocks;
     twl_clk = 0*drs::clocks;
     trtp_clk = 0*drs::clocks;
     tccd_clk = 0*drs::clocks;
-    tccd_actualClk = 0*drs::clocks;
+    tccd_coreClk = 0*drs::clocks;
     twr_clk = 0*drs::clocks;
     trfc_clk = 0*drs::clocks;
-    tref1_clk = 0*drs::clocks;
+    trefI_clk = 0*drs::clocks;
 }
 
 void
@@ -275,7 +277,7 @@ Timing::trasCalc()
            + timeToPercentage(63) * DQWireResistance
              * DQWireCapacitance;
     
-    // Calculating tcl:
+    // Calculating tcl (same as tcas):
     // command decoding latency (consider for now 2ns) +
     // ( readout-sensing of SSA ) + tDQ + 1 ns (interface delay)
     tcas = cmdDecoderLatency + tcsl + interfaceLatency
@@ -347,7 +349,7 @@ Timing::trfcCalc()
 }
 
 void
-Timing::tref1Calc()
+Timing::trefICalc()
 {
     //time for average refresh period
     //number of rows
@@ -359,7 +361,7 @@ Timing::tref1Calc()
                         *drs::bank / drs::page; // !!! Check dimension mismatch !!!
 
 //   [ns]    !!!! [??] !!!!            [ms]        [page/bank]
-    tref1 = banksRefreshFactor
+    trefI = banksRefreshFactor
             * SCALE_QUANTITY(retentionTime, drs::nanosecond_unit)
             / numberofrows;
 }
@@ -370,74 +372,71 @@ Timing::clkTiming()
 
    maxCoreFreq = drs::clock / SCALE_QUANTITY(tccd, drs::microsecond_unit);
 
-    // if we specified a core Freq then take the value else calculate it
-    if (dramCoreFreq != 0*drs::megahertz_clock) {
-        actualCoreFreq = dramCoreFreq;
-    }
-    else {
+    // If not specified, calculate the core freq
+    if (dramCoreFreq == 0*drs::megahertz_clock) {
         if (dramType == "DDR") {
-            clockFactor = 2;
+            clockFactor = prefetch / 2;
         } else {
-            clockFactor = 1;
+            clockFactor = prefetch;
         }
 
-        actualCoreFreq = dramFreq / (Prefetch / clockFactor);
+        dramCoreFreq = dramFreq / clockFactor;
     }
 
-    clk = 1.0 / SCALE_QUANTITY(dramFreq, drs::gigahertz_clock_unit);
-    actualClk = 1.0 / SCALE_QUANTITY(actualCoreFreq, drs::gigahertz_clock_unit);
+    clkPeriod = 1.0 / SCALE_QUANTITY(dramFreq, drs::gigahertz_clock_unit);
+    coreClkPeriod = 1.0 / SCALE_QUANTITY(dramCoreFreq, drs::gigahertz_clock_unit);
 
-    //trcd in clk cycles round-up
-    trcd_clk = ceil(trcd/clk);
+    // Calculating trl (delay in ns):
+    //additionalLatencyTrl = tal (Added Latency to column accesses)
+    trl = tcas + additionalLatencyTrl * clkPeriod;
+
+    //trcd in clk cycles
+    trcd_clk = ceil(trcd/clkPeriod);
 
     //tcl in clk cycles
-    tcas_clk = ceil(tcas/clk);
+    tcas_clk = ceil(tcas/clkPeriod);
 
     //tcl_act in clk cycles
-    tcas_actualClk = ceil(tcas/actualClk);
+    tcas_coreClk = ceil(tcas/coreClkPeriod);
 
     //tras in clk cycles
-    tras_clk = ceil(tras/clk);
+    tras_clk = ceil(tras/clkPeriod);
 
     //trp in clk cycles
-    trp_clk = ceil(trp/clk);
+    trp_clk = ceil(trp/clkPeriod);
 
     //trc in clk cycles
-    trc_clk = ceil(trc/clk);
+    trc_clk = ceil(trc/clkPeriod);
     
     //trl in clk cycles
-    //tal is additional latency defined in tech. parameter
-    trl_clk = ceil(tcas/clk);
-    trl_clk += additionalLatencyTrl;
+    trl_clk = ceil(trl/clkPeriod);
 
     //trl_act in clk cycles
-    //tal is additional latency defined in tech. parameter
-    trl_actualClk = ceil(tcas/actualClk);
-    trl_actualClk +=  additionalLatencyTrl;
+    trl_coreClk = ceil(trl/coreClkPeriod);
 
     //twl in clk cycles
     twl_clk = trl_clk - 1*drs::clock;
 
     //trtp in clk cycles
-    trtp_clk = ceil(trtp/clk);
+    trtp_clk = ceil(trtp/clkPeriod);
 
     //tccd in clk cycles
-    tccd_clk = ceil(tccd/clk);
+    tccd_clk = ceil(tccd/clkPeriod);
 
     //tccd_act in clk cycles
-    tccd_actualClk = ceil(tccd/actualClk);
+    tccd_coreClk = ceil(tccd/coreClkPeriod);
 
     //twr in clk cycles
-    twr_clk = ceil(twr/clk);
+    twr_clk = ceil(twr/clkPeriod);
 
     //trfc in clk cycles
-    trfc_clk = ceil(trfc/clk);
+    trfc_clk = ceil(trfc/clkPeriod);
     
-    //tref1 in clk cycles
-    tref1_clk = ceil(tref1/clk);
+    //trefI in clk cycles
+    trefI_clk = ceil(trefI/clkPeriod);
 
     // If frequency is too high,  warn the user but do all calculations anyway
-    if( actualCoreFreq > maxCoreFreq ) {
+    if( dramCoreFreq > maxCoreFreq ) {
         warning.append("[WARNING] ");
         warning.append("Specified frequency ");
         warning.append("too high for DRAM Desing. ");
@@ -462,7 +461,7 @@ Timing::timingCompute()
 
     trfcCalc();
 
-    tref1Calc();
+    trefICalc();
 
     try {
         clkTiming();
@@ -485,5 +484,5 @@ Timing::printTiming()
     std::cout << "trp"      << "\t" << trp      << ".\n";
     std::cout << "trc"      << "\t" << trc      << ".\n";
     std::cout << "trfc"     << "\t" << trfc     << "\n";
-    std::cout << "tref1"    << "\t" << tref1    << "\n";
+    std::cout << "trefI"    << "\t" << trefI    << "\n";
 }

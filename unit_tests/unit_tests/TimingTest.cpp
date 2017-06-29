@@ -185,6 +185,11 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 13.895*drs::nanoseconds
                         << "\nGot: " << timing.tcas);
 
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl, 3) == 15.145*drs::nanoseconds,
+                        "trl different from the expected."
+                        << "\nExpected around: " << 15.145*drs::nanoseconds
+                        << "\nGot: " << timing.trl);
+
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trtp, 3) == 6.147*drs::nanoseconds,
                         "trtp different from the expected."
                         << "\nExpected around: " << 6.147*drs::nanoseconds
@@ -220,35 +225,30 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 200.15*drs::nanoseconds
                         << "\nGot: " << timing.trfc);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tref1, 2) == 7812.5*drs::nanoseconds,
-                        "tref1 different from the expected."
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trefI, 2) == 7812.5*drs::nanoseconds,
+                        "trefI different from the expected."
                         << "\nExpected around: " << 7812.5*drs::nanoseconds
-                        << "\nGot: " << timing.tref1);
+                        << "\nGot: " << timing.trefI);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.maxCoreFreq, 3) == 219.973*drs::megahertz_clock,
                         "Maximum core frequency different from the expected."
                         << "\nExpected around: " << 219.973*drs::megahertz_clock
                         << "\nGot: " << timing.maxCoreFreq);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.actualCoreFreq, 3) == 200*drs::megahertz_clock,
-                        "Actual core frequency different from the expected."
-                        << "\nExpected around: " << 200*drs::megahertz_clock
-                        << "\nGot: " << timing.actualCoreFreq);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.clockFactor, 3) == 2,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.clockFactor, 3) == 4,
                         "Clock factor different from the expected."
-                        << "\nExpected around: " << 2
+                        << "\nExpected around: " << 4
                         << "\nGot: " << timing.clockFactor);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.clk, 3) == 1.25*drs::nanoseconds_per_clock,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.clkPeriod, 3) == 1.25*drs::nanoseconds_per_clock,
                         "Clock different from the expected."
                         << "\nExpected around: " << 1.25*drs::nanoseconds_per_clock
-                        << "\nGot: " << timing.clk);
+                        << "\nGot: " << timing.clkPeriod);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.actualClk, 3) == 5*drs::nanoseconds_per_clock,
-                        "Actual clock different from the expected."
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.coreClkPeriod, 3) == 5*drs::nanoseconds_per_clock,
+                        "Core clock different from the expected."
                         << "\nExpected around: " << 5*drs::nanoseconds_per_clock
-                        << "\nGot: " << timing.actualClk);
+                        << "\nGot: " << timing.coreClkPeriod);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trcd_clk, 3) == 9*drs::clocks,
                         "trcd in number of clocks different from the expected."
@@ -260,10 +260,10 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 12*drs::clocks
                         << "\nGot: " << timing.tcas_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas_actualClk, 3) == 3*drs::clocks,
-                        "tcas in number of clocks by the actual clock different from the expected."
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas_coreClk, 3) == 3*drs::clocks,
+                        "tcas in number of core clocks different from the expected."
                         << "\nExpected around: " << 3*drs::clocks
-                        << "\nGot: " << timing.tcas_actualClk);
+                        << "\nGot: " << timing.tcas_coreClk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.tras_clk, 3) == 17*drs::clocks,
                         "tras in number of clocks different from the expected."
@@ -280,19 +280,19 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 25*drs::clocks
                         << "\nGot: " << timing.trc_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl_clk, 3) == 12*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl_clk, 3) == 13*drs::clocks,
                         "trl in number of clocks different from the expected."
-                        << "\nExpected around: " << 12*drs::clocks
+                        << "\nExpected around: " << 13*drs::clocks
                         << "\nGot: " << timing.trl_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl_actualClk, 3) == 3*drs::clocks,
-                        "trl in number of clocks by the actual clock different from the expected."
-                        << "\nExpected around: " << 3*drs::clocks
-                        << "\nGot: " << timing.trl_actualClk);
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl_coreClk, 3) == 4*drs::clocks,
+                        "trl in number of core clocks different from the expected."
+                        << "\nExpected around: " << 4*drs::clocks
+                        << "\nGot: " << timing.trl_coreClk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.twl_clk, 3) == 11*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.twl_clk, 3) == 12*drs::clocks,
                         "twl in number of clocks different from the expected."
-                        << "\nExpected around: " << 11*drs::clocks
+                        << "\nExpected around: " << 12*drs::clocks
                         << "\nGot: " << timing.twl_clk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trtp_clk, 3) == 5*drs::clocks,
@@ -305,10 +305,10 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 4*drs::clocks
                         << "\nGot: " << timing.tccd_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tccd_actualClk, 3) == 1*drs::clocks,
-                        "tccd in number of clocks by the actual clock different from the expected."
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tccd_coreClk, 3) == 1*drs::clocks,
+                        "tccd in number of core clocks different from the expected."
                         << "\nExpected around: " << 1*drs::clocks
-                        << "\nGot: " << timing.tccd_actualClk);
+                        << "\nGot: " << timing.tccd_coreClk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.twr_clk, 3) == 7*drs::clocks,
                         "twr in number of clocks different from the expected."
@@ -320,10 +320,10 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 161*drs::clocks
                         << "\nGot: " << timing.trfc_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tref1_clk, 3) == 6250*drs::clocks,
-                        "tref1 in number of clocks different from the expected."
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trefI_clk, 3) == 6250*drs::clocks,
+                        "trefI in number of clocks different from the expected."
                         << "\nExpected around: " << 6250*drs::clocks
-                        << "\nGot: " << timing.tref1_clk);
+                        << "\nGot: " << timing.trefI_clk);
 
 }
 

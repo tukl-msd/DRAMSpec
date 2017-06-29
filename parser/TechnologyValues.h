@@ -215,7 +215,7 @@ class TechnologyValues
     bu::quantity<drs::megahertz_clock_unit> dramCoreFreq;
 
     //Number of Prefetch
-    double Prefetch;
+    double prefetch;
 
     //additional latency required for trl calculation
     bu::quantity<drs::clock_unit> additionalLatencyTrl;
@@ -227,7 +227,7 @@ class TechnologyValues
     bool isDLL;
 
     // Required tref by user
-    bu::quantity<drs::microsecond_unit> tRef1Required;
+    bu::quantity<drs::microsecond_unit> requiredTrefI;
 
     // Ratio of banks refreshed pro command
     double banksRefreshFactor;

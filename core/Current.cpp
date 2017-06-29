@@ -145,7 +145,7 @@ Current::IDD0Calc()
                             * 2.0 ; // !! Why times 2? Maybe number of tiles?
 
     // Clock cycles of trc in ns
-    effectiveTrc = trc_clk * clk;
+    effectiveTrc = trc_clk * clkPeriod;
     // Current caused by charging and discharging of capas in mA
     IDD0ChargingCurrent = IDD0TotalCharge / effectiveTrc;
 
@@ -159,7 +159,7 @@ Current::IDD1Calc()
 {
     // Charges of SSA / SSA active for 1.5 ns
     SSACharge = Interface
-                * Prefetch
+                * prefetch
                 * SCALE_QUANTITY(Issa, drs::ampere_per_bit_unit)
                 * SSAActiveTime;
 
@@ -167,21 +167,21 @@ Current::IDD1Calc()
     CSLCharge = CSLCapacitance * 1.0*drs::bank
                 * vcc
                 * Interface
-                * Prefetch
+                * prefetch
                 / bitProCSL ;
 
     // Charge of global Dataline
     masterDatalineCharge = globalDatalineCapacitance * 1.0*drs::bank
                            * vcc
                            * Interface
-                           * Prefetch
+                           * prefetch
                             / drs::bit; // TODO: remove the work around
 
     // Charges for Dataqueue // 1 Read is done for interface x prefetch
     DQWireCharge = DQWireCapacitance
                    * vcc
                    * Interface
-                   * Prefetch
+                   * prefetch
                     / drs::bit; // TODO: remove the work around
 
     // read charges in pC
@@ -227,7 +227,7 @@ Current::IDD4RCalc()
     }
 
     IDD4ChargingCurrent = IDD4TotalCharge
-                          * SCALE_QUANTITY(actualCoreFreq, drs::gigahertz_clock_unit)
+                          * SCALE_QUANTITY(dramCoreFreq, drs::gigahertz_clock_unit)
                           / (1.0*drs::clock);
 
     IDD4R = IDD3n
@@ -282,7 +282,7 @@ Current::IDD5Calc()
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
 
     // Refresh current
-    effectiveTrfc = trfc_clk * clk;
+    effectiveTrfc = trfc_clk * clkPeriod;
 
     IDD5ChargingCurrent = refreshCharge / effectiveTrfc;
 
@@ -292,17 +292,9 @@ Current::IDD5Calc()
     // Checking the current for the required refresh period
     // Calculate the number of times each row if refreshed in 64 ms
     // retention time
-    nRowActivations = SCALE_QUANTITY(tref1, drs::microsecond_unit)
-                    / tRef1Required;
+    nRowActivations = SCALE_QUANTITY(trefI, drs::microsecond_unit)
+                    / requiredTrefI;
 
-     //TODO: Is this remark important? If so, should be the dealt with in the DRAMSpec class.
-//    std::cout << "Remark: for the required refresh time of "
-//              << tRef1Required
-//              << ", each row will be refreshed "
-//              << nRowActivation
-//              << " times more than required for a retention time of "
-//              << retentionTime
-//              << std::endl;
 
 }
 
