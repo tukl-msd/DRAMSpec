@@ -334,6 +334,7 @@ void DRAMSpec::runDramSpec(int argc, char** argv)
             dram = new Current(arg->technologyFileName[configID],
                                arg->architectureFileName[configID],
                                arg->IOTerminationCurrentFlag);
+            output << dram->warning;
         } catch(string exceptionMsgThrown) {
             throw exceptionMsgThrown;
         }

@@ -90,6 +90,8 @@ TechnologyValues::technologyValuesInitialize()
     tilesPerBank = 0*drs::tile_per_bank;
     pageSpanningFactor = 0*drs::page_per_tile;
     BLArchitecture = "";
+
+    warning = "";
 }
 
 double
