@@ -91,10 +91,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 2.8*si::volt
                         << "\nGot: " << techValues.vpp);
 
-    BOOST_CHECK_MESSAGE( techValues.vcc == 1.1*si::volt,
-                         "VCC different from the expected."
+    BOOST_CHECK_MESSAGE( techValues.vdd == 1.1*si::volt,
+                         "VDD different from the expected."
                         << "\nExpected: " << 1.1*si::volt
-                        << "\nGot: " << techValues.vcc);
+                        << "\nGot: " << techValues.vdd);
 
     BOOST_CHECK_MESSAGE( techValues.wireResistance == 100*drs::ohm_per_millimeter,
                          "Wire resistance different from the expected."
@@ -457,10 +457,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 2*si::volt
                         << "\nGot: " << techValues.vpp);
 
-    BOOST_CHECK_MESSAGE( techValues.vcc == 3*si::volt,
-                         "VCC different from the expected."
+    BOOST_CHECK_MESSAGE( techValues.vdd == 3*si::volt,
+                         "VDD different from the expected."
                         << "\nExpected: " << 3*si::volt
-                        << "\nGot: " << techValues.vcc);
+                        << "\nGot: " << techValues.vdd);
 
     BOOST_CHECK_MESSAGE( techValues.wireResistance == 4*drs::ohm_per_millimeter,
                          "Wire resistance different from the expected."

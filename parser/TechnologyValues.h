@@ -160,8 +160,8 @@ class TechnologyValues
     //voltage vpp
     bu::quantity<si::electric_potential> vpp;
 
-    //voltage vcc
-    bu::quantity<si::electric_potential> vcc;
+    //voltage vdd
+    bu::quantity<si::electric_potential> vdd;
 
     //background current slope
     bu::quantity<drs::milliampere_per_megahertz_clock_unit> backgroundCurrentSlope;

@@ -1,8 +1,8 @@
 {
     "TechnologyNode[nm]": 22,
 
+    "Vdd[V]": 1.2,
     "Vpp[V]": 2.5,
-    "Vcc[V]": 1.2,
 
     "WireResistance[Ohm/mm]": 25,
     "WireCapacitance[fF/mm]" : 150,

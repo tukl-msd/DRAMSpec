@@ -65,7 +65,7 @@ TechnologyValues::technologyValuesInitialize()
     DQDriverResistance = 0*si::ohm;
     Issa = 0*drs::microampere_per_bit;
     vpp = 0*si::volt;
-    vcc = 0*si::volt;
+    vdd = 0*si::volt;
     backgroundCurrentSlope = 0*drs::milliamperes_per_megahertz_clock;
     backgroundCurrentOffset = 0*drs::milliampere;
     IddOcdRcvSlope = 0*drs::microamperes_per_megahertz_clock;
@@ -206,8 +206,8 @@ TechnologyValues::readjson(const string& t,const string& p)
         //voltage vpp
         vpp = getJSONNumber(techDocument, "Vpp[V]")
               * si::volt;
-        //voltage vcc
-        vcc = getJSONNumber(techDocument, "Vcc[V]")
+        //voltage vdd
+        vdd = getJSONNumber(techDocument, "Vdd[V]")
               * si::volt;
 
         //wire resistance in ohm/mm
@@ -377,7 +377,7 @@ TechnologyValues::readjson(const string& t,const string& p)
 
     try {
         //DRAM Type
-        dramType = getJSONString(archDocument, "DRAMType");
+        dramType = getJSONString(archDocument, "DRAMType[-]");
 
         //3D ON/OFF Feature
         //set 3D on for HMC/WideIO

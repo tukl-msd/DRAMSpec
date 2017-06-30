@@ -128,7 +128,7 @@ Current::IDD0Calc()
     //charge of local bitline
     nLocalBitlines = SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)*drs::page/drs::bit;
     localBitlineCharge = localBitlineCapacitance * 1.0*drs::subarray
-                         * vcc / 2.0 // <<-- WHY DIVIDED BY 2??
+                         * vdd / 2.0 // <<-- WHY DIVIDED BY 2??
                          * nLocalBitlines;
 
     rowAddrsLinesCharge =
@@ -136,7 +136,7 @@ Current::IDD0Calc()
             * SCALE_QUANTITY(tileHeight, drs::millimeter_per_tile_unit)
             * tilesPerBank * 1.0*drs::bank
             * nTileRowAddressLines
-            * vcc;
+            * vdd;
 
     IDD0TotalCharge = ( masterWordlineCharge
                       + localWordlineCharge
@@ -165,21 +165,21 @@ Current::IDD1Calc()
 
     // Charges for CSL// 8 bits pro CSL
     CSLCharge = CSLCapacitance * 1.0*drs::bank
-                * vcc
+                * vdd
                 * Interface
                 * prefetch
                 / bitProCSL ;
 
     // Charge of global Dataline
     masterDatalineCharge = globalDatalineCapacitance * 1.0*drs::bank
-                           * vcc
+                           * vdd
                            * Interface
                            * prefetch
                             / drs::bit; // TODO: remove the work around
 
     // Charges for Dataqueue // 1 Read is done for interface x prefetch
     DQWireCharge = DQWireCapacitance
-                   * vcc
+                   * vdd
                    * Interface
                    * prefetch
                     / drs::bit; // TODO: remove the work around
@@ -213,7 +213,7 @@ Current::IDD4RCalc()
             * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit)
             * tilesPerBank * 1.0*drs::bank
             * nTileColumnAddressLines
-            * vcc;
+            * vdd;
 
     IDD4TotalCharge = readingCharge + colAddrsLinesCharge;
     // Number of output signals for read = interface number

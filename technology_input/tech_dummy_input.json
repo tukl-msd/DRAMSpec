@@ -2,7 +2,7 @@
 	"TechnologyNode[nm]": 1,
 
     "Vpp[V]": 2,
-    "Vcc[V]": 3,
+    "Vdd[V]": 3,
 
     "WireResistance[Ohm/mm]": 4,
     "WireCapacitance[fF/mm]" : 5,
