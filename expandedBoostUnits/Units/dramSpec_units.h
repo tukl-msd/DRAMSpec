@@ -47,6 +47,7 @@
 #include "clock_period.h"
 #include "clock.h"
 #include "current_page_per_information.h"
+#include "current_per_information.h"
 #include "current_per_clock_frequency.h"
 #include "information_per_bank.h"
 #include "information_per_cell.h"

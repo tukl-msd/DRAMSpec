@@ -1,34 +1,44 @@
 {
-    "DRAMType": "100",
-    "3D": "101",
-    "Vaultsperlayer": 102,
-    "Size": 103,
-    "Numberofbanks": 104,
-    "Interface": 105,
-    "Freq": 106,
-    "CoreFreq": 107,
-    "Prefetch": 108,
-    "additionallatency" : 109,
-    "Rowbuffersize": 110,
-    "DLL": "111",
-    "Requiredrefreshperiod": 112,
-    "banksrefreshfactor": 113,
-    "rowrefreshrate": 114,
-    "subArrayToPageFactor": 115,
-    "retentiontime" : 116,
-    "tilesperbank" : 117,
-    "pageSpanningFactor": 118,
-    "bitlineArchitecture": "119",
-    "driverOffset": 120,
-    "BLSADelay": 121,
-    "CSLLoadCapacitance": 122,
-    "cmdDecoderLatency": 123,
-    "interfaceLatency": 124,
-    "IODelay": 125,
-    "SSAPrechargeDelay": 126,
-    "securityMargin": 127,
-    "equalizerDelay": 128,
-    "actCmdDelay": 129,
-    "preCmdDelay": 130,
-    "offset": 131
+    "DRAMType[-]": "DDR",
+    "3D[-]": "OFF",
+    "DLL[-]": "OFF",
+
+    "ChannelSize[Gb]": 100,
+
+    "NumberOfBanksPerChannel[]":101,
+    "NumberOfHorizontalBanksPerChannel[]": 102,
+    "NumberOfVerticalBanksPerChannel[]": 103,
+
+    "Interface[bit]": 104,
+    "Prefetch[]": 105,
+
+    "Frequency[MHz]": 106,
+    "CoreFrequency[MHz]": 107,
+
+    "TilesPerBank[]" : 108,
+
+    "PageSize[KB]": 109,
+    "PageSpanningFactor[]": 110,
+    "SubarrayToPageFactor[]": 111,
+    "BitlineArchitecture[-]": "112",
+
+    "RetentionTime[ms]" : 113,
+    "RequiredRefreshPeriod[us]": 114,
+    "BankRefreshFactor[]":115,
+
+    "AdditionalTRLLatency[cc]" : 116,
+
+    "DriverOffset[ns]": 117,
+    "BLSADelay[ns]": 118,
+    "CommandDecoderDelay[ns]": 119,
+    "InterfaceDelay[ns]": 120,
+    "IODelay[ns]": 121,
+    "SSAPrechargeDelay[ns]": 122,
+    "SecurityMargin[ns]": 123,
+    "EqualizerDelay[ns]": 124,
+    "ACTCommandDelay[ns]": 125,
+    "PRECommandDelay[ns]": 126,
+    "Offset[ns]": 127,
+
+    "CSLLoadCapacitance[fF]": 128
 }

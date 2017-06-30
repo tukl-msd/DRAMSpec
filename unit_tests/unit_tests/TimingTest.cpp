@@ -115,44 +115,44 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 3.642*drs::nanoseconds
                         << "\nGot: " << timing.localBitlineDelay);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineResistance, 3) == 115.908*drs::ohms_per_tile,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineResistance, 3) == 139.908*drs::ohms_per_tile,
                         "Resistance of global wordline different from the expected."
-                        << "\nExpected around: " << 115.908*drs::ohms_per_tile
+                        << "\nExpected around: " << 139.908*drs::ohms_per_tile
                         << "\nGot: " << timing.globalWordlineResistance);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineCapacitance, 6) == 4.43e-4*drs::nanofarads_per_tile,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineCapacitance, 6) == 5.35e-4*drs::nanofarads_per_tile,
                         "Capacitance of global wordline different from the expected."
-                        << "\nExpected around: " << 4.43e-4*drs::nanofarads_per_tile
+                        << "\nExpected around: " << 5.35e-4*drs::nanofarads_per_tile
                         << "\nGot: " << timing.globalWordlineCapacitance);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineDelay, 3) == 1.059*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineDelay, 3) == 1.167*drs::nanoseconds,
                         "Delay through global wordline different from the expected."
-                        << "\nExpected around: " << 1.059*drs::nanoseconds
+                        << "\nExpected around: " << 1.167*drs::nanoseconds
                         << "\nGot: " << timing.globalWordlineDelay);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trcd, 3) == 10.165*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trcd, 3) == 10.273*drs::nanoseconds,
                         "trcd different from the expected."
-                        << "\nExpected around: " << 10.165*drs::nanoseconds
+                        << "\nExpected around: " << 10.273*drs::nanoseconds
                         << "\nGot: " << timing.trcd);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcsl, 3) == 1.905*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcsl, 3) == 2.080*drs::nanoseconds,
                         "tcsl different from the expected."
-                        << "\nExpected around: " << 1.905*drs::nanoseconds
+                        << "\nExpected around: " << 2.080*drs::nanoseconds
                         << "\nGot: " << timing.tcsl);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalDatalineResistance, 3) == 212.344*drs::ohms_per_bank,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalDatalineResistance, 3) == 237.344*drs::ohms_per_bank,
                         "Resistance of global dataline different from the expected."
-                        << "\nExpected around: " << 212.344*drs::ohms_per_bank
+                        << "\nExpected around: " << 237.344*drs::ohms_per_bank
                         << "\nGot: " << timing.globalDatalineResistance);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalDatalineCapacitance, 6) == 8.12e-4*drs::nanofarads_per_bank,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalDatalineCapacitance, 6) == 9.07e-4*drs::nanofarads_per_bank,
                         "Capacitance of global dataline different from the expected."
-                        << "\nExpected around: " << 8.12e-4*drs::nanofarads_per_bank
+                        << "\nExpected around: " << 9.07e-4*drs::nanofarads_per_bank
                         << "\nGot: " << timing.globalDatalineCapacitance);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tgdl, 3) == 1.892*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tgdl, 3) == 2.067*drs::nanoseconds,
                         "tgdl different from the expected."
-                        << "\nExpected around: " << 1.892*drs::nanoseconds
+                        << "\nExpected around: " << 2.067*drs::nanoseconds
                         << "\nGot: " << timing.tgdl);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireLength, 3) == 5*drs::millimeters,
@@ -180,29 +180,34 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 3.749*drs::nanoseconds
                         << "\nGot: " << timing.tdq);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas, 3) == 13.546*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas, 3) == 13.895*drs::nanoseconds,
                         "tcas different from the expected."
-                        << "\nExpected around: " << 13.546*drs::nanoseconds
+                        << "\nExpected around: " << 13.895*drs::nanoseconds
                         << "\nGot: " << timing.tcas);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trtp, 3) == 5.797*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl, 3) == 15.145*drs::nanoseconds,
+                        "trl different from the expected."
+                        << "\nExpected around: " << 15.145*drs::nanoseconds
+                        << "\nGot: " << timing.trl);
+
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trtp, 3) == 6.147*drs::nanoseconds,
                         "trtp different from the expected."
-                        << "\nExpected around: " << 5.797*drs::nanoseconds
+                        << "\nExpected around: " << 6.147*drs::nanoseconds
                         << "\nGot: " << timing.trtp);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tccd, 3) == 4.197*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tccd, 3) == 4.547*drs::nanoseconds,
                         "tccd different from the expected."
-                        << "\nExpected around: " << 4.197*drs::nanoseconds
+                        << "\nExpected around: " << 4.547*drs::nanoseconds
                         << "\nGot: " << timing.tccd);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tras, 3) == 20.159*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tras, 3) == 20.965*drs::nanoseconds,
                         "tras different from the expected."
-                        << "\nExpected around: " << 20.159*drs::nanoseconds
+                        << "\nExpected around: " << 20.965*drs::nanoseconds
                         << "\nGot: " << timing.tras);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.twr, 3) == 8.534*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.twr, 3) == 8.709*drs::nanoseconds,
                         "twr different from the expected."
-                        << "\nExpected around: " << 8.534*drs::nanoseconds
+                        << "\nExpected around: " << 8.709*drs::nanoseconds
                         << "\nGot: " << timing.twr);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trp, 3) == 9.186*drs::nanoseconds,
@@ -210,60 +215,55 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 9.186*drs::nanoseconds
                         << "\nGot: " << timing.trp);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trc, 3) == 29.344*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trc, 3) == 30.150*drs::nanoseconds,
                         "trc different from the expected."
-                        << "\nExpected around: " << 29.344*drs::nanoseconds
+                        << "\nExpected around: " << 30.150*drs::nanoseconds
                         << "\nGot: " << timing.trc);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc, 3) == 199.344*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc, 3) == 200.15*drs::nanoseconds,
                         "trfc different from the expected."
-                        << "\nExpected around: " << 199.344*drs::nanoseconds
+                        << "\nExpected around: " << 200.15*drs::nanoseconds
                         << "\nGot: " << timing.trfc);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tref1, 2) == 7812.5*drs::nanoseconds,
-                        "tref1 different from the expected."
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trefI, 2) == 7812.5*drs::nanoseconds,
+                        "trefI different from the expected."
                         << "\nExpected around: " << 7812.5*drs::nanoseconds
-                        << "\nGot: " << timing.tref1);
+                        << "\nGot: " << timing.trefI);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.maxCoreFreq, 3) == 238.291*drs::megahertz_clock,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.maxCoreFreq, 3) == 219.973*drs::megahertz_clock,
                         "Maximum core frequency different from the expected."
-                        << "\nExpected around: " << 238.291*drs::megahertz_clock
+                        << "\nExpected around: " << 219.973*drs::megahertz_clock
                         << "\nGot: " << timing.maxCoreFreq);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.actualCoreFreq, 3) == 200*drs::megahertz_clock,
-                        "Actual core frequency different from the expected."
-                        << "\nExpected around: " << 200*drs::megahertz_clock
-                        << "\nGot: " << timing.actualCoreFreq);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.clockFactor, 3) == 2,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.clockFactor, 3) == 4,
                         "Clock factor different from the expected."
-                        << "\nExpected around: " << 2
+                        << "\nExpected around: " << 4
                         << "\nGot: " << timing.clockFactor);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.clk, 3) == 1.25*drs::nanoseconds_per_clock,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.clkPeriod, 3) == 1.25*drs::nanoseconds_per_clock,
                         "Clock different from the expected."
                         << "\nExpected around: " << 1.25*drs::nanoseconds_per_clock
-                        << "\nGot: " << timing.clk);
+                        << "\nGot: " << timing.clkPeriod);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.actualClk, 3) == 5*drs::nanoseconds_per_clock,
-                        "Actual clock different from the expected."
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.coreClkPeriod, 3) == 5*drs::nanoseconds_per_clock,
+                        "Core clock different from the expected."
                         << "\nExpected around: " << 5*drs::nanoseconds_per_clock
-                        << "\nGot: " << timing.actualClk);
+                        << "\nGot: " << timing.coreClkPeriod);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trcd_clk, 3) == 9*drs::clocks,
                         "trcd in number of clocks different from the expected."
                         << "\nExpected around: " << 9*drs::clocks
                         << "\nGot: " << timing.trcd_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas_clk, 3) == 11*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas_clk, 3) == 12*drs::clocks,
                         "tcas in number of clocks different from the expected."
-                        << "\nExpected around: " << 11*drs::clocks
+                        << "\nExpected around: " << 12*drs::clocks
                         << "\nGot: " << timing.tcas_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas_actualClk, 3) == 3*drs::clocks,
-                        "tcas in number of clocks by the actual clock different from the expected."
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas_coreClk, 3) == 3*drs::clocks,
+                        "tcas in number of core clocks different from the expected."
                         << "\nExpected around: " << 3*drs::clocks
-                        << "\nGot: " << timing.tcas_actualClk);
+                        << "\nGot: " << timing.tcas_coreClk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.tras_clk, 3) == 17*drs::clocks,
                         "tras in number of clocks different from the expected."
@@ -275,24 +275,24 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 8*drs::clocks
                         << "\nGot: " << timing.trp_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trc_clk, 3) == 24*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trc_clk, 3) == 25*drs::clocks,
                         "trc in number of clocks different from the expected."
-                        << "\nExpected around: " << 24*drs::clocks
+                        << "\nExpected around: " << 25*drs::clocks
                         << "\nGot: " << timing.trc_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl_clk, 3) == 11*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl_clk, 3) == 13*drs::clocks,
                         "trl in number of clocks different from the expected."
-                        << "\nExpected around: " << 11*drs::clocks
+                        << "\nExpected around: " << 13*drs::clocks
                         << "\nGot: " << timing.trl_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl_actualClk, 3) == 3*drs::clocks,
-                        "trl in number of clocks by the actual clock different from the expected."
-                        << "\nExpected around: " << 3*drs::clocks
-                        << "\nGot: " << timing.trl_actualClk);
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl_coreClk, 3) == 4*drs::clocks,
+                        "trl in number of core clocks different from the expected."
+                        << "\nExpected around: " << 4*drs::clocks
+                        << "\nGot: " << timing.trl_coreClk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.twl_clk, 3) == 10*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.twl_clk, 3) == 12*drs::clocks,
                         "twl in number of clocks different from the expected."
-                        << "\nExpected around: " << 10*drs::clocks
+                        << "\nExpected around: " << 12*drs::clocks
                         << "\nGot: " << timing.twl_clk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trtp_clk, 3) == 5*drs::clocks,
@@ -305,29 +305,29 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 4*drs::clocks
                         << "\nGot: " << timing.tccd_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tccd_actualClk, 3) == 1*drs::clocks,
-                        "tccd in number of clocks by the actual clock different from the expected."
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tccd_coreClk, 3) == 1*drs::clocks,
+                        "tccd in number of core clocks different from the expected."
                         << "\nExpected around: " << 1*drs::clocks
-                        << "\nGot: " << timing.tccd_actualClk);
+                        << "\nGot: " << timing.tccd_coreClk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.twr_clk, 3) == 7*drs::clocks,
                         "twr in number of clocks different from the expected."
                         << "\nExpected around: " << 7*drs::clocks
                         << "\nGot: " << timing.twr_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc_clk, 3) == 160*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc_clk, 3) == 161*drs::clocks,
                         "trfc in number of clocks different from the expected."
-                        << "\nExpected around: " << 160*drs::clocks
+                        << "\nExpected around: " << 161*drs::clocks
                         << "\nGot: " << timing.trfc_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tref1_clk, 3) == 6250*drs::clocks,
-                        "tref1 in number of clocks different from the expected."
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trefI_clk, 3) == 6250*drs::clocks,
+                        "trefI in number of clocks different from the expected."
                         << "\nExpected around: " << 6250*drs::clocks
-                        << "\nGot: " << timing.tref1_clk);
+                        << "\nGot: " << timing.trefI_clk);
 
 }
 
-BOOST_AUTO_TEST_CASE( checkChip_different_timing_configs )
+BOOST_AUTO_TEST_CASE( checkChannel_different_timing_configs )
 {
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",

@@ -44,10 +44,11 @@ INCLUDEPATH += /users/chinazzo/libs/boost_1_62_0
 HEADERS += core/SubArray.h
 HEADERS += core/Tile.h
 HEADERS += core/Bank.h
-HEADERS += core/Chip.h
+HEADERS += core/Channel.h
 HEADERS += core/Timing.h
 HEADERS += core/Current.h
 
+HEADERS += utils/utils.h
 HEADERS += parser/ArgumentsParser.h
 HEADERS += parser/TechnologyValues.h
 HEADERS += parser/DramSpec.h
@@ -76,6 +77,7 @@ HEADERS += expandedBoostUnits/DerivedDimensions/cell_per_subarray.h
 HEADERS += expandedBoostUnits/DerivedDimensions/clock_frequency.h
 HEADERS += expandedBoostUnits/DerivedDimensions/clock_period.h
 HEADERS += expandedBoostUnits/DerivedDimensions/current_page_per_information.h
+HEADERS += expandedBoostUnits/DerivedDimensions/current_per_information.h
 HEADERS += expandedBoostUnits/DerivedDimensions/current_per_clock_frequency.h
 HEADERS += expandedBoostUnits/DerivedDimensions/information_per_bank.h
 HEADERS += expandedBoostUnits/DerivedDimensions/information_per_cell.h
@@ -108,6 +110,7 @@ HEADERS += expandedBoostUnits/Units/clock_frequency.h
 HEADERS += expandedBoostUnits/Units/clock_period.h
 HEADERS += expandedBoostUnits/Units/clock.h
 HEADERS += expandedBoostUnits/Units/current_page_per_information.h
+HEADERS += expandedBoostUnits/Units/current_per_information.h
 HEADERS += expandedBoostUnits/Units/current_per_clock_frequency.h
 HEADERS += expandedBoostUnits/Units/information_per_bank.h
 HEADERS += expandedBoostUnits/Units/information_per_cell.h
@@ -139,11 +142,12 @@ HEADERS += expandedBoostUnits/dramSpecUnitsSystem.h
 SOURCES += core/SubArray.cpp
 SOURCES += core/Tile.cpp
 SOURCES += core/Bank.cpp
-SOURCES += core/Chip.cpp
+SOURCES += core/Channel.cpp
 SOURCES += core/Timing.cpp
 SOURCES += core/Current.cpp
 
-#DRAMSpec parser source files
+#DRAMSpec other source files
+SOURCES += utils/utils.cpp
 SOURCES += parser/ArgumentsParser.cpp
 SOURCES += parser/TechnologyValues.cpp
 SOURCES += parser/DramSpec.cpp
@@ -182,7 +186,7 @@ CONFIG(debug, debug|release) {
     SOURCES += unit_tests/unit_tests/SubArrayTest.cpp
     SOURCES += unit_tests/unit_tests/TileTest.cpp
     SOURCES += unit_tests/unit_tests/BankTest.cpp
-    SOURCES += unit_tests/unit_tests/ChipTest.cpp
+    SOURCES += unit_tests/unit_tests/ChannelTest.cpp
     SOURCES += unit_tests/unit_tests/TimingTest.cpp
     SOURCES += unit_tests/unit_tests/CurrentTest.cpp
     #SOURCES += unit_tests/unit_tests/DramSpecTest.cpp
@@ -197,6 +201,7 @@ OTHER_FILES += technology_input/*
 OTHER_FILES += architecture_input/*
 OTHER_FILES += Makefile
 OTHER_FILES += README.md
+OTHER_FILES += IODescription.md
 OTHER_FILES += runTests.sh
 OTHER_FILES += buildDRAMSpec.sh
 

@@ -80,8 +80,161 @@ It is also possible to run multiple input files at once:
 ```
 Note: the number of technology and architecture description files must be equal.
 
+## Input Data
+
+### DRAM Technology related inputs
+
+| Parameter | Description | Unit |
+|:------------:|:-----------:|:----:|
+|TechnologyNode|Technology node (not used in any calculation).|um|
+|Vdd|Main power supply voltage.|V|
+|Vpp|Wordlines HIGH level voltage.|V|
+|WireResistance|Wire resistance per length unit (Sheet resistance).|Ohm/mm|
+|WireCapacitance|Wire capacitance per length unit (Sheet capacitance).|fF/mm|
+|CellCapacitance|Total capacitance of a single cell.|fF|
+|CellResistance|Total resistance of a single cell.|KOhm|
+|CellWidth|Length in row direction of a single cell.|um|
+|CellHeight|Length in column direction of a single cell.|um|
+|CellsPerSubarrayRow|Number of cells in row direction in a subarray.|dimensionless|
+|RedundantCellsPerSubarrayRow|Number of redundant cells in row direction in a subarray.|dimensionless|
+|CellsPerSubarrayColumn|Number of cells in column direction in a subarray.|dimensionless|
+|RedundantCellsPerSubarrayColumn|Number of redundant cells in column direction in a subarray.|dimensionless|
+|BitlineCapacitancePerCell|Capacitance due to each cell connected to the local bitline.|aF|
+|BitlineResistancePerCell|Resistance due to each cell connected to the local bitline.|Ohm|
+|WordlineCapacitancePerCell|Capacitance due to each cell connected to the local wordline.|aF|
+|WordlineResistancePerCell|Resistance due to each cell connected to the local wordline.|Ohm|
+|PrimarySenseAmpHeight|Lenght in column direction of the primary sense amplifier.|um|
+|LocalWordlineDriverWitdh|Lenght in row direction of the local wordline driver.|um|
+|LocalWordlineDriverResistance|Output resistance of the local wordline driver.|Ohm|
+|RowDecoderWidth|Length in row direction of the row address decoder.|um|
+|GlobalWordlineDriverResistance|Output resistance of the global wordline driver.|Ohm|
+|SecondarySenseAmpCurrent|Current sinked by the secondary sense amplifier.|uA|
+|WriteDriverResistance|Output resistance of the write driver.|Ohm|
+|ColumnDecoderHeight|Lenght in column direction of the column address decoder.|um|
+|CSLDriverResistance|Output resistance of the column select line driver.|Ohm|
+|GlobalDataLineDriverResistance|Output resistance of the global dataline driver.|Ohm|
+|DQDriverHeight|Length in column direction of the DQ driver.|um|
+|DQDriverResistance|Output resistance of the DQ driver.|Ohm|
+|BackgroundCurrentSlope|Slope in relation to operating frequency of the precharge background current.|mA/MHz|
+|BackgroundCurrentOffset|Constant term of precharge background current (frequency invariant).|mA|
+|OCDCurrentSlope|Slope of current sinked by the off-chip driver in relation to operating frequency.|uA/MHz|
+|TSVHeight|Length in column direction of TSV area.|um|
+
+### DRAM Architecture related inputs
+
+| Parameter | Description | Unit |
+|:------------:|:-----------:|:----:|
+|DRAMType|DRAM type. Currently only differenciates between DDR or SDR.|-|
+|3D|Flag for 3D designs. ON means it is a 3D design.|-|
+|DLL|Flag for the usage of Dealy-Locked Loop. ON means the DRAM uses DLL.|-|
+|ChannelSize|Data storage capacity of a single channel.|Gbit|
+|NumberOfBanksPerChannel|Total number of banks in a single channel.|dimensionless|
+|NumberOfHorizontalBanksPerChannel|Number of banks in row direction.|dimensionless|
+|NumberOfVerticalBanksPerChannel|Number of banks in a column direction.|dimensionless|
+|Interface|Number of datalines of the IO bus. This number is the length of a single data word.|bit|
+|Prefetch|Number of prefetched data words for a single read command (RD).|dimensionless|
+|Frequency|Nominal Synchronous DRAM clock frequency.|MHz|
+|CoreFrequency|DRAM Core clock frequency.|MHz|
+|TilesPerBank|Number of tiles (subsections) of a single bank.|dimensionless|
+|PageSize|Amount of data sensed after an bank activate command (ACT).|KByte|
+|PageSpanningFactor|Percetange of page size sensed on a single bank tile.|dimensionless|
+|SubarrayToPageFactor|Ratio between number of cells in a physical row and the page size.|dimensionless|
+|BitlineArchitecture|Chosen architecture of bitlines. Can be either OPEN bitlines, or FOLDED bitlines.|-|
+|RetentionTime|Minimum amout of time each and every cell must keep its information before being refreshed.|ms|
+|RequiredRefreshPeriod|Required refresh interval latency. Average time interval in between Refresh commands.|us|
+|BankRefreshFactor|Ratio between the number of rows actived in one refresh command and the number of banks.|dimensionless|
+|AdditionalTRLLatency|Added latency (tAL [2]) to tCAS resulting in tRL.|cc|
+|DriverOffset|  |ns|
+|BLSADelay|  |ns|
+|CommandDecoderDelay|  |ns|
+|InterfaceDelay|  |ns|
+|IODelay|  |ns|
+|SSAPrechargeDelay|  |ns|
+|SecurityMargin|  |ns|
+|EqualizerDelay|  |ns|
+|ACTCommandDelay|  |ns|
+|PRECommandDelay|  |ns|
+|Offset|  |ns|
+|CSLLoadCapacitance|  |fF|
+
+## Output Data
+
+### Timings [2]
+
+| Abbreviation | Description | Unit |
+|:------------:|:-----------:|:----:|
+||||
+|Frequency|Nominal Synchronous DRAM clock frequency.|MHz|
+|Core Frequency|DRAM core clock frequency.|MHz|
+|Max Core Frequency|Maximun DRAM core clock frequency.|MHz|
+||||
+||ESTIMATED ANALOG DELAYS||
+|tRCD|Row to Column command Delay. The time interval between row access and data ready at sense amplifiers.|ns|
+|tCL or tCAS| Column Access Strobe delay. The time interval between column access command and the start of data return by the DRAM device(s).|ns|
+|tRAS|Row Access Strobe delay. The time interval between a row access command and data restoration in a DRAM array.|ns|
+|tRP|Row Precharge delay. The time interval that it takes for a DRAM array to be precharged for another row access.|ns|
+|tRC|Row Cycle delay. The time interval between accesses to different rows in a bank. tRC = tRAS + tRP.|ns|
+|tRL|Read Latency delay. tRL = tCL + tAL, where tAL is the Added Latency to column accesses.|ns|
+|tRTP|Read to Precharge delay. The time interval between a read and a precharge command.|ns|
+|tCCD|Column-to-Column Delay. The minimum intra-device column-to-column command timing, determined by internal prefetch length.|ns|
+|tWR|Write Recovery delay. The minimum time interval between the end of write data burst and the start of a precharge command.|ns|
+|tRFC|Refresh Cycle delay. The time interval between Refresh and Activation commands.|ns|
+|tREFI|Refresh Interval. Average time interval in between Refresh commands. |ns|
+||||
+||ESTIMATED LATENCIES <br>(in minimum number of clock cycles)||
+|tRCD|Row to Column command Delay latency. The time interval between row access and data ready at sense amplifiers.|cc|
+|tCL or tCAS| Column Access Strobe latency. The time interval between column access command and the start of data return by the DRAM device(s).|cc|
+|Core tCL or tCAS| Column Access Strobe latency. The time interval between column access command and the start of data return by the DRAM device(s). Given in minimum number of clock cycles of the DRAM core.|cc|
+|tRAS|Row Access Strobe latency. The time interval between a row access command and data restoration in a DRAM array.|cc|
+|tRP|Row Precharge latency. The time interval that it takes for a DRAM array to be precharged for another row access.|cc|
+|tRC|Row Cycle latency. The time interval between accesses to different rows in a bank. tRC = tRAS + tRP.|cc|
+|tRL|Read Latency latency. tRL = tCL + tAL, where tAL is the Added Latency to column accesses.|cc|
+|Core tRL|Read Latency latency. tRL = tCL + tAL, where tAL is the Added Latency to column accesses.  Given in minimum number of clock cycles of the DRAM core.|cc|
+|tRTP|Read to Precharge latency. The time interval between a read and a precharge command.|cc|
+|tCCD|Column-to-Column Delay latency. The minimum intra-device column-to-column command timing, determined by internal prefetch length.|cc|
+|Core tCCD|Column-to-Column Delay latency. The minimum intra-device column-to-column command timing, determined by internal prefetch length. Given in minimum number of clock cycles of the DRAM core.|cc|
+|tWR|Write Recovery latency. The minimum time interval between the end of write data burst and the start of a precharge command.|cc|
+|tRFC|Refresh Cycle latency. The time interval between Refresh and Activation commands.|cc|
+|tREFI|Refresh Interval latency. Average time interval in between Refresh commands. |cc|
+
+### Currents [3]
+
+| Abbreviation | Description | Unit |
+|:------------:|:-----------:|:----:|
+||||
+|IDD0|Operating One Bank Active-Precharge Current.|mA|
+|IDD1|Operating One Bank Active-Read-Precharge Current.|mA|
+|IDD2N|Precharge Standby Current|mA|
+|IDD3N|Active Standby Current|mA|
+|IDD4R|Operating Burst Read Current|mA|
+|IDD4W|Operating Burst Write Current|mA|
+|IDD5B|Burst Refresh Current|mA|
+
+### Physical sizings
+
+| Parameter | Description | Unit |
+|:------------:|:-----------:|:----:|
+||||
+|Subarray height|Height (column direction) of one subarray including sense amplifier.|um|
+|Subarray width|Width (row direction) of one subarray including local wordline driver.|um|
+|Tile height|Height (column direction) of one tile (bank subsection) including column address decoder.|um|
+|Tile width|Width (row direction) of one tile (bank subsection) including row address decoder.|um|
+|Bank height|Height (column direction) of one bank including DQ driver.|um|
+|Bank width|Width (row direction) of one bank.|um|
+|Channel height|Height (column direction) of one channel including TSV if 3D design.|um|
+|Channel width|Width (row direction) of one channel.|um|
+|Channel area|Area of one channel.|(mm)^2|
+
+
 ## Reference
-[1] A High-Level DRAM Timing, Power and Area Exploration Tool
+[1] A High-Level DRAM Timing, Power and Area Exploration Tool,
 O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn.,
 IEEE International Conference on Embedded Computer Systems Architectures Modeling and Simulation (SAMOS), July, 2015, Samos Island, Greece
 
+[2] Memory Systems: Cache, DRAM, Disk,
+B. Jacob, S. Ng and D. Wang,
+Morgan Kaufmann, 2007
+
+[3] DDR3 SDRAM standard (revision F),
+JEDEC,
+July 2012.

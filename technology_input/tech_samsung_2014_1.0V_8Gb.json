@@ -1,49 +1,48 @@
 {
-    "TechnologyNode[nm]": 22,
+    "TechnologyNode[nm]": 29,
 
-    "Vdd[V]": 1.2,
     "Vpp[V]": 2.5,
+    "Vdd[V]": 1.2,
 
-    "WireResistance[Ohm/mm]": 25,
+    "WireResistance[Ohm/mm]": 100,
     "WireCapacitance[fF/mm]" : 150,
 
     "CellCapacitance[fF]": 20,
     "CellResistance[KOhm]": 20,
-    "CellWidth[um]": 0.066 ,
-    "CellHeight[um]": 0.08 ,
+    "CellWidth[um]": 0.0832 ,
+    "CellHeight[um]": 0.1 ,
     "CellsPerSubarrayRow[]": 1046,
     "RedundantCellsPerSubarrayRow[]": 22,
     "CellsPerSubarrayColumn[]": 1046,
     "RedundantCellsPerSubarrayColumn[]": 22,
 
     "BitlineCapacitancePerCell[aF]": 50,
-    "BitlineResistancePerCell[Ohm]": 40,
+    "BitlineResistancePerCell[Ohm]": 35,
 
-    "WordlineCapacitancePerCell[aF]": 70,
-    "WordlineResistancePerCell[Ohm]": 40,
+    "WordlineCapacitancePerCell[aF]": 60,
+    "WordlineResistancePerCell[Ohm]": 25,
 
-    "PrimarySenseAmpHeight[um]": 10,
+    "PrimarySenseAmpHeight[um]": 12.6,
 
-    "LocalWordlineDriverWitdh[um]": 5,
+    "LocalWordlineDriverWitdh[um]": 6.3,
     "LocalWordlineDriverResistance[Ohm]" : 500,
 
-    "RowDecoderWidth[um]": 125,
-    "GlobalWordlineDriverResistance[Ohm]" : 200,
+    "RowDecoderWidth[um]": 53.5,
+    "GlobalWordlineDriverResistance[Ohm]": 200,
 
     "SecondarySenseAmpCurrent[uA]": 200,
     "WriteDriverResistance[Ohm]" : 300 ,
 
-    "ColumnDecoderHeight[um]": 125,
-    "CSLDriverResistance[Ohm]" : 300,
+    "ColumnDecoderHeight[um]": 250,
+    "CSLDriverResistance[Ohm]" : 170,
     "GlobalDataLineDriverResistance[Ohm]" : 300,
 
-    "DQDriverHeight[um]": 225,
+    "DQDriverHeight[um]": 102,
     "DQDriverResistance[Ohm]" : 250,
-
 
     "BackgroundCurrentSlope[mA/MHz]": 0.015,
     "BackgroundCurrentOffset[mA]": 6.75,
-    "OCDCurrentSlope[uA/MHz]": 4.22,
+    "OCDCurrentSlope[mA/MHz]": 4.221,
 
-    "TSVHeight[um]":0
+    "TSVHeight[um]": 900
 }

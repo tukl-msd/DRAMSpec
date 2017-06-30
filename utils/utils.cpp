@@ -11,11 +11,11 @@
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
+ *    documentation and/or other materials provided with the distributio
  *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
+ *    this software without specific prior written permissio
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -29,64 +29,31 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji,
- *          Matthias Jung,
- *          Christian Weis,
- *          Kamal Haddad,
- *          Andr'e Lucas Chinazzo
+ * Authors: Omar Naji, Matthias Jung, Christian Weis
  */
 
-#include "Bank.h"
+#include "utils.h"
+#include <stdio.h>
+#include <iostream>
 
-void
-Bank::bankInitialize()
+bool isInteger( double dn )
 {
-    bankStorage = 0*drs::bit_per_bank;
-    bankWidth = 0*drs::micrometer_per_bank;
-    bankHeight = 0*drs::micrometer_per_bank;
+    double intpart;
+    return ( modf(dn, &intpart) == 0 );
 }
 
-void
-Bank::bankStorageCalc()
+bool isPowerOfTwo( double dn )
 {
-    bankStorage =  SCALE_QUANTITY(dramSize, drs::bit_unit) / nBanks;
+    unsigned int n = (unsigned int) dn;
+
+    return ( (n & (n - 1)) == 0 );
 }
 
-void
-Bank::bankLenghtCalc()
+double timeToPercentage(double percentage)
 {
-
-    // Define tile placement on bank
-    if ( tilesPerBank == 1*drs::tiles_per_bank ) {
-        bankWidth = 1.0 * tileWidth * drs::tile_per_bank;
-
-        bankHeight = 1.0 * tileHeight * drs::tile_per_bank;
-
-    }
-
-    else if ( tilesPerBank == 2*drs::tiles_per_bank ) {
-        bankWidth = tileWidth * 2.0 * drs::tile_per_bank;
-
-        bankHeight = tileHeight * 1.0 * drs::tile_per_bank;
-    }
-
-    else if ( tilesPerBank == 4*drs::tiles_per_bank ) {
-        bankWidth = tileWidth * 2.0 * drs::tile_per_bank;
-
-        bankHeight = tileHeight * 2.0 * drs::tile_per_bank;
-
-    }
-
-    // Add I/O related height
-    bankHeight = bankHeight
-                 + 1.0 * DQDriverHeight / drs::bank;
-
-}
-
-void
-Bank::bankCompute()
-{
-    bankStorageCalc();
-
-    bankLenghtCalc();
+    // Compute the amount of time an exponetial signal,
+    //  of type V(t) = 1 - exp( - t/tau )
+    //  takes to reach a given percentage of the final value.
+    //  The returned amount is given in terms of number of tau's.
+    return -log(1.0 - percentage/100.0);
 }

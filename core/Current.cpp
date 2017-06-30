@@ -45,8 +45,7 @@ Current::currentInitialize()
     vppPumpsEfficiency = 0.3;
     currentPerPageSizeSlope = 2.0*drs::milliamperes_page_per_kibibyte;
     SSAActiveTime = 1.5*drs::nanoseconds;
-    bitProCSL = 8;
-    IddOcdRcvFrequencyPoint = 533*drs::megahertz_clock;
+    bitProCSL = 8 * drs::bits;
 
     // Intermediate values added as variables for code cleanness
     nActiveSubarrays = 0;
@@ -94,7 +93,7 @@ Current::backgroundCurrentCalc()
     IDD2n = backgroundCurrentSlope * dramFreq
             + backgroundCurrentOffset;
 
-    if (DLL =="OFF") {
+    if ( !isDLL ) {
         IDD2n = IDD2nPercentageIfNotDll * IDD2n;
     }
 
@@ -129,7 +128,7 @@ Current::IDD0Calc()
     //charge of local bitline
     nLocalBitlines = SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)*drs::page/drs::bit;
     localBitlineCharge = localBitlineCapacitance * 1.0*drs::subarray
-                         * vcc / 2.0 // <<-- WHY DIVIDED BY 2??
+                         * vdd / 2.0 // <<-- WHY DIVIDED BY 2??
                          * nLocalBitlines;
 
     rowAddrsLinesCharge =
@@ -137,7 +136,7 @@ Current::IDD0Calc()
             * SCALE_QUANTITY(tileHeight, drs::millimeter_per_tile_unit)
             * tilesPerBank * 1.0*drs::bank
             * nTileRowAddressLines
-            * vcc;
+            * vdd;
 
     IDD0TotalCharge = ( masterWordlineCharge
                       + localWordlineCharge
@@ -146,7 +145,7 @@ Current::IDD0Calc()
                             * 2.0 ; // !! Why times 2? Maybe number of tiles?
 
     // Clock cycles of trc in ns
-    effectiveTrc = trc_clk * clk;
+    effectiveTrc = trc_clk * clkPeriod;
     // Current caused by charging and discharging of capas in mA
     IDD0ChargingCurrent = IDD0TotalCharge / effectiveTrc;
 
@@ -160,28 +159,30 @@ Current::IDD1Calc()
 {
     // Charges of SSA / SSA active for 1.5 ns
     SSACharge = Interface
-                * Prefetch
-                * SCALE_QUANTITY(Issa, si::current)
+                * prefetch
+                * SCALE_QUANTITY(Issa, drs::ampere_per_bit_unit)
                 * SSAActiveTime;
 
     // Charges for CSL// 8 bits pro CSL
     CSLCharge = CSLCapacitance * 1.0*drs::bank
-                * vcc
+                * vdd
                 * Interface
-                * Prefetch
+                * prefetch
                 / bitProCSL ;
 
     // Charge of global Dataline
     masterDatalineCharge = globalDatalineCapacitance * 1.0*drs::bank
-                           * vcc
+                           * vdd
                            * Interface
-                           * Prefetch;
+                           * prefetch
+                            / drs::bit; // TODO: remove the work around
 
     // Charges for Dataqueue // 1 Read is done for interface x prefetch
     DQWireCharge = DQWireCapacitance
-                   * vcc
+                   * vdd
                    * Interface
-                   * Prefetch;
+                   * prefetch
+                    / drs::bit; // TODO: remove the work around
 
     // read charges in pC
     readingCharge = SSACharge
@@ -205,27 +206,28 @@ void
 Current::IDD4RCalc()
 {
     // Scale the IDD_OCD_RCV with frequency linearly
-    IddOcdRcv = IddOcdRcvAtFrequencyPoint * dramFreq / IddOcdRcvFrequencyPoint;
+    IddOcdRcv = IddOcdRcvSlope * dramFreq / drs::bit;
 
     colAddrsLinesCharge =
             SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
             * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit)
             * tilesPerBank * 1.0*drs::bank
             * nTileColumnAddressLines
-            * vcc;
+            * vdd;
 
     IDD4TotalCharge = readingCharge + colAddrsLinesCharge;
     // Number of output signals for read = interface number
     // + 1 datastrobe signal pro 4 bits
     if (includeIOTerminationCurrent) {
-       ioTermRdCurrent = (Interface + Interface/4) * IddOcdRcvAtFrequencyPoint;
+       ioTermRdCurrent = (Interface + Interface/4.0)
+                         * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
     }
     else {
        ioTermRdCurrent = 0*drs::milliamperes;
     }
 
     IDD4ChargingCurrent = IDD4TotalCharge
-                          * SCALE_QUANTITY(actualCoreFreq, drs::gigahertz_clock_unit)
+                          * SCALE_QUANTITY(dramCoreFreq, drs::gigahertz_clock_unit)
                           / (1.0*drs::clock);
 
     IDD4R = IDD3n
@@ -242,7 +244,7 @@ Current::IDD4WCalc()
     //number of signals for write is number of signals for read
     //+ 1 extra signal for rcv per 8 bits
     int rcvconst;
-    if(Interface/8 < 1) {
+    if(Interface/8.0 < 1*drs::bit) {
         rcvconst = 1 ;
     } else {
         rcvconst = 0 ;
@@ -251,7 +253,8 @@ Current::IDD4WCalc()
 
     //additional IO term current for Writes
     if (includeIOTerminationCurrent) {
-        ioTermWrCurrent = (Interface/8 + rcvconst) * IddOcdRcvAtFrequencyPoint;
+        ioTermWrCurrent = (Interface/8.0 + rcvconst*drs::bit)
+                          * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
     }
     else {
         ioTermWrCurrent = 0*drs::milliamperes;
@@ -279,7 +282,7 @@ Current::IDD5Calc()
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
 
     // Refresh current
-    effectiveTrfc = trfc_clk * clk;
+    effectiveTrfc = trfc_clk * clkPeriod;
 
     IDD5ChargingCurrent = refreshCharge / effectiveTrfc;
 
@@ -289,17 +292,9 @@ Current::IDD5Calc()
     // Checking the current for the required refresh period
     // Calculate the number of times each row if refreshed in 64 ms
     // retention time
-    nRowActivations = SCALE_QUANTITY(tref1, drs::microsecond_unit)
-                    / tRef1Required;
+    nRowActivations = SCALE_QUANTITY(trefI, drs::microsecond_unit)
+                    / requiredTrefI;
 
-     //TODO: Is this remark important? If so, should be the dealt with in the DRAMSpec class.
-//    std::cout << "Remark: for the required refresh time of "
-//              << tRef1Required
-//              << ", each row will be refreshed "
-//              << nRowActivation
-//              << " times more than required for a retention time of "
-//              << retentionTime
-//              << std::endl;
 
 }
 

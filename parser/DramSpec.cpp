@@ -68,10 +68,10 @@ DRAMSpec::jsonOutputWrite(int dramConfigID)
     //parsing of trc
     timingnsdoc.AddMember("trc", dram->trc.value() , timingnsdoc.GetAllocator());
 
-    //parsing of trl (which is equal to tcas == tcl)
-    timingnsdoc.AddMember("trl", dram->tcas.value() , timingnsdoc.GetAllocator());
+    //parsing of trl
+    timingnsdoc.AddMember("trl", dram->trl.value() , timingnsdoc.GetAllocator());
 
-    // Don't have this modelled
+    // Don't have proper model yet
 //    //parsing of twl
 //    timingnsdoc.AddMember("twl", dram->twl , timingnsdoc.GetAllocator());
 
@@ -87,8 +87,8 @@ DRAMSpec::jsonOutputWrite(int dramConfigID)
     //parsing of trfc
     timingnsdoc.AddMember("trfc", dram->trfc.value() , timingnsdoc.GetAllocator());
 
-    //parsing of tref1
-    timingnsdoc.AddMember("tref1", dram->tref1.value() , timingnsdoc.GetAllocator());
+    //parsing of trefI
+    timingnsdoc.AddMember("trefI", dram->trefI.value() , timingnsdoc.GetAllocator());
 
     // Convert JSON document to string
     rapidjson::GenericStringBuffer< rapidjson::UTF8<> > timingnsbuffer;
@@ -146,8 +146,8 @@ DRAMSpec::jsonOutputWrite(int dramConfigID)
     //parsing of trfc in cc
     timingdoc.AddMember("trfc_cc", dram->trfc_clk.value() , timingdoc.GetAllocator());
 
-    //parsing of tref1 in cc
-    timingdoc.AddMember("tref1_cc", dram->tref1_clk.value() , timingdoc.GetAllocator());
+    //parsing of trefI in cc
+    timingdoc.AddMember("trefI_cc", dram->trefI_clk.value() , timingdoc.GetAllocator());
 
     // Convert JSON document to string
     rapidjson::GenericStringBuffer< rapidjson::UTF8<> > timingbuffer;
@@ -233,55 +233,54 @@ DRAMSpec::arrangeOutput(const string outputType)
     ostringstream resultTable;
 
     resultTable
-    << BUILD_LINE("trcd [ns]", dram->trcd.value())
-    << BUILD_LINE("tcl [ns]", dram->tcas.value())
-    << BUILD_LINE("tras [ns]", dram->tras.value())
-    << BUILD_LINE("trp [ns]", dram->trp.value())
-    << BUILD_LINE("trc [ns]", dram->trc.value())
-    << BUILD_LINE("trl [ns]", dram->tcas.value())
-    << BUILD_LINE("trtp [ns]", dram->trtp.value())
-    << BUILD_LINE("tccd [ns]", dram->tccd.value())
-    << BUILD_LINE("twr [ns]", dram->twr.value())
-    << BUILD_LINE("trfc [ns]", dram->trfc.value())
-    << BUILD_LINE("tref1 [ns]", dram->tref1.value())
+    << BUILD_LINE("DRAM frequency       [MHz]", dram->dramFreq.value())
+    << BUILD_LINE("Core frequency       [MHz]", dram->dramCoreFreq.value())
+    << BUILD_LINE("Max core frequency   [MHz]", dram->maxCoreFreq.value())
 
-    << BUILD_LINE("trcd [cc]", dram->trcd_clk.value())
-    << BUILD_LINE("tcl [cc]", dram->tcas_clk.value())
-    << BUILD_LINE("actual tcl [cc]", dram->tcas_actualClk.value())
-    << BUILD_LINE("tras [cc]", dram->tras_clk.value())
-    << BUILD_LINE("trp [cc]", dram->trp_clk.value())
-    << BUILD_LINE("trc [cc]", dram->trc_clk.value())
-    << BUILD_LINE("trl [cc]", dram->tcas_clk.value())
-    << BUILD_LINE("actual trl [cc]", dram->tcas_actualClk.value())
-    << BUILD_LINE("trtp [cc]", dram->trtp_clk.value())
-    << BUILD_LINE("tccd [cc]", dram->tccd_clk.value())
-    << BUILD_LINE("actual tccd [cc]", dram->tccd_actualClk.value())
-    << BUILD_LINE("twr [cc]", dram->twr_clk.value())
-    << BUILD_LINE("trfc [cc]", dram->trfc_clk.value())
-    << BUILD_LINE("tref1 [cc]", dram->tref1_clk.value())
+    << BUILD_LINE("tRCD                 [ns]", dram->trcd.value())
+    << BUILD_LINE("tCL (tCAS)           [ns]", dram->tcas.value())
+    << BUILD_LINE("tRAS                 [ns]", dram->tras.value())
+    << BUILD_LINE("tRP                  [ns]", dram->trp.value())
+    << BUILD_LINE("tRC                  [ns]", dram->trc.value())
+    << BUILD_LINE("tRL                  [ns]", dram->trl.value())
+    << BUILD_LINE("tRTP                 [ns]", dram->trtp.value())
+    << BUILD_LINE("tCCD                 [ns]", dram->tccd.value())
+    << BUILD_LINE("tWR                  [ns]", dram->twr.value())
+    << BUILD_LINE("tRFC                 [ns]", dram->trfc.value())
+    << BUILD_LINE("tREFI                [ns]", dram->trefI.value())
 
-    << BUILD_LINE("IDD0 [mA]", dram->IDD0.value())
-    << BUILD_LINE("IDD1 [mA]", dram->IDD1.value())
-    << BUILD_LINE("IDD4R [mA]", dram->IDD4R.value())
-    << BUILD_LINE("IDD4W [mA]", dram->IDD4W.value())
-    << BUILD_LINE("IDD2n [mA]", dram->IDD2n.value())
-    << BUILD_LINE("IDD3n [mA]", dram->IDD3n.value())
-    << BUILD_LINE("IDD5 [mA]", dram->IDD5.value())
+    << BUILD_LINE("tRCD                 [cc]", dram->trcd_clk.value())
+    << BUILD_LINE("tCL (tCAS)           [cc]", dram->tcas_clk.value())
+    << BUILD_LINE("Core tCL             [cc]", dram->tcas_coreClk.value())
+    << BUILD_LINE("tRAS                 [cc]", dram->tras_clk.value())
+    << BUILD_LINE("tRP                  [cc]", dram->trp_clk.value())
+    << BUILD_LINE("tRC                  [cc]", dram->trc_clk.value())
+    << BUILD_LINE("tRL                  [cc]", dram->trl_clk.value())
+    << BUILD_LINE("Core tRL             [cc]", dram->trl_coreClk.value())
+    << BUILD_LINE("tRTP                 [cc]", dram->trtp_clk.value())
+    << BUILD_LINE("tCCD                 [cc]", dram->tccd_clk.value())
+    << BUILD_LINE("Core tCCD            [cc]", dram->tccd_coreClk.value())
+    << BUILD_LINE("tWR                  [cc]", dram->twr_clk.value())
+    << BUILD_LINE("tRFC                 [cc]", dram->trfc_clk.value())
+    << BUILD_LINE("tREFI                [cc]", dram->trefI_clk.value())
 
-    << BUILD_LINE("Subarray height [um]", dram->subArrayHeight.value())
-    << BUILD_LINE("Subarray width [um]", dram->subArrayWidth.value())
-    << BUILD_LINE("Tile height [um]", dram->tileHeight.value())
-    << BUILD_LINE("Tile width [um]", dram->tileWidth.value())
-    << BUILD_LINE("Bank height [um]", dram->bankHeight.value())
-    << BUILD_LINE("Bank width [um]", dram->bankWidth.value())
-    << BUILD_LINE("Chip height [um]", dram->chipHeight.value())
-    << BUILD_LINE("Chip width [um]", dram->chipWidth.value())
-    << BUILD_LINE("Chip area [(mm)^2]", dram->chipArea.value())
+    << BUILD_LINE("IDD0                 [mA]", dram->IDD0.value())
+    << BUILD_LINE("IDD1                 [mA]", dram->IDD1.value())
+    << BUILD_LINE("IDD2N                [mA]", dram->IDD2n.value())
+    << BUILD_LINE("IDD3N                [mA]", dram->IDD3n.value())
+    << BUILD_LINE("IDD4R                [mA]", dram->IDD4R.value())
+    << BUILD_LINE("IDD4W                [mA]", dram->IDD4W.value())
+    << BUILD_LINE("IDD5B                [mA]", dram->IDD5.value())
 
-    << BUILD_LINE("DRAM frequency [MHz]", dram->dramFreq.value())
-    << BUILD_LINE("Max core frequency [MHz]", dram->maxCoreFreq.value())
-    << BUILD_LINE("Actual core frequency [MHz]", dram->actualCoreFreq.value())
-    << BUILD_LINE("Clock period [ns]", dram->clk.value())
+    << BUILD_LINE("Subarray height      [um]", dram->subArrayHeight.value())
+    << BUILD_LINE("Subarray width       [um]", dram->subArrayWidth.value())
+    << BUILD_LINE("Tile height          [um]", dram->tileHeight.value())
+    << BUILD_LINE("Tile width           [um]", dram->tileWidth.value())
+    << BUILD_LINE("Bank height          [um]", dram->bankHeight.value())
+    << BUILD_LINE("Bank width           [um]", dram->bankWidth.value())
+    << BUILD_LINE("Channel height       [um]", dram->channelHeight.value())
+    << BUILD_LINE("Channel width        [um]", dram->channelWidth.value())
+    << BUILD_LINE("Channel area       [(mm)^2]", dram->channelArea.value())
     ;
 
     return resultTable.str();

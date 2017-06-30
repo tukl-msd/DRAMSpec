@@ -32,37 +32,26 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_UNIT_H
-#define DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_UNIT_H
+#ifndef DRAMSPEC_CURRENT_PER_INFORMATION_DERIVED_DIMENSION_H
+#define DRAMSPEC_CURRENT_PER_INFORMATION_DERIVED_DIMENSION_H
 
-#include "../dramSpecUnitsSystem.h"
-#include "../DerivedDimensions/current_per_clock_frequency.h"
+#include <boost/units/derived_dimension.hpp>
+
+#include <boost/units/physical_dimensions/current.hpp>
+#include <boost/units/systems/information/bit.hpp>
 
 namespace boost {
 
 namespace units {
 
-namespace dramspec {
-
-typedef unit<current_per_clock_frequency_dimension,dramspec::system_bit>    current_per_clock_frequency;
-
-BOOST_UNITS_STATIC_CONSTANT(ampere_per_clock_hertz,current_per_clock_frequency);
-BOOST_UNITS_STATIC_CONSTANT(amperes_per_clock_hertz,current_per_clock_frequency);
-
-// milliampere / (megahertz clock) = nanoampere / (hertz clock)
-typedef make_scaled_unit<current_per_clock_frequency,scale<10, static_rational<-9>>>::type milliampere_per_megahertz_clock_unit;
-BOOST_UNITS_STATIC_CONSTANT(milliampere_per_megahertz_clock,milliampere_per_megahertz_clock_unit);
-BOOST_UNITS_STATIC_CONSTANT(milliamperes_per_megahertz_clock,milliampere_per_megahertz_clock_unit);
-
-// microampere / (megahertz clock) = picoampere / (hertz clock)
-typedef make_scaled_unit<current_per_clock_frequency,scale<10, static_rational<-12>>>::type microampere_per_megahertz_clock_unit;
-BOOST_UNITS_STATIC_CONSTANT(microampere_per_megahertz_clock,microampere_per_megahertz_clock_unit);
-BOOST_UNITS_STATIC_CONSTANT(microamperes_per_megahertz_clock,microampere_per_megahertz_clock_unit);
-
-} // namespace dramspec
+/// derived dimension for current per information
+/// I^1 INF^-1
+typedef derived_dimension<current_base_dimension,1,
+                          information_base_dimension,-1>::type
+                                        current_per_information_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_UNIT_H
+#endif // DRAMSPEC_CURRENT_PER_INFORMATION_DERIVED_DIMENSION_H

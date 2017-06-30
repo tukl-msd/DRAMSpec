@@ -32,11 +32,14 @@
  * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_UNIT_H
-#define DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_UNIT_H
+#ifndef DRAMSPEC_CURRENT_PER_INFORMATION_UNIT_H
+#define DRAMSPEC_CURRENT_PER_INFORMATION_UNIT_H
 
 #include "../dramSpecUnitsSystem.h"
-#include "../DerivedDimensions/current_per_clock_frequency.h"
+
+#include "../DerivedDimensions/current_per_information.h"
+
+#include <boost/units/base_units/information/bit.hpp>
 
 namespace boost {
 
@@ -44,20 +47,18 @@ namespace units {
 
 namespace dramspec {
 
-typedef unit<current_per_clock_frequency_dimension,dramspec::system_bit>    current_per_clock_frequency;
+typedef unit<current_per_information_dimension,dramspec::system_bit>    ampere_per_bit_unit;
 
-BOOST_UNITS_STATIC_CONSTANT(ampere_per_clock_hertz,current_per_clock_frequency);
-BOOST_UNITS_STATIC_CONSTANT(amperes_per_clock_hertz,current_per_clock_frequency);
+BOOST_UNITS_STATIC_CONSTANT(ampere_per_bit,ampere_per_bit_unit);
+BOOST_UNITS_STATIC_CONSTANT(amperes_per_bit,ampere_per_bit_unit);
 
-// milliampere / (megahertz clock) = nanoampere / (hertz clock)
-typedef make_scaled_unit<current_per_clock_frequency,scale<10, static_rational<-9>>>::type milliampere_per_megahertz_clock_unit;
-BOOST_UNITS_STATIC_CONSTANT(milliampere_per_megahertz_clock,milliampere_per_megahertz_clock_unit);
-BOOST_UNITS_STATIC_CONSTANT(milliamperes_per_megahertz_clock,milliampere_per_megahertz_clock_unit);
+typedef make_scaled_unit<ampere_per_bit_unit,scale<10, static_rational<-3>>>::type milliampere_per_bit_unit;
+BOOST_UNITS_STATIC_CONSTANT(milliampere_per_bit,milliampere_per_bit_unit);
+BOOST_UNITS_STATIC_CONSTANT(milliamperes_per_bit,milliampere_per_bit_unit);
 
-// microampere / (megahertz clock) = picoampere / (hertz clock)
-typedef make_scaled_unit<current_per_clock_frequency,scale<10, static_rational<-12>>>::type microampere_per_megahertz_clock_unit;
-BOOST_UNITS_STATIC_CONSTANT(microampere_per_megahertz_clock,microampere_per_megahertz_clock_unit);
-BOOST_UNITS_STATIC_CONSTANT(microamperes_per_megahertz_clock,microampere_per_megahertz_clock_unit);
+typedef make_scaled_unit<ampere_per_bit_unit,scale<10, static_rational<-6>>>::type microampere_per_bit_unit;
+BOOST_UNITS_STATIC_CONSTANT(microampere_per_bit,microampere_per_bit_unit);
+BOOST_UNITS_STATIC_CONSTANT(microamperes_per_bit,microampere_per_bit_unit);
 
 } // namespace dramspec
 
@@ -65,4 +66,4 @@ BOOST_UNITS_STATIC_CONSTANT(microamperes_per_megahertz_clock,microampere_per_meg
 
 } // namespace boost
 
-#endif // DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_UNIT_H
+#endif // DRAMSPEC_CURRENT_PER_INFORMATION_UNIT_H

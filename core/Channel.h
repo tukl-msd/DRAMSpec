@@ -29,40 +29,66 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andr'e Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_UNIT_H
-#define DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_UNIT_H
+#ifndef CHANNEL_H
+#define CHANNEL_H
 
-#include "../dramSpecUnitsSystem.h"
-#include "../DerivedDimensions/current_per_clock_frequency.h"
+//This class repesents the fifth level of abstraction of the DRAM structure,
+//being the channel a grouping of banks.
 
-namespace boost {
+#include "Bank.h"
 
-namespace units {
+namespace bu=boost::units;
+namespace si=boost::units::si;
+namespace inf=boost::units::information;
+namespace drs=boost::units::dramspec;
 
-namespace dramspec {
+class Channel : public Bank
+{
+  public:
+    Channel() : //Empty constructor for test proposes
+        Bank()
+    {
+        channelInitialize();
+    }
 
-typedef unit<current_per_clock_frequency_dimension,dramspec::system_bit>    current_per_clock_frequency;
+    Channel(const string& technologyFileName,
+         const string& architectureFileName) :
+        Bank(technologyFileName, architectureFileName)
+    {
+        channelInitialize();
+        channelCompute();
+    }
 
-BOOST_UNITS_STATIC_CONSTANT(ampere_per_clock_hertz,current_per_clock_frequency);
-BOOST_UNITS_STATIC_CONSTANT(amperes_per_clock_hertz,current_per_clock_frequency);
+    // Size in number of bits of the channel
+    bu::quantity<drs::gibibit_unit> channelStorage;
 
-// milliampere / (megahertz clock) = nanoampere / (hertz clock)
-typedef make_scaled_unit<current_per_clock_frequency,scale<10, static_rational<-9>>>::type milliampere_per_megahertz_clock_unit;
-BOOST_UNITS_STATIC_CONSTANT(milliampere_per_megahertz_clock,milliampere_per_megahertz_clock_unit);
-BOOST_UNITS_STATIC_CONSTANT(milliamperes_per_megahertz_clock,milliampere_per_megahertz_clock_unit);
+    // Width in micrometer of the channel
+    bu::quantity<drs::micrometer_unit> channelWidth;
+    // Height in micrometer of the channel
+    bu::quantity<drs::micrometer_unit> channelHeight;
 
-// microampere / (megahertz clock) = picoampere / (hertz clock)
-typedef make_scaled_unit<current_per_clock_frequency,scale<10, static_rational<-12>>>::type microampere_per_megahertz_clock_unit;
-BOOST_UNITS_STATIC_CONSTANT(microampere_per_megahertz_clock,microampere_per_megahertz_clock_unit);
-BOOST_UNITS_STATIC_CONSTANT(microamperes_per_megahertz_clock,microampere_per_megahertz_clock_unit);
+    // Area in micrometer squared of the channel
+    bu::quantity<drs::square_millimeter_unit> channelArea;
 
-} // namespace dramspec
+    void channelInitialize();
 
-} // namespace units
+    void channelStorageCalc();
 
-} // namespace boost
+    void channelBanksPlacementAssess();
 
-#endif // DRAMSPEC_CURRENT_PER_CLOCK_FREQUENCY_UNIT_H
+    void channelLenghtCalc();
+
+    void channelAreaCalc();
+
+    void channelCompute();
+
+};
+
+#endif // CHANNEL_H

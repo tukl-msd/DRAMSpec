@@ -112,39 +112,42 @@ Tile::checkTileDataConsistency()
 void
 Tile::tileLenghtCalc()
 {
-    try {
-        checkTileDataConsistency();
-    }catch (std::string exceptionMsgThrown){
-        throw exceptionMsgThrown;
-    }
+    nSubArraysPerArrayBlock = ceil(
+                                    SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)
+                                    * pageSpanningFactor
+                                    * subArrayToPageFactor
+                                    / subArrayRowStorage
+                                   );
 
-    nSubArraysPerArrayBlock =
-            SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)
-                             * pageSpanningFactor
-                             * subArrayToPageFactor
-                             / subArrayRowStorage;
-
-    tileWidth = nSubArraysPerArrayBlock * subArrayWidth + WLDriverWidth/drs::tile;
+    tileWidth = nSubArraysPerArrayBlock * subArrayWidth
+                + 1.0 * LWLDriverWidth / drs::tile
+                + 1.0 * rowDecoderWidth / drs::tile;
 
 
     if ( BLArchitecture == "OPEN" ) {
-        nArrayBlocksPerTile = (tileStorage
-                              / subArrayStorage
-                              / nSubArraysPerArrayBlock
-                              + 1 )
+        nArrayBlocksPerTile = ceil(tileStorage
+                                   / subArrayStorage
+                                   / nSubArraysPerArrayBlock
+                                   + 1
+                                  )
                               * drs::subarrays_per_tile;
 
-        tileHeight = nArrayBlocksPerTile * subArrayHeight - BLSenseAmpHeight/drs::tile;
+        tileHeight = nArrayBlocksPerTile * subArrayHeight
+                     - 1.0 * BLSenseAmpHeight / drs::tile
+                     + 1.0 * colDecoderHeight / drs::tile;
 
     }
 
     else if ( BLArchitecture == "FOLDED" ) {
-        nArrayBlocksPerTile = (tileStorage
-                              / subArrayStorage
-                              / nSubArraysPerArrayBlock)
+        nArrayBlocksPerTile = ceil(tileStorage
+                                   / subArrayStorage
+                                   / nSubArraysPerArrayBlock
+                                  )
                               * drs::subarrays_per_tile;
 
-        tileHeight = nArrayBlocksPerTile * subArrayHeight + BLSenseAmpHeight/drs::tile;
+        tileHeight = nArrayBlocksPerTile * subArrayHeight
+                     + 1.0 * BLSenseAmpHeight / drs::tile
+                     + 1.0 * colDecoderHeight / drs::tile;
     }
 
     else {
@@ -178,7 +181,7 @@ Tile::tileLogicAssess()
 
     nTileColumnAddressLines = ceil (log2 ( subArrayRowStorage
                                            * nSubArraysPerArrayBlock
-                                           * 1.0*drs::tile/inf::bit
+                                           * 1.0*drs::tile
                                            / Interface
                                          )
                                    );
@@ -191,6 +194,7 @@ Tile::tileCompute()
     tileStorageCalc();
 
     try {
+        checkTileDataConsistency();
         tileLenghtCalc();
     }catch (std::string exceptionMsgThrown){
         throw exceptionMsgThrown;

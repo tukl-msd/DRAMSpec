@@ -68,7 +68,7 @@ class Current : public Timing
     double vppPumpsEfficiency;
     bu::quantity<drs::milliampere_page_per_kibibyte_unit> currentPerPageSizeSlope;
     bu::quantity<drs::nanosecond_unit> SSAActiveTime;
-    double bitProCSL;
+    bu::quantity<drs::bit_unit> bitProCSL;
 
     // Intermediate values added as variables for code cleanness
     double nActiveSubarrays;
@@ -136,7 +136,7 @@ class Current : public Timing
     bu::quantity<drs::nanocoulomb_unit> readingCharge;
 
     //Current per IO pin
-    bu::quantity<drs::milliampere_unit> IddOcdRcv;
+    bu::quantity<drs::microampere_per_bit_unit> IddOcdRcv;
 
     // Termination current flag
     bool includeIOTerminationCurrent;
