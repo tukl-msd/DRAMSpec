@@ -56,21 +56,29 @@ BOOST_AUTO_TEST_CASE( checkChip_real_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    Chip chip;
+    try {
+        chip = Chip(inputFileName.technologyFileName[0],
+                    inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    Chip chip(inputFileName.technologyFileName[0],
-                      inputFileName.architectureFileName[0]);
 
     BOOST_CHECK_MESSAGE( chip.chipStorage == 1*drs::gibibits,
                         "Chip storage size different from the expected."
@@ -105,26 +113,24 @@ BOOST_AUTO_TEST_CASE( checkChip_dummy_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
-
+    Chip chip;
     try {
-        Chip chip(inputFileName.technologyFileName[0],
-                  inputFileName.architectureFileName[0]);
-    }catch (std::string exceptionMsgThrown){
+        chip = Chip(inputFileName.technologyFileName[0],
+                    inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-
     expectedMsg = "[ERROR] Architecture must have ";
     expectedMsg.append("1, 2 or 4 tile per bank.");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
@@ -132,15 +138,14 @@ BOOST_AUTO_TEST_CASE( checkChip_dummy_input )
                         << "\nExpected: " << expectedMsg
                         << "\nGot: " << exceptionMsg);
 
-    Chip chip;
-    chip.readjson(inputFileName.technologyFileName[0],
-                  inputFileName.architectureFileName[0]);
+
     try {
+        chip.readjson(inputFileName.technologyFileName[0],
+                      inputFileName.architectureFileName[0]);
         chip.chipCompute();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-
     expectedMsg = "[ERROR] Architecture must have ";
     expectedMsg.append("1, 2, 4, 6, 8 or 16 banks.");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
@@ -162,27 +167,35 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    Chip chip;
+    try {
+        chip = Chip(inputFileName.technologyFileName[0],
+                    inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    Chip chip(inputFileName.technologyFileName[0],
-                      inputFileName.architectureFileName[0]);
 
     chip.nBanks = 1.0*drs::bank;
     try {
         chip.tileCompute();
-    }catch (std::string exceptionMsgThrown){
-        std::cerr << exceptionMsgThrown << std::endl;
+    }catch (string exceptionMsgThrown){
+        cerr << exceptionMsgThrown << endl;
     }
     chip.bankCompute();
     chip.chipCompute();
@@ -210,8 +223,8 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
     chip.nBanks = 2.0*drs::bank;
     try {
         chip.tileCompute();
-    }catch (std::string exceptionMsgThrown){
-        std::cerr << exceptionMsgThrown << std::endl;
+    }catch (string exceptionMsgThrown){
+        cerr << exceptionMsgThrown << endl;
     }
     chip.bankCompute();
     chip.chipCompute();
@@ -239,8 +252,8 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
     chip.nBanks = 4.0*drs::bank;
     try {
         chip.tileCompute();
-    }catch (std::string exceptionMsgThrown){
-        std::cerr << exceptionMsgThrown << std::endl;
+    }catch (string exceptionMsgThrown){
+        cerr << exceptionMsgThrown << endl;
     }
     chip.bankCompute();
     chip.chipCompute();
@@ -268,8 +281,8 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
     chip.nBanks = 6.0*drs::bank;
     try {
         chip.tileCompute();
-    }catch (std::string exceptionMsgThrown){
-        std::cerr << exceptionMsgThrown << std::endl;
+    }catch (string exceptionMsgThrown){
+        cerr << exceptionMsgThrown << endl;
     }
     chip.bankCompute();
     chip.chipCompute();
@@ -297,8 +310,8 @@ BOOST_AUTO_TEST_CASE( checkChip_different_bank_configs )
     chip.nBanks = 8.0*drs::bank;
     try {
         chip.tileCompute();
-    }catch (std::string exceptionMsgThrown){
-        std::cerr << exceptionMsgThrown << std::endl;
+    }catch (string exceptionMsgThrown){
+        cerr << exceptionMsgThrown << endl;
     }
     chip.bankCompute();
     chip.chipCompute();

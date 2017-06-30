@@ -58,13 +58,14 @@ class Tile : public SubArray
         tileInitialize();
     }
 
-    Tile(const std::string& techname,const std::string& paraname):
-        SubArray(techname,paraname)
+    Tile(const string& technologyFileName,
+         const string& architectureFileName):
+        SubArray(technologyFileName, architectureFileName)
     {
         tileInitialize();
         try {
             tileCompute();
-        }catch (std::string exceptionMsgThrown){
+        }catch (string exceptionMsgThrown){
             throw exceptionMsgThrown;
         }
     }

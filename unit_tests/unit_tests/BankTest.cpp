@@ -56,21 +56,29 @@ BOOST_AUTO_TEST_CASE( checkBank_real_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    Bank bank;
+    try {
+        bank = Bank(inputFileName.technologyFileName[0],
+                    inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    Bank bank(inputFileName.technologyFileName[0],
-                      inputFileName.architectureFileName[0]);
 
     BOOST_CHECK_MESSAGE( bank.bankStorage == 134217728*drs::bits_per_bank,
                         "Bank storage size different from the expected."
@@ -99,26 +107,24 @@ BOOST_AUTO_TEST_CASE( checkBank_dummy_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
-
+    Bank bank;
     try {
-        Bank bank(inputFileName.technologyFileName[0],
-                  inputFileName.architectureFileName[0]);
-    }catch (std::string exceptionMsgThrown){
+        bank = Bank(inputFileName.technologyFileName[0],
+                    inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-
     expectedMsg = "[ERROR] Architecture must have ";
     expectedMsg.append("1, 2 or 4 tile per bank.");
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
@@ -139,28 +145,36 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    Bank bank;
+    try {
+        bank = Bank(inputFileName.technologyFileName[0],
+                    inputFileName.architectureFileName[0]);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    Bank bank(inputFileName.technologyFileName[0],
-                      inputFileName.architectureFileName[0]);
 
     bank.tilesPerBank = 1.0*drs::tiles_per_bank;
     bank.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
         bank.tileCompute();
-    }catch (std::string exceptionMsgThrown){
-        std::cerr << exceptionMsgThrown << std::endl;
+    }catch (string exceptionMsgThrown){
+        cerr << exceptionMsgThrown << endl;
     }
     bank.bankCompute();
 
@@ -183,8 +197,8 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
     bank.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
         bank.tileCompute();
-    }catch (std::string exceptionMsgThrown){
-        std::cerr << exceptionMsgThrown << std::endl;
+    }catch (string exceptionMsgThrown){
+        cerr << exceptionMsgThrown << endl;
     }
     bank.bankCompute();
 
@@ -207,8 +221,8 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
     bank.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
         bank.tileCompute();
-    }catch (std::string exceptionMsgThrown){
-        std::cerr << exceptionMsgThrown << std::endl;
+    }catch (string exceptionMsgThrown){
+        cerr << exceptionMsgThrown << endl;
     }
     bank.bankCompute();
 

@@ -57,21 +57,30 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    std::string exceptionMsg("Empty");
+    string exceptionMsg("Empty");
     try {
         inputFileName.runArgParser();
-    }catch (std::string exceptionMsgThrown){
+    }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-    std::string expectedMsg("Empty");
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
+    string expectedMsg("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
 
-    Current current(inputFileName.technologyFileName[0],
-                    inputFileName.architectureFileName[0],
-                    inputFileName.IOTerminationCurrentFlag);
+    Current current;
+    try {
+        current = Current(inputFileName.technologyFileName[0],
+                          inputFileName.architectureFileName[0],
+                          inputFileName.IOTerminationCurrentFlag);
+    }catch (string exceptionMsgThrown){
+        exceptionMsg = exceptionMsgThrown;
+    }
+    expectedMsg = string("Empty");
+    if ( exceptionMsg != expectedMsg ) {
+        BOOST_FAIL( exceptionMsg );
+    }
+
 
     // !! Hard-coded values converted to variables !!
     BOOST_CHECK_MESSAGE( current.IDD2nPercentageIfNotDll == 0.6,

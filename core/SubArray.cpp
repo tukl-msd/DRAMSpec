@@ -69,7 +69,6 @@ SubArray::subArrayLengthCalc()
 void
 SubArray::subArrayCompute()
 {
-    readjson(techName,paraName);
     subArrayStorageCalc();
     subArrayLengthCalc();
 }
