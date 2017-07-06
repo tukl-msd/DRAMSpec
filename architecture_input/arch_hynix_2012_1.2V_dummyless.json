@@ -9,6 +9,11 @@
     "NumberOfHorizontalBanksPerChannel[]": 0,
     "NumberOfVerticalBanksPerChannel[]": 0,
 
+    "CellsPerSubarrayRow[]": 1046,
+    "RedundantCellsPerSubarrayRow[]": 22,
+    "CellsPerSubarrayColumn[]": 1046,
+    "RedundantCellsPerSubarrayColumn[]": 22,
+
     "Interface[bit]": 8,
     "Prefetch[]": 8,
 

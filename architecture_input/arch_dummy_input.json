@@ -3,42 +3,47 @@
     "3D[-]": "OFF",
     "DLL[-]": "OFF",
 
-    "ChannelSize[Gb]": 100,
+    "ChannelSize[Gb]": 2028,
 
-    "NumberOfBanksPerChannel[]":101,
-    "NumberOfHorizontalBanksPerChannel[]": 102,
-    "NumberOfVerticalBanksPerChannel[]": 103,
+    "NumberOfBanksPerChannel[]":3264,
+    "NumberOfHorizontalBanksPerChannel[]": 8054,
+    "NumberOfVerticalBanksPerChannel[]": 2098,
 
-    "Interface[bit]": 104,
-    "Prefetch[]": 105,
+    "CellsPerSubarrayRow[]": 5507,
+    "RedundantCellsPerSubarrayRow[]": 7765,
+    "CellsPerSubarrayColumn[]": 2941,
+    "RedundantCellsPerSubarrayColumn[]": 7914,
 
-    "Frequency[MHz]": 106,
-    "CoreFrequency[MHz]": 107,
+    "Interface[bit]": 3554,
+    "Prefetch[]": 8578,
 
-    "TilesPerBank[]" : 108,
+    "Frequency[MHz]": 9664,
+    "CoreFrequency[MHz]": 7546,
 
-    "PageSize[KB]": 109,
-    "PageSpanningFactor[]": 110,
-    "SubarrayToPageFactor[]": 111,
-    "BitlineArchitecture[-]": "112",
+    "TilesPerBank[]" : 8259,
 
-    "RetentionTime[ms]" : 113,
-    "RequiredRefreshPeriod[us]": 114,
-    "BankRefreshFactor[]":115,
+    "PageSize[KB]": 463,
+    "PageSpanningFactor[]": 6401,
+    "SubarrayToPageFactor[]": 4456,
+    "BitlineArchitecture[-]": "2957",
 
-    "AdditionalTRLLatency[cc]" : 116,
+    "RetentionTime[ms]" : 2242,
+    "RequiredRefreshPeriod[us]": 963,
+    "BankRefreshFactor[]":9263,
 
-    "DriverOffset[ns]": 117,
-    "BLSADelay[ns]": 118,
-    "CommandDecoderDelay[ns]": 119,
-    "InterfaceDelay[ns]": 120,
-    "IODelay[ns]": 121,
-    "SSAPrechargeDelay[ns]": 122,
-    "SecurityMargin[ns]": 123,
-    "EqualizerDelay[ns]": 124,
-    "ACTCommandDelay[ns]": 125,
-    "PRECommandDelay[ns]": 126,
-    "Offset[ns]": 127,
+    "AdditionalTRLLatency[cc]" : 3404,
 
-    "CSLLoadCapacitance[fF]": 128
+    "DriverOffset[ns]": 5885,
+    "BLSADelay[ns]": 867,
+    "CommandDecoderDelay[ns]": 946,
+    "InterfaceDelay[ns]": 1973,
+    "IODelay[ns]": 1941,
+    "SSAPrechargeDelay[ns]": 6970,
+    "SecurityMargin[ns]": 8683,
+    "EqualizerDelay[ns]": 9927,
+    "ACTCommandDelay[ns]": 8492,
+    "PRECommandDelay[ns]": 8840,
+    "Offset[ns]": 3057,
+
+    "CSLLoadCapacitance[fF]": 3445
 }

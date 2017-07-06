@@ -234,22 +234,6 @@ TechnologyValues::readjson(const string& t,const string& p)
         cellHeight = getJSONNumber(techDocument, "CellHeight[um]")
                      * drs::micrometers_per_cell;
 
-        //cells per subarray row
-        cellsPerLWL = getJSONNumber(techDocument, "CellsPerSubarrayRow[]")
-                      * drs::cell_per_subarray;
-
-        //cells per subarray row redundancy
-        cellsPerLWLRedundancy = getJSONNumber(techDocument, "RedundantCellsPerSubarrayRow[]")
-                                * drs::cell_per_subarray;
-
-        //cells per subarray column
-        cellsPerLBL = getJSONNumber(techDocument, "CellsPerSubarrayColumn[]")
-                      * drs::cell_per_subarray;
-
-        //cells per subarray column redundancy
-        cellsPerLBLRedundancy = getJSONNumber(techDocument, "RedundantCellsPerSubarrayColumn[]")
-                                * drs::cell_per_subarray;
-
         //Bitline per cell capa
         capacitancePerBLCell = getJSONNumber(techDocument, "BitlineCapacitancePerCell[aF]")
                                * drs::attofarads_per_cell;
@@ -301,6 +285,10 @@ TechnologyValues::readjson(const string& t,const string& p)
         CSLDriverResistance = getJSONNumber(techDocument, "CSLDriverResistance[Ohm]")
                               * si::ohm;
 
+        //Load capacitance !!!  TODO: What exactly is it?  !!!
+        CSLLoadCapacitance = getJSONNumber(techDocument, "CSLLoadCapacitance[fF]")
+                         * drs::femtofarads_per_bank;
+
         //GDL driver resistance in ohm
         GDLDriverResistance = getJSONNumber(techDocument, "GlobalDataLineDriverResistance[Ohm]")
                               * si::ohm;
@@ -329,6 +317,55 @@ TechnologyValues::readjson(const string& t,const string& p)
         //Height of the TSV area needed for each bank I/O
         TSVHeight = getJSONNumber(techDocument, "TSVHeight[um]")
                     * drs::micrometer;
+
+        //additional latency required for trl calculation
+        additionalLatencyTrl = getJSONNumber(techDocument, "AdditionalTRLLatency[cc]")
+                         * drs::clock;
+
+    //  !!!!!!!! TIMING VARIABLES WHICH WHERE HARDCODED IN THE ORIGINAL VERSION !!!!!!!!
+        //Driver offset !!!  TODO: What exactly is it?  !!!
+        driverOffset = getJSONNumber(techDocument, "DriverOffset[ns]")
+                         * drs::nanoseconds;
+
+        //SSA Delay !!!  TODO: Check value !!!
+        BitlineSenseAmpDelay = getJSONNumber(techDocument, "BLSADelay[ns]")
+                         * drs::nanoseconds;
+
+        //Command decoder latency !!!  TODO: What exactly is it?  !!!
+        cmdDecoderLatency = getJSONNumber(techDocument, "CommandDecoderDelay[ns]")
+                         * drs::nanoseconds;
+
+        //Internal latency !!!  TODO: What exactly is it?  !!!
+        interfaceLatency = getJSONNumber(techDocument, "InterfaceDelay[ns]")
+                         * drs::nanoseconds;
+
+        //I/O latency !!!  TODO: What exactly is it?  !!!
+        IODelay = getJSONNumber(techDocument, "IODelay[ns]")
+                         * drs::nanoseconds;
+
+        //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
+        SSAPrechargeDelay = getJSONNumber(techDocument, "SSAPrechargeDelay[ns]")
+                         * drs::nanoseconds;
+
+        //Security margin !!!  TODO: What exactly is it?  !!!
+        securityMargin = getJSONNumber(techDocument, "SecurityMargin[ns]")
+                         * drs::nanoseconds;
+
+        //Equalizer delay !!!  TODO: What exactly is it?  !!!
+        equalizerDelay = getJSONNumber(techDocument, "EqualizerDelay[ns]")
+                         * drs::nanoseconds;
+
+        //Act cmd delay !!!  TODO: What exactly is it?  !!!
+        actCmdDelay = getJSONNumber(techDocument, "ACTCommandDelay[ns]")
+                         * drs::nanoseconds;
+
+        //pre cmd delay !!!  TODO: What exactly is it?  !!!
+        preCmdDelay = getJSONNumber(techDocument, "PRECommandDelay[ns]")
+                         * drs::nanoseconds;
+
+        //offset !!!  TODO: What exactly is it?  !!!
+        offset = getJSONNumber(techDocument, "Offset[ns]")
+                         * drs::nanoseconds;
 
     } catch(string exceptionMsgThrown) {
         throw exceptionMsgThrown;
@@ -402,6 +439,22 @@ TechnologyValues::readjson(const string& t,const string& p)
         nVerticalBanks = getJSONNumber(archDocument, "NumberOfVerticalBanksPerChannel[]")
                          * drs::bank;
 
+        //cells per subarray row
+        cellsPerLWL = getJSONNumber(archDocument, "CellsPerSubarrayRow[]")
+                      * drs::cell_per_subarray;
+
+        //cells per subarray row redundancy
+        cellsPerLWLRedundancy = getJSONNumber(archDocument, "RedundantCellsPerSubarrayRow[]")
+                                * drs::cell_per_subarray;
+
+        //cells per subarray column
+        cellsPerLBL = getJSONNumber(archDocument, "CellsPerSubarrayColumn[]")
+                      * drs::cell_per_subarray;
+
+        //cells per subarray column redundancy
+        cellsPerLBLRedundancy = getJSONNumber(archDocument, "RedundantCellsPerSubarrayColumn[]")
+                                * drs::cell_per_subarray;
+
         //Interface
         Interface = getJSONNumber(archDocument, "Interface[bit]")
                     * drs::bits;
@@ -447,59 +500,6 @@ TechnologyValues::readjson(const string& t,const string& p)
 
         // Ratio of banks refreshed pro command
         banksRefreshFactor = getJSONNumber(archDocument, "BankRefreshFactor[]");
-
-        //additional latency required for trl calculation
-        additionalLatencyTrl = getJSONNumber(archDocument, "AdditionalTRLLatency[cc]")
-                         * drs::clock;
-
-    //  !!!!!!!! TIMING VARIABLES WHICH WHERE HARDCODED IN THE ORIGINAL VERSION !!!!!!!!
-        //Driver offset !!!  TODO: What exactly is it?  !!!
-        driverOffset = getJSONNumber(archDocument, "DriverOffset[ns]")
-                         * drs::nanoseconds;
-
-        //SSA Delay !!!  TODO: Check value !!!
-        BitlineSenseAmpDelay = getJSONNumber(archDocument, "BLSADelay[ns]")
-                         * drs::nanoseconds;
-
-        //Command decoder latency !!!  TODO: What exactly is it?  !!!
-        cmdDecoderLatency = getJSONNumber(archDocument, "CommandDecoderDelay[ns]")
-                         * drs::nanoseconds;
-
-        //Internal latency !!!  TODO: What exactly is it?  !!!
-        interfaceLatency = getJSONNumber(archDocument, "InterfaceDelay[ns]")
-                         * drs::nanoseconds;
-
-        //I/O latency !!!  TODO: What exactly is it?  !!!
-        IODelay = getJSONNumber(archDocument, "IODelay[ns]")
-                         * drs::nanoseconds;
-
-        //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
-        SSAPrechargeDelay = getJSONNumber(archDocument, "SSAPrechargeDelay[ns]")
-                         * drs::nanoseconds;
-
-        //Security margin !!!  TODO: What exactly is it?  !!!
-        securityMargin = getJSONNumber(archDocument, "SecurityMargin[ns]")
-                         * drs::nanoseconds;
-
-        //Equalizer delay !!!  TODO: What exactly is it?  !!!
-        equalizerDelay = getJSONNumber(archDocument, "EqualizerDelay[ns]")
-                         * drs::nanoseconds;
-
-        //Act cmd delay !!!  TODO: What exactly is it?  !!!
-        actCmdDelay = getJSONNumber(archDocument, "ACTCommandDelay[ns]")
-                         * drs::nanoseconds;
-
-        //pre cmd delay !!!  TODO: What exactly is it?  !!!
-        preCmdDelay = getJSONNumber(archDocument, "PRECommandDelay[ns]")
-                         * drs::nanoseconds;
-
-        //offset !!!  TODO: What exactly is it?  !!!
-        offset = getJSONNumber(archDocument, "Offset[ns]")
-                         * drs::nanoseconds;
-
-        //Load capacitance !!!  TODO: What exactly is it?  !!!
-        CSLLoadCapacitance = getJSONNumber(archDocument, "CSLLoadCapacitance[fF]")
-                         * drs::femtofarads_per_bank;
 
     } catch(string exceptionMsgThrown) {
         throw exceptionMsgThrown;
