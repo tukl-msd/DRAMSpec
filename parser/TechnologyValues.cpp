@@ -310,7 +310,7 @@ TechnologyValues::readjson(const string& t,const string& p)
                                   * drs::milliampere;
 
         //Current slope per IO pin (Off Channel Driver)
-        IddOcdRcvSlope = getJSONNumber(techDocument, "OCDCurrentSlope[mA/MHz]")
+        IddOcdRcvSlope = getJSONNumber(techDocument, "OCDCurrentSlope[uA/MHz]")
                                     * drs::microamperes_per_megahertz_clock;
 
 
