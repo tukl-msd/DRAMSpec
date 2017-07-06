@@ -39,7 +39,7 @@
 
     "BackgroundCurrentSlope[mA/MHz]": 0.02,
 	"BackgroundCurrentOffset[mA]": 12,
-    "OCDCurrentSlope[mA/MHz]": 1.1257,
+    "OCDCurrentSlope[uA/MHz]": 1.1257,
 
     "TSVHeight[um]": 0,
 

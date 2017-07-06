@@ -127,9 +127,10 @@ Timing::trcdCalc()
 
     // Calculating tau for cell celltau ( in ns )
     cellDelay = timeToPercentage(90)
+              * 1.0 * drs::cell
               * SCALE_QUANTITY(capacitancePerCell, drs::nanofarad_per_cell_unit)
-              * SCALE_QUANTITY(resistancePerCell, drs::ohm_per_cell_unit)
-              * drs::cell * drs::cell;
+              * 1.0 * drs::cell
+              * SCALE_QUANTITY(resistancePerCell, drs::ohm_per_cell_unit);
 
     localWordlineResistance = LWLDriverResistance
                               + (cellsPerLWL *  resistancePerWLCell);
@@ -152,8 +153,6 @@ Timing::trcdCalc()
           * SCALE_QUANTITY(capacitancePerBLCell, drs::nanofarad_per_cell_unit);
 
     // Calculating the bltau( in ns )
-    // for timing of bitline, the voltage should reach 90% of the value
-    // or else the BLSA can kipp to the wrong value => tau*2.3
     localBitlineDelay = timeToPercentage(90)
             * localBitlineResistance * drs::subarray
             * localBitlineCapacitance * drs::subarray;
