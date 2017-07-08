@@ -11,10 +11,6 @@
     "CellResistance[KOhm]": 20,
     "CellWidth[um]": 0.066 ,
     "CellHeight[um]": 0.114 ,
-    "CellsPerSubarrayRow[]": 1044,
-    "RedundantCellsPerSubarrayRow[]": 20,
-    "CellsPerSubarrayColumn[]": 524,
-    "RedundantCellsPerSubarrayColumn[]": 12,
 
     "BitlineCapacitancePerCell[aF]": 94,
 	"BitlineResistancePerCell[Ohm]": 60,
@@ -35,6 +31,7 @@
 
     "ColumnDecoderHeight[um]": 200,
     "CSLDriverResistance[Ohm]" : 600,
+    "CSLLoadCapacitance[fF]": 8,
 	"GlobalDataLineDriverResistance[Ohm]" : 600,
 
     "DQDriverHeight[um]": 500,
@@ -42,7 +39,23 @@
 
     "BackgroundCurrentSlope[mA/MHz]": 0.015,
 	"BackgroundCurrentOffset[mA]": 6.75,
-    "OCDCurrentSlope[mA/MHz]": 4.221,
+    "OCDCurrentSlope[uA/MHz]": 4.221,
 
-    "TSVHeight[um]": 0
+    "TSVHeight[um]": 0,
+
+    "AdditionalTRLLatency[cc]" : 0,
+
+    "DriverOffset[ns]": 0.6,
+    "BLSADelay[ns]": 2,
+    "CommandDecoderDelay[ns]": 2,
+    "InterfaceDelay[ns]": 1,
+    "IODelay[ns]": 1,
+    "SSAPrechargeDelay[ns]": 1,
+    "SecurityMargin[ns]": 1,
+    "EqualizerDelay[ns]": 1,
+    "ACTCommandDelay[ns]": 5,
+    "PRECommandDelay[ns]": 5,
+    "Offset[ns]": 10
+
+
 }

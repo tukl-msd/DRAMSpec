@@ -95,10 +95,6 @@ Note: the number of technology and architecture description files must be equal.
 |CellResistance|Total resistance of a single cell.|KOhm|
 |CellWidth|Length in row direction of a single cell.|um|
 |CellHeight|Length in column direction of a single cell.|um|
-|CellsPerSubarrayRow|Number of cells in row direction in a subarray.|dimensionless|
-|RedundantCellsPerSubarrayRow|Number of redundant cells in row direction in a subarray.|dimensionless|
-|CellsPerSubarrayColumn|Number of cells in column direction in a subarray.|dimensionless|
-|RedundantCellsPerSubarrayColumn|Number of redundant cells in column direction in a subarray.|dimensionless|
 |BitlineCapacitancePerCell|Capacitance due to each cell connected to the local bitline.|aF|
 |BitlineResistancePerCell|Resistance due to each cell connected to the local bitline.|Ohm|
 |WordlineCapacitancePerCell|Capacitance due to each cell connected to the local wordline.|aF|
@@ -112,6 +108,7 @@ Note: the number of technology and architecture description files must be equal.
 |WriteDriverResistance|Output resistance of the write driver.|Ohm|
 |ColumnDecoderHeight|Lenght in column direction of the column address decoder.|um|
 |CSLDriverResistance|Output resistance of the column select line driver.|Ohm|
+|CSLLoadCapacitance|  |fF|
 |GlobalDataLineDriverResistance|Output resistance of the global dataline driver.|Ohm|
 |DQDriverHeight|Length in column direction of the DQ driver.|um|
 |DQDriverResistance|Output resistance of the DQ driver.|Ohm|
@@ -119,30 +116,6 @@ Note: the number of technology and architecture description files must be equal.
 |BackgroundCurrentOffset|Constant term of precharge background current (frequency invariant).|mA|
 |OCDCurrentSlope|Slope of current sinked by the off-chip driver in relation to operating frequency.|uA/MHz|
 |TSVHeight|Length in column direction of TSV area.|um|
-
-### DRAM Architecture related inputs
-
-| Parameter | Description | Unit |
-|:------------:|:-----------:|:----:|
-|DRAMType|DRAM type. Currently only differenciates between DDR or SDR.|-|
-|3D|Flag for 3D designs. ON means it is a 3D design.|-|
-|DLL|Flag for the usage of Dealy-Locked Loop. ON means the DRAM uses DLL.|-|
-|ChannelSize|Data storage capacity of a single channel.|Gbit|
-|NumberOfBanksPerChannel|Total number of banks in a single channel.|dimensionless|
-|NumberOfHorizontalBanksPerChannel|Number of banks in row direction.|dimensionless|
-|NumberOfVerticalBanksPerChannel|Number of banks in a column direction.|dimensionless|
-|Interface|Number of datalines of the IO bus. This number is the length of a single data word.|bit|
-|Prefetch|Number of prefetched data words for a single read command (RD).|dimensionless|
-|Frequency|Nominal Synchronous DRAM clock frequency.|MHz|
-|CoreFrequency|DRAM Core clock frequency.|MHz|
-|TilesPerBank|Number of tiles (subsections) of a single bank.|dimensionless|
-|PageSize|Amount of data sensed after an bank activate command (ACT).|KByte|
-|PageSpanningFactor|Percetange of page size sensed on a single bank tile.|dimensionless|
-|SubarrayToPageFactor|Ratio between number of cells in a physical row and the page size.|dimensionless|
-|BitlineArchitecture|Chosen architecture of bitlines. Can be either OPEN bitlines, or FOLDED bitlines.|-|
-|RetentionTime|Minimum amout of time each and every cell must keep its information before being refreshed.|ms|
-|RequiredRefreshPeriod|Required refresh interval latency. Average time interval in between Refresh commands.|us|
-|BankRefreshFactor|Ratio between the number of rows actived in one refresh command and the number of banks.|dimensionless|
 |AdditionalTRLLatency|Added latency (tAL [2]) to tCAS resulting in tRL.|cc|
 |DriverOffset|  |ns|
 |BLSADelay|  |ns|
@@ -155,7 +128,34 @@ Note: the number of technology and architecture description files must be equal.
 |ACTCommandDelay|  |ns|
 |PRECommandDelay|  |ns|
 |Offset|  |ns|
-|CSLLoadCapacitance|  |fF|
+
+### DRAM Architecture related inputs
+
+| Parameter | Description | Unit |
+|:------------:|:-----------:|:----:|
+|DRAMType|DRAM type. Currently only differenciates between DDR or SDR.|-|
+|3D|Flag for 3D designs. ON means it is a 3D design.|-|
+|DLL|Flag for the usage of Dealy-Locked Loop. ON means the DRAM uses DLL.|-|
+|ChannelSize|Data storage capacity of a single channel.|Gbit|
+|NumberOfBanksPerChannel|Total number of banks in a single channel.|dimensionless|
+|NumberOfHorizontalBanksPerChannel|Number of banks in row direction. Set to 0 (zero) for automatic calculation.|dimensionless|
+|NumberOfVerticalBanksPerChannel|Number of banks in a column direction. Set to 0 (zero) for automatic calculation.|dimensionless|
+|CellsPerSubarrayRow|Number of cells in row direction in a subarray, including redundace.|dimensionless|
+|RedundantCellsPerSubarrayRow|Number of redundant cells in row direction in a subarray.|dimensionless|
+|CellsPerSubarrayColumn|Number of cells in column direction in a subarray, including redundance.|dimensionless|
+|RedundantCellsPerSubarrayColumn|Number of redundant cells in column direction in a subarray.|dimensionless|
+|Interface|Number of datalines of the IO bus. This number is the length of a single data word.|bit|
+|Prefetch|Number of prefetched data words for a single read command (RD).|dimensionless|
+|Frequency|Nominal Synchronous DRAM clock frequency.|MHz|
+|CoreFrequency|DRAM Core clock frequency.|MHz|
+|TilesPerBank|Number of tiles (subsections) of a single bank.|dimensionless|
+|PageSize|Amount of data sensed after an bank activate command (ACT).|KByte|
+|PageSpanningFactor|Percetange of page size sensed on a single bank tile.|dimensionless|
+|SubarrayToPageFactor|Ratio between number of cells in a physical row and the page size.|dimensionless|
+|BitlineArchitecture|Chosen architecture of bitlines. Can be either OPEN bitlines, or FOLDED bitlines.|-|
+|RetentionTime|Minimum amout of time each and every cell must keep its information before being refreshed.|ms|
+|RequiredRefreshPeriod|Required refresh interval latency. Average time interval in between Refresh commands.|us|
+|BankRefreshFactor|Ratio between the number of rows actived in one refresh command and the number of banks.|dimensionless|
 
 ## Output Data
 
@@ -238,3 +238,4 @@ Morgan Kaufmann, 2007
 [3] DDR3 SDRAM standard (revision F),
 JEDEC,
 July 2012.
+s

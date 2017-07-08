@@ -1,48 +1,61 @@
 {
-	"TechnologyNode[nm]": 1,
+    "TechnologyNode[nm]": 3946,
 
-    "Vpp[V]": 2,
-    "Vdd[V]": 3,
+    "Vpp[V]": 1189,
+    "Vdd[V]": 3374,
 
-    "WireResistance[Ohm/mm]": 4,
-    "WireCapacitance[fF/mm]" : 5,
+    "WireResistance[Ohm/mm]": 8638,
+    "WireCapacitance[fF/mm]" : 2179,
 
-    "CellCapacitance[fF]": 6,
-    "CellResistance[KOhm]": 7,
-    "CellWidth[um]": 8,
-    "CellHeight[um]": 9,
-    "CellsPerSubarrayRow[]": 10,
-    "RedundantCellsPerSubarrayRow[]": 11,
-    "CellsPerSubarrayColumn[]": 12,
-    "RedundantCellsPerSubarrayColumn[]": 13,
+    "CellCapacitance[fF]": 3944,
+    "CellResistance[KOhm]": 2287,
+    "CellWidth[um]": 1070,
+    "CellHeight[um]": 885,
 
-    "BitlineCapacitancePerCell[aF]": 14,
-    "BitlineResistancePerCell[Ohm]": 15,
+    "BitlineCapacitancePerCell[aF]": 8281,
+    "BitlineResistancePerCell[Ohm]": 7024,
 
-    "WordlineCapacitancePerCell[aF]": 16,
-    "WordlineResistancePerCell[Ohm]": 17,
+    "WordlineCapacitancePerCell[aF]": 6381,
+    "WordlineResistancePerCell[Ohm]": 8543,
 
-    "PrimarySenseAmpHeight[um]": 18,
+    "PrimarySenseAmpHeight[um]": 4104,
 
-    "LocalWordlineDriverWitdh[um]": 19,
-    "LocalWordlineDriverResistance[Ohm]" : 20,
+    "LocalWordlineDriverWitdh[um]": 8791,
+    "LocalWordlineDriverResistance[Ohm]" : 5222,
 
-    "RowDecoderWidth[um]": 21,
-    "GlobalWordlineDriverResistance[Ohm]": 22,
+    "RowDecoderWidth[um]": 5812,
+    "GlobalWordlineDriverResistance[Ohm]": 4405,
 
-    "SecondarySenseAmpCurrent[uA]": 23,
-    "WriteDriverResistance[Ohm]" : 24,
+    "SecondarySenseAmpCurrent[uA]": 1877,
+    "WriteDriverResistance[Ohm]" : 5931,
 
-    "ColumnDecoderHeight[um]": 25,
-    "CSLDriverResistance[Ohm]" : 26,
-    "GlobalDataLineDriverResistance[Ohm]" : 27,
+    "ColumnDecoderHeight[um]": 7970,
+    "CSLDriverResistance[Ohm]" : 9601,
+    "CSLLoadCapacitance[fF]": 2056,
+    "GlobalDataLineDriverResistance[Ohm]" : 5885,
 
-    "DQDriverHeight[um]": 28,
-    "DQDriverResistance[Ohm]" : 29,
+    "DQDriverHeight[um]": 5457,
+    "DQDriverResistance[Ohm]" : 9240,
 
-    "BackgroundCurrentSlope[mA/MHz]": 30,
-    "BackgroundCurrentOffset[mA]": 31,
-    "OCDCurrentSlope[mA/MHz]": 32,
+    "BackgroundCurrentSlope[mA/MHz]": 483,
+    "BackgroundCurrentOffset[mA]": 8513,
+    "OCDCurrentSlope[uA/MHz]": 4560,
 
-    "TSVHeight[um]": 33
+    "TSVHeight[um]": 9483,
+
+    "AdditionalTRLLatency[cc]" : 9541,
+
+    "DriverOffset[ns]": 5654,
+    "BLSADelay[ns]": 8,
+    "CommandDecoderDelay[ns]": 9212,
+    "InterfaceDelay[ns]": 989,
+    "IODelay[ns]": 9769,
+    "SSAPrechargeDelay[ns]": 1540,
+    "SecurityMargin[ns]": 2126,
+    "EqualizerDelay[ns]": 1103,
+    "ACTCommandDelay[ns]": 305,
+    "PRECommandDelay[ns]": 7509,
+    "Offset[ns]": 7302
+
+
 }

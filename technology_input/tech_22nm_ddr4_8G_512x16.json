@@ -35,6 +35,7 @@
 
     "ColumnDecoderHeight[um]": 125,
     "CSLDriverResistance[Ohm]" : 300,
+    "CSLLoadCapacitance[fF]": 8,
     "GlobalDataLineDriverResistance[Ohm]" : 300,
 
     "DQDriverHeight[um]": 225,
@@ -45,5 +46,21 @@
     "BackgroundCurrentOffset[mA]": 6.75,
     "OCDCurrentSlope[uA/MHz]": 4.22,
 
-    "TSVHeight[um]":0
+    "TSVHeight[um]":0,
+
+    "AdditionalTRLLatency[cc]" : 0,
+
+    "DriverOffset[ns]": 0.6,
+    "BLSADelay[ns]": 2,
+    "CommandDecoderDelay[ns]": 2,
+    "InterfaceDelay[ns]": 1,
+    "IODelay[ns]": 1,
+    "SSAPrechargeDelay[ns]": 1,
+    "SecurityMargin[ns]": 1,
+    "EqualizerDelay[ns]": 1,
+    "ACTCommandDelay[ns]": 5,
+    "PRECommandDelay[ns]": 5,
+    "Offset[ns]": 10
+
+
 }
