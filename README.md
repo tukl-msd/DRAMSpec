@@ -1,5 +1,26 @@
-# DRAMSpec [1]
-a DRAM Current and Timing Generator
+# DRAMSpec - A DRAM Current and Timing Generator
+
+If you use **DRAMSpec** in your research, we would appreciate a citation to: 
+
+**A High-Level DRAM Timing, Power and Area Exploration Tool**,
+O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn.,
+*IEEE International Conference on Embedded Computer Systems Architectures Modeling and Simulation (SAMOS)*, July, 2015, Samos Island, Greece, [DOI](http://dx.doi.org/10.1109/SAMOS.2015.7363670)
+
+BibTeX:
+
+``` bibtex
+@INPROCEEDINGS{DRAMSpec, 
+author={O. Naji and C. Weis and M. Jung and N. Wehn and A. Hansson}, 
+booktitle={2015 International Conference on Embedded Computer Systems: Architectures, Modeling, and Simulation (SAMOS)}, 
+title={A high-level DRAM timing, power and area exploration tool}, 
+year={2015}, 
+pages={149-156}, 
+keywords={DRAM chips;energy conservation;logic design;memory architecture;microprocessor chips;DDR3;DRAMSpec;energy saving;mobile devices;open source high-level DRAM bank modeling tool;processor designers;servers;Computational modeling;Computer architecture;Delays;Integrated circuit modeling;Performance evaluation;Random access memory}, 
+doi={10.1109/SAMOS.2015.7363670}, 
+month={July},}
+```
+
+For more information about our other tools please visit: http://www.uni-kl.de/3d-dram/tools/
 
 ## LICENSE
 Copyright (c) 2015-2017, University of Kaiserslautern
@@ -227,9 +248,9 @@ Note: the number of technology and architecture description files must be equal.
 
 
 ## Reference
-[1] A High-Level DRAM Timing, Power and Area Exploration Tool,
+[1] **A High-Level DRAM Timing, Power and Area Exploration Tool**,
 O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn.,
-IEEE International Conference on Embedded Computer Systems Architectures Modeling and Simulation (SAMOS), July, 2015, Samos Island, Greece
+*IEEE International Conference on Embedded Computer Systems Architectures Modeling and Simulation (SAMOS)*, July, 2015, Samos Island, Greece, [DOI](http://dx.doi.org/10.1109/SAMOS.2015.7363670)
 
 [2] Memory Systems: Cache, DRAM, Disk,
 B. Jacob, S. Ng and D. Wang,
@@ -238,4 +259,3 @@ Morgan Kaufmann, 2007
 [3] DDR3 SDRAM standard (revision F),
 JEDEC,
 July 2012.
-s
