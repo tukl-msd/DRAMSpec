@@ -1,5 +1,7 @@
 # DRAMSpec - A DRAM Current and Timing Generator
 
+![DRAMSpec](http://www.uni-kl.de/fileadmin/3d-dram/dramSpec.png "DRAMSpec Logo")
+
 If you use **DRAMSpec** in your research, we would appreciate a citation to: 
 
 **A High-Level DRAM Timing, Power and Area Exploration Tool**,
