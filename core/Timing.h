@@ -114,9 +114,7 @@ class Timing : public Channel
     bu::quantity<drs::nanosecond_unit> tgdl;
 
     //DQ wire length
-    bu::quantity<drs::millimeter_unit> DQWireLength;
-    // Factor which defines the page size * subArrayToPageFactor relation
-    bu::quantity<drs::kibibyte_per_page_unit> bankWidthFactor;
+    bu::quantity<drs::micrometer_unit> DQWireLength;
     //Resistance of DQ wire
     bu::quantity<si::resistance> DQWireResistance;
     //Capacitace of DQ wire

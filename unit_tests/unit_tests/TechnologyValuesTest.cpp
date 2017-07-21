@@ -178,10 +178,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 300*drs::microampere_per_bit
                         << "\nGot: " << techValues.Issa);
 
-    BOOST_CHECK_MESSAGE( techValues.WRResistance == 600*drs::ohm_per_subarray,
+    BOOST_CHECK_MESSAGE( techValues.WRDriverResistance == 600*drs::ohm_per_subarray,
                          "WRrestore resistance different from the expected."
                         << "\nExpected: " << 600*drs::ohm_per_subarray
-                        << "\nGot: " << techValues.WRResistance);
+                        << "\nGot: " << techValues.WRDriverResistance);
 
     BOOST_CHECK_MESSAGE( techValues.colDecoderHeight == 200*drs::micrometer,
                          "Column decoder (between tiles) width different from the expected."
@@ -311,10 +311,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << true
                         << "\nGot: " << techValues.isDLL);
 
-    BOOST_CHECK_MESSAGE( techValues.dramSize == 1*drs::gibibit,
+    BOOST_CHECK_MESSAGE( techValues.channelSize == 1*drs::gibibit,
                          "DRAM Size different from the expected."
                         << "\nExpected: " << 1*drs::gibibit
-                        << "\nGot: " << techValues.dramSize);
+                        << "\nGot: " << techValues.channelSize);
 
     BOOST_CHECK_MESSAGE( techValues.nBanks == 8*drs::bank,
                          "Number of banks different from the expected."
@@ -544,10 +544,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 1877*drs::microampere_per_bit
                         << "\nGot: " << techValues.Issa);
 
-    BOOST_CHECK_MESSAGE( techValues.WRResistance == 5931*drs::ohm_per_subarray,
+    BOOST_CHECK_MESSAGE( techValues.WRDriverResistance == 5931*drs::ohm_per_subarray,
                          "WRrestore resistance different from the expected."
                         << "\nExpected: " << 5931*drs::ohm_per_subarray
-                        << "\nGot: " << techValues.WRResistance);
+                        << "\nGot: " << techValues.WRDriverResistance);
 
     BOOST_CHECK_MESSAGE( techValues.colDecoderHeight == 7970*drs::micrometer,
                          "Column decoder (between tiles) width different from the expected."
@@ -677,10 +677,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << false
                         << "\nGot: " << techValues.isDLL);
 
-    BOOST_CHECK_MESSAGE( techValues.dramSize == 2028*drs::gibibit,
+    BOOST_CHECK_MESSAGE( techValues.channelSize == 2028*drs::gibibit,
                          "DRAM Size different from the expected."
                         << "\nExpected: " << 2028*drs::gibibit
-                        << "\nGot: " << techValues.dramSize);
+                        << "\nGot: " << techValues.channelSize);
 
     BOOST_CHECK_MESSAGE( techValues.nBanks == 3264*drs::bank,
                          "Number of banks different from the expected."

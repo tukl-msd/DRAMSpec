@@ -47,55 +47,72 @@ TechnologyValues::technologyValuesInitialize()
     archFileName = "";
 
     technologyNode = 0*drs::nanometer;
+    vpp = 0*si::volt;
+    vdd = 0*si::volt;
+    wireResistance = 0*drs::ohm_per_millimeter;
+    wireCapacitance = 0*drs::femtofarad_per_millimeter;
+    capacitancePerCell = 0*drs::femtofarads_per_cell;
+    resistancePerCell = 0*drs::kiloohm_per_cell;
+    cellWidth = 0*drs::micrometer_per_cell;
+    cellHeight = 0*drs::micrometer_per_cell;
     capacitancePerBLCell = 0*drs::attofarads_per_cell;
     resistancePerBLCell = 0*drs::ohm_per_cell;
     capacitancePerWLCell = 0*drs::attofarads_per_cell;
     resistancePerWLCell = 0*drs::ohm_per_cell;
-    capacitancePerCell = 0*drs::femtofarads_per_cell;
-    resistancePerCell = 0*drs::kiloohm_per_cell;
-    wireResistance = 0*drs::ohm_per_millimeter;
-    wireCapacitance = 0*drs::femtofarad_per_millimeter;
-    cellWidth = 0*drs::micrometer_per_cell;
-    cellHeight = 0*drs::micrometer_per_cell;
+    BLSenseAmpHeight = 0*drs::micrometer;
+    LWLDriverWidth = 0*drs::micrometer;
+    LWLDriverResistance = 0*drs::ohm_per_subarray;
+    rowDecoderWidth = 0*drs::micrometers;
+    GWLDriverResistance = 0*si::ohm;
+    Issa = 0*drs::microampere_per_bit;
+    WRDriverResistance = 0*drs::ohm_per_subarray;
+    colDecoderHeight = 0*drs::micrometers;
+    CSLDriverResistance = 0*si::ohms;
+    CSLLoadCapacitance = 0*drs::femtofarads_per_bank;
+    GDLDriverResistance = 0*si::ohms;
+    DQDriverHeight = 0*drs::micrometers;
+    DQtoTSVWireLength = 0*drs::micrometers;
+    DQDriverResistance = 0*si::ohms;
+    backgroundCurrentSlope = 0*drs::milliamperes_per_megahertz_clock;
+    backgroundCurrentOffset = 0*drs::milliamperes;
+    IddOcdRcvSlope = 0*drs::microamperes_per_megahertz_clock;
+    TSVHeight = 0*drs::micrometers;
+    additionalLatencyTrl = 0*drs::clocks;
+    driverEnableDelay = 0*drs::nanoseconds;
+    BitlineSenseAmpDelay = 0*drs::nanoseconds;
+    cmdDecoderLatency = 0*drs::nanoseconds;
+    interfaceLatency = 0*drs::nanoseconds;
+    IODelay = 0*drs::nanoseconds;
+    SSAPrechargeDelay = 0*drs::nanoseconds;
+    securityMargin = 0*drs::nanoseconds;
+    equalizerDelay = 0*drs::nanoseconds;
+    actCmdDelay = 0*drs::nanoseconds;
+    preCmdDelay = 0*drs::nanoseconds;
+    offset = 0*drs::nanoseconds;
+
+    dramType = "";
+    is3D = false;
+    isDLL = false;
+    channelSize = 0*drs::gibibit;
+    nBanks = 0*drs::bank;
+    nHorizontalBanks = 0*drs::bank;
+    nVerticalBanks = 0*drs::bank;
     cellsPerLWL = 0*drs::cell_per_subarray;
     cellsPerLWLRedundancy = 0*drs::cell_per_subarray;
     cellsPerLBL = 0*drs::cell_per_subarray;
     cellsPerLBLRedundancy = 0*drs::cell_per_subarray;
-    BLSenseAmpHeight = 0*drs::micrometer;
-    LWLDriverWidth = 0*drs::micrometer;
-    GWLDriverResistance = 0*si::ohm;
-    LWLDriverResistance = 0*drs::ohm_per_subarray;
-    WRResistance = 0*drs::ohm_per_subarray;
-    CSLDriverResistance = 0*si::ohm;
-    GDLDriverResistance = 0*si::ohm;
-    DQDriverResistance = 0*si::ohm;
-    Issa = 0*drs::microampere_per_bit;
-    vpp = 0*si::volt;
-    vdd = 0*si::volt;
-    backgroundCurrentSlope = 0*drs::milliamperes_per_megahertz_clock;
-    backgroundCurrentOffset = 0*drs::milliampere;
-    IddOcdRcvSlope = 0*drs::microamperes_per_megahertz_clock;
-
-    dramType = "";
-    is3D = false;
-    dramSize = 0*drs::gibibit;
-    nBanks = 0*drs::bank;
-    nHorizontalBanks = 0*drs::bank;
-    nVerticalBanks = 0*drs::bank;
     Interface = 0*drs::bit;
+    prefetch = 0;
     dramFreq = 0*drs::megahertz_clock;
     dramCoreFreq = 0*drs::megahertz_clock;
-    prefetch = 0;
-    additionalLatencyTrl = 0*drs::clock;
-    pageStorage = 0*drs::kibibyte_per_page;
-    isDLL = false;
-    requiredTrefI = 0*drs::microsecond;
-    banksRefreshFactor = 0;
-    subArrayToPageFactor = 0;
-    retentionTime = 0*drs::millisecond;
     tilesPerBank = 0*drs::tile_per_bank;
+    pageStorage = 0*drs::kibibyte_per_page;
     pageSpanningFactor = 0*drs::page_per_tile;
     BLArchitecture = "";
+    subArrayToPageFactor = 0;
+    retentionTime = 0*drs::millisecond;
+    requiredTrefI = 0*drs::microsecond;
+    banksRefreshFactor = 0;
 
     warning = "";
 }
@@ -279,8 +296,8 @@ TechnologyValues::readjson(const string& t,const string& p)
         Issa = getJSONNumber(techDocument, "SecondarySenseAmpCurrent[uA]")
                * drs::microampere_per_bit;
 
-        //WRrestore resistance
-        WRResistance = getJSONNumber(techDocument, "WriteDriverResistance[Ohm]")
+        // Write Driver resistance
+        WRDriverResistance = getJSONNumber(techDocument, "WriteDriverResistance[Ohm]")
                        * drs::ohm_per_subarray;
 
         //Column decoder (between tiles) height
@@ -303,6 +320,10 @@ TechnologyValues::readjson(const string& t,const string& p)
         DQDriverHeight = getJSONNumber(techDocument, "DQDriverHeight[um]")
                          * drs::micrometer;
 
+        //Length of the wire going from the DQ main wiring to the TSV
+        DQtoTSVWireLength = getJSONNumber(techDocument, "DQtoTSVWireLength[um]")
+                             * drs::micrometers;
+
         //DQ driver resistance in ohm
         DQDriverResistance = getJSONNumber(techDocument, "DQDriverResistance[Ohm]")
                              * si::ohm;
@@ -324,12 +345,11 @@ TechnologyValues::readjson(const string& t,const string& p)
         TSVHeight = getJSONNumber(techDocument, "TSVHeight[um]")
                     * drs::micrometer;
 
-        //additional latency required for trl calculation
+        //Additional latency required for trl calculation
         additionalLatencyTrl = getJSONNumber(techDocument, "AdditionalTRLLatency[cc]")
                          * drs::clock;
 
-    //  !!!!!!!! TIMING VARIABLES WHICH WHERE HARDCODED IN THE ORIGINAL VERSION !!!!!!!!
-        //Driver offset !!!  TODO: What exactly is it?  !!!
+        //Driver enabling delay
         driverEnableDelay = getJSONNumber(techDocument, "DriverEnableDelay[ns]")
                          * drs::nanoseconds;
 
@@ -429,8 +449,8 @@ TechnologyValues::readjson(const string& t,const string& p)
         // DLL ON/OFF Feature
         isDLL = ( getJSONString(archDocument, "DLL[-]") == "ON" );
 
-        //size of DRAM
-        dramSize = getJSONNumber(archDocument, "ChannelSize[Gb]")
+        //size of DRAM Channel
+        channelSize = getJSONNumber(archDocument, "ChannelSize[Gb]")
                          * drs::gibibit;
 
         //# of banks
@@ -461,11 +481,11 @@ TechnologyValues::readjson(const string& t,const string& p)
         cellsPerLBLRedundancy = getJSONNumber(archDocument, "RedundantCellsPerSubarrayColumn[]")
                                 * drs::cell_per_subarray;
 
-        //Interface
+        //Interface (channel-wise)
         Interface = getJSONNumber(archDocument, "Interface[bit]")
                     * drs::bits;
 
-        //Number of Prefetch
+        //Number of prefetched words (interface wide) per CAS
         prefetch = getJSONNumber(archDocument, "Prefetch[]");
 
         //DRAM Frequency
@@ -473,8 +493,6 @@ TechnologyValues::readjson(const string& t,const string& p)
                          * drs::megahertz_clock;
 
         //DRAM Core Frequency
-        //if this value is not specified then calculate this value:
-        //Core Freq= Freq / (n.prefetch / n.DataRate)
         dramCoreFreq = getJSONNumber(archDocument, "CoreFrequency[MHz]")
                          * drs::megahertz_clock;
 
@@ -482,7 +500,7 @@ TechnologyValues::readjson(const string& t,const string& p)
         tilesPerBank = getJSONNumber(archDocument, "TilesPerBank[]")
                          * drs::tile_per_bank;
 
-        // Row buffer size this value is given in KBytes (Hard conversion needed)
+        // Page size - number of local sense amp. activated in a row access
         pageStorage = getJSONNumber(archDocument, "PageSize[KB]")
                          * drs::kibibyte_per_page;
 
@@ -490,10 +508,10 @@ TechnologyValues::readjson(const string& t,const string& p)
         pageSpanningFactor = getJSONNumber(archDocument, "PageSpanningFactor[]")
                          * drs::page_per_tile;
 
-        // Subarray to rowbuffer factor
+        // Subarray to page factor (inverse percentage bitlines that are sensed per row access)
         subArrayToPageFactor = getJSONNumber(archDocument, "SubarrayToPageFactor[]");
 
-        // DRAM Bitline Architecture: OPEN or FOLDED bit-line
+        // DRAM Bitline Architecture: OPEN or FOLDED bitline
         BLArchitecture = getJSONString(archDocument, "BitlineArchitecture[-]");
 
         // Retention time

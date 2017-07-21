@@ -35,6 +35,7 @@
     "GlobalDataLineDriverResistance[Ohm]" : 5885,
 
     "DQDriverHeight[um]": 5457,
+    "DQtoTSVWireLength[um]": 200,
     "DQDriverResistance[Ohm]" : 9240,
 
     "BackgroundCurrentSlope[mA/MHz]": 483,

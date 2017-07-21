@@ -69,8 +69,7 @@ Timing::timingInitialize()
     globalDatalineCapacitance = 0*drs::nanofarads_per_bank;
     tgdl = 0*drs::nanoseconds;
 
-    DQWireLength = 0*drs::millimeters;
-    bankWidthFactor = 0*drs::kibibytes_per_page;
+    DQWireLength = 0*drs::micrometers;
     DQWireResistance = 0*si::ohms;
     DQWireCapacitance = 0*drs::nanofarads;
     tdq = 0*drs::nanoseconds;
@@ -224,56 +223,26 @@ Timing::trasCalc()
              * globalDatalineCapacitance * drs::bank * drs::bank;
 
 
-    // Delay from SSA to DQ//assume wire length = 5mm
-    // the length of the DQ wire depends on the width of the bank
-    // Factor which defines the rowbuffer*subarray2rowbuffer relation
-    bankWidthFactor = pageStorage * subArrayToPageFactor;
-
-    // Currently we assume 5 mm taken from a DDR3 ( 8 banks config)
-    // when the number of banks increases this distance from bank to
-    // DQ should increas. We do not model this yet due to lack of input.
-    // This should be changed in the future.
+    // The longest DQ main wire for a non-3D architecture
+    //  extends throught the internal edge of the edge banks all the way
+    //  to the other side of the channel
+    // For a 3D design, it connects to all banks,
+    //  from the column decoder and throught the TSV area
     if ( is3D ) {
-        DQWireLength = 1 * drs::millimeters;
+        DQWireLength = nHorizontalBanks
+                            * ( 2.0 * colDecoderHeight + TSVHeight)/drs::bank
+                       + (nHorizontalBanks - 1.0*drs::bank)
+                            * bankWidth
+                       + DQtoTSVWireLength;
     } else {
-        if (bankWidthFactor < 0.5 * drs::kibibytes_per_page) {
-            DQWireLength = 5 * drs::millimeters;
-
-            warning.append("[WARNING] ");
-            warning.append("Your ");
-            warning.append("pageSize * subArrayToPageFactor ");
-            warning.append("is too small!!!\n");
-        }
-        else if(bankWidthFactor == 0.5 * drs::kibibytes_per_page) {
-            DQWireLength = 2 * drs::millimeters;
-        } else if (bankWidthFactor == 1 * drs::kibibytes_per_page) {
-            DQWireLength = 3 * drs::millimeters;
-        } else if (bankWidthFactor == 2 * drs::kibibytes_per_page) {
-            DQWireLength = 5 * drs::millimeters;
-        } else if(bankWidthFactor == 4 * drs::kibibytes_per_page) {
-            DQWireLength = 7 * drs::millimeters;
-        } else if(bankWidthFactor == 8 * drs::kibibytes_per_page) {
-            DQWireLength = 9 * drs::millimeters;
-        } else if (bankWidthFactor > 8 * drs::kibibytes_per_page) {
-            DQWireLength = 5 * drs::millimeters;
-
-            warning.append("[WARNING] ");
-            warning.append("Your ");
-            warning.append("pageSize * subArrayToPageFactor ");
-            warning.append("is too big!!!\n");
-        } else {
-            std::string exceptionMsgThrown;
-            exceptionMsgThrown.append("[ERROR] ");
-            exceptionMsgThrown.append("Unexpected behaviour!!\n");
-            exceptionMsgThrown.append("Could not define the length of DQ wire!");
-            throw exceptionMsgThrown;
-        }
+        DQWireLength = channelWidth - 1.0*drs::bank*bankWidth;
     }
 
-    DQWireResistance = DQWireLength * wireResistance;
+    DQWireResistance = SCALE_QUANTITY(DQWireLength, drs::millimeter_unit)
+                        * wireResistance;
 
     DQWireCapacitance = DQWireLength
-                      * SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit);
+                      * SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_micrometer_unit);
 
     // delay through global dataline
     tdq = driverEnableDelay
@@ -360,7 +329,7 @@ Timing::trefICalc()
     //number of rows
     //number of rows = (DRAM SIZE/#ofbanks) / rowbuffer
 //     !!!! [page/bank] !!!!
-    double numberofrows = SCALE_QUANTITY(dramSize, drs::kibibyte_unit)
+    double numberofrows = SCALE_QUANTITY(channelSize, drs::kibibyte_unit)
                         / nBanks
                         / pageStorage
                         *drs::bank / drs::page; // !!! Check dimension mismatch !!!

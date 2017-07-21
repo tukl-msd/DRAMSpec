@@ -94,6 +94,30 @@ class TechnologyValues
     //Technology node in nm
     bu::quantity<drs::nanometer_unit> technologyNode;
 
+    //voltage vpp
+    bu::quantity<si::electric_potential> vpp;
+
+    //voltage vdd
+    bu::quantity<si::electric_potential> vdd;
+
+    //wire resistance in ohm/mm
+    bu::quantity<drs::ohm_per_millimeter_unit> wireResistance;
+
+    //wire capa in ff/mm
+    bu::quantity<drs::femtofarad_per_millimeter_unit> wireCapacitance;
+
+    //cell capa
+    bu::quantity<drs::femtofarad_per_cell_unit> capacitancePerCell;
+
+    //cell resistance
+    bu::quantity<drs::kiloohm_per_cell_unit> resistancePerCell;
+
+    //cell width
+    bu::quantity<drs::micrometer_per_cell_unit> cellWidth;
+
+    //cell height
+    bu::quantity<drs::micrometer_per_cell_unit> cellHeight;
+
     //Bitline per cell capa
     bu::quantity<drs::attofarad_per_cell_unit> capacitancePerBLCell;
 
@@ -106,23 +130,117 @@ class TechnologyValues
     //Wordline per cell resistance
     bu::quantity<drs::ohm_per_cell_unit> resistancePerWLCell;
 
-    //cell capa
-    bu::quantity<drs::femtofarad_per_cell_unit> capacitancePerCell;
+    //sense amp height
+    bu::quantity<drs::micrometer_unit> BLSenseAmpHeight;
 
-    //cell resistance
-    bu::quantity<drs::kiloohm_per_cell_unit> resistancePerCell;
+    //wordline driver width
+    bu::quantity<drs::micrometer_unit> LWLDriverWidth;
 
-    //wire resistance in ohm/mm
-    bu::quantity<drs::ohm_per_millimeter_unit> wireResistance;
+    //Local wordline driver resistance in ohm
+    bu::quantity<drs::resistance_per_subarray_unit> LWLDriverResistance;
 
-    //wire capa in ff/mm
-    bu::quantity<drs::femtofarad_per_millimeter_unit> wireCapacitance;
+    //Row decoder (between tiles) width
+    bu::quantity<drs::micrometer_unit> rowDecoderWidth;
 
-    //cell width
-    bu::quantity<drs::micrometer_per_cell_unit> cellWidth;
+    //global wordline driver resistance in ohm
+    bu::quantity<si::resistance> GWLDriverResistance;
 
-    //cell height
-    bu::quantity<drs::micrometer_per_cell_unit> cellHeight;
+    //current of SSA in microamperes
+    bu::quantity<drs::microampere_per_bit_unit> Issa;
+
+    //Write Driver Resistance
+    bu::quantity<drs::resistance_per_subarray_unit> WRDriverResistance;
+
+    //Column decoder (between tiles) height
+    bu::quantity<drs::micrometer_unit> colDecoderHeight;
+
+    //CSL driver resistance in ohm
+    bu::quantity<si::resistance> CSLDriverResistance;
+
+    //Load capacitance !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::femtofarad_per_bank_unit> CSLLoadCapacitance;
+
+    //GDL driver resistance in ohm
+    bu::quantity<si::resistance> GDLDriverResistance;
+
+    //DQ driver (between banks) height
+    bu::quantity<drs::micrometer_unit> DQDriverHeight;
+
+    //Length of the wire going from the DQ main wiring to the TSV
+    bu::quantity<drs::micrometer_unit> DQtoTSVWireLength;
+
+    //DQ driver resistance in ohm
+    bu::quantity<si::resistance> DQDriverResistance;
+
+    //background current slope
+    bu::quantity<drs::milliampere_per_megahertz_clock_unit> backgroundCurrentSlope;
+
+    //background current offset
+    bu::quantity<drs::milliampere_unit> backgroundCurrentOffset;
+
+    //Current slope per IO pin in relation to clock frequency
+    bu::quantity<drs::microampere_per_megahertz_clock_unit> IddOcdRcvSlope;
+
+    //Height of the TSV area needed for each bank I/O
+    bu::quantity<drs::micrometer_unit> TSVHeight;
+
+    //Additional latency required for trl calculation
+    bu::quantity<drs::clock_unit> additionalLatencyTrl;
+
+    //Driver enabling delay
+    bu::quantity<drs::nanosecond_unit> driverEnableDelay;
+
+    //SSA Delay !!!  TODO: Check value !!!
+    bu::quantity<drs::nanosecond_unit> BitlineSenseAmpDelay;
+
+    //Command decoder latency !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> cmdDecoderLatency;
+
+    //Internal latency !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> interfaceLatency;
+
+    //I/O latency !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> IODelay;
+
+    //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> SSAPrechargeDelay;
+
+    //Security margin !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> securityMargin;
+
+    //Equalizer delay !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> equalizerDelay;
+
+    //Act cmd delay !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> actCmdDelay;
+
+    //pre cmd delay !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> preCmdDelay;
+
+    //offset !!!  TODO: What exactly is it?  !!!
+    bu::quantity<drs::nanosecond_unit> offset;
+
+
+    //DRAM Type
+    string dramType;
+
+    //3D ON/OFF Feature (set for WideIO and HBM)
+    bool is3D;
+
+    // DLL ON/OFF Feature
+    bool isDLL;
+
+    //size of DRAM Channel
+    bu::quantity<drs::gibibit_unit> channelSize;
+
+    //# of banks
+    bu::quantity<drs::bank_unit> nBanks;
+
+    //# of banks
+    bu::quantity<drs::bank_unit> nHorizontalBanks;
+
+    //# of banks
+    bu::quantity<drs::bank_unit> nVerticalBanks;
 
     //cells per subarray row
     bu::quantity<drs::cell_per_subarray_unit> cellsPerLWL;
@@ -136,101 +254,35 @@ class TechnologyValues
     //cells per subarray column redundancy
     bu::quantity<drs::cell_per_subarray_unit> cellsPerLBLRedundancy;
 
-    //sense amp height
-    bu::quantity<drs::micrometer_unit> BLSenseAmpHeight;
-
-    //wordline driver width
-    bu::quantity<drs::micrometer_unit> LWLDriverWidth;
-
-    //global wordline driver resistance in ohm
-    bu::quantity<si::resistance> GWLDriverResistance;
-
-    //Local wordline driver resistance in ohm
-    bu::quantity<drs::resistance_per_subarray_unit> LWLDriverResistance;
-
-    //WRrestore resistance
-    bu::quantity<drs::resistance_per_subarray_unit> WRResistance;
-
-    //CSL driver resistance in ohm
-    bu::quantity<si::resistance> CSLDriverResistance;
-
-    //GDL driver resistance in ohm
-    bu::quantity<si::resistance> GDLDriverResistance;
-
-    //DQ driver resistance in ohm
-    bu::quantity<si::resistance> DQDriverResistance;
-
-    //current of SSA in microamperes
-    bu::quantity<drs::microampere_per_bit_unit> Issa;
-
-    //voltage vpp
-    bu::quantity<si::electric_potential> vpp;
-
-    //voltage vdd
-    bu::quantity<si::electric_potential> vdd;
-
-    //background current slope
-    bu::quantity<drs::milliampere_per_megahertz_clock_unit> backgroundCurrentSlope;
-
-    //background current offset
-    bu::quantity<drs::milliampere_unit> backgroundCurrentOffset;
-
-    //Current slope per IO pin in relation to clock frequency
-    bu::quantity<drs::microampere_per_megahertz_clock_unit> IddOcdRcvSlope;
-
-    //Row decoder (between tiles) width
-    bu::quantity<drs::micrometer_unit> rowDecoderWidth;
-
-    //Column decoder (between tiles) height
-    bu::quantity<drs::micrometer_unit> colDecoderHeight;
-
-    //DQ driver (between banks) height
-    bu::quantity<drs::micrometer_unit> DQDriverHeight;
-
-    //Height of the TSV area needed for each bank I/O
-    bu::quantity<drs::micrometer_unit> TSVHeight;
-
-    //DRAM Type
-    string dramType;
-
-    //3D ON/OFF Feature
-    //set 3D on for HMC/WideIO
-    bool is3D;
-
-    //size of DRAM
-    bu::quantity<drs::gibibit_unit> dramSize;
-
-    //# of banks
-    bu::quantity<drs::bank_unit> nBanks;
-
-    //# of banks
-    bu::quantity<drs::bank_unit> nHorizontalBanks;
-
-    //# of banks
-    bu::quantity<drs::bank_unit> nVerticalBanks;
-
-    //Interface
+    //Interface (channel-wise)
     bu::quantity<drs::bit_unit> Interface;
+
+    //Number of prefetched words (interface wide) per CAS
+    double prefetch;
 
     //DRAM Frequency
     bu::quantity<drs::megahertz_clock_unit> dramFreq;
 
     //DRAM Core Frequency
-    //if this value is not specified then calculate this value:
-    //Core Freq= Freq / (n.prefetch / n.DataRate)
     bu::quantity<drs::megahertz_clock_unit> dramCoreFreq;
 
-    //Number of Prefetch
-    double prefetch;
+    // Number of tiles per bank
+    bu::quantity<drs::tile_per_bank_unit> tilesPerBank;
 
-    //additional latency required for trl calculation
-    bu::quantity<drs::clock_unit> additionalLatencyTrl;
-
-    // Row buffer size this value is given in KBytes (hard conversion needed)
+    // Page size - number of local sense amp. activated in a row access
     bu::quantity<drs::kibibyte_per_page_unit> pageStorage;
 
-    // DLL ON/OFF Feature
-    bool isDLL;
+    // Spanning factor of a page across tiles
+    bu::quantity<drs::page_per_tile_unit> pageSpanningFactor;
+
+    // Subarray to page factor (inverse percentage bitlines that are sensed per row access)
+    double subArrayToPageFactor;
+
+    // DRAM Bitline Architecture: OPEN or FOLDED bitline
+    string BLArchitecture;
+
+    // Retention time
+    bu::quantity<drs::millisecond_unit> retentionTime;
 
     // Required tref by user
     bu::quantity<drs::microsecond_unit> requiredTrefI;
@@ -238,47 +290,8 @@ class TechnologyValues
     // Ratio of banks refreshed pro command
     double banksRefreshFactor;
 
-    // Subarray to rowbuffer factor
-    double subArrayToPageFactor;
 
-    // Retention time
-    bu::quantity<drs::millisecond_unit> retentionTime;
-
-    // Number of tiles per bank
-    bu::quantity<drs::tile_per_bank_unit> tilesPerBank;
-
-    // Spanning factor of pages across tiles
-    bu::quantity<drs::page_per_tile_unit> pageSpanningFactor;
-
-    // DRAM Bitline Architecture: OPEN or FOLDED bit-line
-    string BLArchitecture;
-
-//  !!!!!!!! TIMING VARIABLES WHICH WHERE HARDCODED IN THE ORIGINAL VERSION !!!!!!!!
-    //Driver offset !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> driverEnableDelay;
-    //SSA Delay !!!  TODO: Check value !!!
-    bu::quantity<drs::nanosecond_unit> BitlineSenseAmpDelay;
-    //Load capacitance !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::femtofarad_per_bank_unit> CSLLoadCapacitance;
-    //Command decoder latency !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> cmdDecoderLatency;
-    //Internal latency !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> interfaceLatency;
-    //I/O latency !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> IODelay;
-    //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> SSAPrechargeDelay;
-    //Security margin !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> securityMargin;
-    //Equalizer delay !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> equalizerDelay;
-    //Act cmd delay !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> actCmdDelay;
-    //pre cmd delay !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> preCmdDelay;
-    //offset !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> offset;
-
+    // String to output warnings
     string warning;
 
 

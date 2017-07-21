@@ -119,10 +119,10 @@ BOOST_AUTO_TEST_CASE( checkSubArray_real_input)
                         << "\nExpected: " << 1000*drs::ohms_per_subarray
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 600*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 600*drs::ohms_per_subarray,
                         "WR restore resistance different from the expected."
                         << "\nExpected: " << 600*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 }
 
@@ -197,10 +197,10 @@ BOOST_AUTO_TEST_CASE( checkSubArray_dummy_input )
                         << "\nExpected: " << 5422*drs::ohms_per_subarray
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 6131*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 6131*drs::ohms_per_subarray,
                         "WR restore resistance different from the expected."
                         << "\nExpected: " << 6131*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 
 }
@@ -339,10 +339,10 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nExpected: " << 5422*drs::ohms_per_subarray
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 6131*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 6131*drs::ohms_per_subarray,
                         "WR restore resistance different from the expected."
                         << "\nExpected: " << 6131*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 
     subarray.readjson(inputFileName.technologyFileName[0],
@@ -355,10 +355,10 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nExpected: " << 5322*drs::ohms_per_subarray
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 6031*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 6031*drs::ohms_per_subarray,
                         "WR restore resistance different from the expected."
                         << "\nExpected: " << 6031*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 
     subarray.readjson(inputFileName.technologyFileName[0],
@@ -371,10 +371,10 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nExpected: " << 5222*drs::ohms_per_subarray
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 5931*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 5931*drs::ohms_per_subarray,
                         "WR restore resistance different from the expected."
                         << "\nExpected: " << 5931*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 
     subarray.readjson(inputFileName.technologyFileName[0],
@@ -387,10 +387,10 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nExpected: " << 5122*drs::ohms_per_subarray
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 5831*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 5831*drs::ohms_per_subarray,
                         "WR restore resistance different from the expected."
                         << "\nExpected: " << 5831*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 
     subarray.readjson(inputFileName.technologyFileName[0],
@@ -403,10 +403,10 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nExpected: " << 5022*drs::ohms_per_subarray
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 5731*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 5731*drs::ohms_per_subarray,
                         "WR restore resistance different from the expected."
                         << "\nExpected: " << 5731*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 }
 

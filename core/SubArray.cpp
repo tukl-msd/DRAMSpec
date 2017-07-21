@@ -104,22 +104,22 @@ SubArray::driverUpdate()
 
     if(subArrayRowStorage < 256*drs::bits_per_subarray ) {
         LWLDriverResistance = LWLDriverResistance + 200*drs::ohms_per_subarray ;
-        WRResistance = WRResistance + 200*drs::ohms_per_subarray;
+        WRDriverResistance = WRDriverResistance + 200*drs::ohms_per_subarray;
     }
     else if(subArrayRowStorage < 512*drs::bits_per_subarray ) {
         LWLDriverResistance = LWLDriverResistance + 100*drs::ohms_per_subarray;
-        WRResistance = WRResistance + 100*drs::ohms_per_subarray ;
+        WRDriverResistance = WRDriverResistance + 100*drs::ohms_per_subarray ;
     }
     else if(subArrayRowStorage < 1024*drs::bits_per_subarray ) {
         LWLDriverResistance = LWLDriverResistance;
-        WRResistance = WRResistance;    
+        WRDriverResistance = WRDriverResistance;    
     }
     else if(subArrayRowStorage < 1025*drs::bits_per_subarray ) {
         LWLDriverResistance = LWLDriverResistance  - 100*drs::ohms_per_subarray ;
-        WRResistance = WRResistance - 100*drs::ohms_per_subarray ;
+        WRDriverResistance = WRDriverResistance - 100*drs::ohms_per_subarray ;
 
     } else {
         LWLDriverResistance = LWLDriverResistance - 200*drs::ohms_per_subarray;
-        WRResistance = WRResistance - 200*drs::ohms_per_subarray ;
+        WRDriverResistance = WRDriverResistance - 200*drs::ohms_per_subarray ;
     }
 }

@@ -157,39 +157,34 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 2.067*drs::nanoseconds
                         << "\nGot: " << timing.tgdl);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireLength, 3) == 5*drs::millimeters,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireLength, 3) == 8394.48*drs::micrometers,
                         "Length of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 5*drs::millimeters
+                        << "\nExpected around: " << 8394.48*drs::micrometers
                         << "\nGot: " << timing.DQWireLength);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 2*drs::kibibytes_per_page,
-                        "Bank width factor different from the expected."
-                        << "\nExpected around: " << 2*drs::kibibytes_per_page
-                        << "\nGot: " << timing.bankWidthFactor);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 500*si::ohms,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 839.448*si::ohms,
                         "Resistance of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 500*si::ohms
+                        << "\nExpected around: " << 839.448*si::ohms
                         << "\nGot: " << timing.DQWireResistance);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireCapacitance, 6) == 1.91e-3*drs::nanofarads,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireCapacitance, 6) == 3.207e-3*drs::nanofarads,
                         "Capacitance of bank do DQ wire different from the expected."
-                        << "\nExpected around: " << 1.91e-3*drs::nanofarads
+                        << "\nExpected around: " << 3.207e-3*drs::nanofarads
                         << "\nGot: " << timing.DQWireCapacitance);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tdq, 3) == 3.749*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tdq, 3) == 6.969*drs::nanoseconds,
                         "tdq different from the expected."
-                        << "\nExpected around: " << 3.749*drs::nanoseconds
+                        << "\nExpected around: " << 6.969*drs::nanoseconds
                         << "\nGot: " << timing.tdq);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas, 3) == 13.895*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas, 3) == 17.115*drs::nanoseconds,
                         "tcas different from the expected."
-                        << "\nExpected around: " << 13.895*drs::nanoseconds
+                        << "\nExpected around: " << 17.115*drs::nanoseconds
                         << "\nGot: " << timing.tcas);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl, 3) == 15.145*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl, 3) == 18.365*drs::nanoseconds,
                         "trl different from the expected."
-                        << "\nExpected around: " << 15.145*drs::nanoseconds
+                        << "\nExpected around: " << 18.365*drs::nanoseconds
                         << "\nGot: " << timing.trl);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trtp, 3) == 6.147*drs::nanoseconds,
@@ -257,14 +252,14 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 9*drs::clocks
                         << "\nGot: " << timing.trcd_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas_clk, 3) == 12*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas_clk, 3) == 14*drs::clocks,
                         "tcas in number of clocks different from the expected."
-                        << "\nExpected around: " << 12*drs::clocks
+                        << "\nExpected around: " << 14*drs::clocks
                         << "\nGot: " << timing.tcas_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas_coreClk, 3) == 3*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcas_coreClk, 3) == 4*drs::clocks,
                         "tcas in number of core clocks different from the expected."
-                        << "\nExpected around: " << 3*drs::clocks
+                        << "\nExpected around: " << 4*drs::clocks
                         << "\nGot: " << timing.tcas_coreClk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.tras_clk, 3) == 17*drs::clocks,
@@ -282,9 +277,9 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 25*drs::clocks
                         << "\nGot: " << timing.trc_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl_clk, 3) == 13*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl_clk, 3) == 15*drs::clocks,
                         "trl in number of clocks different from the expected."
-                        << "\nExpected around: " << 13*drs::clocks
+                        << "\nExpected around: " << 15*drs::clocks
                         << "\nGot: " << timing.trl_clk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trl_coreClk, 3) == 4*drs::clocks,
@@ -292,9 +287,9 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 4*drs::clocks
                         << "\nGot: " << timing.trl_coreClk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.twl_clk, 3) == 12*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.twl_clk, 3) == 14*drs::clocks,
                         "twl in number of clocks different from the expected."
-                        << "\nExpected around: " << 12*drs::clocks
+                        << "\nExpected around: " << 14*drs::clocks
                         << "\nGot: " << timing.twl_clk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trtp_clk, 3) == 5*drs::clocks,
@@ -326,358 +321,6 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         "trefI in number of clocks different from the expected."
                         << "\nExpected around: " << 6250*drs::clocks
                         << "\nGot: " << timing.trefI_clk);
-
-}
-
-BOOST_AUTO_TEST_CASE( checkChannel_different_timing_configs )
-{
-    int sim_argc = 5;
-    char* sim_argv[] = {"./executable",
-                        "-t",
-                        "../../technology_input/test_technology.json",
-                        "-p",
-                        "../../architecture_input/test_architecture.json"};
-
-    ArgumentsParser inputFileName(sim_argc, sim_argv);
-
-    string exceptionMsg("Empty");
-    try {
-        inputFileName.runArgParser();
-    }catch (string exceptionMsgThrown){
-        exceptionMsg = exceptionMsgThrown;
-    }
-    string expectedMsg("Empty");
-    if ( exceptionMsg != expectedMsg ) {
-        BOOST_FAIL( exceptionMsg );
-    }
-
-    Timing timing;
-    try {
-        timing = Timing(inputFileName.technologyFileName[0],
-                    inputFileName.architectureFileName[0]);
-    }catch (string exceptionMsgThrown){
-        exceptionMsg = exceptionMsgThrown;
-    }
-    expectedMsg = string("Empty");
-    if ( exceptionMsg != expectedMsg ) {
-        BOOST_FAIL( exceptionMsg );
-    }
-
-
-    timing.pageStorage = 0.25 * drs::kibibytes_per_page;
-    timing.subArrayToPageFactor = 1;
-
-    exceptionMsg.clear();
-    exceptionMsg = "Empty";
-    try {
-        timing.timingCompute();
-    }catch (string exceptionMsgThrown){
-        exceptionMsg = exceptionMsgThrown;
-    }
-    expectedMsg.clear();
-    expectedMsg = "Empty";
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireLength, 3) == 5*drs::millimeters,
-                        "Length of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 5*drs::millimeters
-                        << "\nGot: " << timing.DQWireLength);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 0.25*drs::kibibytes_per_page,
-                        "Bank width factor different from the expected."
-                        << "\nExpected around: " << 0.25*drs::kibibytes_per_page
-                        << "\nGot: " << timing.bankWidthFactor);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 500*si::ohms,
-                        "Resistance of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 500*si::ohms
-                        << "\nGot: " << timing.DQWireResistance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireCapacitance, 6) == 1.91e-3*drs::nanofarads,
-                        "Capacitance of bank do DQ wire different from the expected."
-                        << "\nExpected around: " << 1.91e-3*drs::nanofarads
-                        << "\nGot: " << timing.DQWireCapacitance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tdq, 3) == 3.749*drs::nanoseconds,
-                        "tdq different from the expected."
-                        << "\nExpected around: " << 3.749*drs::nanoseconds
-                        << "\nGot: " << timing.tdq);
-
-
-
-
-    timing.pageStorage = 0.5 * drs::kibibytes_per_page;
-    timing.subArrayToPageFactor = 1;
-
-    exceptionMsg.clear();
-    exceptionMsg = "Empty";
-    try {
-        timing.timingCompute();
-    }catch (string exceptionMsgThrown){
-        exceptionMsg = exceptionMsgThrown;
-    }
-    expectedMsg.clear();
-    expectedMsg = "Empty";
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireLength, 3) == 2*drs::millimeters,
-                        "Length of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 2*drs::millimeters
-                        << "\nGot: " << timing.DQWireLength);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 0.5*drs::kibibytes_per_page,
-                        "Bank width factor different from the expected."
-                        << "\nExpected around: " << 0.5*drs::kibibytes_per_page
-                        << "\nGot: " << timing.bankWidthFactor);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 200*si::ohms,
-                        "Resistance of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 200*si::ohms
-                        << "\nGot: " << timing.DQWireResistance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireCapacitance, 6) == 0.764e-3*drs::nanofarads,
-                        "Capacitance of bank do DQ wire different from the expected."
-                        << "\nExpected around: " << 0.764e-3*drs::nanofarads
-                        << "\nGot: " << timing.DQWireCapacitance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tdq, 3) == 1.632*drs::nanoseconds,
-                        "tdq different from the expected."
-                        << "\nExpected around: " << 1.632*drs::nanoseconds
-                        << "\nGot: " << timing.tdq);
-
-
-
-
-    timing.pageStorage = 1 * drs::kibibytes_per_page;
-    timing.subArrayToPageFactor = 1;
-
-    exceptionMsg.clear();
-    exceptionMsg = "Empty";
-    try {
-        timing.timingCompute();
-    }catch (string exceptionMsgThrown){
-        exceptionMsg = exceptionMsgThrown;
-    }
-    expectedMsg.clear();
-    expectedMsg = "Empty";
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireLength, 3) == 3*drs::millimeters,
-                        "Length of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 3*drs::millimeters
-                        << "\nGot: " << timing.DQWireLength);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 1*drs::kibibytes_per_page,
-                        "Bank width factor different from the expected."
-                        << "\nExpected around: " << 1*drs::kibibytes_per_page
-                        << "\nGot: " << timing.bankWidthFactor);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 300*si::ohms,
-                        "Resistance of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 300*si::ohms
-                        << "\nGot: " << timing.DQWireResistance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireCapacitance, 6) == 1.146e-3*drs::nanofarads,
-                        "Capacitance of bank do DQ wire different from the expected."
-                        << "\nExpected around: " << 1.146e-3*drs::nanofarads
-                        << "\nGot: " << timing.DQWireCapacitance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tdq, 3) == 2.262*drs::nanoseconds,
-                        "tdq different from the expected."
-                        << "\nExpected around: " << 2.262*drs::nanoseconds
-                        << "\nGot: " << timing.tdq);
-
-
-
-
-    timing.pageStorage = 1 * drs::kibibytes_per_page;
-    timing.subArrayToPageFactor = 2;
-
-    exceptionMsg.clear();
-    exceptionMsg = "Empty";
-    try {
-        timing.timingCompute();
-    }catch (string exceptionMsgThrown){
-        exceptionMsg = exceptionMsgThrown;
-    }
-    expectedMsg.clear();
-    expectedMsg = "Empty";
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireLength, 3) == 5*drs::millimeters,
-                        "Length of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 5*drs::millimeters
-                        << "\nGot: " << timing.DQWireLength);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 2*drs::kibibytes_per_page,
-                        "Bank width factor different from the expected."
-                        << "\nExpected around: " << 2*drs::kibibytes_per_page
-                        << "\nGot: " << timing.bankWidthFactor);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 500*si::ohms,
-                        "Resistance of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 500*si::ohms
-                        << "\nGot: " << timing.DQWireResistance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireCapacitance, 6) == 1.91e-3*drs::nanofarads,
-                        "Capacitance of bank do DQ wire different from the expected."
-                        << "\nExpected around: " << 1.91e-3*drs::nanofarads
-                        << "\nGot: " << timing.DQWireCapacitance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tdq, 3) == 3.749*drs::nanoseconds,
-                        "tdq different from the expected."
-                        << "\nExpected around: " << 3.749*drs::nanoseconds
-                        << "\nGot: " << timing.tdq);
-
-
-
-
-    timing.pageStorage = 1 * drs::kibibytes_per_page;
-    timing.subArrayToPageFactor = 4;
-
-    exceptionMsg.clear();
-    exceptionMsg = "Empty";
-    try {
-        timing.timingCompute();
-    }catch (string exceptionMsgThrown){
-        exceptionMsg = exceptionMsgThrown;
-    }
-    expectedMsg.clear();
-    expectedMsg = "Empty";
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireLength, 3) == 7*drs::millimeters,
-                        "Length of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 7*drs::millimeters
-                        << "\nGot: " << timing.DQWireLength);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 4*drs::kibibytes_per_page,
-                        "Bank width factor different from the expected."
-                        << "\nExpected around: " << 4*drs::kibibytes_per_page
-                        << "\nGot: " << timing.bankWidthFactor);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 700*si::ohms,
-                        "Resistance of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 700*si::ohms
-                        << "\nGot: " << timing.DQWireResistance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireCapacitance, 6) == 2.674e-3*drs::nanofarads,
-                        "Capacitance of bank do DQ wire different from the expected."
-                        << "\nExpected around: " << 2.674e-3*drs::nanofarads
-                        << "\nGot: " << timing.DQWireCapacitance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tdq, 3) == 5.540*drs::nanoseconds,
-                        "tdq different from the expected."
-                        << "\nExpected around: " << 5.540*drs::nanoseconds
-                        << "\nGot: " << timing.tdq);
-
-
-
-
-
-    timing.pageStorage = 1 * drs::kibibytes_per_page;
-    timing.subArrayToPageFactor = 8;
-
-    exceptionMsg.clear();
-    exceptionMsg = "Empty";
-    try {
-        timing.timingCompute();
-    }catch (string exceptionMsgThrown){
-        exceptionMsg = exceptionMsgThrown;
-    }
-    expectedMsg.clear();
-    expectedMsg = "Empty";
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireLength, 3) == 9*drs::millimeters,
-                        "Length of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 9*drs::millimeters
-                        << "\nGot: " << timing.DQWireLength);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 8*drs::kibibytes_per_page,
-                        "Bank width factor different from the expected."
-                        << "\nExpected around: " << 8*drs::kibibytes_per_page
-                        << "\nGot: " << timing.bankWidthFactor);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 900*si::ohms,
-                        "Resistance of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 900*si::ohms
-                        << "\nGot: " << timing.DQWireResistance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireCapacitance, 6) == 3.438e-3*drs::nanofarads,
-                        "Capacitance of bank do DQ wire different from the expected."
-                        << "\nExpected around: " << 3.438e-3*drs::nanofarads
-                        << "\nGot: " << timing.DQWireCapacitance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tdq, 3) == 7.635*drs::nanoseconds,
-                        "tdq different from the expected."
-                        << "\nExpected around: " << 7.635*drs::nanoseconds
-                        << "\nGot: " << timing.tdq);
-
-
-
-
-
-    timing.pageStorage = 1 * drs::kibibytes_per_page;
-    timing.subArrayToPageFactor = 16;
-
-    exceptionMsg.clear();
-    exceptionMsg = "Empty";
-    try {
-        timing.timingCompute();
-    }catch (string exceptionMsgThrown){
-        exceptionMsg = exceptionMsgThrown;
-    }
-    expectedMsg.clear();
-    expectedMsg = "Empty";
-    BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
-                        "Error message different from what was expected."
-                        << "\nExpected: " << expectedMsg
-                        << "\nGot: " << exceptionMsg);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireLength, 3) == 5*drs::millimeters,
-                        "Length of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 5*drs::millimeters
-                        << "\nGot: " << timing.DQWireLength);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.bankWidthFactor, 3) == 16*drs::kibibytes_per_page,
-                        "Bank width factor different from the expected."
-                        << "\nExpected around: " << 16*drs::kibibytes_per_page
-                        << "\nGot: " << timing.bankWidthFactor);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireResistance, 3) == 500*si::ohms,
-                        "Resistance of bank to DQ wire different from the expected."
-                        << "\nExpected around: " << 500*si::ohms
-                        << "\nGot: " << timing.DQWireResistance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.DQWireCapacitance, 6) == 1.91e-3*drs::nanofarads,
-                        "Capacitance of bank do DQ wire different from the expected."
-                        << "\nExpected around: " << 1.91e-3*drs::nanofarads
-                        << "\nGot: " << timing.DQWireCapacitance);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.tdq, 3) == 3.749*drs::nanoseconds,
-                        "tdq different from the expected."
-                        << "\nExpected around: " << 3.749*drs::nanoseconds
-                        << "\nGot: " << timing.tdq);
-
 
 }
 

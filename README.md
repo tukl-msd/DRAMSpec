@@ -111,6 +111,7 @@ Note: the number of technology and architecture description files must be equal.
 |CSLLoadCapacitance|  |fF|
 |GlobalDataLineDriverResistance|Output resistance of the global dataline driver.|Ohm|
 |DQDriverHeight|Length in column direction of the DQ driver.|um|
+|DQtoTSVWireLength|Length of the wire from DQ main line to TSV connection.|um|
 |DQDriverResistance|Output resistance of the DQ driver.|Ohm|
 |BackgroundCurrentSlope|Slope in relation to operating frequency of the precharge background current.|mA/MHz|
 |BackgroundCurrentOffset|Constant term of precharge background current (frequency invariant).|mA|
@@ -119,7 +120,7 @@ Note: the number of technology and architecture description files must be equal.
 |AdditionalTRLLatency|Added latency (tAL [2]) to tCAS resulting in tRL.|cc|
 |DriverEnableDelay| Time interval between driving signal to active driver. |ns|
 |BLSADelay|  |ns|
-|CommandDecoderDelay|  |ns|
+|CommandDecoderDelay| Clock wave pipeline delay for decode and fetch command in the same cycle it is registered. |ns|
 |InterfaceDelay|  |ns|
 |IODelay|  |ns|
 |SSAPrechargeDelay|  |ns|
@@ -147,7 +148,7 @@ Note: the number of technology and architecture description files must be equal.
 |Interface|Number of datalines of the IO bus. This number is the length of a single data word.|bit|
 |Prefetch|Number of prefetched data words for a single read command (RD).|dimensionless|
 |Frequency|Nominal Synchronous DRAM clock frequency.|MHz|
-|CoreFrequency|DRAM Core clock frequency.|MHz|
+|CoreFrequency|DRAM Core clock frequency. Set to 0 (zero) for automatic calculation.|MHz|
 |TilesPerBank|Number of tiles (subsections) of a single bank.|dimensionless|
 |PageSize|Amount of data sensed after an bank activate command (ACT).|KByte|
 |PageSpanningFactor|Percetange of page size sensed on a single bank tile.|dimensionless|

@@ -52,7 +52,7 @@ Channel::channelInitialize()
 void
 Channel::channelStorageCalc()
 {
-    channelStorage = dramSize;
+    channelStorage = channelSize;
 }
 
 void

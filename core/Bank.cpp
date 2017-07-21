@@ -51,7 +51,7 @@ Bank::bankInitialize()
 void
 Bank::bankStorageCalc()
 {
-    bankStorage =  SCALE_QUANTITY(dramSize, drs::bit_unit) / nBanks;
+    bankStorage =  SCALE_QUANTITY(channelSize, drs::bit_unit) / nBanks;
 }
 
 void

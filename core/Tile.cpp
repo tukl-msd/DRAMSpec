@@ -54,7 +54,7 @@ Tile::tileInitialize()
 void
 Tile::tileStorageCalc()
 {
-    bu::quantity<drs::information_per_bank_unit> bankStorage(dramSize/nBanks);
+    bu::quantity<drs::information_per_bank_unit> bankStorage(channelSize/nBanks);
 
     tileStorage = bankStorage/tilesPerBank;
 }
