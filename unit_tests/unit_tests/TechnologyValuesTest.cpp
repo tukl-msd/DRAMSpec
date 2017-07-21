@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,12 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji
- *          Matthias Jung
- *          Christian Weis
- *          Kamal Haddad
- *          Andr'e Lucas Chinazzo
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #ifndef TECHNOLOGYVALUESTEST_CPP
 #define TECHNOLOGYVALUESTEST_CPP
@@ -236,10 +238,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 1*drs::clock
                         << "\nGot: " << techValues.additionalLatencyTrl);
 
-    BOOST_CHECK_MESSAGE( techValues.driverOffset == 0.6*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.driverEnableDelay == 0.6*drs::nanoseconds,
                         "Driver offset time different from the expected."
                         << "\nExpected around: " << 0.6*drs::nanoseconds
-                        << "\nGot: " << techValues.driverOffset);
+                        << "\nGot: " << techValues.driverEnableDelay);
 
     BOOST_CHECK_MESSAGE( techValues.BitlineSenseAmpDelay == 2*drs::nanoseconds,
                         "Secondary sense amplifier delay different from the expected."
@@ -602,10 +604,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 9541*drs::clock
                         << "\nGot: " << techValues.additionalLatencyTrl);
 
-    BOOST_CHECK_MESSAGE( techValues.driverOffset == 5654*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.driverEnableDelay == 5654*drs::nanoseconds,
                         "Driver offset time different from the expected."
                         << "\nExpected around: " << 5654*drs::nanoseconds
-                        << "\nGot: " << techValues.driverOffset);
+                        << "\nGot: " << techValues.driverEnableDelay);
 
     BOOST_CHECK_MESSAGE( techValues.BitlineSenseAmpDelay == 8*drs::nanoseconds,
                         "Secondary sense amplifier delay different from the expected."

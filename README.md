@@ -117,7 +117,7 @@ Note: the number of technology and architecture description files must be equal.
 |OCDCurrentSlope|Slope of current sinked by the off-chip driver in relation to operating frequency.|uA/MHz|
 |TSVHeight|Length in column direction of TSV area.|um|
 |AdditionalTRLLatency|Added latency (tAL [2]) to tCAS resulting in tRL.|cc|
-|DriverOffset|  |ns|
+|DriverEnableDelay| Time interval between driving signal to active driver. |ns|
 |BLSADelay|  |ns|
 |CommandDecoderDelay|  |ns|
 |InterfaceDelay|  |ns|
@@ -238,4 +238,3 @@ Morgan Kaufmann, 2007
 [3] DDR3 SDRAM standard (revision F),
 JEDEC,
 July 2012.
-s

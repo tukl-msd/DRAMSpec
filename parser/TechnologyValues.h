@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 //This class presents the main key technology points used by this tool.
 //The values are read from a json file 
@@ -249,7 +255,7 @@ class TechnologyValues
 
 //  !!!!!!!! TIMING VARIABLES WHICH WHERE HARDCODED IN THE ORIGINAL VERSION !!!!!!!!
     //Driver offset !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> driverOffset;
+    bu::quantity<drs::nanosecond_unit> driverEnableDelay;
     //SSA Delay !!!  TODO: Check value !!!
     bu::quantity<drs::nanosecond_unit> BitlineSenseAmpDelay;
     //Load capacitance !!!  TODO: What exactly is it?  !!!

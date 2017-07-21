@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #include "TechnologyValues.h"
 
@@ -324,7 +330,7 @@ TechnologyValues::readjson(const string& t,const string& p)
 
     //  !!!!!!!! TIMING VARIABLES WHICH WHERE HARDCODED IN THE ORIGINAL VERSION !!!!!!!!
         //Driver offset !!!  TODO: What exactly is it?  !!!
-        driverOffset = getJSONNumber(techDocument, "DriverOffset[ns]")
+        driverEnableDelay = getJSONNumber(techDocument, "DriverEnableDelay[ns]")
                          * drs::nanoseconds;
 
         //SSA Delay !!!  TODO: Check value !!!

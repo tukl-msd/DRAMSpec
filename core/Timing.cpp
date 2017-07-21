@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,11 +11,11 @@
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distributio
+ *    documentation and/or other materials provided with the distribution.
  *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permissio
+ *    this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -29,8 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #include "Timing.h"
 #include <math.h>
@@ -157,7 +163,7 @@ Timing::trcdCalc()
             * localBitlineResistance * drs::subarray
             * localBitlineCapacitance * drs::subarray;
 
-    //calculating GWL decoder + wiring femtofarad_per_bank_unitdelay
+    //calculating GWL decoder + wiring delay
     //calculating global wordline total capa
     globalWordlineResistance = wireResistance
            * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit);
@@ -166,7 +172,7 @@ Timing::trcdCalc()
            * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit);
 
     // Calculating delay through global wordline driver and wiring
-    globalWordlineDelay = driverOffset +
+    globalWordlineDelay = driverEnableDelay +
             timeToPercentage(90) * GWLDriverResistance * globalWordlineCapacitance * drs::tile +
             timeToPercentage(63) * globalWordlineResistance * drs::tile * globalWordlineCapacitance * drs::tile;
     
@@ -196,7 +202,7 @@ Timing::trasCalc()
                      + SCALE_QUANTITY(CSLLoadCapacitance, drs::nanofarad_per_bank_unit);
 
     // delay through CSL
-    tcsl = driverOffset
+    tcsl = driverEnableDelay
            + timeToPercentage(90) * CSLDriverResistance
             * CSLCapacitance * drs::bank
            + timeToPercentage(63) * CSLResistance
@@ -211,7 +217,7 @@ Timing::trasCalc()
                       * SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit);
 
     // delay through global dataline
-    tgdl = driverOffset
+    tgdl = driverEnableDelay
            + timeToPercentage(90) * GDLDriverResistance
              * globalDatalineCapacitance * drs::bank
            + timeToPercentage(63) * globalDatalineResistance
@@ -270,7 +276,7 @@ Timing::trasCalc()
                       * SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit);
 
     // delay through global dataline
-    tdq = driverOffset
+    tdq = driverEnableDelay
            + timeToPercentage(90) * DQDriverResistance
              * DQWireCapacitance
            + timeToPercentage(63) * DQWireResistance
@@ -295,7 +301,7 @@ Timing::trasCalc()
     // tccd ( column to column delay) is equal time to select another CSL
     //  + precharging secondary SSA + Global Dataline delay...
     // - 0.5(delay of CSL driver isnot in the critical path)
-    tccd = tcsl + SSAPrechargeDelay + tgdl - driverOffset;
+    tccd = tcsl + SSAPrechargeDelay + tgdl - driverEnableDelay;
     
     // Calculating tras:
 //    tras = trcd + tcas + bitlineDelay - tdq - 1; TODO - Discuss with Christian about this timing!!!!

@@ -50,7 +50,7 @@
 
     "AdditionalTRLLatency[cc]" : 0,
 
-    "DriverOffset[ns]": 0.6,
+    "DriverEnableDelay[ns]": 0.6,
     "BLSADelay[ns]": 2,
     "CommandDecoderDelay[ns]": 2,
     "InterfaceDelay[ns]": 1,

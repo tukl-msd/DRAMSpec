@@ -29,21 +29,5 @@
 
     "RetentionTime[ms]" : 2242,
     "RequiredRefreshPeriod[us]": 963,
-    "BankRefreshFactor[]":9263,
-
-    "AdditionalTRLLatency[cc]" : 3404,
-
-    "DriverOffset[ns]": 5885,
-    "BLSADelay[ns]": 867,
-    "CommandDecoderDelay[ns]": 946,
-    "InterfaceDelay[ns]": 1973,
-    "IODelay[ns]": 1941,
-    "SSAPrechargeDelay[ns]": 6970,
-    "SecurityMargin[ns]": 8683,
-    "EqualizerDelay[ns]": 9927,
-    "ACTCommandDelay[ns]": 8492,
-    "PRECommandDelay[ns]": 8840,
-    "Offset[ns]": 3057,
-
-    "CSLLoadCapacitance[fF]": 3445
+    "BankRefreshFactor[]":9263
 }

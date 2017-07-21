@@ -35,35 +35,3 @@
  *          Kamal Haddad,
  *          Andre Lucas Chinazzo
  */
-
-
-
-#ifndef DRAMSPEC_RESISTANCE_PER_LENGTH_UNIT_H
-#define DRAMSPEC_RESISTANCE_PER_LENGTH_UNIT_H
-
-#include "../dramSpecUnitsSystem.h"
-#include "../DerivedDimensions/resistance_per_length.h"
-
-namespace boost {
-
-namespace units {
-
-namespace dramspec {
-
-typedef unit<resistance_per_length_dimension,dramspec::system_bit>    resistance_per_length;
-
-BOOST_UNITS_STATIC_CONSTANT(ohm_per_meter,resistance_per_length);
-BOOST_UNITS_STATIC_CONSTANT(ohms_per_meter,resistance_per_length);
-
-// ohm / millimeter = kiloohm / meter
-typedef make_scaled_unit<resistance_per_length,scale<10, static_rational<3>>>::type ohm_per_millimeter_unit;
-BOOST_UNITS_STATIC_CONSTANT(ohm_per_millimeter,ohm_per_millimeter_unit);
-BOOST_UNITS_STATIC_CONSTANT(ohms_per_millimeter,ohm_per_millimeter_unit);
-
-} // namespace dramspec
-
-} // namespace units
-
-} // namespace boost
-
-#endif // DRAMSPEC_RESISTANCE_PER_LENGTH_UNIT_H

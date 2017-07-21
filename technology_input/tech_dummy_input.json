@@ -45,7 +45,7 @@
 
     "AdditionalTRLLatency[cc]" : 9541,
 
-    "DriverOffset[ns]": 5654,
+    "DriverEnableDelay[ns]": 5654,
     "BLSADelay[ns]": 8,
     "CommandDecoderDelay[ns]": 9212,
     "InterfaceDelay[ns]": 989,

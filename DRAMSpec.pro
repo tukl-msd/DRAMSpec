@@ -40,6 +40,9 @@ mac {
 # Newest version of Boost Library
 INCLUDEPATH += /users/chinazzo/libs/boost_1_62_0
 
+#DRAMSpec License
+OTHER_FILES += License
+
 #DRAMSpec HEADERS
 HEADERS += core/SubArray.h
 HEADERS += core/Tile.h
