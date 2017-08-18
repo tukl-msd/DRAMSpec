@@ -84,10 +84,14 @@ The executable is now available under `build/release/` by the name `dramspec`.
 
 ### Running DRAMSpec
 
-The program expect as parameters (at least) one technology and one achitecture description files. The flags `-t` and `-p` precede the technology and architecture description files, respectively. The optional `-term` flag will include the IO termination currents for read and write operations of the DRAM.
+The program expect as parameters (at least) one technology and one achitecture description files. The flags `-t` and `-p` precede the technology and architecture description files, respectively.
+
+The optional `-term` flag will include the IO termination currents for read and write operations of the DRAM.
+
+For more detailed information on timings, it is possible to print out all internal timing variables using the flag `-internaltimings`.
 
 ``` bash
-    ./build/release/dramspec -t <path/to/technologyfilename> -p <path/to/parameterfilename> [-term]
+    ./build/release/dramspec -t <path/to/technologyfilename> -p <path/to/parameterfilename> [-term] [-internaltimings]
 ```
 
 #### Examples:
@@ -99,7 +103,7 @@ The program expect as parameters (at least) one technology and one achitecture d
 It is also possible to run multiple input files at once:
 
 ``` bash
-    ./build/release/dramspec -t <t1.json> <t2.json> -p <p1.json> <p2.json> [-term]
+    ./build/release/dramspec -t <t1.json> <t2.json> -p <p1.json> <p2.json> [-term] [-internaltimings]
 ```
 Note: the number of technology and architecture description files must be equal.
 

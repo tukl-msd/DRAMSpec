@@ -47,5 +47,7 @@ bool isInteger( double dn );
 bool isPowerOfTwo( double n );
 
 double timeToPercentage(double percentage);
+#define PRINT_VAR(varName) \
+    do{std::cout << #varName " = " << varName << std::endl;} while(false)
 
 #endif // UTILS_H

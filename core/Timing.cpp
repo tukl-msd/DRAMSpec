@@ -115,6 +115,7 @@ Timing::timingInitialize()
     twr_clk = 0*drs::clocks;
     trfc_clk = 0*drs::clocks;
     trefI_clk = 0*drs::clocks;
+
 }
 
 void
@@ -273,7 +274,7 @@ Timing::trasCalc()
     //  + precharging secondary SSA + Global Dataline delay...
     // - 0.5(delay of CSL driver isnot in the critical path)
     tccd = tcsl + SSAPrechargeDelay + tgdl - driverEnableDelay;
-    
+
     // Calculating tras:
 //    tras = trcd + tcas + bitlineDelay - tdq - 1; TODO - Discuss with Christian about this timing!!!!
     // From Matthias thesis pg. 20 Fig. 2.5: Basic DRAM protocol -> tras = trcd + tccd + trtp
@@ -444,21 +445,29 @@ Timing::timingCompute()
     }catch (std::string exceptionMsgThrown){
         throw exceptionMsgThrown;
     }
+
 }
 
 void
-Timing::printTiming()
+Timing::printTimings()
 {
-    //print analog timings
-    std::cout << "Timing Parameters in ns"      << "\n";
-    std::cout << "trcd"     << "\t" << trcd     << ".\n";
-    std::cout << "tcl"      << "\t" << tcas     << ".\n";
-    std::cout << "trtp"     << "\t" << trtp     << ".\n";
-    std::cout << "tccd"     << "\t" << tccd     << ".\n";
-    std::cout << "tras"     << "\t" << tras     << ".\n";
-    std::cout << "twr"      << "\t" << twr      << "\n" ;
-    std::cout << "trp"      << "\t" << trp      << ".\n";
-    std::cout << "trc"      << "\t" << trc      << ".\n";
-    std::cout << "trfc"     << "\t" << trfc     << "\n";
-    std::cout << "trefI"    << "\t" << trefI    << "\n";
+
+    std::cout << "\nTime variables:\n";
+    PRINT_VAR(cellDelay);
+    PRINT_VAR(localWordlineDelay);
+    PRINT_VAR(localBitlineDelay);
+    PRINT_VAR(globalWordlineDelay);
+    PRINT_VAR(tcsl);
+    PRINT_VAR(tgdl);
+    PRINT_VAR(tdq);
+    PRINT_VAR(tcas);
+    PRINT_VAR(trtp);
+    PRINT_VAR(tccd);
+    PRINT_VAR(tras);
+    PRINT_VAR(twr);
+    PRINT_VAR(trp);
+    PRINT_VAR(trc);
+    PRINT_VAR(trfc);
+    PRINT_VAR(trefI);
+
 }

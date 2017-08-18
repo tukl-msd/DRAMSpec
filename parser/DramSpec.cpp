@@ -298,8 +298,8 @@ void DRAMSpec::runDramSpec(int argc, char** argv)
         throw exceptionMsgThrown;
     }
 
-    if ( !arg->helpMessage.str().empty() ) {
-        output << arg->helpMessage.str();
+    if ( !arg->helpStrStream.str().empty() ) {
+        output << arg->helpStrStream.str();
         return;
     }
 
@@ -358,6 +358,11 @@ void DRAMSpec::runDramSpec(int argc, char** argv)
         } catch(string exceptionMsgThrown) {
             throw exceptionMsgThrown;
         }
+
+        if (arg->printInternalTimigs) {
+            dram->printTimings();
+        }
+
         output  << "_______________________________________________________"
                 << "_______________________________________________________"
                 << "_______________________________________________________"

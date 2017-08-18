@@ -56,8 +56,21 @@ public:
     vector<string> architectureFileName;
     unsigned int nConfigurations;
     bool IOTerminationCurrentFlag;
+    bool printInternalTimigs;
 
-    ostringstream helpMessage;
+    ostringstream helpStrStream;
+    const char* helpMessage =
+            "  Mandatory:\n"
+            "    -t    <path/to/technologyfile.json>   "
+              "(Specify which technology description file should be used.)\n"
+            "    -p    <path/to/architecturefile.json> "
+              "(Specify which architecture description file should be used.)\n"
+            "  Optional:\n"
+            "    -term                                 "
+              "(Include IO termination currents for read and write operations.)\n"
+            "    -internaltimings                      "
+              "(Enable print out of internal timings.)\n"
+            "For more information, see README.md.\n";
 
     void runArgParser();
 

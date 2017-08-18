@@ -214,7 +214,7 @@ class Timing : public Channel
 
     void timingCompute();
 
-    void printTiming();
+    void printTimings();
 };
 
 #endif

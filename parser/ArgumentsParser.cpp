@@ -49,30 +49,13 @@ ArgumentsParser::ArgumentsParser(int argc, char** argv)
     argvID = 1;
     nConfigurations = 0;
     IOTerminationCurrentFlag = false;
-    helpMessage.str("");
 }
 
 void ArgumentsParser::runArgParser()
 {
     // Help run
-    if ( cpargc == 1 ) {
-        helpMessage << "Parameters:"
-                    << endl;
-        helpMessage << "  Mandatory:"
-                    << endl;
-        helpMessage << "    -t    <path/to/technologyfile.json>   "
-                    << "(Specify which technology description file should be used.)"
-                    << endl;
-        helpMessage << "    -p    <path/to/architecturefile.json> "
-                    << "(Specify which architecture description file should be used.)"
-                    << endl;
-        helpMessage << "  Optional:"
-                    << endl;
-        helpMessage << "    -term                                 "
-                    << "(Include IO termination currents for read and write operations.)"
-                    << endl;
-        helpMessage << "For more information, see README.md."
-                    << endl;
+    if ( cpargc == 1 || cpargv[argvID] == "-h" ) {
+        helpStrStream << helpMessage;
     }
 
     // Normal run
@@ -85,10 +68,8 @@ void ArgumentsParser::runArgParser()
             string exceptionMsgThrown("[ERROR] ");
             exceptionMsgThrown.append("Unexpected argument \'");
             exceptionMsgThrown.append(cpargv[argvID]);
-            exceptionMsgThrown.append("\'.\nUse \'-t\' and \'-p\' before the ");
-            exceptionMsgThrown.append("Technology and Archtecture file names, respectively.\n");
-            exceptionMsgThrown.append("Use \'-term\' to include the");
-            exceptionMsgThrown.append(" OI Termination Current calculation.\n");
+            exceptionMsgThrown.append("\'");
+            exceptionMsgThrown.append(helpMessage);
             throw exceptionMsgThrown;
        }
     }
@@ -98,10 +79,8 @@ void ArgumentsParser::runArgParser()
             string exceptionMsgThrown("[ERROR] ");
             exceptionMsgThrown.append("Unexpected argument \'");
             exceptionMsgThrown.append(cpargv[argvID]);
-            exceptionMsgThrown.append("\'.\nUse \'-t\' and \'-p\' before the ");
-            exceptionMsgThrown.append("Technology and Archtecture file names, respectively.\n");
-            exceptionMsgThrown.append("Use \'-term\' to include the");
-            exceptionMsgThrown.append(" OI Termination Current calculation.\n");
+            exceptionMsgThrown.append("\'");
+            exceptionMsgThrown.append(helpMessage);
             throw exceptionMsgThrown;
        }
     }
@@ -110,14 +89,17 @@ void ArgumentsParser::runArgParser()
         argvID++;
         runArgParser();
     }
+    else if( string(cpargv[argvID]) == "-internaltimings") {
+        printInternalTimigs = true;
+        argvID++;
+        runArgParser();
+    }
     else {
         string exceptionMsgThrown("[ERROR] ");
         exceptionMsgThrown.append("Unexpected argument \'");
         exceptionMsgThrown.append(cpargv[argvID]);
-        exceptionMsgThrown.append("\'.\nUse \'-t\' and \'-p\' before the ");
-        exceptionMsgThrown.append("Technology and Archtecture file names, respectively.\n");
-        exceptionMsgThrown.append("Use \'-term\' to include the");
-        exceptionMsgThrown.append(" OI Termination Current calculation.\n");
+        exceptionMsgThrown.append("\'");
+        exceptionMsgThrown.append(helpMessage);
         throw exceptionMsgThrown;
     }
 
@@ -142,10 +124,8 @@ void ArgumentsParser::runArgParser()
          string exceptionMsgThrown("[ERROR] ");
          exceptionMsgThrown.append("No technology nor architecture ");
          exceptionMsgThrown.append("file provided!\n");
-         exceptionMsgThrown.append("Use \'-t\' and \'-p\' before the ");
-         exceptionMsgThrown.append("Technology and Archtecture file names, respectively.\n");
-         exceptionMsgThrown.append("Use \'-term\' to include the");
-         exceptionMsgThrown.append(" OI Termination Current calculation.\n");
+         exceptionMsgThrown.append("\'");
+         exceptionMsgThrown.append(helpMessage);
          throw exceptionMsgThrown;
 
      }
@@ -163,6 +143,11 @@ bool ArgumentsParser::getTechFileName()
         }
         else if( string(cpargv[argvID]) == "-term") {
             IOTerminationCurrentFlag = true;
+            argvID++;
+            runArgParser();
+        }
+        else if( string(cpargv[argvID]) == "-internaltimings") {
+            printInternalTimigs = true;
             argvID++;
             runArgParser();
         }
@@ -190,6 +175,11 @@ bool ArgumentsParser::getArchFileName()
         }
         else if( string(cpargv[argvID]) == "-term") {
             IOTerminationCurrentFlag = true;
+            argvID++;
+            runArgParser();
+        }
+        else if( string(cpargv[argvID]) == "-internaltimings") {
+            printInternalTimigs = true;
             argvID++;
             runArgParser();
         }

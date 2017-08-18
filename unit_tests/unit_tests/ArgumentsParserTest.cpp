@@ -65,13 +65,23 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_wrong_first_flag )
         exceptionMsg = exceptionMsgThrown;
     }
 
+    const char* helpMessage =
+            "  Mandatory:\n"
+            "    -t    <path/to/technologyfile.json>   "
+              "(Specify which technology description file should be used.)\n"
+            "    -p    <path/to/architecturefile.json> "
+              "(Specify which architecture description file should be used.)\n"
+            "  Optional:\n"
+            "    -term                                 "
+              "(Include IO termination currents for read and write operations.)\n"
+            "    -internaltimings                      "
+              "(Enable print out of internal timings.)\n"
+            "For more information, see README.md.\n";
+
     string expectedMsg("[ERROR] ");
     expectedMsg.append("Unexpected argument \'");
-    expectedMsg.append("-r"); // Same flag error: "-r" instead of "-t".
-    expectedMsg.append("\'.\nUse \'-t\' and \'-p\' before the ");
-    expectedMsg.append("Technology and Archtecture file names, respectively.\n");
-    expectedMsg.append("Use \'-term\' to include the");
-    expectedMsg.append(" OI Termination Current calculation.\n");
+    expectedMsg.append("-r\'"); // Same flag error: "-r" instead of "-t".
+    expectedMsg.append(helpMessage);
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -97,13 +107,23 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_wrong_second_flag1 )
         exceptionMsg = exceptionMsgThrown;
     }
 
+    const char* helpMessage =
+            "  Mandatory:\n"
+            "    -t    <path/to/technologyfile.json>   "
+              "(Specify which technology description file should be used.)\n"
+            "    -p    <path/to/architecturefile.json> "
+              "(Specify which architecture description file should be used.)\n"
+            "  Optional:\n"
+            "    -term                                 "
+              "(Include IO termination currents for read and write operations.)\n"
+            "    -internaltimings                      "
+              "(Enable print out of internal timings.)\n"
+            "For more information, see README.md.\n";
+
     string expectedMsg("[ERROR] ");
     expectedMsg.append("Unexpected argument \'");
-    expectedMsg.append("-o"); // Same flag error: "-o" instead of "-p".
-    expectedMsg.append("\'.\nUse \'-t\' and \'-p\' before the ");
-    expectedMsg.append("Technology and Archtecture file names, respectively.\n");
-    expectedMsg.append("Use \'-term\' to include the");
-    expectedMsg.append(" OI Termination Current calculation.\n");
+    expectedMsg.append("-o\'"); // Same flag error: "-o" instead of "-t".
+    expectedMsg.append(helpMessage);
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg
@@ -129,13 +149,23 @@ BOOST_AUTO_TEST_CASE( checkInputParametersParser_wrong_second_flag2 )
         exceptionMsg = exceptionMsgThrown;
     }
 
+    const char* helpMessage =
+            "  Mandatory:\n"
+            "    -t    <path/to/technologyfile.json>   "
+              "(Specify which technology description file should be used.)\n"
+            "    -p    <path/to/architecturefile.json> "
+              "(Specify which architecture description file should be used.)\n"
+            "  Optional:\n"
+            "    -term                                 "
+              "(Include IO termination currents for read and write operations.)\n"
+            "    -internaltimings                      "
+              "(Enable print out of internal timings.)\n"
+            "For more information, see README.md.\n";
+
     string expectedMsg("[ERROR] ");
     expectedMsg.append("Unexpected argument \'");
-    expectedMsg.append("-r"); // Same flag error: "-r" instead of "-t".
-    expectedMsg.append("\'.\nUse \'-t\' and \'-p\' before the ");
-    expectedMsg.append("Technology and Archtecture file names, respectively.\n");
-    expectedMsg.append("Use \'-term\' to include the");
-    expectedMsg.append(" OI Termination Current calculation.\n");
+    expectedMsg.append("-r\'"); // Same flag error: "-r" instead of "-t".
+    expectedMsg.append(helpMessage);
     BOOST_CHECK_MESSAGE( exceptionMsg == expectedMsg,
                         "Error message different from what was expected."
                         << "\nExpected: " << expectedMsg

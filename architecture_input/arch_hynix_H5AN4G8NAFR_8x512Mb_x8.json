@@ -1,0 +1,34 @@
+{
+    "DRAMType[-]": "DDR",
+    "3D[-]": "OFF",
+    "DLL[-]": "ON",
+
+    "ChannelSize[Gb]": 8,
+
+    "NumberOfBanksPerChannel[]":8,
+    "NumberOfHorizontalBanksPerChannel[]": 0,
+    "NumberOfVerticalBanksPerChannel[]": 0,
+
+    "CellsPerSubarrayRow[]": 1046,
+    "RedundantCellsPerSubarrayRow[]": 22,
+    "CellsPerSubarrayColumn[]": 512,
+    "RedundantCellsPerSubarrayColumn[]": 12,
+
+    "Interface[bit]": 8,
+    "Prefetch[]": 8,
+
+    "Frequency[MHz]": 800,
+    "CoreFrequency[MHz]": 0,
+
+    "TilesPerBank[]" : 2,
+
+    "PageSize[KB]": 1,
+    "PageSpanningFactor[]": 0.5,
+    "SubarrayToPageFactor[]": 3,
+    "BitlineArchitecture[-]": "OPEN",
+
+    "RetentionTime[ms]" : 64,
+    "RequiredRefreshPeriod[us]": 7.8,
+    "BankRefreshFactor[]":8
+
+}
