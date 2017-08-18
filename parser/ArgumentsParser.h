@@ -56,7 +56,7 @@ public:
     vector<string> architectureFileName;
     unsigned int nConfigurations;
     bool IOTerminationCurrentFlag;
-    bool printInternalTimigs;
+    bool printInternalTimings;
 
     ostringstream helpStrStream;
     const char* helpMessage =

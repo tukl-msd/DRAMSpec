@@ -49,26 +49,33 @@ ArgumentsParser::ArgumentsParser(int argc, char** argv)
     argvID = 1;
     nConfigurations = 0;
     IOTerminationCurrentFlag = false;
+    printInternalTimings = false;
 }
 
 void ArgumentsParser::runArgParser()
 {
-    // Help run
-    if ( cpargc == 1 || cpargv[argvID] == "-h" ) {
+    if ( argvID >= cpargc ) {
+        // Help run (no arguments)
+        if ( cpargc == 1 ) {
+            helpStrStream << helpMessage;
+        }
+        // Or end of parsing
+        return;
+    }
+
+    // Help run (by argument)
+    if ( string(cpargv[argvID]) == "-h" ) {
         helpStrStream << helpMessage;
     }
 
     // Normal run
-    if ( argvID >= cpargc ) {
-        return;
-    }
     if( string(cpargv[argvID]) == "-t") {
         argvID++;
         if(!getTechFileName()) {
             string exceptionMsgThrown("[ERROR] ");
             exceptionMsgThrown.append("Unexpected argument \'");
             exceptionMsgThrown.append(cpargv[argvID]);
-            exceptionMsgThrown.append("\'");
+            exceptionMsgThrown.append("\'\n");
             exceptionMsgThrown.append(helpMessage);
             throw exceptionMsgThrown;
        }
@@ -79,7 +86,7 @@ void ArgumentsParser::runArgParser()
             string exceptionMsgThrown("[ERROR] ");
             exceptionMsgThrown.append("Unexpected argument \'");
             exceptionMsgThrown.append(cpargv[argvID]);
-            exceptionMsgThrown.append("\'");
+            exceptionMsgThrown.append("\'\n");
             exceptionMsgThrown.append(helpMessage);
             throw exceptionMsgThrown;
        }
@@ -90,7 +97,7 @@ void ArgumentsParser::runArgParser()
         runArgParser();
     }
     else if( string(cpargv[argvID]) == "-internaltimings") {
-        printInternalTimigs = true;
+        printInternalTimings = true;
         argvID++;
         runArgParser();
     }
@@ -98,7 +105,7 @@ void ArgumentsParser::runArgParser()
         string exceptionMsgThrown("[ERROR] ");
         exceptionMsgThrown.append("Unexpected argument \'");
         exceptionMsgThrown.append(cpargv[argvID]);
-        exceptionMsgThrown.append("\'");
+        exceptionMsgThrown.append("\'\n");
         exceptionMsgThrown.append(helpMessage);
         throw exceptionMsgThrown;
     }
@@ -124,7 +131,6 @@ void ArgumentsParser::runArgParser()
          string exceptionMsgThrown("[ERROR] ");
          exceptionMsgThrown.append("No technology nor architecture ");
          exceptionMsgThrown.append("file provided!\n");
-         exceptionMsgThrown.append("\'");
          exceptionMsgThrown.append(helpMessage);
          throw exceptionMsgThrown;
 
@@ -144,16 +150,17 @@ bool ArgumentsParser::getTechFileName()
         else if( string(cpargv[argvID]) == "-term") {
             IOTerminationCurrentFlag = true;
             argvID++;
-            runArgParser();
+            if(!getTechFileName()) { return false; }
         }
         else if( string(cpargv[argvID]) == "-internaltimings") {
-            printInternalTimigs = true;
+            printInternalTimings = true;
             argvID++;
-            runArgParser();
+            if(!getTechFileName()) { return false; }
+        }
+        else if (cpargv[argvID][0] == '-') {
+            return false;
         }
         else {
-            if (cpargv[argvID][0] == '-') { return false; }
-
             technologyFileName.push_back(cpargv[argvID]);
             argvID++;
             if(!getTechFileName()) { return false; }
@@ -176,16 +183,17 @@ bool ArgumentsParser::getArchFileName()
         else if( string(cpargv[argvID]) == "-term") {
             IOTerminationCurrentFlag = true;
             argvID++;
-            runArgParser();
+            if(!getArchFileName()) { return false; }
         }
         else if( string(cpargv[argvID]) == "-internaltimings") {
-            printInternalTimigs = true;
+            printInternalTimings = true;
             argvID++;
-            runArgParser();
+            if(!getArchFileName()) { return false; }
+        }
+        else if (cpargv[argvID][0] == '-') {
+            return false;
         }
         else {
-            if (cpargv[argvID][0] == '-') { return false; }
-
             architectureFileName.push_back(cpargv[argvID]);
             argvID++;
             if(!getArchFileName()) { return false; }

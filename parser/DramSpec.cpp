@@ -359,7 +359,7 @@ void DRAMSpec::runDramSpec(int argc, char** argv)
             throw exceptionMsgThrown;
         }
 
-        if (arg->printInternalTimigs) {
+        if (arg->printInternalTimings) {
             dram->printTimings();
         }
 
