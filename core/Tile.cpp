@@ -56,14 +56,14 @@ Tile::tileStorageCalc()
 {
     bu::quantity<drs::information_per_bank_unit> bankStorage(channelSize/nBanks);
 
-    tileStorage = bankStorage/tilesPerBank;
+    tileStorage = bankStorage/nTilesPerBank;
 }
 
 void
 Tile::checkTileDataConsistency()
 {
     // Check input consistency with respect to tilesPerBank & pageSpanningFactor
-    if ( tilesPerBank == 1.0*drs::tile_per_bank ) {
+    if ( nTilesPerBank == 1.0*drs::tile_per_bank ) {
         if (   pageSpanningFactor != 1.0*drs::page_per_tile)
         {
             std::string exceptionMsgThrown("[ERROR] ");
@@ -75,7 +75,7 @@ Tile::checkTileDataConsistency()
         }
     }
 
-    else if ( tilesPerBank == 2.0*drs::tile_per_bank ) {
+    else if ( nTilesPerBank == 2.0*drs::tile_per_bank ) {
         if (   pageSpanningFactor != 1.0*drs::page_per_tile
                && pageSpanningFactor != 0.5*drs::page_per_tile
                )
@@ -89,7 +89,7 @@ Tile::checkTileDataConsistency()
         }
     }
 
-    else if ( tilesPerBank == 4.0*drs::tile_per_bank ) {
+    else if ( nTilesPerBank == 4.0*drs::tile_per_bank ) {
         if (   pageSpanningFactor != 1*drs::page_per_tile
             && pageSpanningFactor != 0.5*drs::page_per_tile
             && pageSpanningFactor != 0.25*drs::page_per_tile)
@@ -184,7 +184,7 @@ Tile::tileLogicAssess()
     nTileColumnAddressLines = ceil (log2 ( subArrayRowStorage
                                            * nSubArraysPerArrayBlock
                                            * 1.0*drs::tile
-                                           / Interface
+                                           / interface
                                          )
                                    );
 

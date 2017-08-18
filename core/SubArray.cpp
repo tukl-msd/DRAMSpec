@@ -82,6 +82,12 @@ SubArray::subArrayCompute()
 void
 SubArray::driverUpdate()
 {
+
+    // TODO: CHANGE FOR A ABSOLUTE VALUE
+    // OR SLOPE
+    // AND USER CHOOSE ONE OR THE OTHER
+
+
     // The value for global ( master ) wordline driver resistance is
     // give for a page size of 2 kB.If the page size becomes
     // smaller we will need a to drive less => bigger resistance

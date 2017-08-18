@@ -55,32 +55,27 @@ Bank::bankStorageCalc()
 }
 
 void
+Bank::bankTilesPlacementAssess()
+{
+    if ( isPowerOfTwo(nTilesPerBank.value()) == false ) {
+        std::string exceptionMsgThrown("[ERROR] ");
+        exceptionMsgThrown.append("Total number of tiles per bank ");
+        exceptionMsgThrown.append("must be a power of two.");
+        throw exceptionMsgThrown;
+    }
+
+    // Defining default tiles placement on bank
+    nVerticalTiles = pow(2, floor(log(nTilesPerBank.value())/log(4.0)) ) * drs::tiles_per_bank;
+    nHorizontalTiles = nTilesPerBank / nVerticalTiles * drs::tiles_per_bank;
+
+}
+
+void
 Bank::bankLenghtCalc()
 {
+    bankWidth = nHorizontalTiles * tileWidth;
 
-    // Define tile placement on bank
-    if ( tilesPerBank == 1*drs::tiles_per_bank ) {
-        bankWidth = 1.0 * tileWidth * drs::tile_per_bank;
-
-        bankHeight = 1.0 * tileHeight * drs::tile_per_bank;
-
-    }
-
-    else if ( tilesPerBank == 2*drs::tiles_per_bank ) {
-        bankWidth = tileWidth * 2.0 * drs::tile_per_bank;
-
-        bankHeight = tileHeight * 1.0 * drs::tile_per_bank;
-    }
-
-    else if ( tilesPerBank == 4*drs::tiles_per_bank ) {
-        bankWidth = tileWidth * 2.0 * drs::tile_per_bank;
-
-        bankHeight = tileHeight * 2.0 * drs::tile_per_bank;
-
-    }
-
-    // Add I/O related height
-    bankHeight = bankHeight
+    bankHeight = nVerticalTiles * tileHeight
                  + 1.0 * DQDriverHeight / drs::bank;
 
 }
@@ -89,6 +84,10 @@ void
 Bank::bankCompute()
 {
     bankStorageCalc();
-
+    try{
+        bankTilesPlacementAssess();
+    } catch(string exceptionMsgThrown) {
+        throw exceptionMsgThrown;
+    }
     bankLenghtCalc();
 }

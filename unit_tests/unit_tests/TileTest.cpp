@@ -197,7 +197,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     }
 
 
-    tile.tilesPerBank = 1*drs::tiles_per_bank;
+    tile.nTilesPerBank = 1*drs::tiles_per_bank;
     tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
     try {
         tile.tileCompute();
@@ -257,7 +257,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 10
                         << "\nGot: " << tile.nTileColumnAddressLines);
 
-    tile.tilesPerBank = 2*drs::tiles_per_bank;
+    tile.nTilesPerBank = 2*drs::tiles_per_bank;
     tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
     try {
         tile.tileCompute();
@@ -361,7 +361,7 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 9
                         << "\nGot: " << tile.nTileColumnAddressLines);
 
-    tile.tilesPerBank = 4*drs::tiles_per_bank;
+    tile.nTilesPerBank = 4*drs::tiles_per_bank;
     tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
     try {
         tile.tileCompute();

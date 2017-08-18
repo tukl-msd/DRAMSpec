@@ -82,7 +82,9 @@ Current::currentInitialize()
     masterWordlineCharge = 0*drs::nanocoulomb;
     localWordlineCharge = 0*drs::nanocoulomb;
     localBitlineCharge = 0*drs::nanocoulomb;
+    nLDQs = 0*drs::bits;
     SSACharge = 0*drs::nanocoulomb;
+    nCSLs = 0;
     CSLCharge = 0*drs::nanocoulomb;
     masterDatalineCharge = 0*drs::nanocoulomb;
     DQWireCharge = 0*drs::nanocoulomb;
@@ -140,7 +142,7 @@ Current::IDD0Calc()
     rowAddrsLinesCharge =
             SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
             * SCALE_QUANTITY(tileHeight, drs::millimeter_per_tile_unit)
-            * tilesPerBank * 1.0*drs::bank
+            * nTilesPerBank * 1.0*drs::bank
             * nTileRowAddressLines
             * vdd;
 
@@ -163,30 +165,32 @@ Current::IDD0Calc()
 void
 Current::IDD1Calc()
 {
-    // Charges of SSA / SSA active for 1.5 ns
-    SSACharge = Interface
-                * prefetch
+
+    nLDQs = interface * prefetch;
+
+    // Charges of SSA
+    SSACharge = nLDQs
                 * SCALE_QUANTITY(Issa, drs::ampere_per_bit_unit)
                 * SSAActiveTime;
 
-    // Charges for CSL// 8 bits pro CSL
+    // nCSLs includes CSLEN and !CSLEN lines (+ 2),
+    //  and we consider they have the same capacitance as CSLs.
+    nCSLs = nSubArraysPerArrayBlock * nHorizontalTiles * 1.0*drs::bank/drs::subarrays + 2.0;
     CSLCharge = CSLCapacitance * 1.0*drs::bank
                 * vdd
-                * Interface
-                * prefetch
-                / bitProCSL ;
+                * nCSLs;
 
     // Charge of global Dataline
     masterDatalineCharge = globalDatalineCapacitance * 1.0*drs::bank
                            * vdd
-                           * Interface
+                           * interface
                            * prefetch
                             / drs::bit; // TODO: remove the work around
 
     // Charges for Dataqueue // 1 Read is done for interface x prefetch
     DQWireCharge = DQWireCapacitance
                    * vdd
-                   * Interface
+                   * interface
                    * prefetch
                     / drs::bit; // TODO: remove the work around
 
@@ -217,7 +221,7 @@ Current::IDD4RCalc()
     colAddrsLinesCharge =
             SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
             * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit)
-            * tilesPerBank * 1.0*drs::bank
+            * nTilesPerBank * 1.0*drs::bank
             * nTileColumnAddressLines
             * vdd;
 
@@ -225,7 +229,7 @@ Current::IDD4RCalc()
     // Number of output signals for read = interface number
     // + 1 datastrobe signal pro 4 bits
     if (includeIOTerminationCurrent) {
-       ioTermRdCurrent = (Interface + Interface/4.0)
+       ioTermRdCurrent = (interface + interface/4.0)
                          * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
     }
     else {
@@ -250,7 +254,7 @@ Current::IDD4WCalc()
     //number of signals for write is number of signals for read
     //+ 1 extra signal for rcv per 8 bits
     int rcvconst;
-    if(Interface/8.0 < 1*drs::bit) {
+    if(interface/8.0 < 1*drs::bit) {
         rcvconst = 1 ;
     } else {
         rcvconst = 0 ;
@@ -259,7 +263,7 @@ Current::IDD4WCalc()
 
     //additional IO term current for Writes
     if (includeIOTerminationCurrent) {
-        ioTermWrCurrent = (Interface/8.0 + rcvconst*drs::bit)
+        ioTermWrCurrent = (interface/8.0 + rcvconst*drs::bit)
                           * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
     }
     else {

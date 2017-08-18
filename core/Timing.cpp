@@ -162,6 +162,8 @@ Timing::trcdCalc()
             * localBitlineResistance * drs::subarray
             * localBitlineCapacitance * drs::subarray;
 
+
+    // TODO: Global word line driving needs re-check! WLDV signal seems to be the "bottleneck"
     //calculating GWL decoder + wiring delay
     //calculating global wordline total capa
     globalWordlineResistance = wireResistance

@@ -126,8 +126,14 @@ class Current : public Timing
     //charges for Local bitline + blsa
     bu::quantity<drs::nanocoulomb_unit> localBitlineCharge;
 
+    //Number of local DQ lines
+    bu::quantity<drs::bit_unit> nLDQs;
+
     //charges for SSA ( Secondary sense amp )
     bu::quantity<drs::nanocoulomb_unit> SSACharge;
+
+    //Number of CSL + CSLEN lines per bank
+    double nCSLs;
 
     //charges for CSL (column select line )
     bu::quantity<drs::nanocoulomb_unit> CSLCharge;

@@ -101,11 +101,11 @@ TechnologyValues::technologyValuesInitialize()
     cellsPerLWLRedundancy = 0*drs::cell_per_subarray;
     cellsPerLBL = 0*drs::cell_per_subarray;
     cellsPerLBLRedundancy = 0*drs::cell_per_subarray;
-    Interface = 0*drs::bit;
+    interface = 0*drs::bit;
     prefetch = 0;
     dramFreq = 0*drs::megahertz_clock;
     dramCoreFreq = 0*drs::megahertz_clock;
-    tilesPerBank = 0*drs::tile_per_bank;
+    nTilesPerBank = 0*drs::tile_per_bank;
     pageStorage = 0*drs::kibibyte_per_page;
     pageSpanningFactor = 0*drs::page_per_tile;
     BLArchitecture = "";
@@ -482,7 +482,7 @@ TechnologyValues::readjson(const string& t,const string& p)
                                 * drs::cell_per_subarray;
 
         //Interface (channel-wise)
-        Interface = getJSONNumber(archDocument, "Interface[bit]")
+        interface = getJSONNumber(archDocument, "Interface[bit]")
                     * drs::bits;
 
         //Number of prefetched words (interface wide) per CAS
@@ -497,7 +497,7 @@ TechnologyValues::readjson(const string& t,const string& p)
                          * drs::megahertz_clock;
 
         // Number of tiles per bank
-        tilesPerBank = getJSONNumber(archDocument, "TilesPerBank[]")
+        nTilesPerBank = getJSONNumber(archDocument, "TilesPerBank[]")
                          * drs::tile_per_bank;
 
         // Page size - number of local sense amp. activated in a row access

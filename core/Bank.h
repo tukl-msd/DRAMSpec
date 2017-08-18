@@ -70,6 +70,10 @@ class Bank : public Tile
     // Size in number of bits of a single bank
     bu::quantity<drs::information_per_bank_unit> bankStorage;
 
+    // Tiles placement on bank
+    bu::quantity<drs::tile_per_bank_unit> nVerticalTiles;
+    bu::quantity<drs::tile_per_bank_unit> nHorizontalTiles;
+
     // Width in micrometer of a single bank
     bu::quantity<drs::micrometer_per_bank_unit> bankWidth;
     // Height in micrometer of a single bank
@@ -79,6 +83,7 @@ class Bank : public Tile
 
     void bankCompute();
     void bankStorageCalc();
+    void bankTilesPlacementAssess();
     void bankLenghtCalc();
 
 };

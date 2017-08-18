@@ -255,7 +255,7 @@ class TechnologyValues
     bu::quantity<drs::cell_per_subarray_unit> cellsPerLBLRedundancy;
 
     //Interface (channel-wise)
-    bu::quantity<drs::bit_unit> Interface;
+    bu::quantity<drs::bit_unit> interface;
 
     //Number of prefetched words (interface wide) per CAS
     double prefetch;
@@ -267,7 +267,7 @@ class TechnologyValues
     bu::quantity<drs::megahertz_clock_unit> dramCoreFreq;
 
     // Number of tiles per bank
-    bu::quantity<drs::tile_per_bank_unit> tilesPerBank;
+    bu::quantity<drs::tile_per_bank_unit> nTilesPerBank;
 
     // Page size - number of local sense amp. activated in a row access
     bu::quantity<drs::kibibyte_per_page_unit> pageStorage;

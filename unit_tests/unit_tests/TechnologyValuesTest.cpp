@@ -351,10 +351,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 0*drs::bank
                         << "\nGot: " << techValues.nVerticalBanks);
 
-    BOOST_CHECK_MESSAGE( techValues.Interface == 16*drs::bit,
+    BOOST_CHECK_MESSAGE( techValues.interface == 16*drs::bit,
                          "Interface different from the expected."
                         << "\nExpected: " << 16*drs::bit
-                        << "\nGot: " << techValues.Interface);
+                        << "\nGot: " << techValues.interface);
 
     BOOST_CHECK_MESSAGE( techValues.prefetch == 8,
                          "Prefetch different from the expected."
@@ -371,10 +371,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 0*drs::megahertz_clock
                         << "\nGot: " << techValues.dramCoreFreq);
 
-    BOOST_CHECK_MESSAGE( techValues.tilesPerBank == 2*drs::tile_per_bank,
+    BOOST_CHECK_MESSAGE( techValues.nTilesPerBank == 2*drs::tile_per_bank,
                          "Tiles per bank different from the expected."
                         << "\nExpected: " << 2*drs::tile_per_bank
-                        << "\nGot: " << techValues.tilesPerBank);
+                        << "\nGot: " << techValues.nTilesPerBank);
 
     BOOST_CHECK_MESSAGE( techValues.pageStorage == 2*drs::kibibyte_per_page,
                          "Page size different from the expected."
@@ -717,10 +717,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 7914*drs::cell_per_subarray
                         << "\nGot: " << techValues.cellsPerLBLRedundancy);
 
-    BOOST_CHECK_MESSAGE( techValues.Interface == 3554*drs::bit,
+    BOOST_CHECK_MESSAGE( techValues.interface == 3554*drs::bit,
                          "Interface different from the expected."
                         << "\nExpected: " << 3554*drs::bit
-                        << "\nGot: " << techValues.Interface);
+                        << "\nGot: " << techValues.interface);
 
     BOOST_CHECK_MESSAGE( techValues.prefetch == 8578,
                          "Prefetch different from the expected."
@@ -737,10 +737,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 7546*drs::megahertz_clock
                         << "\nGot: " << techValues.dramCoreFreq);
 
-    BOOST_CHECK_MESSAGE( techValues.tilesPerBank == 8259*drs::tile_per_bank,
+    BOOST_CHECK_MESSAGE( techValues.nTilesPerBank == 8259*drs::tile_per_bank,
                          "Tiles per bank different from the expected."
                         << "\nExpected: " << 8259*drs::tile_per_bank
-                        << "\nGot: " << techValues.tilesPerBank);
+                        << "\nGot: " << techValues.nTilesPerBank);
 
     BOOST_CHECK_MESSAGE( techValues.pageStorage == 463*drs::kibibyte_per_page,
                          "Page size different from the expected."

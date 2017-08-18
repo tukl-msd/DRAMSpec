@@ -171,7 +171,7 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
     }
 
 
-    bank.tilesPerBank = 1.0*drs::tiles_per_bank;
+    bank.nTilesPerBank = 1.0*drs::tiles_per_bank;
     bank.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
         bank.tileCompute();
@@ -195,7 +195,7 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
                         << "\nExpected: " << 2374*drs::micrometer_per_bank
                         << "\nGot: " << ceil(bank.bankHeight));
 
-    bank.tilesPerBank = 2.0*drs::tiles_per_bank;
+    bank.nTilesPerBank = 2.0*drs::tiles_per_bank;
     bank.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
         bank.tileCompute();
@@ -219,7 +219,7 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
                         << "\nExpected: " << 1459*drs::micrometer_per_bank
                         << "\nGot: " << ceil(bank.bankHeight));
 
-    bank.tilesPerBank = 4.0*drs::tiles_per_bank;
+    bank.nTilesPerBank = 4.0*drs::tiles_per_bank;
     bank.pageSpanningFactor = 1*drs::pages_per_tile;
     try {
         bank.tileCompute();
