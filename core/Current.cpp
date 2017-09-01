@@ -48,7 +48,6 @@ Current::currentInitialize()
 {
     // TODO: Find appropriate var. names and whether it should or not be an user input
     IDD2nPercentageIfNotDll = 0.6;
-    vppPumpsEfficiency = 0.3;
     currentPerPageSizeSlope = 2.0*drs::milliamperes_page_per_kibibyte;
     SSAActiveTime = 1.5*drs::nanoseconds;
     bitProCSL = 8 * drs::bits;
@@ -122,6 +121,13 @@ Current::IDD0Calc()
     nActiveSubarrays =
             SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit) * 1.0*drs::page
             / ( subArrayRowStorage * 1.0*drs::subarray );
+
+    if ( dramType == "DDR4" ) {
+        vppPumpsEfficiency = 1;
+    } else {
+        vppPumpsEfficiency = 0.3;
+
+    }
 
     // Charge of master wordline
     masterWordlineCharge = globalWordlineCapacitance * 1.0*drs::tile

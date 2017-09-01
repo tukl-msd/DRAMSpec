@@ -1,9 +1,9 @@
 {
-    "DRAMType[-]": "DDR",
+    "DRAMType[-]": "DDR4",
     "3D[-]": "OFF",
     "DLL[-]": "ON",
 
-    "ChannelSize[Gb]": 8,
+    "ChannelSize[Gb]": 4,
 
     "NumberOfBanksPerChannel[]":8,
     "NumberOfHorizontalBanksPerChannel[]": 0,

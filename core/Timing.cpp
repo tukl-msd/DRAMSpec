@@ -351,7 +351,7 @@ Timing::clkTiming()
 
     // If not specified, calculate the core freq
     if (dramCoreFreq == 0*drs::megahertz_clock) {
-        if (dramType == "DDR") {
+        if (dramType.find("DDR") != string::npos) {
             clockFactor = prefetch / 2;
         } else {
             clockFactor = prefetch;
