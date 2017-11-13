@@ -5,13 +5,13 @@
 
     "ChannelSize[Gb]": 4,
 
-    "NumberOfBanksPerChannel[]":8,
+    "NumberOfBanksPerChannel[]":16,
     "NumberOfHorizontalBanksPerChannel[]": 0,
     "NumberOfVerticalBanksPerChannel[]": 0,
 
     "CellsPerSubarrayRow[]": 1046,
     "RedundantCellsPerSubarrayRow[]": 22,
-    "CellsPerSubarrayColumn[]": 512,
+    "CellsPerSubarrayColumn[]": 524,
     "RedundantCellsPerSubarrayColumn[]": 12,
 
     "Interface[bit]": 8,
@@ -28,7 +28,9 @@
     "BitlineArchitecture[-]": "OPEN",
 
     "RetentionTime[ms]" : 64,
-    "RequiredRefreshPeriod[us]": 7.8,
-    "BankRefreshFactor[]":8
+    "tREFI(base)[us]" : 7.8,
+    "RefreshMode[]":1,
+
+    "Temperature[C]": 27
 
 }

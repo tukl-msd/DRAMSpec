@@ -65,17 +65,21 @@ class SubArray : public TechnologyValues
         TechnologyValues(technologyFileName, architectureFileName)
     {
         subArrayInitialize();
-        subArrayCompute();
+        try {
+            subArrayCompute();
+        }catch (string exceptionMsgThrown){
+            throw exceptionMsgThrown;
+        }
         driverUpdate();
     }
 
     // Size in number of bits of a single subarray
     bu::quantity<drs::information_per_subarray_unit> subArrayStorage;
 
-    // Size in number of bits of a single row of a subarray
+    // Size in number of bits of a single physical row of a subarray
     bu::quantity<drs::information_per_subarray_unit> subArrayRowStorage;
 
-    // Size in number of bits of a single column of a subarray
+    // Size in number of bits of a single column physical of a subarray
     bu::quantity<drs::information_per_subarray_unit> subArrayColumnStorage;
 
     //the width of the subarray which should be calculated

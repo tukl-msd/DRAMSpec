@@ -217,9 +217,9 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 30.150*drs::nanoseconds
                         << "\nGot: " << timing.trc);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc, 3) == 200.15*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc, 3) == 44.021*drs::nanoseconds,
                         "trfc different from the expected."
-                        << "\nExpected around: " << 200.15*drs::nanoseconds
+                        << "\nExpected around: " << 44.021*drs::nanoseconds
                         << "\nGot: " << timing.trfc);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trefI, 2) == 7812.5*drs::nanoseconds,
@@ -312,9 +312,9 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << 7*drs::clocks
                         << "\nGot: " << timing.twr_clk);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc_clk, 3) == 161*drs::clocks,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc_clk, 3) == 36*drs::clocks,
                         "trfc in number of clocks different from the expected."
-                        << "\nExpected around: " << 161*drs::clocks
+                        << "\nExpected around: " << 36*drs::clocks
                         << "\nGot: " << timing.trfc_clk);
 
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trefI_clk, 3) == 6250*drs::clocks,

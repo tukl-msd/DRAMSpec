@@ -77,5 +77,6 @@
 #include "tile.h"
 #include "scaled_si_units.h"
 #include "scaled_information_units.h"
+#include <boost/units/systems/temperature/celsius.hpp>
 
 #endif // DRAMSPEC_UNITS_H

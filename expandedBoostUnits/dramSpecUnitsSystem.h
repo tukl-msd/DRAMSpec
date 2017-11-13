@@ -49,6 +49,7 @@
 #include <boost/units/base_units/si/kilogram.hpp>
 #include <boost/units/base_units/si/second.hpp>
 #include <boost/units/base_units/si/ampere.hpp>
+#include <boost/units/base_units/temperature/celsius.hpp>
 #include <boost/units/base_units/information/bit.hpp>
 #include <boost/units/base_units/information/byte.hpp>
 
@@ -87,6 +88,7 @@ typedef make_system<clock_base_unit,
                     boost::units::si::kilogram_base_unit,
                     boost::units::si::second_base_unit,
                     boost::units::si::ampere_base_unit,
+                    boost::units::temperature::celsius_base_unit,
                     boost::units::information::bit_base_unit>::type system_bit;
 
 /// placeholder class defining dramspec unit system
@@ -101,6 +103,7 @@ typedef make_system<clock_base_unit,
                     boost::units::si::kilogram_base_unit,
                     boost::units::si::second_base_unit,
                     boost::units::si::ampere_base_unit,
+                    boost::units::temperature::celsius_base_unit,
                     boost::units::information::byte_base_unit>::type system_byte;
 
 } // namespace dramspec

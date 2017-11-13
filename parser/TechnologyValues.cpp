@@ -111,8 +111,9 @@ TechnologyValues::technologyValuesInitialize()
     BLArchitecture = "";
     subArrayToPageFactor = 0;
     retentionTime = 0*drs::millisecond;
-    requiredTrefI = 0*drs::microsecond;
-    banksRefreshFactor = 0;
+    trefIBase = 0*drs::microsecond;
+    refreshMode = 0;
+    temperature = 0*bu::celsius::degrees;
 
     warning = "";
 }
@@ -296,7 +297,7 @@ TechnologyValues::readjson(const string& t,const string& p)
         Issa = getJSONNumber(techDocument, "SecondarySenseAmpCurrent[uA]")
                * drs::microampere_per_bit;
 
-        // Write Driver resistance
+        // Write Restore Driver resistance
         WRDriverResistance = getJSONNumber(techDocument, "WriteDriverResistance[Ohm]")
                        * drs::ohm_per_subarray;
 
@@ -518,12 +519,16 @@ TechnologyValues::readjson(const string& t,const string& p)
         retentionTime = getJSONNumber(archDocument, "RetentionTime[ms]")
                          * drs::millisecond;
 
-        // Required tref by user
-        requiredTrefI = getJSONNumber(archDocument, "RequiredRefreshPeriod[us]")
-                         * drs::microseconds;
+        // Normal mode and temp. average interval between AR commands
+        trefIBase = getJSONNumber(archDocument, "tREFI(base)[us]")
+                         * drs::microsecond;
 
-        // Ratio of banks refreshed pro command
-        banksRefreshFactor = getJSONNumber(archDocument, "BankRefreshFactor[]");
+        // Refresh mode according to JEDEC (eg., JESD79-4B)
+        refreshMode = getJSONNumber(archDocument, "RefreshMode[]");
+
+        // Temperature used for timings and currents calculations
+        temperature = getJSONNumber(archDocument, "Temperature[C]")
+                         * bu::celsius::degrees;
 
     } catch(string exceptionMsgThrown) {
         throw exceptionMsgThrown;

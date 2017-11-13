@@ -93,7 +93,6 @@ class Current : public Timing
     bu::quantity<drs::nanocoulomb_unit> refreshCharge;
     bu::quantity<drs::nanosecond_unit> effectiveTrfc;
     bu::quantity<si::current> IDD5ChargingCurrent;
-    int nRowActivations;
 
     // Main variables
     //current IDD0 in mA ( ACT-PRE )

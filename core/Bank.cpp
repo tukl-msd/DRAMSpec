@@ -46,6 +46,13 @@ Bank::bankInitialize()
     bankStorage = 0*drs::bit_per_bank;
     bankWidth = 0*drs::micrometer_per_bank;
     bankHeight = 0*drs::micrometer_per_bank;
+
+    effectivePageStorage = 0*drs::bits_per_bank;
+    nBankLogicalRows = 0;
+    nRowAddressLines = 0;
+    nBankLogicalColumns = 0;
+    nColumnAddressLines = 0;
+
 }
 
 void
@@ -81,6 +88,26 @@ Bank::bankLenghtCalc()
 }
 
 void
+Bank::bankLogicAssess()
+{
+
+    effectivePageStorage = (SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)
+                            * nTilesPerBank
+                            * pageSpanningFactor
+                            );
+    // Number of (addressable) rows in a bank
+    nBankLogicalRows = bankStorage
+                       / effectivePageStorage;
+    nRowAddressLines = ceil(log2(nBankLogicalRows));
+
+    // Number of (addressable) columns in a bank
+    nBankLogicalColumns = 1*drs::page * SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)
+                      / interface;
+    nColumnAddressLines = ceil(log2(nBankLogicalColumns));
+
+}
+
+void
 Bank::bankCompute()
 {
     bankStorageCalc();
@@ -90,4 +117,5 @@ Bank::bankCompute()
         throw exceptionMsgThrown;
     }
     bankLenghtCalc();
+    bankLogicAssess();
 }

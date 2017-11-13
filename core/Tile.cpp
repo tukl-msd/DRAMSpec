@@ -49,6 +49,7 @@ Tile::tileInitialize()
 
     nSubArraysPerArrayBlock = 0*drs::subarray_per_tile;
     nArrayBlocksPerTile = 0*drs::subarray_per_tile;
+
 }
 
 void
@@ -57,6 +58,7 @@ Tile::tileStorageCalc()
     bu::quantity<drs::information_per_bank_unit> bankStorage(channelSize/nBanks);
 
     tileStorage = bankStorage/nTilesPerBank;
+
 }
 
 void
@@ -119,7 +121,7 @@ Tile::tileLenghtCalc()
                                     * pageSpanningFactor
                                     * subArrayToPageFactor
                                     / subArrayRowStorage
-                                   );
+                                  );
 
     tileWidth = nSubArraysPerArrayBlock * subArrayWidth
                 + 1.0 * LWLDriverWidth / drs::tile
@@ -130,7 +132,8 @@ Tile::tileLenghtCalc()
         nArrayBlocksPerTile = ceil(tileStorage
                                    / subArrayStorage
                                    / nSubArraysPerArrayBlock
-                                   + 1
+                                   + 1  // Dummy row of subarrays
+                                        //  for BL capacitance matching
                                   )
                               * drs::subarrays_per_tile;
 
@@ -158,35 +161,6 @@ Tile::tileLenghtCalc()
         exceptionMsgThrown.append("either \'OPEN\' or \'FOLDED\'.");
         throw exceptionMsgThrown;
     }
-}
-
-void
-Tile::tileLogicAssess()
-{
-
-    if ( BLArchitecture == "OPEN" ) {
-        nTileRowAddressLines = ceil (log2 ( subArrayColumnStorage
-                                            * ( nArrayBlocksPerTile
-                                                - 1.0*drs::subarray_per_tile
-                                              )
-                                            * 1.0*drs::tile/inf::bit
-                                          )
-                                    );
-    }
-    else if ( BLArchitecture == "FOLDED" ) {
-        nTileRowAddressLines = ceil (log2 ( subArrayColumnStorage
-                                            * nArrayBlocksPerTile
-                                            * 1.0*drs::tile/inf::bit
-                                          )
-                                    );
-    }
-
-    nTileColumnAddressLines = ceil (log2 ( subArrayRowStorage
-                                           * nSubArraysPerArrayBlock
-                                           * 1.0*drs::tile
-                                           / interface
-                                         )
-                                   );
 
 }
 
@@ -202,6 +176,5 @@ Tile::tileCompute()
         throw exceptionMsgThrown;
     }
 
-    tileLogicAssess();
 }
 

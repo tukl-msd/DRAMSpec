@@ -1,5 +1,5 @@
 {
-    "DRAMType[-]": "DDR",
+    "DRAMType[-]": "DDR3",
     "3D[-]": "OFF",
     "DLL[-]": "ON",
 
@@ -27,7 +27,9 @@
     "SubarrayToPageFactor[]": 1,
     "BitlineArchitecture[-]": "OPEN",
 
-    "RetentionTime[ms]" : 32,
-    "RequiredRefreshPeriod[us]": 3.9,
-    "BankRefreshFactor[]":2
+    "RetentionTime[ms]" : 64,
+    "tREFI(base)[us]" : 7.8125,
+    "RefreshMode[]":1,
+
+    "Temperature[C]": 27
 }

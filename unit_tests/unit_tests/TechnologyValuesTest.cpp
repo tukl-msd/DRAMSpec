@@ -179,7 +179,7 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nGot: " << techValues.Issa);
 
     BOOST_CHECK_MESSAGE( techValues.WRDriverResistance == 600*drs::ohm_per_subarray,
-                         "WRrestore resistance different from the expected."
+                         "WR restore driver resistance different from the expected."
                         << "\nExpected: " << 600*drs::ohm_per_subarray
                         << "\nGot: " << techValues.WRDriverResistance);
 
@@ -296,9 +296,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
 
 
 
-    BOOST_CHECK_MESSAGE( techValues.dramType == "DDR",
+    BOOST_CHECK_MESSAGE( techValues.dramType == "DDR3",
                          "DRAM type different from the expected."
-                        << "\nExpected: " << "DDR"
+                        << "\nExpected: " << "DDR3"
                         << "\nGot: " << techValues.dramType);
 
     BOOST_CHECK_MESSAGE( techValues.is3D == false,
@@ -396,20 +396,25 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << "OPEN"
                         << "\nGot: " << techValues.BLArchitecture);
 
-    BOOST_CHECK_MESSAGE( techValues.retentionTime == 32*drs::millisecond,
+    BOOST_CHECK_MESSAGE( techValues.retentionTime == 64*drs::millisecond,
                          "Retention time different from the expected."
-                        << "\nExpected: " << 32*drs::millisecond
+                        << "\nExpected: " << 64*drs::millisecond
                         << "\nGot: " << techValues.retentionTime);
 
-    BOOST_CHECK_MESSAGE( techValues.requiredTrefI == 3.9*drs::microsecond,
-                         "Required trefI different from the expected."
-                        << "\nExpected: " << 3.9*drs::microsecond
-                        << "\nGot: " << techValues.requiredTrefI);
+    BOOST_CHECK_MESSAGE( techValues.trefIBase == 7.8125*drs::microsecond,
+                         "Retention time different from the expected."
+                        << "\nExpected: " << 7.8125*drs::microsecond
+                        << "\nGot: " << techValues.trefIBase);
 
-    BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 2,
-                         "Bank refresh factor different from the expected."
-                        << "\nExpected: " << 2
-                        << "\nGot: " << techValues.banksRefreshFactor);
+    BOOST_CHECK_MESSAGE( techValues.refreshMode == 1,
+                         "Refresh mode different from the expected."
+                        << "\nExpected: " << 1
+                        << "\nGot: " << techValues.refreshMode);
+
+    BOOST_CHECK_MESSAGE( techValues.temperature == 27*bu::celsius::degrees,
+                         "Required trefI different from the expected."
+                        << "\nExpected: " << 27*bu::celsius::degrees
+                        << "\nGot: " << techValues.temperature);
 
 }
 
@@ -545,7 +550,7 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nGot: " << techValues.Issa);
 
     BOOST_CHECK_MESSAGE( techValues.WRDriverResistance == 5931*drs::ohm_per_subarray,
-                         "WRrestore resistance different from the expected."
+                         "WRrestore driver resistance different from the expected."
                         << "\nExpected: " << 5931*drs::ohm_per_subarray
                         << "\nGot: " << techValues.WRDriverResistance);
 
@@ -767,15 +772,15 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 2242*drs::millisecond
                         << "\nGot: " << techValues.retentionTime);
 
-    BOOST_CHECK_MESSAGE( techValues.requiredTrefI == 963*drs::microsecond,
+    BOOST_CHECK_MESSAGE( techValues.temperature == 963*bu::celsius::degrees,
                          "Required trefI different from the expected."
-                        << "\nExpected: " << 963*drs::microsecond
-                        << "\nGot: " << techValues.requiredTrefI);
+                        << "\nExpected: " << 963*bu::celsius::degrees
+                        << "\nGot: " << techValues.temperature);
 
-    BOOST_CHECK_MESSAGE( techValues.banksRefreshFactor == 9263,
-                         "Bank refresh factor different from the expected."
+    BOOST_CHECK_MESSAGE( techValues.refreshMode == 9263,
+                         "Refresh mode factor different from the expected."
                         << "\nExpected: " << 9263
-                        << "\nGot: " << techValues.banksRefreshFactor);
+                        << "\nGot: " << techValues.refreshMode);
 
 
 }

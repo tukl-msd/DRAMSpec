@@ -90,12 +90,12 @@ BOOST_AUTO_TEST_CASE( checkSubArray_real_input)
                         << "\nGot: " << subarray.subArrayStorage);
 
     BOOST_CHECK_MESSAGE( subarray.subArrayRowStorage == 512*drs::bits_per_subarray,
-                         "Size of subarray row different from the expected."
+                        "Size of subarray row different from the expected."
                         << "\nExpected: " << 512*drs::bits_per_subarray
                         << "\nGot: " << subarray.subArrayRowStorage);
 
     BOOST_CHECK_MESSAGE( subarray.subArrayColumnStorage == 512*drs::bits_per_subarray,
-                         "Size of subarray row different from the expected."
+                         "Size of subarray column different from the expected."
                         << "\nExpected: " << 512*drs::bits_per_subarray
                         << "\nGot: " << subarray.subArrayColumnStorage);
 
@@ -120,7 +120,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_real_input)
                         << "\nGot: " << subarray.LWLDriverResistance);
 
     BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 600*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
+                        "WR restore driver resistance different from the expected."
                         << "\nExpected: " << 600*drs::ohms_per_subarray
                         << "\nGot: " << subarray.WRDriverResistance);
 
@@ -173,7 +173,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_dummy_input )
                         << "\nGot: " << subarray.subArrayRowStorage);
 
     BOOST_CHECK_MESSAGE( subarray.subArrayColumnStorage == -4973*drs::bits_per_subarray,
-                         "Size of subarray row different from the expected."
+                         "Size of subarray column different from the expected."
                         << "\nExpected: " << -4973*drs::bits_per_subarray
                         << "\nGot: " << subarray.subArrayColumnStorage);
 
@@ -198,7 +198,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_dummy_input )
                         << "\nGot: " << subarray.LWLDriverResistance);
 
     BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 6131*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
+                        "WR restore driver resistance different from the expected."
                         << "\nExpected: " << 6131*drs::ohms_per_subarray
                         << "\nGot: " << subarray.WRDriverResistance);
 
@@ -340,7 +340,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.LWLDriverResistance);
 
     BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 6131*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
+                        "WR restore driver resistance different from the expected."
                         << "\nExpected: " << 6131*drs::ohms_per_subarray
                         << "\nGot: " << subarray.WRDriverResistance);
 
@@ -356,7 +356,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.LWLDriverResistance);
 
     BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 6031*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
+                        "WR restore driver resistance different from the expected."
                         << "\nExpected: " << 6031*drs::ohms_per_subarray
                         << "\nGot: " << subarray.WRDriverResistance);
 
@@ -372,7 +372,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.LWLDriverResistance);
 
     BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 5931*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
+                        "WR restore driver resistance different from the expected."
                         << "\nExpected: " << 5931*drs::ohms_per_subarray
                         << "\nGot: " << subarray.WRDriverResistance);
 
@@ -388,7 +388,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.LWLDriverResistance);
 
     BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 5831*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
+                        "WR restore driver resistance different from the expected."
                         << "\nExpected: " << 5831*drs::ohms_per_subarray
                         << "\nGot: " << subarray.WRDriverResistance);
 
@@ -404,7 +404,7 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
                         << "\nGot: " << subarray.LWLDriverResistance);
 
     BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 5731*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
+                        "WR restore driver resistance different from the expected."
                         << "\nExpected: " << 5731*drs::ohms_per_subarray
                         << "\nGot: " << subarray.WRDriverResistance);
 

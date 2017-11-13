@@ -79,12 +79,20 @@ class Bank : public Tile
     // Height in micrometer of a single bank
     bu::quantity<drs::micrometer_per_bank_unit> bankHeight;
 
+    // Total page size accounting all tiles
+    bu::quantity<drs::information_per_bank_unit> effectivePageStorage;
+    double nBankLogicalRows;
+    double nRowAddressLines;
+    double nBankLogicalColumns;
+    double nColumnAddressLines;
+
     void bankInitialize();
 
     void bankCompute();
     void bankStorageCalc();
     void bankTilesPlacementAssess();
     void bankLenghtCalc();
+    void bankLogicAssess();
 
 };
 

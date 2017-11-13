@@ -75,7 +75,11 @@ SubArray::subArrayLengthCalc()
 void
 SubArray::subArrayCompute()
 {
-    subArrayStorageCalc();
+    try {
+        subArrayStorageCalc();
+    }catch (std::string exceptionMsgThrown){
+        throw exceptionMsgThrown;
+    }
     subArrayLengthCalc();
 }
 
@@ -109,23 +113,23 @@ SubArray::driverUpdate()
     }
 
     if(subArrayRowStorage < 256*drs::bits_per_subarray ) {
-        LWLDriverResistance = LWLDriverResistance + 200*drs::ohms_per_subarray ;
+        LWLDriverResistance = LWLDriverResistance + 200*drs::ohms_per_subarray;
         WRDriverResistance = WRDriverResistance + 200*drs::ohms_per_subarray;
     }
     else if(subArrayRowStorage < 512*drs::bits_per_subarray ) {
         LWLDriverResistance = LWLDriverResistance + 100*drs::ohms_per_subarray;
-        WRDriverResistance = WRDriverResistance + 100*drs::ohms_per_subarray ;
+        WRDriverResistance = WRDriverResistance + 100*drs::ohms_per_subarray;
     }
     else if(subArrayRowStorage < 1024*drs::bits_per_subarray ) {
         LWLDriverResistance = LWLDriverResistance;
         WRDriverResistance = WRDriverResistance;    
     }
     else if(subArrayRowStorage < 1025*drs::bits_per_subarray ) {
-        LWLDriverResistance = LWLDriverResistance  - 100*drs::ohms_per_subarray ;
-        WRDriverResistance = WRDriverResistance - 100*drs::ohms_per_subarray ;
+        LWLDriverResistance = LWLDriverResistance  - 100*drs::ohms_per_subarray;
+        WRDriverResistance = WRDriverResistance - 100*drs::ohms_per_subarray;
 
     } else {
         LWLDriverResistance = LWLDriverResistance - 200*drs::ohms_per_subarray;
-        WRDriverResistance = WRDriverResistance - 200*drs::ohms_per_subarray ;
+        WRDriverResistance = WRDriverResistance - 200*drs::ohms_per_subarray;
     }
 }

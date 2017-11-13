@@ -1,4 +1,4 @@
-# Copyright (c) 2016, University of Kaiserslautern
+# Copyright (c) 2017, University of Kaiserslautern
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-# Author: Matthias Jung, Andr'e Lucas Chinazzo
+# Authors: Matthias Jung, Andr'e Lucas Chinazzo
 
 CONFIG += c++11
 

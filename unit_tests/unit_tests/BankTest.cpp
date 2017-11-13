@@ -96,6 +96,31 @@ BOOST_AUTO_TEST_CASE( checkBank_real_input )
                         "Height of bank different from the expected."
                         << "\nExpected: " << 2374*drs::micrometer_per_bank
                         << "\nGot: " << ceil(bank.bankHeight));
+
+    BOOST_CHECK_MESSAGE( bank.nBankLogicalRows == 8192,
+                        "Number logical rows in a bank"
+                        << "different from the expected."
+                        << "\nExpected: " << 8192
+                        << "\nGot: " << bank.nBankLogicalRows);
+
+    BOOST_CHECK_MESSAGE( bank.nRowAddressLines == 13,
+                        "Number of lines for row addressing "
+                        << "different from the expected."
+                        << "\nExpected: " << 13
+                        << "\nGot: " << bank.nRowAddressLines);
+
+    BOOST_CHECK_MESSAGE( bank.nBankLogicalColumns == 1024,
+                        "Number logical columns in a bank"
+                        << "different from the expected."
+                        << "\nExpected: " << 1024
+                        << "\nGot: " << bank.nBankLogicalColumns);
+
+    BOOST_CHECK_MESSAGE( bank.nColumnAddressLines == 10,
+                        "Number of lines for column addressing "
+                        << "different from the expected."
+                        << "\nExpected: " << 10
+                        << "\nGot: " << bank.nColumnAddressLines);
+
 }
 
 BOOST_AUTO_TEST_CASE( checkBank_dummy_input )

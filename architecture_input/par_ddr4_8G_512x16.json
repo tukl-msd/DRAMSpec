@@ -28,6 +28,9 @@
     "BitlineArchitecture[-]": "OPEN",
 
     "RetentionTime[ms]" : 64,
-    "RequiredRefreshPeriod[us]": 3.9,
-    "BankRefreshFactor[]":8
+    "tREFI(base)[us]" : 7.8,
+    "RefreshMode[]":8,
+
+    "Temperature[C]": 27
+
 }

@@ -183,7 +183,7 @@ Note: the number of technology and architecture description files must be equal.
 |BitlineArchitecture|Chosen architecture of bitlines. Can be either OPEN bitlines, or FOLDED bitlines.|-|
 |RetentionTime|Minimum amout of time each and every cell must keep its information before being refreshed.|ms|
 |RequiredRefreshPeriod|Required refresh interval latency. Average time interval in between Refresh commands.|us|
-|BankRefreshFactor|Ratio between the number of rows actived in one refresh command and the number of banks.|dimensionless|
+|RefreshMode|Ratio between the number of rows actived in one refresh command and the number of banks.|dimensionless|
 
 ## Output Data
 

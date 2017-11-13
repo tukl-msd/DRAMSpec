@@ -148,7 +148,7 @@ class TechnologyValues
     //current of SSA in microamperes
     bu::quantity<drs::microampere_per_bit_unit> Issa;
 
-    //Write Driver Resistance
+    //Write Restore Driver Resistance
     bu::quantity<drs::resistance_per_subarray_unit> WRDriverResistance;
 
     //Column decoder (between tiles) height
@@ -284,11 +284,15 @@ class TechnologyValues
     // Retention time
     bu::quantity<drs::millisecond_unit> retentionTime;
 
-    // Required tref by user
-    bu::quantity<drs::microsecond_unit> requiredTrefI;
+    // Normal mode and temp. average interval between AR commands
+    bu::quantity<drs::microsecond_unit> trefIBase;
 
-    // Ratio of banks refreshed pro command
-    double banksRefreshFactor;
+    // Refresh mode according to JEDEC (eg., JESD79-4B)
+    double refreshMode;
+
+    // Temperature used for timings and currents calculations
+    bu::quantity<bu::celsius::temperature> temperature;
+
 
 
     // String to output warnings

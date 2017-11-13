@@ -90,9 +90,10 @@ Timing::timingInitialize()
 
     trc = 0*drs::nanoseconds;
 
-    trfc = 0*drs::nanoseconds;
-
     trefI = 0*drs::nanoseconds;
+
+    nRowsRefreshedPerARCmd = 0;
+    trfc = 0*drs::nanoseconds;
 
     maxCoreFreq = 0*drs::megahertz_clock;
     dramCoreFreq = 0*drs::megahertz_clock;
@@ -180,6 +181,14 @@ Timing::trcdCalc()
     
     // Calculating trcd
     trcd = globalWordlineDelay + localWordlineDelay + cellDelay + localBitlineDelay;
+
+    cellDelay99p = timeToPercentage(99) / timeToPercentage(90)
+                   * cellDelay;
+
+    localBitlineDelay99p = timeToPercentage(99) / timeToPercentage(90)
+                           * localBitlineDelay;
+
+    ACTtoRefreshCellDelay = globalWordlineDelay + localWordlineDelay + cellDelay99p + localBitlineDelay99p;
 
 }
 
@@ -302,66 +311,93 @@ Timing::trcCalc()
 }
 
 void
-Timing::trfcCalc()
+Timing::tckCalc()
 {
-    //time for refresh cycle
-    //numberofbanks refreshed*(5(Act cmd delay ) +
-    // 5(pre cmd delay)) + 10 ns (offset)) + trc
-    if ( is3D ) {
-////      [ns]           [??]              [??/bank]
-//        trfc = rowRefreshRate * banksRefreshFactor
-////                     [bank]           []         [] []
-//                * nBanks/vaultsPerLayer*(5+5)
-////               [ns]   [ns]
-//                + 10  + trc;
-        trfc = nBanks/drs::banks * banksRefreshFactor
-               * (actCmdDelay + preCmdDelay)
-               + offset  + trc;
-    } else {
-//        !!!!!! CHECK RELATION BETWEEN nBanks AND banksRefreshFactor !!!!!!
-        trfc = nBanks/drs::banks * banksRefreshFactor
-               * (actCmdDelay + preCmdDelay)
-               + offset  + trc;
-    }
+    maxCoreFreq = drs::clock / SCALE_QUANTITY(tccd, drs::microsecond_unit);
+
+     // If not specified, calculate the core freq
+     if (dramCoreFreq == 0*drs::megahertz_clock) {
+         if (dramType.find("DDR") != string::npos) {
+             clockFactor = prefetch / 2;
+         } else {
+             clockFactor = prefetch;
+         }
+
+         dramCoreFreq = dramFreq / clockFactor;
+     }
+
+     clkPeriod = 1.0 / SCALE_QUANTITY(dramFreq, drs::gigahertz_clock_unit);
+     tck = 1*drs::clock * clkPeriod;
+     coreClkPeriod = 1.0 / SCALE_QUANTITY(dramCoreFreq, drs::gigahertz_clock_unit);
+     tckCore = 1*drs::clock * coreClkPeriod;
 }
 
 void
 Timing::trefICalc()
 {
-    //time for average refresh period
-    //number of rows
-    //number of rows = (DRAM SIZE/#ofbanks) / rowbuffer
-//     !!!! [page/bank] !!!!
-    double numberofrows = SCALE_QUANTITY(channelSize, drs::kibibyte_unit)
-                        / nBanks
-                        / pageStorage
-                        *drs::bank / drs::page; // !!! Check dimension mismatch !!!
 
-//   [ns]    !!!! [??] !!!!            [ms]        [page/bank]
-    trefI = banksRefreshFactor
-            * SCALE_QUANTITY(retentionTime, drs::nanosecond_unit)
-            / numberofrows;
+    // Normal op temp
+    if (temperature > 0*bu::celsius::degrees
+         && temperature < 85*bu::celsius::degrees)
+    {
+      trefI = SCALE_QUANTITY(trefIBase, drs::nanosecond_unit) / refreshMode;
+    }
+    // Extended op temp
+    else if (temperature > 85*bu::celsius::degrees
+              && temperature < 95*bu::celsius::degrees)
+    {
+      trefI = SCALE_QUANTITY(trefIBase, drs::nanosecond_unit) / refreshMode / 2.0;
+    }
+    // Outside temp range
+    else
+    {
+      std::string exceptionMsgThrown("[ERROR] ");
+      exceptionMsgThrown.append("Operating temperature is defined ");
+      exceptionMsgThrown.append("only from 0 to 95 degrees Celsius.");
+      throw exceptionMsgThrown;
+    }
+
+}
+
+void
+Timing::trfcCalc()
+{
+    // Normal op temp
+    if (temperature > 0*bu::celsius::degrees
+         && temperature < 85*bu::celsius::degrees)
+    {
+      nRowsRefreshedPerARCmd = ceil(nBanks * nBankLogicalRows/drs::bank
+                                * trefI / SCALE_QUANTITY(retentionTime, drs::nanosecond_unit)
+                                );
+    }
+    // Extended op temp
+    else if (temperature > 85*bu::celsius::degrees
+              && temperature < 95*bu::celsius::degrees)
+    {
+      nRowsRefreshedPerARCmd = ceil(2.0 * nBanks * nBankLogicalRows/drs::bank
+                                * trefI / SCALE_QUANTITY(retentionTime, drs::nanosecond_unit)
+                                );
+    }
+    // Outside temp range
+    else
+    {
+      std::string exceptionMsgThrown("[ERROR] ");
+      exceptionMsgThrown.append("Operating temperature is defined ");
+      exceptionMsgThrown.append("only from 0 to 95 degrees Celsius.");
+      throw exceptionMsgThrown;
+    }
+
+    // Assuming ACT-PRE-ACT-PRE... cycles until the needs number of rows are refreshed
+    // Based on: Using Run-Time Reverse-Engineering to Optimize DRAM Refresh,
+    // D. Mathew, E. Zulian, M. Jung, K. Kraft, C. Weis, B. Jacob, N. Wehn,
+    // MEMSYS 2017, New York, USA
+    trfc = nRowsRefreshedPerARCmd * 2.0 * tck + ACTtoRefreshCellDelay + trp;
+
 }
 
 void
 Timing::clkTiming()
 {
-
-   maxCoreFreq = drs::clock / SCALE_QUANTITY(tccd, drs::microsecond_unit);
-
-    // If not specified, calculate the core freq
-    if (dramCoreFreq == 0*drs::megahertz_clock) {
-        if (dramType.find("DDR") != string::npos) {
-            clockFactor = prefetch / 2;
-        } else {
-            clockFactor = prefetch;
-        }
-
-        dramCoreFreq = dramFreq / clockFactor;
-    }
-
-    clkPeriod = 1.0 / SCALE_QUANTITY(dramFreq, drs::gigahertz_clock_unit);
-    coreClkPeriod = 1.0 / SCALE_QUANTITY(dramCoreFreq, drs::gigahertz_clock_unit);
 
     // Calculating trl (delay in ns):
     //additionalLatencyTrl = tal (Added Latency to column accesses)
@@ -428,19 +464,15 @@ Timing::clkTiming()
 void
 Timing::timingCompute()
 {
-    trcdCalc();
-
-    trasCalc();
-
-    trpCalc();
-
-    trcCalc();
-
-    trfcCalc();
-
-    trefICalc();
-
     try {
+        trcdCalc();
+        trasCalc();
+        trpCalc();
+        trcCalc();
+        tckCalc();
+        trefICalc();
+        trfcCalc();
+
         clkTiming();
     }catch (std::string exceptionMsgThrown){
         throw exceptionMsgThrown;

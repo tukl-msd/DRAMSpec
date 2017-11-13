@@ -67,7 +67,6 @@ Current::currentInitialize()
     refreshCharge = 0*drs::nanocoulomb;
     effectiveTrfc = 0*drs::nanosecond;
     IDD5ChargingCurrent = 0*si::amperes;
-    nRowActivations = 0;
 
     // Main variables
     IDD0 = 0*drs::milliamperes;
@@ -118,8 +117,7 @@ Current::IDD0Calc()
     //   !!! CHECK !!!
     // Number of active subarrays
     //    [subarray / page] ???
-    nActiveSubarrays =
-            SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit) * 1.0*drs::page
+    nActiveSubarrays = 1.0 * drs::bank * effectivePageStorage
             / ( subArrayRowStorage * 1.0*drs::subarray );
 
     if ( dramType == "DDR4" ) {
@@ -142,14 +140,14 @@ Current::IDD0Calc()
     //charge of local bitline
     nLocalBitlines = SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)*drs::page/drs::bit;
     localBitlineCharge = localBitlineCapacitance * 1.0*drs::subarray
-                         * vdd / 2.0 // <<-- WHY DIVIDED BY 2??
+                         * vdd/2.0
                          * nLocalBitlines;
 
     rowAddrsLinesCharge =
             SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
             * SCALE_QUANTITY(tileHeight, drs::millimeter_per_tile_unit)
             * nTilesPerBank * 1.0*drs::bank
-            * nTileRowAddressLines
+            * nRowAddressLines
             * vdd;
 
     IDD0TotalCharge = ( masterWordlineCharge
@@ -228,7 +226,7 @@ Current::IDD4RCalc()
             SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
             * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit)
             * nTilesPerBank * 1.0*drs::bank
-            * nTileColumnAddressLines
+            * nColumnAddressLines
             * vdd;
 
     IDD4TotalCharge = readingCharge + colAddrsLinesCharge;
@@ -288,14 +286,8 @@ Current::IDD5Calc()
     // Charges for refresh
     // Charges of IDD0 x 2 ( 2 rows pro command)x # of banksrefreshed pro
     // x # of rows pro command
-    refreshCharge = ( masterWordlineCharge
-                      + localWordlineCharge    // <- Should't it be IDD0ChargingCurrent?
-                      + localBitlineCharge )
-                    * 2.0
-                    * 2.0
-                    * banksRefreshFactor
-                    * nBanks / (1.0*drs::bank);
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
+    refreshCharge = IDD0TotalCharge
+                    * nRowsRefreshedPerARCmd;
 
     // Refresh current
     effectiveTrfc = trfc_clk * clkPeriod;
@@ -304,13 +296,6 @@ Current::IDD5Calc()
 
     IDD5 = IDD3n
            + SCALE_QUANTITY(IDD5ChargingCurrent, drs::milliampere_unit);
-
-    // Checking the current for the required refresh period
-    // Calculate the number of times each row if refreshed in 64 ms
-    // retention time
-    nRowActivations = SCALE_QUANTITY(trefI, drs::microsecond_unit)
-                    / requiredTrefI;
-
 
 }
 

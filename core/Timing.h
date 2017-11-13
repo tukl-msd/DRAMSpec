@@ -99,6 +99,15 @@ class Timing : public Channel
     //t_rcd: ACT to internal read or write delay time
     bu::quantity<drs::nanosecond_unit> trcd;
 
+    //Delay of the cell for 99% (recharge)
+    bu::quantity<drs::nanosecond_unit> cellDelay99p;
+
+    //Delay of the bitline for 99% (recharge)
+    bu::quantity<drs::nanosecond_unit> localBitlineDelay99p;
+
+    //Delay for internal ACT cmd to effective refresh of the cell
+    bu::quantity<drs::nanosecond_unit> ACTtoRefreshCellDelay;
+
     //Resistance of CSL wire
     bu::quantity<drs::resistance_per_bank_unit> CSLResistance;
     //Capacitace of CSL wire
@@ -148,11 +157,20 @@ class Timing : public Channel
     //trc - Row Cycle delay
     bu::quantity<drs::nanosecond_unit> trc;
 
-    //trfc - Refresh Cycle delay
-    bu::quantity<drs::nanosecond_unit> trfc;
+    //tck - One clock cycle time
+    bu::quantity<drs::nanosecond_unit> tck;
+
+    //tck - One core clock cycle time
+    bu::quantity<drs::nanosecond_unit> tckCore;
 
     //trefI - Refresh Interval delay
     bu::quantity<drs::nanosecond_unit> trefI;
+
+    //Number of rows refreshed per auto-refresh command (total, not per bank)
+    double nRowsRefreshedPerARCmd;
+
+    //trfc - Refresh Cycle delay
+    bu::quantity<drs::nanosecond_unit> trfc;
 
     //Maximum core frequency
     bu::quantity<drs::megahertz_clock_unit> maxCoreFreq;
@@ -205,6 +223,8 @@ class Timing : public Channel
     void trpCalc();
 
     void trcCalc();
+
+    void tckCalc();
 
     void trfcCalc();
 
