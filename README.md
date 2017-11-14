@@ -2,7 +2,7 @@
 
 ![DRAMSpec](http://www.uni-kl.de/fileadmin/3d-dram/dramSpec.png "DRAMSpec Logo")
 
-If you use **DRAMSpec** in your research, we would appreciate a citation to:
+If you use **DRAMSpec** in your research, we would appreciate a citation to: 
 
 **A High-Level DRAM Timing, Power and Area Exploration Tool**,
 O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn.,
@@ -256,9 +256,9 @@ Note: the number of technology and architecture description files must be equal.
 
 
 ## Reference
-[1] A High-Level DRAM Timing, Power and Area Exploration Tool,
+[1] **A High-Level DRAM Timing, Power and Area Exploration Tool**,
 O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn.,
-IEEE International Conference on Embedded Computer Systems Architectures Modeling and Simulation (SAMOS), July, 2015, Samos Island, Greece
+*IEEE International Conference on Embedded Computer Systems Architectures Modeling and Simulation (SAMOS)*, July, 2015, Samos Island, Greece, [DOI](http://dx.doi.org/10.1109/SAMOS.2015.7363670)
 
 [2] Memory Systems: Cache, DRAM, Disk,
 B. Jacob, S. Ng and D. Wang,
@@ -271,4 +271,3 @@ July 2012.
 [4] DDR4 SDRAM standard (revision B),
 JEDEC,
 June 2017.
-
