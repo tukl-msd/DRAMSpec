@@ -182,8 +182,9 @@ Note: the number of technology and architecture description files must be equal.
 |SubarrayToPageFactor|Ratio between number of cells in a physical row and the page size.|dimensionless|
 |BitlineArchitecture|Chosen architecture of bitlines. Can be either OPEN bitlines, or FOLDED bitlines.|-|
 |RetentionTime|Minimum amout of time each and every cell must keep its information before being refreshed.|ms|
-|RequiredRefreshPeriod|Required refresh interval latency. Average time interval in between Refresh commands.|us|
-|RefreshMode|Ratio between the number of rows actived in one refresh command and the number of banks.|dimensionless|
+|tREFI(base)|Base average interval between two AREF commands (1X refresh mode, normal temperature). Please see [4] for reference.|us|
+|RefreshMode|Base tREFI divider for effective tREFI [4]. Please use 1, 2, etc, for X1, X2, ect, refresh modes.|dimensionless|
+|Temperature|Operating temperature of the device.|C|
 
 ## Output Data
 
@@ -225,7 +226,7 @@ Note: the number of technology and architecture description files must be equal.
 |tRFC|Refresh Cycle latency. The time interval between Refresh and Activation commands.|cc|
 |tREFI|Refresh Interval latency. Average time interval in between Refresh commands. |cc|
 
-### Currents [3]
+### Currents [3, 4]
 
 | Abbreviation | Description | Unit |
 |:------------:|:-----------:|:----:|
@@ -266,3 +267,8 @@ Morgan Kaufmann, 2007
 [3] DDR3 SDRAM standard (revision F),
 JEDEC,
 July 2012.
+
+[4] DDR4 SDRAM standard (revision B),
+JEDEC,
+June 2017.
+
