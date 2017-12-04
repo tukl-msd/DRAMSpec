@@ -92,9 +92,9 @@ BOOST_AUTO_TEST_CASE( checkBank_real_input )
                         << "\nExpected: " << 2799*drs::micrometer_per_bank
                         << "\nGot: " << ceil(bank.bankWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 2374*drs::micrometer_per_bank,
+    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 2324*drs::micrometer_per_bank,
                         "Height of bank different from the expected."
-                        << "\nExpected: " << 2374*drs::micrometer_per_bank
+                        << "\nExpected: " << 2324*drs::micrometer_per_bank
                         << "\nGot: " << ceil(bank.bankHeight));
 
     BOOST_CHECK_MESSAGE( bank.nBankLogicalRows == 8192,
@@ -215,9 +215,9 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
                         << "\nExpected: " << 2550*drs::micrometer_per_bank
                         << "\nGot: " << ceil(bank.bankWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 2374*drs::micrometer_per_bank,
+    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 2324*drs::micrometer_per_bank,
                         "Height of bank different from the expected."
-                        << "\nExpected: " << 2374*drs::micrometer_per_bank
+                        << "\nExpected: " << 2324*drs::micrometer_per_bank
                         << "\nGot: " << ceil(bank.bankHeight));
 
     bank.nTilesPerBank = 2.0*drs::tiles_per_bank;
@@ -239,9 +239,9 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
                         << "\nExpected: " << 5099*drs::micrometer_per_bank
                         << "\nGot: " << ceil(bank.bankWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 1459*drs::micrometer_per_bank,
+    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 1409*drs::micrometer_per_bank,
                         "Height of bank different from the expected."
-                        << "\nExpected: " << 1459*drs::micrometer_per_bank
+                        << "\nExpected: " << 1409*drs::micrometer_per_bank
                         << "\nGot: " << ceil(bank.bankHeight));
 
     bank.nTilesPerBank = 4.0*drs::tiles_per_bank;
@@ -263,9 +263,9 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
                         << "\nExpected: " << 5099*drs::micrometer_per_bank
                         << "\nGot: " << ceil(bank.bankWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 1754*drs::micrometer_per_bank,
+    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 1704*drs::micrometer_per_bank,
                         "Height of bank different from the expected."
-                        << "\nExpected: " << 1754*drs::micrometer_per_bank
+                        << "\nExpected: " << 1704*drs::micrometer_per_bank
                         << "\nGot: " << ceil(bank.bankHeight));
 }
 

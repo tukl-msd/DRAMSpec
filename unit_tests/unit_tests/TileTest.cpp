@@ -89,9 +89,9 @@ BOOST_AUTO_TEST_CASE( checkTile_real_input )
                         << "\nExpected: " << 134217728/2.0*drs::bits_per_tile
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 1400*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 1160*drs::micrometer_per_tile,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 1400*drs::micrometer_per_tile
+                        << "\nExpected: " << 1160*drs::micrometer_per_tile
                         << "\nGot: " << ceil(tile.tileWidth));
 
     BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 2124*drs::micrometer_per_tile,
@@ -197,9 +197,9 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 134217728/2.*drs::bits_per_tile
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2550*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2310*drs::micrometer_per_tile,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 2550*drs::micrometer_per_tile
+                        << "\nExpected: " << 2310*drs::micrometer_per_tile
                         << "\nGot: " << ceil(tile.tileWidth));
 
     BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 1209*drs::micrometer_per_tile,
@@ -251,9 +251,9 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 134217728*drs::bits_per_tile
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2550*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2310*drs::micrometer_per_tile,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 2550*drs::micrometer_per_tile
+                        << "\nExpected: " << 2310*drs::micrometer_per_tile
                         << "\nGot: " << ceil(tile.tileWidth));
 
     BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 2124*drs::micrometer_per_tile,
@@ -300,9 +300,9 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 67108864*drs::bits_per_tile
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2550*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2310*drs::micrometer_per_tile,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 2550*drs::micrometer_per_tile
+                        << "\nExpected: " << 2310*drs::micrometer_per_tile
                         << "\nGot: " << ceil(tile.tileWidth));
 
     BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 1209*drs::micrometer_per_tile,
@@ -334,9 +334,9 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 67108864*drs::bits_per_tile
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 1400*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 1160*drs::micrometer_per_tile,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 1400*drs::micrometer_per_tile
+                        << "\nExpected: " << 1160*drs::micrometer_per_tile
                         << "\nGot: " << ceil(tile.tileWidth));
 
     BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 2124*drs::micrometer_per_tile,
@@ -384,9 +384,9 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 33554432*drs::bits_per_tile
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2550*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2310*drs::micrometer_per_tile,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 2550*drs::micrometer_per_tile
+                        << "\nExpected: " << 2310*drs::micrometer_per_tile
                         << "\nGot: " << ceil(tile.tileWidth));
 
     BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 752*drs::micrometer_per_tile,
@@ -420,9 +420,9 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 33554432*drs::bits_per_tile
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 1400*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 1160*drs::micrometer_per_tile,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 1400*drs::micrometer_per_tile
+                        << "\nExpected: " << 1160*drs::micrometer_per_tile
                         << "\nGot: " << ceil(tile.tileWidth));
 
     BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 1209*drs::micrometer_per_tile,
@@ -455,9 +455,9 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << 33554432*drs::bits_per_tile
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 825*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 585*drs::micrometer_per_tile,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 825*drs::micrometer_per_tile
+                        << "\nExpected: " << 585*drs::micrometer_per_tile
                         << "\nGot: " << ceil(tile.tileWidth));
 
     BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 2124*drs::micrometer_per_tile,
