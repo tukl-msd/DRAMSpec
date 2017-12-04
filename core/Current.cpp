@@ -185,12 +185,11 @@ Current::IDD1Calc()
                 * nCSLs;
 
     // Charge of global Dataline
-    masterDatalineCharge = globalDatalineCapacitance * 1.0*drs::bank
+    masterDatalineCharge = globalDatalineCapacitance / drs::bit
+                           * 1.0*drs::bank
                            * vdd
                            * interface
-                           * prefetch
-                            / drs::bit; // TODO: remove the work around
-
+                           * prefetch;
     // Charges for Dataqueue // 1 Read is done for interface x prefetch
     DQWireCharge = DQWireCapacitance
                    * vdd
@@ -224,8 +223,8 @@ Current::IDD4RCalc()
 
     colAddrsLinesCharge =
             SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
-            * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit)
-            * nTilesPerBank * 1.0*drs::bank
+            * SCALE_QUANTITY(bankWidth, drs::millimeter_per_bank_unit)
+            * 1.0*drs::bank
             * nColumnAddressLines
             * vdd;
 

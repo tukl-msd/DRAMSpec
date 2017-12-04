@@ -124,8 +124,7 @@ Tile::tileLenghtCalc()
                                   );
 
     tileWidth = nSubArraysPerArrayBlock * subArrayWidth
-                + 1.0 * LWLDriverWidth / drs::tile
-                + 1.0 * rowDecoderWidth / drs::tile;
+                + 1.0 * LWLDriverWidth / drs::tile;
 
 
     if ( BLArchitecture == "OPEN" ) {

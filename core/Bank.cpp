@@ -80,10 +80,11 @@ Bank::bankTilesPlacementAssess()
 void
 Bank::bankLenghtCalc()
 {
-  bankWidth = nHorizontalTiles * tileWidth;
+  bankWidth = nHorizontalTiles
+               * (tileWidth + 1.0 * rowDecoderWidth / drs::tile);
 
   bankHeight = nVerticalTiles * tileHeight
-               + 1.0 * DQDriverHeight / drs::bank;
+               + 1.0 * colDecoderHeight / drs::bank;
 
 }
 

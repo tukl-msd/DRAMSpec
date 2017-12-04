@@ -121,7 +121,8 @@ Channel::channelLenghtCalc()
 {
     channelWidth = nHorizontalBanks * bankWidth;
 
-    channelHeight = nVerticalBanks * bankHeight;
+    channelHeight = nVerticalBanks * bankHeight
+                    + 1.0 * DQDriverHeight;
     // Add TSV area if is 3D design
     if ( is3D ) {
         channelHeight = channelHeight + 1.0 * TSVHeight;
