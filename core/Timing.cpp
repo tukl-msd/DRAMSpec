@@ -246,8 +246,10 @@ Timing::trasCalc()
                        + (nHorizontalBanks - 1.0*drs::bank)
                             * bankWidth
                        + DQtoTSVWireLength;
+        PRINT_VAR(DQWireLength);
     } else {
         DQWireLength = channelWidth - 1.0*drs::bank*bankWidth;
+        PRINT_VAR(DQWireLength);
     }
 
     DQWireResistance = SCALE_QUANTITY(DQWireLength, drs::millimeter_unit)
@@ -287,10 +289,10 @@ Timing::trasCalc()
     // Calculating tras:
 //    tras = trcd + tcas + bitlineDelay - tdq - 1; TODO - Discuss with Christian about this timing!!!!
     // From Matthias thesis pg. 20 Fig. 2.5: Basic DRAM protocol -> tras = trcd + tccd + trtp
-    tras = trcd + tccd + trtp;
+    tras = trcd + tccd + trtp; // trcd99p
 
     // Calculating twr + 2 (command decoding) + 1 (security margin):
-    twr = cmdDecoderLatency + localBitlineDelay + tgdl + securityMargin;
+    twr = cmdDecoderLatency + localBitlineDelay + tgdl + tWRMargin;
 
 }
 

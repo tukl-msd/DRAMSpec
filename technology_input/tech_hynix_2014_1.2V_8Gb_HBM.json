@@ -1,0 +1,62 @@
+{
+    "TechnologyNode[nm]": 29,
+
+    "Vpp[V]": 2.5,
+    "Vdd[V]": 1.2,
+
+    "WireResistance[Ohm/mm]": 100,
+    "WireCapacitance[fF/mm]" : 150,
+
+    "CellCapacitance[fF]": 20,
+    "CellResistance[KOhm]": 20,
+    "CellWidth[um]": 0.085,
+    "CellHeight[um]": 0.045,
+
+    "BitlineCapacitancePerCell[aF]": 50,
+    "BitlineResistancePerCell[Ohm]": 35,
+
+    "WordlineCapacitancePerCell[aF]": 60,
+    "WordlineResistancePerCell[Ohm]": 25,
+
+    "PrimarySenseAmpHeight[um]": 10,
+
+    "LocalWordlineDriverWitdh[um]": 5,
+    "LocalWordlineDriverResistance[Ohm]" : 500,
+
+    "SecondarySenseAmpCurrent[uA]": 200,
+    "GlobalWordlineDriverResistance[Ohm]": 200,
+
+    "RowDecoderWidth[um]": 53.5,
+    "WriteDriverResistance[Ohm]" : 300 ,
+
+    "ColumnDecoderHeight[um]": 250,
+    "CSLDriverResistance[Ohm]" : 170,
+    "CSLLoadCapacitance[fF]": 8,
+    "GlobalDataLineDriverResistance[Ohm]" : 300,
+
+    "DQDriverHeight[um]": 205,
+    "DQtoTSVWireLength[um]": 200,
+    "DQDriverResistance[Ohm]" : 250,
+
+    "BackgroundCurrentSlope[mA/MHz]": 0.015,
+    "BackgroundCurrentOffset[mA]": 6.75,
+    "OCDCurrentSlope[uA/MHz]": 4.221,
+
+    "TSVHeight[um]": 896,
+
+    "AdditionalTRLLatency[cc]" : 0,
+
+    "DriverEnableDelay[ns]": 0.6,
+    "BLSADelay[ns]": 2,
+    "CommandDecoderDelay[ns]": 2,
+    "InterfaceDelay[ns]": 1,
+    "IODelay[ns]": 1,
+    "SSAPrechargeDelay[ns]": 1,
+    "SecurityMargin[ns]": 1,
+    "EqualizerDelay[ns]": 1,
+    "ACTCommandDelay[ns]": 5,
+    "PRECommandDelay[ns]": 5,
+    "Offset[ns]": 10
+
+
+}

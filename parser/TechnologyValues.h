@@ -206,7 +206,7 @@ class TechnologyValues
     bu::quantity<drs::nanosecond_unit> SSAPrechargeDelay;
 
     //Security margin !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> securityMargin;
+    bu::quantity<drs::nanosecond_unit> tWRMargin;
 
     //Equalizer delay !!!  TODO: What exactly is it?  !!!
     bu::quantity<drs::nanosecond_unit> equalizerDelay;

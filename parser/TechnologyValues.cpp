@@ -84,7 +84,7 @@ TechnologyValues::technologyValuesInitialize()
     interfaceLatency = 0*drs::nanoseconds;
     IODelay = 0*drs::nanoseconds;
     SSAPrechargeDelay = 0*drs::nanoseconds;
-    securityMargin = 0*drs::nanoseconds;
+    tWRMargin = 0*drs::nanoseconds;
     equalizerDelay = 0*drs::nanoseconds;
     actCmdDelay = 0*drs::nanoseconds;
     preCmdDelay = 0*drs::nanoseconds;
@@ -375,7 +375,7 @@ TechnologyValues::readjson(const string& t,const string& p)
                          * drs::nanoseconds;
 
         //Security margin !!!  TODO: What exactly is it?  !!!
-        securityMargin = getJSONNumber(techDocument, "SecurityMargin[ns]")
+        tWRMargin = getJSONNumber(techDocument, "SecurityMargin[ns]")
                          * drs::nanoseconds;
 
         //Equalizer delay !!!  TODO: What exactly is it?  !!!
@@ -390,7 +390,7 @@ TechnologyValues::readjson(const string& t,const string& p)
         preCmdDelay = getJSONNumber(techDocument, "PRECommandDelay[ns]")
                          * drs::nanoseconds;
 
-        //offset !!!  TODO: What exactly is it?  !!!
+        //offset !!!  TODO: What exactly is it?  !!! ???
         offset = getJSONNumber(techDocument, "Offset[ns]")
                          * drs::nanoseconds;
 

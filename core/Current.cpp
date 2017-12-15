@@ -47,10 +47,10 @@ void
 Current::currentInitialize()
 {
     // TODO: Find appropriate var. names and whether it should or not be an user input
-    IDD2nPercentageIfNotDll = 0.6;
-    currentPerPageSizeSlope = 2.0*drs::milliamperes_page_per_kibibyte;
-    SSAActiveTime = 1.5*drs::nanoseconds;
-    bitProCSL = 8 * drs::bits;
+    IDD2nPercentageIfNotDll = 0.6; // Fixed
+    currentPerPageSizeSlope = 1.0*drs::milliamperes_page_per_kibibyte; // To be estimated
+    SSAActiveTime = 1.5*drs::nanoseconds; // 1.5 tccd instead
+    bitProCSL = 8 * drs::bits; // Fixed
 
     // Intermediate values added as variables for code cleanness
     nActiveSubarrays = 0;
@@ -262,6 +262,7 @@ Current::IDD4WCalc()
     } else {
         rcvconst = 0 ;
     }
+
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
 
     //additional IO term current for Writes
