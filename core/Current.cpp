@@ -218,8 +218,6 @@ Current::IDD1Calc()
 void
 Current::IDD4RCalc()
 {
-    // Scale the IDD_OCD_RCV with frequency linearly
-    IddOcdRcv = IddOcdRcvSlope * dramFreq / drs::bit;
 
     colAddrsLinesCharge =
             SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
@@ -229,11 +227,36 @@ Current::IDD4RCalc()
             * vdd;
 
     IDD4TotalCharge = readingCharge + colAddrsLinesCharge;
-    // Number of output signals for read = interface number
-    // + 1 datastrobe signal pro 4 bits
     if (includeIOTerminationCurrent) {
-       ioTermRdCurrent = (interface + interface/4.0)
+      // Scale the IDD_OCD_RCV with frequency linearly
+      IddOcdRcv = IddOcdRcvSlope * dramFreq / drs::bit;
+
+      // Case for [LP]DDRX ( x4, x8, x16 or x32 per channel )
+      //  Must have a DQS/!DQS pair for each 8 bits of data lines
+      if ( interface <= 32 * drs::bits) {
+       ioTermRdCurrent = ( interface + ceil(interface / 8.0) * 2.0 )
                          * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
+      }
+      // Case for WIDEIO2 ( x64 per channel )
+      //  Must have a DQS/!DQS pair for each 16 bits of data lines
+      else if ( interface <= 64 * drs::bits) {
+       ioTermRdCurrent = ( interface + ceil(interface / 16.0) * 2.0 )
+                         * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
+      }
+      // Case for HBM ( x128 per channel )
+      //  Must have a DQS/!DQS pair for each 32 bits of data lines
+      else if ( interface <= 128 * drs::bits) {
+       ioTermRdCurrent = ( interface + ceil(interface / 32.0) * 2.0 )
+                         * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
+      }
+      else {
+        std::string exceptionMsgThrown("[ERROR] ");
+        exceptionMsgThrown.append("Custom interface size ");
+        exceptionMsgThrown.append("(greater than 128 bits or ");
+        exceptionMsgThrown.append("not a power of two) ");
+        exceptionMsgThrown.append("model is not yet implemented!");
+        throw exceptionMsgThrown;
+      }
     }
     else {
        ioTermRdCurrent = 0*drs::milliamperes;
@@ -252,29 +275,20 @@ Current::IDD4RCalc()
 void
 Current::IDD4WCalc()
 {
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
-    // !!!! TODO: DISCUSS THESE VALUES WITH CHRISTIAN IN FURTHER MEETINGS !!!! //
-    //number of signals for write is number of signals for read
-    //+ 1 extra signal for rcv per 8 bits
-    int rcvconst;
-    if(interface/8.0 < 1*drs::bit) {
-        rcvconst = 1 ;
-    } else {
-        rcvconst = 0 ;
-    }
-
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
-
-    //additional IO term current for Writes
+    // Termination current for writting must include DQS/!DQS pairs
+    //  as well as DM lines charges (one for each 8 bits of data lines).
     if (includeIOTerminationCurrent) {
-        ioTermWrCurrent = (interface/8.0 + rcvconst*drs::bit)
+      ioTermWrCurrent = ioTermRdCurrent
+                        + ceil(interface / 8.0)
                           * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
     }
     else {
         ioTermWrCurrent = 0*drs::milliamperes;
     }
 
-    IDD4W = IDD4R + ioTermWrCurrent;
+    IDD4W = IDD3n
+            + ioTermWrCurrent
+            + SCALE_QUANTITY(IDD4ChargingCurrent, drs::milliampere_unit);
 
 }
 

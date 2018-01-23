@@ -205,7 +205,7 @@ class TechnologyValues
     //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
     bu::quantity<drs::nanosecond_unit> SSAPrechargeDelay;
 
-    //Security margin !!!  TODO: What exactly is it?  !!!
+    // Security margin for Write Recovery
     bu::quantity<drs::nanosecond_unit> tWRMargin;
 
     //Equalizer delay !!!  TODO: What exactly is it?  !!!

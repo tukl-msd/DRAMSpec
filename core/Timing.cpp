@@ -246,10 +246,8 @@ Timing::trasCalc()
                        + (nHorizontalBanks - 1.0*drs::bank)
                             * bankWidth
                        + DQtoTSVWireLength;
-        PRINT_VAR(DQWireLength);
     } else {
         DQWireLength = channelWidth - 1.0*drs::bank*bankWidth;
-        PRINT_VAR(DQWireLength);
     }
 
     DQWireResistance = SCALE_QUANTITY(DQWireLength, drs::millimeter_unit)

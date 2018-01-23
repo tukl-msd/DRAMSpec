@@ -268,10 +268,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected around: " << 1*drs::nanoseconds
                         << "\nGot: " << techValues.SSAPrechargeDelay);
 
-    BOOST_CHECK_MESSAGE( techValues.securityMargin == 1*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.tWRMargin == 1*drs::nanoseconds,
                         "Security margin different from the expected."
                         << "\nExpected around: " << 1*drs::nanoseconds
-                        << "\nGot: " << techValues.securityMargin);
+                        << "\nGot: " << techValues.tWRMargin);
 
     BOOST_CHECK_MESSAGE( techValues.equalizerDelay == 1*drs::nanoseconds,
                         "Equalizer delay different from the expected."
@@ -639,10 +639,10 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected around: " << 1540*drs::nanoseconds
                         << "\nGot: " << techValues.SSAPrechargeDelay);
 
-    BOOST_CHECK_MESSAGE( techValues.securityMargin == 2126*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.tWRMargin == 2126*drs::nanoseconds,
                         "Security margin different from the expected."
                         << "\nExpected around: " << 2126*drs::nanoseconds
-                        << "\nGot: " << techValues.securityMargin);
+                        << "\nGot: " << techValues.tWRMargin);
 
     BOOST_CHECK_MESSAGE( techValues.equalizerDelay == 1103*drs::nanoseconds,
                         "Equalizer delay different from the expected."
