@@ -172,11 +172,20 @@ class TechnologyValues
     //DQ driver resistance in ohm
     bu::quantity<si::resistance> DQDriverResistance;
 
-    //background current slope
-    bu::quantity<drs::milliampere_per_megahertz_clock_unit> backgroundCurrentSlope;
+    //Background current slope with frequency
+    bu::quantity<drs::milliampere_per_megahertz_clock_unit> idd2nFreqSlope;
 
-    //background current offset
-    bu::quantity<drs::milliampere_unit> backgroundCurrentOffset;
+    //Background current alpha coefficient (models temperature dependency)
+    bu::quantity<drs::milliampere_unit> idd2nTempAlpha;
+
+    //Background current beta coefficient (models temperature dependency)
+    bu::quantity<drs::per_temperature_unit> idd2nTempBeta;
+
+    //Background current reference temperature (models temperature dependency)
+    bu::quantity<bu::celsius::temperature> idd2nRefTemp;
+
+    //Background current offset (current at ref temp and 0 MHz)
+    bu::quantity<drs::milliampere_unit> idd2nOffset;
 
     //Current slope per IO pin in relation to clock frequency
     bu::quantity<drs::microampere_per_megahertz_clock_unit> IddOcdRcvSlope;

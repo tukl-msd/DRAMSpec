@@ -38,46 +38,28 @@
 
 
 
-#ifndef DRAMSPEC_UNITS_H
-#define DRAMSPEC_UNITS_H
+#ifndef DRAMSPEC_PER_TEMPERATURE_UNIT_H
+#define DRAMSPEC_PER_TEMPERATURE_UNIT_H
 
-#include "bank.h"
-#include "capacitance_per_bank.h"
-#include "capacitance_per_cell.h"
-#include "capacitance_per_length.h"
-#include "capacitance_per_subarray.h"
-#include "capacitance_per_tile.h"
-#include "cell_per_subarray.h"
-#include "cell.h"
-#include "clock_frequency.h"
-#include "clock_period.h"
-#include "clock.h"
-#include "current_page_per_information.h"
-#include "current_per_information.h"
-#include "current_per_clock_frequency.h"
-#include "information_per_bank.h"
-#include "information_per_cell.h"
-#include "information_per_page.h"
-#include "information_per_subarray.h"
-#include "information_per_tile.h"
-#include "length_per_bank.h"
-#include "length_per_cell.h"
-#include "length_per_subarray.h"
-#include "length_per_tile.h"
-#include "page_per_tile.h"
-#include "page.h"
-#include "per_temperature.h"
-#include "resistance_per_bank.h"
-#include "resistance_per_cell.h"
-#include "resistance_per_length.h"
-#include "resistance_per_subarray.h"
-#include "resistance_per_tile.h"
-#include "subarray_per_tile.h"
-#include "subarray.h"
-#include "tile_per_bank.h"
-#include "tile.h"
-#include "scaled_si_units.h"
-#include "scaled_information_units.h"
-#include <boost/units/systems/temperature/celsius.hpp>
+#include "../dramSpecUnitsSystem.h"
+#include "../DerivedDimensions/per_temperature.h"
 
-#endif // DRAMSPEC_UNITS_H
+namespace boost {
+
+namespace units {
+
+namespace dramspec {
+
+typedef unit<per_temperature_dimension,dramspec::system_bit> per_temperature_unit;
+
+BOOST_UNITS_STATIC_CONSTANT(eerged,per_temperature_unit);
+BOOST_UNITS_STATIC_CONSTANT(eergeds,per_temperature_unit);
+
+} // namespace dramspec
+
+} // namespace units
+
+} // namespace boost
+
+
+#endif // DRAMSPEC_PER_TEMPERATURE_UNIT_H

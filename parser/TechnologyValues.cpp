@@ -73,8 +73,11 @@ TechnologyValues::technologyValuesInitialize()
     DQDriverHeight = 0*drs::micrometers;
     DQtoTSVWireLength = 0*drs::micrometers;
     DQDriverResistance = 0*si::ohms;
-    backgroundCurrentSlope = 0*drs::milliamperes_per_megahertz_clock;
-    backgroundCurrentOffset = 0*drs::milliamperes;
+    idd2nFreqSlope = 0*drs::milliamperes_per_megahertz_clock;
+    idd2nTempAlpha = 0*drs::milliamperes;
+    idd2nTempBeta = 0*drs::eergeds;
+    idd2nRefTemp = 0*bu::celsius::degrees;
+    idd2nOffset = 0*drs::milliamperes;
     IddOcdRcvSlope = 0*drs::microamperes_per_megahertz_clock;
     TSVHeight = 0*drs::micrometers;
     additionalLatencyTrl = 0*drs::clocks;
@@ -329,13 +332,25 @@ TechnologyValues::readjson(const string& t,const string& p)
         DQDriverResistance = getJSONNumber(techDocument, "DQDriverResistance[Ohm]")
                              * si::ohm;
 
-        //backgroundcurrentslope
-        backgroundCurrentSlope = getJSONNumber(techDocument, "BackgroundCurrentSlope[mA/MHz]")
+        //Background current slope with frequency
+        idd2nFreqSlope = getJSONNumber(techDocument, "IDD2NFreqSlope[mA/MHz]")
                                  * drs::milliamperes_per_megahertz_clock;
 
-        //backgroundcurrentoffset
-        backgroundCurrentOffset = getJSONNumber(techDocument, "BackgroundCurrentOffset[mA]")
-                                  * drs::milliampere;
+        //Background current alpha coefficient (models temperature dependency)
+        idd2nTempAlpha = getJSONNumber(techDocument, "IDD2NTempAlpha[mA]")
+                                 * drs::milliamperes;
+
+        //Background current beta coefficient (models temperature dependency)
+        idd2nTempBeta = getJSONNumber(techDocument, "IDD2NTempBeta[C^-1]")
+                                 * drs::eergeds;
+
+        //Background current reference temperature (models temperature dependency)
+        idd2nRefTemp = getJSONNumber(techDocument, "IDD2NRefTemp[C]")
+                                 * bu::celsius::degrees;
+
+        //Background current offset (current at ref temp and 0 MHz)
+        idd2nOffset = getJSONNumber(techDocument, "IDD2NOffset[mA]")
+                                  * drs::milliamperes;
 
         //Current slope per IO pin (Off Channel Driver)
         IddOcdRcvSlope = getJSONNumber(techDocument, "OCDCurrentSlope[uA/MHz]")
@@ -375,7 +390,7 @@ TechnologyValues::readjson(const string& t,const string& p)
                          * drs::nanoseconds;
 
         //Security margin !!!  TODO: What exactly is it?  !!!
-        tWRMargin = getJSONNumber(techDocument, "SecurityMargin[ns]")
+        tWRMargin = getJSONNumber(techDocument, "tWRMargin[ns]")
                          * drs::nanoseconds;
 
         //Equalizer delay !!!  TODO: What exactly is it?  !!!

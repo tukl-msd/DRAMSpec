@@ -140,8 +140,11 @@ Note: the number of technology and architecture description files must be equal.
 |DQDriverHeight|Length in column direction of the DQ driver.|um|
 |DQtoTSVWireLength|Length of the wire from DQ main line to TSV connection.|um|
 |DQDriverResistance|Output resistance of the DQ driver.|Ohm|
-|BackgroundCurrentSlope|Slope in relation to operating frequency of the precharge background current.|mA/MHz|
-|BackgroundCurrentOffset|Constant term of precharge background current (frequency invariant).|mA|
+|IDD2NFreqSlope|Slope in relation to operating frequency of the precharge background current.|mA/MHz|
+|IDD2NTempAlpha|Alpha coeff. (alpha * (exp(beta * (T - TRef)) - 1)) in relation to operating temperature of the precharge background current.|mA|
+|IDD2NTempBeta|Beta coeff. (alpha * (exp(beta * (T - TRef)) - 1)) in relation to operating temperature of the precharge background current.|C^-1|
+|IDD2NRefTemp|Ref. temperature (alpha * (exp(beta * (T - TRef)) - 1)) in relation to operating temperature of the precharge background current.|C|
+|IDD2NOffset|Constant term of precharge background current. It is IDD2n at 0 MHz and TRef.|mA|
 |OCDCurrentSlope|Slope of current sinked by the off-chip driver in relation to operating frequency.|uA/MHz|
 |TSVHeight|Length in column direction of TSV area.|um|
 |AdditionalTRLLatency|Added latency (tAL [2]) to tCAS resulting in tRL.|cc|
@@ -149,9 +152,9 @@ Note: the number of technology and architecture description files must be equal.
 |BLSADelay|  |ns|
 |CommandDecoderDelay| Clock wave pipeline delay for decode and fetch command in the same cycle it is registered. |ns|
 |InterfaceDelay|  |ns|
-|IODelay|  |ns|
+|IODelay| I/O interface delay |ns|
 |SSAPrechargeDelay|  |ns|
-|SecurityMargin|  |ns|
+|tWRMargin|Security margin for Write Recovery|ns|
 |EqualizerDelay|  |ns|
 |ACTCommandDelay|  |ns|
 |PRECommandDelay|  |ns|

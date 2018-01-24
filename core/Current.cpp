@@ -96,9 +96,14 @@ Current::currentInitialize()
 void
 Current::backgroundCurrentCalc()
 {
-  // Precharge background current (scaling with Freq)
-  IDD2n = backgroundCurrentSlope * dramFreq
-          + backgroundCurrentOffset;
+
+  // Precharge background current
+  //  Linear increase with frequency
+  //  and exponential increase with temperature
+  IDD2n = idd2nFreqSlope * dramFreq
+          + idd2nTempAlpha
+            * ( exp(idd2nTempBeta * (temperature - idd2nRefTemp)) - 1 )
+          + idd2nOffset;
 
   if ( !isDLL ) {
     IDD2n = IDD2nPercentageIfNotDll * IDD2n;
@@ -106,8 +111,6 @@ Current::backgroundCurrentCalc()
 
   // Active background current:
   // IDD3n is equal to IDD2n + active-adder
-  // Assumption : active-adder current = 4mA for 2K page
-  // and changes linearly while changing page size
   IDD3n = IDD2n + currentPerPageSizeSlope * pageStorage;
 
 }

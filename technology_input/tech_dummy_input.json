@@ -38,8 +38,11 @@
     "DQtoTSVWireLength[um]": 200,
     "DQDriverResistance[Ohm]" : 9240,
 
-    "BackgroundCurrentSlope[mA/MHz]": 483,
-    "BackgroundCurrentOffset[mA]": 8513,
+    "IDD2NFreqSlope[mA/MHz]": 483,
+    "IDD2NTempAlpha[mA]": 1833,
+    "IDD2NTempBeta[C^-1]": 5108,
+    "IDD2NRefTemp[C]": 3901,
+    "IDD2NOffset[mA]": 8513,
     "OCDCurrentSlope[uA/MHz]": 4560,
 
     "TSVHeight[um]": 9483,
@@ -52,7 +55,7 @@
     "InterfaceDelay[ns]": 989,
     "IODelay[ns]": 9769,
     "SSAPrechargeDelay[ns]": 1540,
-    "SecurityMargin[ns]": 2126,
+    "tWRMargin[ns]": 2126,
     "EqualizerDelay[ns]": 1103,
     "ACTCommandDelay[ns]": 305,
     "PRECommandDelay[ns]": 7509,

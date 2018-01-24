@@ -213,15 +213,30 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 500*si::ohm
                         << "\nGot: " << techValues.DQDriverResistance);
 
-    BOOST_CHECK_MESSAGE( techValues.backgroundCurrentSlope == 0.025*drs::milliamperes_per_megahertz_clock,
+    BOOST_CHECK_MESSAGE( techValues.idd2nFreqSlope == 0.025*drs::milliamperes_per_megahertz_clock,
                          "Background current slope different from the expected."
                         << "\nExpected: " << 0.025*drs::milliamperes_per_megahertz_clock
-                        << "\nGot: " << techValues.backgroundCurrentSlope);
+                        << "\nGot: " << techValues.idd2nFreqSlope);
 
-    BOOST_CHECK_MESSAGE( techValues.backgroundCurrentOffset == 17*drs::milliampere,
+    BOOST_CHECK_MESSAGE( techValues.idd2nTempAlpha == 0.6775*drs::milliamperes,
+                         "Background current alpha coefficient different from the expected."
+                        << "\nExpected: " << 0.6775*drs::milliamperes
+                        << "\nGot: " << techValues.idd2nTempAlpha);
+
+    BOOST_CHECK_MESSAGE( techValues.idd2nTempBeta == 0.04467*drs::eergeds,
+                         "Background current beta coefficient different from the expected."
+                        << "\nExpected: " << 0.04467*drs::eergeds
+                        << "\nGot: " << techValues.idd2nTempBeta);
+
+    BOOST_CHECK_MESSAGE( techValues.idd2nRefTemp == 25*bu::celsius::degrees,
+                         "Background current reference temperature different from the expected."
+                        << "\nExpected: " << 25*bu::celsius::degrees
+                        << "\nGot: " << techValues.idd2nRefTemp);
+
+    BOOST_CHECK_MESSAGE( techValues.idd2nOffset == 17*drs::milliamperes,
                          "Background current offset different from the expected."
-                        << "\nExpected: " << 17*drs::milliampere
-                        << "\nGot: " << techValues.backgroundCurrentOffset);
+                        << "\nExpected: " << 17*drs::milliamperes
+                        << "\nGot: " << techValues.idd2nOffset);
 
     BOOST_CHECK_MESSAGE( techValues.IddOcdRcvSlope == 5.629*drs::microamperes_per_megahertz_clock,
                          "Current slope per IO pin different from the expected."
@@ -584,15 +599,30 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected: " << 9240*si::ohm
                         << "\nGot: " << techValues.DQDriverResistance);
 
-    BOOST_CHECK_MESSAGE( techValues.backgroundCurrentSlope == 483*drs::milliamperes_per_megahertz_clock,
+    BOOST_CHECK_MESSAGE( techValues.idd2nFreqSlope == 483*drs::milliamperes_per_megahertz_clock,
                          "Background current slope different from the expected."
                         << "\nExpected: " << 483*drs::milliamperes_per_megahertz_clock
-                        << "\nGot: " << techValues.backgroundCurrentSlope);
+                        << "\nGot: " << techValues.idd2nFreqSlope);
 
-    BOOST_CHECK_MESSAGE( techValues.backgroundCurrentOffset == 8513*drs::milliampere,
+    BOOST_CHECK_MESSAGE( techValues.idd2nTempAlpha == 1833*drs::milliamperes,
+                         "Background current alpha coefficient different from the expected."
+                        << "\nExpected: " << 1833*drs::milliamperes
+                        << "\nGot: " << techValues.idd2nTempAlpha);
+
+    BOOST_CHECK_MESSAGE( techValues.idd2nTempBeta == 5108*drs::eergeds,
+                         "Background current beta coefficient different from the expected."
+                        << "\nExpected: " << 5108*drs::eergeds
+                        << "\nGot: " << techValues.idd2nTempBeta);
+
+    BOOST_CHECK_MESSAGE( techValues.idd2nRefTemp == 3901*bu::celsius::degrees,
+                         "Background current reference temperature different from the expected."
+                        << "\nExpected: " << 3901*bu::celsius::degrees
+                        << "\nGot: " << techValues.idd2nRefTemp);
+
+    BOOST_CHECK_MESSAGE( techValues.idd2nOffset == 8513*drs::milliampere,
                          "Background current offset different from the expected."
                         << "\nExpected: " << 8513*drs::milliampere
-                        << "\nGot: " << techValues.backgroundCurrentOffset);
+                        << "\nGot: " << techValues.idd2nOffset);
 
     BOOST_CHECK_MESSAGE( techValues.IddOcdRcvSlope == 4560*drs::microamperes_per_megahertz_clock,
                          "Current slope per IO pin different from the expected."
