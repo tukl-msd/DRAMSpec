@@ -161,23 +161,27 @@ Timing::trcdCalc()
 
     // Calculating the bltau( in ns )
     localBitlineDelay = timeToPercentage(90)
-            * localBitlineResistance * drs::subarray
-            * localBitlineCapacitance * drs::subarray;
+            * localBitlineResistance * 1.0 * drs::subarray
+            * localBitlineCapacitance * 1.0 * drs::subarray;
 
 
-    // TODO: Global word line driving needs re-check! WLDV signal seems to be the "bottleneck"
+    // TODO: Global word line driving needs re-check!
+    //  WLDV signal seems to be the "bottleneck"
     //calculating GWL decoder + wiring delay
     //calculating global wordline total capa
     globalWordlineResistance = wireResistance
            * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit);
 
-    globalWordlineCapacitance = SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+    globalWordlineCapacitance =
+           SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
            * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit);
 
     // Calculating delay through global wordline driver and wiring
-    globalWordlineDelay = driverEnableDelay +
-            timeToPercentage(90) * GWLDriverResistance * globalWordlineCapacitance * drs::tile +
-            timeToPercentage(63) * globalWordlineResistance * drs::tile * globalWordlineCapacitance * drs::tile;
+    globalWordlineDelay = driverEnableDelay
+        + timeToPercentage(90) * GWLDriverResistance
+          * globalWordlineCapacitance * 1.0 * drs::tile
+        + timeToPercentage(63) * globalWordlineResistance * 1.0 * drs::tile
+          * globalWordlineCapacitance * 1.0 * drs::tile;
     
     // Calculating trcd
     trcd = globalWordlineDelay + localWordlineDelay + cellDelay + localBitlineDelay;
@@ -188,7 +192,9 @@ Timing::trcdCalc()
     localBitlineDelay99p = timeToPercentage(99) / timeToPercentage(90)
                            * localBitlineDelay;
 
-    ACTtoRefreshCellDelay = globalWordlineDelay + localWordlineDelay + cellDelay99p + localBitlineDelay99p;
+    ACTtoRefreshCellDelay = globalWordlineDelay + localWordlineDelay
+                            + cellDelay + localBitlineDelay99p
+                            + cellDelay99p;
 
 }
 
@@ -272,7 +278,7 @@ Timing::trasCalc()
     // From Matthias thesis pg. 20 Fig. 2.5: Basic DRAM protocol -> tras = trcd + tccd + trtp
     tras = trcd + tccd + trtp; // trcd99p
 
-    // Calculating twr + 2 (command decoding) + 1 (security margin):
+    // Calculating twr:
     twr = cmdDecoderDelay + localBitlineDelay + tgdl + tWRMargin;
 
 }

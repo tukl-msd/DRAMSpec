@@ -149,6 +149,24 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << _mag*drs::nanoseconds
                         << "\nGot: " << timing.trcd);
 
+    _mag = 1.843;
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.cellDelay99p, 3) == _mag*drs::nanoseconds,
+                        "Delay to recharge cell to 99\% different from the expected."
+                        << "\nExpected around: " << _mag*drs::nanoseconds
+                        << "\nGot: " << timing.cellDelay99p);
+
+    _mag = 7.284;
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.localBitlineDelay99p, 3) == _mag*drs::nanoseconds,
+                        "Delay to charge LBL to 99\% different from the expected."
+                        << "\nExpected around: " << _mag*drs::nanoseconds
+                        << "\nGot: " << timing.localBitlineDelay99p);
+
+    _mag = 15.649;
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.ACTtoRefreshCellDelay, 3) == _mag*drs::nanoseconds,
+                        "\"Internal\" tRAS different from the expected."
+                        << "\nExpected around: " << _mag*drs::nanoseconds
+                        << "\nGot: " << timing.ACTtoRefreshCellDelay);
+
     _mag = 2.045;
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.tcsl, 3) == _mag*drs::nanoseconds,
                         "tcsl different from the expected."
@@ -245,7 +263,7 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << _mag*drs::nanoseconds
                         << "\nGot: " << timing.trc);
 
-    _mag = 43.913;
+    _mag = 44.834;
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc, 3) == _mag*drs::nanoseconds,
                         "trfc different from the expected."
                         << "\nExpected around: " << _mag*drs::nanoseconds
