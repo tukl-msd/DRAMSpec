@@ -149,16 +149,12 @@ Note: the number of technology and architecture description files must be equal.
 |TSVHeight|Length in column direction of TSV area.|um|
 |AdditionalTRLLatency|Added latency (tAL [2]) to tCAS resulting in tRL.|cc|
 |DriverEnableDelay| Time interval between driving signal to active driver. |ns|
-|BLSADelay|  |ns|
-|CommandDecoderDelay| Clock wave pipeline delay for decode and fetch command in the same cycle it is registered. |ns|
-|InterfaceDelay|  |ns|
-|IODelay| I/O interface delay |ns|
-|SSAPrechargeDelay|  |ns|
-|tWRMargin|Security margin for Write Recovery|ns|
-|EqualizerDelay|  |ns|
-|ACTCommandDelay|  |ns|
-|PRECommandDelay|  |ns|
-|Offset|  |ns|
+|InOutSSADelay|Signal delay from input to output of the secondary sense amplifier.|ns|
+|CommandDecoderDelay|Clock wave pipeline delay for decode and fetch command in the same cycle it is registered.|ns|
+|IODelay|I/O interface delay.|ns|
+|SSAPrechargeDelay|Secondary sense amplifier precharge delay.|ns|
+|tWRMargin|Security margin for Write Recovery.|ns|
+|EqualizerDelay|Equalizer circuit enabling delay.|ns|
 
 ### DRAM Architecture related inputs
 

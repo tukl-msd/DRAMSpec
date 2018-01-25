@@ -50,16 +50,11 @@
     "AdditionalTRLLatency[cc]" : 9541,
 
     "DriverEnableDelay[ns]": 5654,
-    "BLSADelay[ns]": 8,
+    "InOutSSADelay[ns]": 8,
     "CommandDecoderDelay[ns]": 9212,
-    "InterfaceDelay[ns]": 989,
     "IODelay[ns]": 9769,
     "SSAPrechargeDelay[ns]": 1540,
     "tWRMargin[ns]": 2126,
-    "EqualizerDelay[ns]": 1103,
-    "ACTCommandDelay[ns]": 305,
-    "PRECommandDelay[ns]": 7509,
-    "Offset[ns]": 7302
-
+    "EqualizerDelay[ns]": 1103
 
 }

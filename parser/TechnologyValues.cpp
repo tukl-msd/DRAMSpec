@@ -82,16 +82,12 @@ TechnologyValues::technologyValuesInitialize()
     TSVHeight = 0*drs::micrometers;
     additionalLatencyTrl = 0*drs::clocks;
     driverEnableDelay = 0*drs::nanoseconds;
-    BitlineSenseAmpDelay = 0*drs::nanoseconds;
-    cmdDecoderLatency = 0*drs::nanoseconds;
-    interfaceLatency = 0*drs::nanoseconds;
+    inOutSSADelay = 0*drs::nanoseconds;
+    cmdDecoderDelay = 0*drs::nanoseconds;
     IODelay = 0*drs::nanoseconds;
     SSAPrechargeDelay = 0*drs::nanoseconds;
     tWRMargin = 0*drs::nanoseconds;
     equalizerDelay = 0*drs::nanoseconds;
-    actCmdDelay = 0*drs::nanoseconds;
-    preCmdDelay = 0*drs::nanoseconds;
-    offset = 0*drs::nanoseconds;
 
     dramType = "";
     is3D = false;
@@ -312,7 +308,7 @@ TechnologyValues::readjson(const string& t,const string& p)
         CSLDriverResistance = getJSONNumber(techDocument, "CSLDriverResistance[Ohm]")
                               * si::ohm;
 
-        //Load capacitance !!!  TODO: What exactly is it?  !!!
+        //CSL load capacitance
         CSLLoadCapacitance = getJSONNumber(techDocument, "CSLLoadCapacitance[fF]")
                          * drs::femtofarads_per_bank;
 
@@ -369,44 +365,28 @@ TechnologyValues::readjson(const string& t,const string& p)
         driverEnableDelay = getJSONNumber(techDocument, "DriverEnableDelay[ns]")
                          * drs::nanoseconds;
 
-        //SSA Delay !!!  TODO: Check value !!!
-        BitlineSenseAmpDelay = getJSONNumber(techDocument, "BLSADelay[ns]")
+        //Signal delay from input to output of SSA
+        inOutSSADelay = getJSONNumber(techDocument, "InOutSSADelay[ns]")
                          * drs::nanoseconds;
 
-        //Command decoder latency !!!  TODO: What exactly is it?  !!!
-        cmdDecoderLatency = getJSONNumber(techDocument, "CommandDecoderDelay[ns]")
+        //Command decoder delay - clock wave pipeline delay
+        cmdDecoderDelay = getJSONNumber(techDocument, "CommandDecoderDelay[ns]")
                          * drs::nanoseconds;
 
-        //Internal latency !!!  TODO: What exactly is it?  !!!
-        interfaceLatency = getJSONNumber(techDocument, "InterfaceDelay[ns]")
-                         * drs::nanoseconds;
-
-        //I/O latency !!!  TODO: What exactly is it?  !!!
+        //I/O interface delay
         IODelay = getJSONNumber(techDocument, "IODelay[ns]")
                          * drs::nanoseconds;
 
-        //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
+        //Delay for SSA precharging
         SSAPrechargeDelay = getJSONNumber(techDocument, "SSAPrechargeDelay[ns]")
                          * drs::nanoseconds;
 
-        //Security margin !!!  TODO: What exactly is it?  !!!
+        // Security margin for Write Recovery
         tWRMargin = getJSONNumber(techDocument, "tWRMargin[ns]")
                          * drs::nanoseconds;
 
-        //Equalizer delay !!!  TODO: What exactly is it?  !!!
+        //Equalizer circuit enabling delay
         equalizerDelay = getJSONNumber(techDocument, "EqualizerDelay[ns]")
-                         * drs::nanoseconds;
-
-        //Act cmd delay !!!  TODO: What exactly is it?  !!!
-        actCmdDelay = getJSONNumber(techDocument, "ACTCommandDelay[ns]")
-                         * drs::nanoseconds;
-
-        //pre cmd delay !!!  TODO: What exactly is it?  !!!
-        preCmdDelay = getJSONNumber(techDocument, "PRECommandDelay[ns]")
-                         * drs::nanoseconds;
-
-        //offset !!!  TODO: What exactly is it?  !!! ???
-        offset = getJSONNumber(techDocument, "Offset[ns]")
                          * drs::nanoseconds;
 
     } catch(string exceptionMsgThrown) {

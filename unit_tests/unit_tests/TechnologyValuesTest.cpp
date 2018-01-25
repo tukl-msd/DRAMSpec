@@ -254,60 +254,39 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nGot: " << techValues.additionalLatencyTrl);
 
     BOOST_CHECK_MESSAGE( techValues.driverEnableDelay == 0.6*drs::nanoseconds,
-                        "Driver offset time different from the expected."
+                        "Driver enabling time different from the expected."
                         << "\nExpected around: " << 0.6*drs::nanoseconds
                         << "\nGot: " << techValues.driverEnableDelay);
 
-    BOOST_CHECK_MESSAGE( techValues.BitlineSenseAmpDelay == 2*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.inOutSSADelay == 2*drs::nanoseconds,
                         "Secondary sense amplifier delay different from the expected."
                         << "\nExpected around: " << 2*drs::nanoseconds
-                        << "\nGot: " << techValues.BitlineSenseAmpDelay);
+                        << "\nGot: " << techValues.inOutSSADelay);
 
-    BOOST_CHECK_MESSAGE( techValues.cmdDecoderLatency == 2*drs::nanoseconds,
-                        "Command decoder latency different from the expected."
+    BOOST_CHECK_MESSAGE( techValues.cmdDecoderDelay == 2*drs::nanoseconds,
+                        "Command decoder delay different from the expected."
                         << "\nExpected around: " << 2*drs::nanoseconds
-                        << "\nGot: " << techValues.cmdDecoderLatency);
-
-    BOOST_CHECK_MESSAGE( techValues.interfaceLatency == 1*drs::nanoseconds,
-                        "Interface latency different from the expected."
-                        << "\nExpected around: " << 1*drs::nanoseconds
-                        << "\nGot: " << techValues.interfaceLatency);
+                        << "\nGot: " << techValues.cmdDecoderDelay);
 
     BOOST_CHECK_MESSAGE( techValues.IODelay == 1*drs::nanoseconds,
-                        "IO Delay different from the expected."
+                        "IO interface Delay different from the expected."
                         << "\nExpected around: " << 1*drs::nanoseconds
                         << "\nGot: " << techValues.IODelay);
 
     BOOST_CHECK_MESSAGE( techValues.SSAPrechargeDelay == 1*drs::nanoseconds,
-                        "Delay of precharge SSA different from the expected."
+                        "Delay of SSA precharge different from the expected."
                         << "\nExpected around: " << 1*drs::nanoseconds
                         << "\nGot: " << techValues.SSAPrechargeDelay);
 
     BOOST_CHECK_MESSAGE( techValues.tWRMargin == 1*drs::nanoseconds,
-                        "Security margin different from the expected."
+                        "Security margin for write recovery different from the expected."
                         << "\nExpected around: " << 1*drs::nanoseconds
                         << "\nGot: " << techValues.tWRMargin);
 
     BOOST_CHECK_MESSAGE( techValues.equalizerDelay == 1*drs::nanoseconds,
-                        "Equalizer delay different from the expected."
+                        "Equalizer circuit enabling delay different from the expected."
                         << "\nExpected around: " << 1*drs::nanoseconds
                         << "\nGot: " << techValues.equalizerDelay);
-
-    BOOST_CHECK_MESSAGE( techValues.actCmdDelay == 5*drs::nanoseconds,
-                        "Act commmand delay different from the expected."
-                        << "\nExpected around: " << 5*drs::nanoseconds
-                        << "\nGot: " << techValues.actCmdDelay);
-
-    BOOST_CHECK_MESSAGE( techValues.preCmdDelay == 5*drs::nanoseconds,
-                        "Pre command delay different from the expected."
-                        << "\nExpected around: " << 5*drs::nanoseconds
-                        << "\nGot: " << techValues.preCmdDelay);
-
-    BOOST_CHECK_MESSAGE( techValues.offset == 10*drs::nanoseconds,
-                        "Offset time different from the expected."
-                        << "\nExpected around: " << 10*drs::nanoseconds
-                        << "\nGot: " << techValues.offset);
-
 
 
 
@@ -640,59 +619,39 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nGot: " << techValues.additionalLatencyTrl);
 
     BOOST_CHECK_MESSAGE( techValues.driverEnableDelay == 5654*drs::nanoseconds,
-                        "Driver offset time different from the expected."
+                        "Driver enabling time different from the expected."
                         << "\nExpected around: " << 5654*drs::nanoseconds
                         << "\nGot: " << techValues.driverEnableDelay);
 
-    BOOST_CHECK_MESSAGE( techValues.BitlineSenseAmpDelay == 8*drs::nanoseconds,
+    BOOST_CHECK_MESSAGE( techValues.inOutSSADelay == 8*drs::nanoseconds,
                         "Secondary sense amplifier delay different from the expected."
                         << "\nExpected around: " << 8*drs::nanoseconds
-                        << "\nGot: " << techValues.BitlineSenseAmpDelay);
+                        << "\nGot: " << techValues.inOutSSADelay);
 
-    BOOST_CHECK_MESSAGE( techValues.cmdDecoderLatency == 9212*drs::nanoseconds,
-                        "Command decoder latency different from the expected."
+    BOOST_CHECK_MESSAGE( techValues.cmdDecoderDelay == 9212*drs::nanoseconds,
+                        "Command decoder delay different from the expected."
                         << "\nExpected around: " << 9212*drs::nanoseconds
-                        << "\nGot: " << techValues.cmdDecoderLatency);
-
-    BOOST_CHECK_MESSAGE( techValues.interfaceLatency == 989*drs::nanoseconds,
-                        "Interface latency different from the expected."
-                        << "\nExpected around: " << 989*drs::nanoseconds
-                        << "\nGot: " << techValues.interfaceLatency);
+                        << "\nGot: " << techValues.cmdDecoderDelay);
 
     BOOST_CHECK_MESSAGE( techValues.IODelay == 9769*drs::nanoseconds,
-                        "IO Delay different from the expected."
+                        "IO interface Delay different from the expected."
                         << "\nExpected around: " << 9769*drs::nanoseconds
                         << "\nGot: " << techValues.IODelay);
 
     BOOST_CHECK_MESSAGE( techValues.SSAPrechargeDelay == 1540*drs::nanoseconds,
-                        "Delay of precharge SSA different from the expected."
+                        "Delay of SSA precharge different from the expected."
                         << "\nExpected around: " << 1540*drs::nanoseconds
                         << "\nGot: " << techValues.SSAPrechargeDelay);
 
     BOOST_CHECK_MESSAGE( techValues.tWRMargin == 2126*drs::nanoseconds,
-                        "Security margin different from the expected."
+                        "Security margin for write recovery different from the expected."
                         << "\nExpected around: " << 2126*drs::nanoseconds
                         << "\nGot: " << techValues.tWRMargin);
 
     BOOST_CHECK_MESSAGE( techValues.equalizerDelay == 1103*drs::nanoseconds,
-                        "Equalizer delay different from the expected."
+                        "Equalizer circuit enabling delay different from the expected."
                         << "\nExpected around: " << 1103*drs::nanoseconds
                         << "\nGot: " << techValues.equalizerDelay);
-
-    BOOST_CHECK_MESSAGE( techValues.actCmdDelay == 305*drs::nanoseconds,
-                        "Act commmand delay different from the expected."
-                        << "\nExpected around: " << 305*drs::nanoseconds
-                        << "\nGot: " << techValues.actCmdDelay);
-
-    BOOST_CHECK_MESSAGE( techValues.preCmdDelay == 7509*drs::nanoseconds,
-                        "Pre command delay different from the expected."
-                        << "\nExpected around: " << 7509*drs::nanoseconds
-                        << "\nGot: " << techValues.preCmdDelay);
-
-    BOOST_CHECK_MESSAGE( techValues.offset == 7302*drs::nanoseconds,
-                        "Offset time different from the expected."
-                        << "\nExpected around: " << 7302*drs::nanoseconds
-                        << "\nGot: " << techValues.offset);
 
 
 

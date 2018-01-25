@@ -199,35 +199,24 @@ class TechnologyValues
     //Driver enabling delay
     bu::quantity<drs::nanosecond_unit> driverEnableDelay;
 
-    //SSA Delay !!!  TODO: Check value !!!
-    bu::quantity<drs::nanosecond_unit> BitlineSenseAmpDelay;
+    //Signal delay from input to output of SSA
+    bu::quantity<drs::nanosecond_unit> inOutSSADelay;
 
-    //Command decoder latency !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> cmdDecoderLatency;
+    //Command decoder delay - clock wave pipeline delay
+    bu::quantity<drs::nanosecond_unit> cmdDecoderDelay;
 
-    //Internal latency !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> interfaceLatency;
-
-    //I/O latency !!!  TODO: What exactly is it?  !!!
+    //I/O interface delay
     bu::quantity<drs::nanosecond_unit> IODelay;
 
-    //Delay for SSA precharging !!!  TODO: What exactly is it?  !!!
+    //Delay for SSA precharging
     bu::quantity<drs::nanosecond_unit> SSAPrechargeDelay;
 
     // Security margin for Write Recovery
     bu::quantity<drs::nanosecond_unit> tWRMargin;
 
-    //Equalizer delay !!!  TODO: What exactly is it?  !!!
+    //Equalizer circuit enabling delay
     bu::quantity<drs::nanosecond_unit> equalizerDelay;
 
-    //Act cmd delay !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> actCmdDelay;
-
-    //pre cmd delay !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> preCmdDelay;
-
-    //offset !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::nanosecond_unit> offset;
 
 
     //DRAM Type

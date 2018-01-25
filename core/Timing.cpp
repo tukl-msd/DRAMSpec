@@ -195,15 +195,6 @@ Timing::trcdCalc()
 void
 Timing::trasCalc()
 {
-//     tras is divided into 4 parts: trcd + tCAS + time for precharging
-//     SSA(~2ns) + time needed to restore the bits into the cells
-//     (tau bitline)
-
-//     Calculating tCAS:
-//     tCAS has delay from CSL driver + Wire ,Local Dataline driver
-//     + wire (~1 ns ), Global Data line driver + wire, Delay from
-//     SSA to Dataqueue(DQ)
-
 
     CSLResistance = SCALE_QUANTITY(bankHeight, drs::millimeter_per_bank_unit)
                       * wireResistance;
@@ -218,7 +209,6 @@ Timing::trasCalc()
             * CSLCapacitance * drs::bank
            + timeToPercentage(63) * CSLResistance
             * CSLCapacitance * drs::bank * drs::bank;
-
 
 
     globalDatalineResistance = SCALE_QUANTITY(bankHeight, drs::millimeter_per_bank_unit)
@@ -263,34 +253,27 @@ Timing::trasCalc()
            + timeToPercentage(63) * DQWireResistance
              * DQWireCapacitance;
     
-    // Calculating tcl (same as tcas):
-    // command decoding latency (consider for now 2ns) +
-    // ( readout-sensing of SSA ) + tDQ + 1 ns (interface delay)
-    tcas = cmdDecoderLatency + tcsl + interfaceLatency
-          + tgdl + BitlineSenseAmpDelay + tdq + IODelay;
-    
-    // Calculating trtp:
-    // read to precharge
-    // trtp is tCSL + tGDL + delay for sense amps.
-    // This is the point in time where precharging is allowed
-    // std::cout<<"bltau"<<bltau<<std::endl;
-    // std::cout<<"tCSL"<<tCSL<<std::endl;
-    // remove the command decoding latency
-    trtp = tcsl + tgdl + BitlineSenseAmpDelay;
-    
     // Calculating tccd:
-    // tccd ( column to column delay) is equal time to select another CSL
-    //  + precharging secondary SSA + Global Dataline delay...
-    // - 0.5(delay of CSL driver isnot in the critical path)
+    // CSL driver is already enabled (not in the critical path)
     tccd = tcsl + SSAPrechargeDelay + tgdl - driverEnableDelay;
 
+    // Estimation of signal delay from the input to the output of the SSA
+    inOutSSADelay = 1.25 * tccd;
+
+    // Calculating tcl (same as tcas):
+    tcas = cmdDecoderDelay + tcsl + tgdl
+          + inOutSSADelay + tdq + 2.0 * IODelay;
+    
+    // Calculating trtp:
+    trtp = tcsl + tgdl + inOutSSADelay;
+    
     // Calculating tras:
 //    tras = trcd + tcas + bitlineDelay - tdq - 1; TODO - Discuss with Christian about this timing!!!!
     // From Matthias thesis pg. 20 Fig. 2.5: Basic DRAM protocol -> tras = trcd + tccd + trtp
     tras = trcd + tccd + trtp; // trcd99p
 
     // Calculating twr + 2 (command decoding) + 1 (security margin):
-    twr = cmdDecoderLatency + localBitlineDelay + tgdl + tWRMargin;
+    twr = cmdDecoderDelay + localBitlineDelay + tgdl + tWRMargin;
 
 }
 
