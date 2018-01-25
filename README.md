@@ -135,7 +135,7 @@ Note: the number of technology and architecture description files must be equal.
 |WriteDriverResistance|Output resistance of the write driver.|Ohm|
 |ColumnDecoderHeight|Lenght in column direction of the column address decoder.|um|
 |CSLDriverResistance|Output resistance of the column select line driver.|Ohm|
-|CSLLoadCapacitance|  |fF|
+|CSLLoadCapacitance|Column select line capacitive load (LBL to GBL transistors gates).|fF|
 |GlobalDataLineDriverResistance|Output resistance of the global dataline driver.|Ohm|
 |DQDriverHeight|Length in column direction of the DQ driver.|um|
 |DQtoTSVWireLength|Length of the wire from DQ main line to TSV connection.|um|
