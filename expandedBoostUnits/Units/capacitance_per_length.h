@@ -43,6 +43,7 @@
 
 #include "../dramSpecUnitsSystem.h"
 #include "../DerivedDimensions/capacitance_per_length.h"
+#include <boost/units/systems/si/prefixes.hpp>
 
 namespace boost {
 

@@ -59,9 +59,6 @@ namespace dramspec {
 typedef make_scaled_unit<information::hu::bit::info,scale<2, static_rational<0>>>::type bit_unit;
 BOOST_UNITS_STATIC_CONSTANT(bit,bit_unit);
 BOOST_UNITS_STATIC_CONSTANT(bits,bit_unit);
-typedef make_scaled_unit<information::hu::bit::info,scale<2, static_rational<3>>>::type baite_unit;
-BOOST_UNITS_STATIC_CONSTANT(baite,baite_unit);
-BOOST_UNITS_STATIC_CONSTANT(baites,baite_unit);
 typedef make_scaled_unit<information::hu::bit::info,scale<2, static_rational<10>>>::type kibibit_unit;
 BOOST_UNITS_STATIC_CONSTANT(kibibit,kibibit_unit);
 BOOST_UNITS_STATIC_CONSTANT(kibibits,kibibit_unit);
@@ -75,6 +72,9 @@ BOOST_UNITS_STATIC_CONSTANT(bytes,byte_unit);
 typedef make_scaled_unit<information::hu::byte::info,scale<2, static_rational<10>>>::type kibibyte_unit;
 BOOST_UNITS_STATIC_CONSTANT(kibibyte,kibibyte_unit);
 BOOST_UNITS_STATIC_CONSTANT(kibibytes,kibibyte_unit);
+typedef make_scaled_unit<information::hu::byte::info,scale<2, static_rational<10>>>::type gibibyte_unit;
+BOOST_UNITS_STATIC_CONSTANT(gibibyte,gibibyte_unit);
+BOOST_UNITS_STATIC_CONSTANT(gibibytes,gibibyte_unit);
 
 } // namespace dramspec
 
