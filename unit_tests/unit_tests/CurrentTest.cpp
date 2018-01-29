@@ -140,9 +140,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                       << "\nGot: " << current.effectiveTrc);
 
   _mag = 0.048;
-  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0ChargingCurrent, 3) == _mag*si::amperes,
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0ChargingCurrent, 3) == _mag*drs::amperes,
                       "Part of IDD0 for charging lines different from the expected."
-                      << "\nExpected around: " << _mag*si::amperes
+                      << "\nExpected around: " << _mag*drs::amperes
                       << "\nGot: " << current.IDD0ChargingCurrent);
 
   _mag = 3.619;
@@ -152,9 +152,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                       << "\nGot: " << current.IDD1TotalCharge);
 
   _mag = 0.108;
-  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1ChargingCurrent, 3) == _mag*si::amperes,
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1ChargingCurrent, 3) == _mag*drs::amperes,
                       "Part of IDD1 for charging lines different from the expected."
-                      << "\nExpected around: " << _mag*si::amperes
+                      << "\nExpected around: " << _mag*drs::amperes
                       << "\nGot: " << current.IDD1ChargingCurrent);
 
   _mag = 1.038;
@@ -170,9 +170,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                       << "\nGot: " << current.ioTermRdCurrent);
 
   _mag = 0.208;
-  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4ChargingCurrent, 3) == _mag*si::amperes,
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4ChargingCurrent, 3) == _mag*drs::amperes,
                       "Part of IDD4 for charging lines different from the expected."
-                      << "\nExpected around: " << _mag*si::amperes
+                      << "\nExpected around: " << _mag*drs::amperes
                       << "\nGot: " << current.IDD4ChargingCurrent);
 
   _mag = 99.071;
@@ -194,9 +194,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                       << "\nGot: " << current.effectiveTrfc);
 
   _mag = 0.287;
-  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD5ChargingCurrent, 3) == _mag*si::amperes,
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD5ChargingCurrent, 3) == _mag*drs::amperes,
                       "Part of IDD5 for charging lines different from the expected."
-                      << "\nExpected around: " << _mag*si::amperes
+                      << "\nExpected around: " << _mag*drs::amperes
                       << "\nGot: " << current.IDD5ChargingCurrent);
 
   // Main variables

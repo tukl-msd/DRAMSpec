@@ -194,9 +194,9 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
     }
 
 
-    channel.nBanks = 1.0*drs::bank;
-    channel.nHorizontalBanks = 0.0*drs::bank;
-    channel.nVerticalBanks = 0.0*drs::bank;
+    channel.nBanks = 1.0;
+    channel.nHorizontalBanks = 0.0;
+    channel.nVerticalBanks = 0.0;
     try {
         channel.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -225,9 +225,9 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
                         << "\nExpected: " << 44*drs::square_millimeter
                         << "\nGot: " << ceil(channel.channelArea));
 
-    channel.nBanks = 2.0*drs::bank;
-    channel.nHorizontalBanks = 0.0*drs::bank;
-    channel.nVerticalBanks = 0.0*drs::bank;
+    channel.nBanks = 2.0;
+    channel.nHorizontalBanks = 0.0;
+    channel.nVerticalBanks = 0.0;
     try {
         channel.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -256,9 +256,9 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
                         << "\nExpected: " << 46*drs::square_millimeter
                         << "\nGot: " << ceil(channel.channelArea));
 
-    channel.nBanks = 4.0*drs::bank;
-    channel.nHorizontalBanks = 0.0*drs::bank;
-    channel.nVerticalBanks = 0.0*drs::bank;
+    channel.nBanks = 4.0;
+    channel.nHorizontalBanks = 0.0;
+    channel.nVerticalBanks = 0.0;
     try {
         channel.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -287,9 +287,9 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
                         << "\nExpected: " << 48*drs::square_millimeter
                         << "\nGot: " << ceil(channel.channelArea));
 
-    channel.nBanks = 8.0*drs::bank;
-    channel.nHorizontalBanks = 0.0*drs::bank;
-    channel.nVerticalBanks = 0.0*drs::bank;
+    channel.nBanks = 8.0;
+    channel.nHorizontalBanks = 0.0;
+    channel.nVerticalBanks = 0.0;
     try {
         channel.tileCompute();
     }catch (string exceptionMsgThrown){

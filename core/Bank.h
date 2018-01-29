@@ -68,19 +68,19 @@ class Bank : public Tile
     }
 
     // Size in number of bits of a single bank
-    bu::quantity<drs::information_per_bank_unit> bankStorage;
+    bu::quantity<drs::bit_unit> bankStorage;
 
     // Tiles placement on bank
-    bu::quantity<drs::tile_per_bank_unit> nVerticalTiles;
-    bu::quantity<drs::tile_per_bank_unit> nHorizontalTiles;
+    double nVerticalTiles;
+    double nHorizontalTiles;
 
     // Width in micrometer of a single bank
-    bu::quantity<drs::micrometer_per_bank_unit> bankWidth;
+    bu::quantity<drs::micrometer_unit> bankWidth;
     // Height in micrometer of a single bank
-    bu::quantity<drs::micrometer_per_bank_unit> bankHeight;
+    bu::quantity<drs::micrometer_unit> bankHeight;
 
     // Total page size accounting all tiles
-    bu::quantity<drs::information_per_bank_unit> effectivePageStorage;
+    bu::quantity<drs::bit_unit> effectivePageStorage;
     double nBankLogicalRows;
     double nRowAddressLines;
     double nBankLogicalColumns;

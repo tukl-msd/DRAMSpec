@@ -90,15 +90,15 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nGot: " << timing.cellDelay);
 
     _mag = 25104;
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.localWordlineResistance, 3) == _mag*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.localWordlineResistance, 3) == _mag*drs::ohms,
                         "Resistance of local wordline different from the expected."
-                        << "\nExpected around: " << _mag*drs::ohms_per_subarray
+                        << "\nExpected around: " << _mag*drs::ohms
                         << "\nGot: " << timing.localWordlineResistance);
 
     _mag = 7.8601e-05;
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.localWordlineCapacitance, 9) == _mag*drs::nanofarads_per_subarray,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.localWordlineCapacitance, 9) == _mag*drs::nanofarads,
                         "Capacitance of local wordline different from the expected."
-                        << "\nExpected around: " << _mag*drs::nanofarads_per_subarray
+                        << "\nExpected around: " << _mag*drs::nanofarads
                         << "\nGot: " << timing.localWordlineCapacitance);
 
     _mag = 4.544;
@@ -108,15 +108,15 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nGot: " << timing.localWordlineDelay);
 
     _mag = 18864;
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.localBitlineResistance, 3) == _mag*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.localBitlineResistance, 3) == _mag*drs::ohms,
                         "Bitline resistance different from the expected."
-                        << "\nExpected around: " << _mag*drs::ohms_per_subarray
+                        << "\nExpected around: " << _mag*drs::ohms
                         << "\nGot: " << timing.localBitlineResistance);
 
     _mag = 8.384e-05;
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.localBitlineCapacitance, 9) == _mag*drs::nanofarads_per_subarray,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.localBitlineCapacitance, 9) == _mag*drs::nanofarads,
                         "Bitline capacitance different from the expected."
-                        << "\nExpected around: " << _mag*drs::nanofarads_per_subarray
+                        << "\nExpected around: " << _mag*drs::nanofarads
                         << "\nGot: " << timing.localBitlineCapacitance);
 
     _mag = 3.642;
@@ -126,15 +126,15 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nGot: " << timing.localBitlineDelay);
 
     _mag = 115.908;
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineResistance, 3) == _mag*drs::ohms_per_tile,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineResistance, 3) == _mag*drs::ohms,
                         "Resistance of global wordline different from the expected."
-                        << "\nExpected around: " << _mag*drs::ohms_per_tile
+                        << "\nExpected around: " << _mag*drs::ohms
                         << "\nGot: " << timing.globalWordlineResistance);
 
     _mag = 4.43e-4;
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineCapacitance, 6) == _mag*drs::nanofarads_per_tile,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineCapacitance, 6) == _mag*drs::nanofarads,
                         "Capacitance of global wordline different from the expected."
-                        << "\nExpected around: " << _mag*drs::nanofarads_per_tile
+                        << "\nExpected around: " << _mag*drs::nanofarads
                         << "\nGot: " << timing.globalWordlineCapacitance);
 
     _mag = 1.059;
@@ -174,15 +174,15 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nGot: " << timing.tcsl);
 
     _mag = 232.344;
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalDatalineResistance, 3) == _mag*drs::ohms_per_bank,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalDatalineResistance, 3) == _mag*drs::ohms,
                         "Resistance of global dataline different from the expected."
-                        << "\nExpected around: " << _mag*drs::ohms_per_bank
+                        << "\nExpected around: " << _mag*drs::ohms
                         << "\nGot: " << timing.globalDatalineResistance);
 
     _mag = 8.88e-4;
-    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalDatalineCapacitance, 6) == _mag*drs::nanofarads_per_bank,
+    BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalDatalineCapacitance, 6) == _mag*drs::nanofarads,
                         "Capacitance of global dataline different from the expected."
-                        << "\nExpected around: " << _mag*drs::nanofarads_per_bank
+                        << "\nExpected around: " << _mag*drs::nanofarads
                         << "\nGot: " << timing.globalDatalineCapacitance);
 
     _mag = 2.032;

@@ -43,11 +43,11 @@
 void
 Bank::bankInitialize()
 {
-  bankStorage = 0*drs::bit_per_bank;
-  bankWidth = 0*drs::micrometer_per_bank;
-  bankHeight = 0*drs::micrometer_per_bank;
+  bankStorage = 0*drs::bits;
+  bankWidth = 0*drs::micrometers;
+  bankHeight = 0*drs::micrometers;
 
-  effectivePageStorage = 0*drs::bits_per_bank;
+  effectivePageStorage = 0*drs::bits;
   nBankLogicalRows = 0;
   nRowAddressLines = 0;
   nBankLogicalColumns = 0;
@@ -64,7 +64,7 @@ Bank::bankStorageCalc()
 void
 Bank::bankTilesPlacementAssess()
 {
-  if ( isPowerOfTwo(nTilesPerBank.value()) == false ) {
+  if ( isPowerOfTwo(nTilesPerBank) == false ) {
       std::string exceptionMsgThrown("[ERROR] ");
       exceptionMsgThrown.append("Total number of tiles per bank ");
       exceptionMsgThrown.append("must be a power of two.");
@@ -72,8 +72,8 @@ Bank::bankTilesPlacementAssess()
   }
 
   // Defining default tiles placement on bank
-  nVerticalTiles = pow(2, floor(log(nTilesPerBank.value())/log(4.0)) ) * drs::tiles_per_bank;
-  nHorizontalTiles = nTilesPerBank / nVerticalTiles * drs::tiles_per_bank;
+  nVerticalTiles = pow(2, floor(log(nTilesPerBank)/log(4.0)) );
+  nHorizontalTiles = nTilesPerBank / nVerticalTiles;
 
 }
 
@@ -81,10 +81,10 @@ void
 Bank::bankLenghtCalc()
 {
   bankWidth = nHorizontalTiles
-               * (tileWidth + 1.0 * rowDecoderWidth / drs::tile);
+               * (tileWidth + 1.0 * rowDecoderWidth);
 
   bankHeight = nVerticalTiles * tileHeight
-               + 1.0 * colDecoderHeight / drs::bank;
+               + 1.0 * colDecoderHeight;
 
 }
 
@@ -92,7 +92,7 @@ void
 Bank::bankLogicAssess()
 {
 
-  effectivePageStorage = (SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)
+  effectivePageStorage = (SCALE_QUANTITY(pageStorage, drs::bit_unit)
                           * nTilesPerBank
                           * pageSpanningFactor
                           );
@@ -102,8 +102,7 @@ Bank::bankLogicAssess()
   nRowAddressLines = ceil(log2(nBankLogicalRows));
 
   // Number of (addressable) columns in a bank
-  nBankLogicalColumns = 1.0*drs::bank
-                         * effectivePageStorage / interface;
+  nBankLogicalColumns = effectivePageStorage / interface;
   nColumnAddressLines = ceil(log2(nBankLogicalColumns));
 }
 

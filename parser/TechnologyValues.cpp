@@ -51,24 +51,24 @@ TechnologyValues::technologyValuesInitialize()
     vdd = 0*si::volt;
     wireResistance = 0*drs::ohm_per_millimeter;
     wireCapacitance = 0*drs::femtofarad_per_millimeter;
-    capacitancePerCell = 0*drs::femtofarads_per_cell;
-    resistancePerCell = 0*drs::kiloohm_per_cell;
-    cellWidth = 0*drs::micrometer_per_cell;
-    cellHeight = 0*drs::micrometer_per_cell;
-    capacitancePerBLCell = 0*drs::attofarads_per_cell;
-    resistancePerBLCell = 0*drs::ohm_per_cell;
-    capacitancePerWLCell = 0*drs::attofarads_per_cell;
-    resistancePerWLCell = 0*drs::ohm_per_cell;
+    capacitancePerCell = 0*drs::femtofarads;
+    resistancePerCell = 0*drs::kiloohm;
+    cellWidth = 0*drs::micrometer;
+    cellHeight = 0*drs::micrometer;
+    capacitancePerBLCell = 0*drs::attofarads;
+    resistancePerBLCell = 0*drs::ohm;
+    capacitancePerWLCell = 0*drs::attofarads;
+    resistancePerWLCell = 0*drs::ohm;
     BLSenseAmpHeight = 0*drs::micrometer;
     LWLDriverWidth = 0*drs::micrometer;
-    LWLDriverResistance = 0*drs::ohm_per_subarray;
+    LWLDriverResistance = 0*drs::ohm;
     rowDecoderWidth = 0*drs::micrometers;
     GWLDriverResistance = 0*si::ohm;
     Issa = 0*drs::microampere_per_bit;
-    WRDriverResistance = 0*drs::ohm_per_subarray;
+    WRDriverResistance = 0*drs::ohm;
     colDecoderHeight = 0*drs::micrometers;
     CSLDriverResistance = 0*si::ohms;
-    CSLLoadCapacitance = 0*drs::femtofarads_per_bank;
+    CSLLoadCapacitance = 0*drs::femtofarads;
     GDLDriverResistance = 0*si::ohms;
     DQDriverHeight = 0*drs::micrometers;
     DQtoTSVWireLength = 0*drs::micrometers;
@@ -93,20 +93,20 @@ TechnologyValues::technologyValuesInitialize()
     is3D = false;
     isDLL = false;
     channelSize = 0*drs::gibibit;
-    nBanks = 0*drs::bank;
-    nHorizontalBanks = 0*drs::bank;
-    nVerticalBanks = 0*drs::bank;
-    cellsPerLWL = 0*drs::cell_per_subarray;
-    cellsPerLWLRedundancy = 0*drs::cell_per_subarray;
-    cellsPerLBL = 0*drs::cell_per_subarray;
-    cellsPerLBLRedundancy = 0*drs::cell_per_subarray;
+    nBanks = 0;
+    nHorizontalBanks = 0;
+    nVerticalBanks = 0;
+    cellsPerLWL = 0;
+    cellsPerLWLRedundancy = 0;
+    cellsPerLBL = 0;
+    cellsPerLBLRedundancy = 0;
     interface = 0*drs::bit;
     prefetch = 0;
     dramFreq = 0*drs::megahertz_clock;
     dramCoreFreq = 0*drs::megahertz_clock;
-    nTilesPerBank = 0*drs::tile_per_bank;
-    pageStorage = 0*drs::kibibyte_per_page;
-    pageSpanningFactor = 0*drs::page_per_tile;
+    nTilesPerBank = 0;
+    pageStorage = 0*drs::kibibyte;
+    pageSpanningFactor = 0;
     BLArchitecture = "";
     subArrayToPageFactor = 0;
     retentionTime = 0*drs::millisecond;
@@ -243,34 +243,35 @@ TechnologyValues::readjson(const string& t,const string& p)
 
         //cell capa
         capacitancePerCell = getJSONNumber(techDocument, "CellCapacitance[fF]")
-                             * drs::femtofarads_per_cell;
+                             * drs::femtofarads;
 
         //cell resistance
         resistancePerCell = getJSONNumber(techDocument, "CellResistance[KOhm]")
-                            * drs::kiloohm_per_cell;
+                            * drs::kiloohm;
 
         //cell width
         cellWidth = getJSONNumber(techDocument, "CellWidth[um]")
-                    * drs::micrometers_per_cell;
+                    * drs::micrometers;
 
         //cell height
         cellHeight = getJSONNumber(techDocument, "CellHeight[um]")
-                     * drs::micrometers_per_cell;
+                     * drs::micrometers;
 
         //Bitline per cell capa
         capacitancePerBLCell = getJSONNumber(techDocument, "BitlineCapacitancePerCell[aF]")
-                               * drs::attofarads_per_cell;
+                               * drs::attofarads;
 
         //Bitline per cell resistance
         resistancePerBLCell = getJSONNumber(techDocument, "BitlineResistancePerCell[Ohm]")
-                              * drs::ohm_per_cell;
+                              * drs::ohm;
+
         //Wordline per cell capa
         capacitancePerWLCell = getJSONNumber(techDocument, "WordlineCapacitancePerCell[aF]")
-                               * drs::attofarads_per_cell;
+                               * drs::attofarads;
 
         //Wordline per cell resistance
         resistancePerWLCell = getJSONNumber(techDocument, "WordlineResistancePerCell[Ohm]")
-                              * drs::ohm_per_cell;
+                              * drs::ohm;
 
         //Sense amp height
         BLSenseAmpHeight = getJSONNumber(techDocument, "PrimarySenseAmpHeight[um]")
@@ -282,7 +283,7 @@ TechnologyValues::readjson(const string& t,const string& p)
 
         //Local wordline driver resistance in ohm
         LWLDriverResistance = getJSONNumber(techDocument, "LocalWordlineDriverResistance[Ohm]")
-                              * drs::ohm_per_subarray;
+                              * drs::ohm;
 
         //Row decoder (between tiles) width
         rowDecoderWidth = getJSONNumber(techDocument, "RowDecoderWidth[um]")
@@ -298,7 +299,7 @@ TechnologyValues::readjson(const string& t,const string& p)
 
         // Write Restore Driver resistance
         WRDriverResistance = getJSONNumber(techDocument, "WriteDriverResistance[Ohm]")
-                       * drs::ohm_per_subarray;
+                       * drs::ohm;
 
         //Column decoder (between tiles) height
         colDecoderHeight = getJSONNumber(techDocument, "ColumnDecoderHeight[um]")
@@ -310,7 +311,7 @@ TechnologyValues::readjson(const string& t,const string& p)
 
         //CSL load capacitance
         CSLLoadCapacitance = getJSONNumber(techDocument, "CSLLoadCapacitance[fF]")
-                         * drs::femtofarads_per_bank;
+                         * drs::femtofarads;
 
         //GDL driver resistance in ohm
         GDLDriverResistance = getJSONNumber(techDocument, "GlobalDataLineDriverResistance[Ohm]")
@@ -447,35 +448,28 @@ TechnologyValues::readjson(const string& t,const string& p)
 
         //size of DRAM Channel
         channelSize = getJSONNumber(archDocument, "ChannelSize[Gb]")
-                         * drs::gibibit;
+                      * drs::gibibits;
 
         //# of banks
-        nBanks = getJSONNumber(archDocument, "NumberOfBanksPerChannel[]")
-                         * drs::bank;
+        nBanks = getJSONNumber(archDocument, "NumberOfBanksPerChannel[]");
 
         //# of banks in the row direction
-        nHorizontalBanks = getJSONNumber(archDocument, "NumberOfHorizontalBanksPerChannel[]")
-                         * drs::bank;
+        nHorizontalBanks = getJSONNumber(archDocument, "NumberOfHorizontalBanksPerChannel[]");
 
         //# of banks in the column direction
-        nVerticalBanks = getJSONNumber(archDocument, "NumberOfVerticalBanksPerChannel[]")
-                         * drs::bank;
+        nVerticalBanks = getJSONNumber(archDocument, "NumberOfVerticalBanksPerChannel[]");
 
         //cells per subarray row
-        cellsPerLWL = getJSONNumber(archDocument, "CellsPerSubarrayRow[]")
-                      * drs::cell_per_subarray;
+        cellsPerLWL = getJSONNumber(archDocument, "CellsPerSubarrayRow[]");
 
         //cells per subarray row redundancy
-        cellsPerLWLRedundancy = getJSONNumber(archDocument, "RedundantCellsPerSubarrayRow[]")
-                                * drs::cell_per_subarray;
+        cellsPerLWLRedundancy = getJSONNumber(archDocument, "RedundantCellsPerSubarrayRow[]");
 
         //cells per subarray column
-        cellsPerLBL = getJSONNumber(archDocument, "CellsPerSubarrayColumn[]")
-                      * drs::cell_per_subarray;
+        cellsPerLBL = getJSONNumber(archDocument, "CellsPerSubarrayColumn[]");
 
         //cells per subarray column redundancy
-        cellsPerLBLRedundancy = getJSONNumber(archDocument, "RedundantCellsPerSubarrayColumn[]")
-                                * drs::cell_per_subarray;
+        cellsPerLBLRedundancy = getJSONNumber(archDocument, "RedundantCellsPerSubarrayColumn[]");
 
         //Interface (channel-wise)
         interface = getJSONNumber(archDocument, "Interface[bit]")
@@ -493,16 +487,14 @@ TechnologyValues::readjson(const string& t,const string& p)
                          * drs::megahertz_clock;
 
         // Number of tiles per bank
-        nTilesPerBank = getJSONNumber(archDocument, "TilesPerBank[]")
-                         * drs::tile_per_bank;
+        nTilesPerBank = getJSONNumber(archDocument, "TilesPerBank[]");
 
         // Page size - number of local sense amp. activated in a row access
         pageStorage = getJSONNumber(archDocument, "PageSize[KB]")
-                         * drs::kibibyte_per_page;
+                         * drs::kibibyte;
 
         // Spanning factor of pages across tiles
-        pageSpanningFactor = getJSONNumber(archDocument, "PageSpanningFactor[]")
-                         * drs::page_per_tile;
+        pageSpanningFactor = getJSONNumber(archDocument, "PageSpanningFactor[]");
 
         // Subarray to page factor (inverse percentage bitlines that are sensed per row access)
         subArrayToPageFactor = getJSONNumber(archDocument, "SubarrayToPageFactor[]");

@@ -49,24 +49,24 @@ Timing::timingInitialize()
 
     cellDelay = 0*drs::nanoseconds;
 
-    localWordlineResistance = 0*drs::ohms_per_subarray;
-    localWordlineCapacitance = 0*drs::nanofarads_per_subarray;
+    localWordlineResistance = 0*drs::ohms;
+    localWordlineCapacitance = 0*drs::nanofarads;
     localWordlineDelay = 0*drs::nanoseconds;
 
-    localBitlineResistance = 0*drs::ohms_per_subarray;
-    localBitlineCapacitance = 0*drs::nanofarads_per_subarray;
+    localBitlineResistance = 0*drs::ohms;
+    localBitlineCapacitance = 0*drs::nanofarads;
     localBitlineDelay = 0*drs::nanoseconds;
 
-    globalWordlineResistance = 0*drs::ohms_per_tile;
-    globalWordlineCapacitance = 0*drs::nanofarads_per_tile;
+    globalWordlineResistance = 0*drs::ohms;
+    globalWordlineCapacitance = 0*drs::nanofarads;
     globalWordlineDelay = 0*drs::nanoseconds;
 
     trcd = 0*drs::nanoseconds;
 
     tcsl = 0*drs::nanoseconds;
 
-    globalDatalineResistance = 0*drs::ohms_per_bank;
-    globalDatalineCapacitance = 0*drs::nanofarads_per_bank;
+    globalDatalineResistance = 0*drs::ohms;
+    globalDatalineCapacitance = 0*drs::nanofarads;
     tgdl = 0*drs::nanoseconds;
 
     DQWireLength = 0*drs::micrometers;
@@ -134,35 +134,32 @@ Timing::trcdCalc()
 
     // Calculating tau for cell celltau ( in ns )
     cellDelay = timeToPercentage(90)
-              * 1.0 * drs::cell
-              * SCALE_QUANTITY(capacitancePerCell, drs::nanofarad_per_cell_unit)
-              * 1.0 * drs::cell
-              * SCALE_QUANTITY(resistancePerCell, drs::ohm_per_cell_unit);
+              * SCALE_QUANTITY(capacitancePerCell, drs::nanofarad_unit)
+              * SCALE_QUANTITY(resistancePerCell, drs::ohm_unit);
 
     localWordlineResistance = LWLDriverResistance
                               + (cellsPerLWL *  resistancePerWLCell);
 
     // Calculating wordline total capacitance
     localWordlineCapacitance = cellsPerLWL
-            * SCALE_QUANTITY(capacitancePerWLCell, drs::nanofarad_per_cell_unit);
+            * SCALE_QUANTITY(capacitancePerWLCell, drs::nanofarad_unit);
 
     // Calculating wltau( in ns )
     localWordlineDelay = timeToPercentage(90)
             * localWordlineCapacitance
-            * localWordlineResistance
-            * drs::subarray * drs::subarray;
+            * localWordlineResistance;
 
     // Calculating bitline total resistance
     localBitlineResistance = cellsPerLBL * resistancePerBLCell;
 
     // Calculating bitline total capacitance
     localBitlineCapacitance = cellsPerLBL
-          * SCALE_QUANTITY(capacitancePerBLCell, drs::nanofarad_per_cell_unit);
+          * SCALE_QUANTITY(capacitancePerBLCell, drs::nanofarad_unit);
 
     // Calculating the bltau( in ns )
     localBitlineDelay = timeToPercentage(90)
-            * localBitlineResistance * 1.0 * drs::subarray
-            * localBitlineCapacitance * 1.0 * drs::subarray;
+            * localBitlineResistance
+            * localBitlineCapacitance;
 
 
     // TODO: Global word line driving needs re-check!
@@ -170,18 +167,18 @@ Timing::trcdCalc()
     //calculating GWL decoder + wiring delay
     //calculating global wordline total capa
     globalWordlineResistance = wireResistance
-           * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit);
+           * SCALE_QUANTITY(tileWidth, drs::millimeter_unit);
 
     globalWordlineCapacitance =
            SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
-           * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit);
+           * SCALE_QUANTITY(tileWidth, drs::millimeter_unit);
 
     // Calculating delay through global wordline driver and wiring
     globalWordlineDelay = driverEnableDelay
         + timeToPercentage(90) * GWLDriverResistance
-          * globalWordlineCapacitance * 1.0 * drs::tile
-        + timeToPercentage(63) * globalWordlineResistance * 1.0 * drs::tile
-          * globalWordlineCapacitance * 1.0 * drs::tile;
+          * globalWordlineCapacitance
+        + timeToPercentage(63) * globalWordlineResistance
+          * globalWordlineCapacitance;
     
     // Calculating trcd
     trcd = globalWordlineDelay + localWordlineDelay + cellDelay + localBitlineDelay;
@@ -202,33 +199,33 @@ void
 Timing::trasCalc()
 {
 
-    CSLResistance = SCALE_QUANTITY(bankHeight, drs::millimeter_per_bank_unit)
+    CSLResistance = SCALE_QUANTITY(bankHeight, drs::millimeter_unit)
                       * wireResistance;
 
-    CSLCapacitance = SCALE_QUANTITY(bankHeight, drs::millimeter_per_bank_unit)
+    CSLCapacitance = SCALE_QUANTITY(bankHeight, drs::millimeter_unit)
                       * SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
-                     + SCALE_QUANTITY(CSLLoadCapacitance, drs::nanofarad_per_bank_unit);
+                     + SCALE_QUANTITY(CSLLoadCapacitance, drs::nanofarad_unit);
 
     // delay through CSL
     tcsl = driverEnableDelay
            + timeToPercentage(90) * CSLDriverResistance
-            * CSLCapacitance * drs::bank
+            * CSLCapacitance
            + timeToPercentage(63) * CSLResistance
-            * CSLCapacitance * drs::bank * drs::bank;
+            * CSLCapacitance;
 
 
-    globalDatalineResistance = SCALE_QUANTITY(bankHeight, drs::millimeter_per_bank_unit)
+    globalDatalineResistance = SCALE_QUANTITY(bankHeight, drs::millimeter_unit)
                       * wireResistance;
 
-    globalDatalineCapacitance = SCALE_QUANTITY(bankHeight, drs::millimeter_per_bank_unit)
+    globalDatalineCapacitance = SCALE_QUANTITY(bankHeight, drs::millimeter_unit)
                       * SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit);
 
     // delay through global dataline
     tgdl = driverEnableDelay
            + timeToPercentage(90) * GDLDriverResistance
-             * globalDatalineCapacitance * drs::bank
+             * globalDatalineCapacitance
            + timeToPercentage(63) * globalDatalineResistance
-             * globalDatalineCapacitance * drs::bank * drs::bank;
+             * globalDatalineCapacitance;
 
 
     // The longest DQ main wire for a non-3D architecture
@@ -238,12 +235,12 @@ Timing::trasCalc()
     //  from the column decoder and throught the TSV area
     if ( is3D ) {
         DQWireLength = nHorizontalBanks
-                            * ( 2.0 * colDecoderHeight + TSVHeight)/drs::bank
-                       + (nHorizontalBanks - 1.0*drs::bank)
+                            * ( 2.0 * colDecoderHeight + TSVHeight)
+                       + (nHorizontalBanks - 1.0)
                             * bankWidth
                        + DQtoTSVWireLength;
     } else {
-        DQWireLength = channelWidth - 1.0*drs::bank*bankWidth;
+        DQWireLength = channelWidth - 1.0*bankWidth;
     }
 
     DQWireResistance = SCALE_QUANTITY(DQWireLength, drs::millimeter_unit)
@@ -355,7 +352,7 @@ Timing::trfcCalc()
     if (temperature > 0*bu::celsius::degrees
          && temperature < 85*bu::celsius::degrees)
     {
-      nRowsRefreshedPerARCmd = ceil(nBanks * nBankLogicalRows/drs::bank
+      nRowsRefreshedPerARCmd = ceil(nBanks * nBankLogicalRows
                                 * trefI / SCALE_QUANTITY(retentionTime, drs::nanosecond_unit)
                                 );
     }
@@ -363,7 +360,7 @@ Timing::trfcCalc()
     else if (temperature > 85*bu::celsius::degrees
               && temperature < 95*bu::celsius::degrees)
     {
-      nRowsRefreshedPerARCmd = ceil(2.0 * nBanks * nBankLogicalRows/drs::bank
+      nRowsRefreshedPerARCmd = ceil(2.0 * nBanks * nBankLogicalRows
                                 * trefI / SCALE_QUANTITY(retentionTime, drs::nanosecond_unit)
                                 );
     }

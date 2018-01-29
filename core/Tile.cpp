@@ -43,19 +43,19 @@
 void
 Tile::tileInitialize()
 {
-    tileStorage = 0*drs::bit_per_tile;
-    tileWidth = 0*drs::micrometer_per_tile;
-    tileHeight = 0*drs::micrometer_per_tile;
+    tileStorage = 0*drs::bits;
+    tileWidth = 0*drs::micrometers;
+    tileHeight = 0*drs::micrometers;
 
-    nSubArraysPerArrayBlock = 0*drs::subarray_per_tile;
-    nArrayBlocksPerTile = 0*drs::subarray_per_tile;
+    nSubArraysPerArrayBlock = 0;
+    nArrayBlocksPerTile = 0;
 
 }
 
 void
 Tile::tileStorageCalc()
 {
-    bu::quantity<drs::information_per_bank_unit> bankStorage(channelSize/nBanks);
+    bu::quantity<drs::bit_unit> bankStorage(channelSize/nBanks);
 
     tileStorage = bankStorage/nTilesPerBank;
 
@@ -65,8 +65,8 @@ void
 Tile::checkTileDataConsistency()
 {
     // Check input consistency with respect to tilesPerBank & pageSpanningFactor
-    if ( nTilesPerBank == 1.0*drs::tile_per_bank ) {
-        if (   pageSpanningFactor != 1.0*drs::page_per_tile)
+    if ( nTilesPerBank == 1.0 ) {
+        if (   pageSpanningFactor != 1.0 )
         {
             std::string exceptionMsgThrown("[ERROR] ");
             exceptionMsgThrown.append("If architecture has ");
@@ -77,9 +77,9 @@ Tile::checkTileDataConsistency()
         }
     }
 
-    else if ( nTilesPerBank == 2.0*drs::tile_per_bank ) {
-        if (   pageSpanningFactor != 1.0*drs::page_per_tile
-               && pageSpanningFactor != 0.5*drs::page_per_tile
+    else if ( nTilesPerBank == 2.0 ) {
+        if (   pageSpanningFactor != 1.0
+               && pageSpanningFactor != 0.5
                )
         {
             std::string exceptionMsgThrown("[ERROR] ");
@@ -91,10 +91,10 @@ Tile::checkTileDataConsistency()
         }
     }
 
-    else if ( nTilesPerBank == 4.0*drs::tile_per_bank ) {
-        if (   pageSpanningFactor != 1*drs::page_per_tile
-            && pageSpanningFactor != 0.5*drs::page_per_tile
-            && pageSpanningFactor != 0.25*drs::page_per_tile)
+    else if ( nTilesPerBank == 4.0 ) {
+        if (   pageSpanningFactor != 1
+            && pageSpanningFactor != 0.5
+            && pageSpanningFactor != 0.25 )
         {
             std::string exceptionMsgThrown("[ERROR] ");
             exceptionMsgThrown.append("If architecture has ");
@@ -117,14 +117,14 @@ void
 Tile::tileLenghtCalc()
 {
     nSubArraysPerArrayBlock = ceil(
-                                    SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)
+                                    SCALE_QUANTITY(pageStorage, drs::bit_unit)
                                     * pageSpanningFactor
                                     * subArrayToPageFactor
                                     / subArrayRowStorage
                                   );
 
     tileWidth = nSubArraysPerArrayBlock * subArrayWidth
-                + 1.0 * LWLDriverWidth / drs::tile;
+                + 1.0 * LWLDriverWidth;
 
 
     if ( BLArchitecture == "OPEN" ) {
@@ -133,12 +133,11 @@ Tile::tileLenghtCalc()
                                    / nSubArraysPerArrayBlock
                                    + 1  // Dummy row of subarrays
                                         //  for BL capacitance matching
-                                  )
-                              * drs::subarrays_per_tile;
+                                  );
 
         tileHeight = nArrayBlocksPerTile * subArrayHeight
-                     - 1.0 * BLSenseAmpHeight / drs::tile
-                     + 1.0 * colDecoderHeight / drs::tile;
+                     - 1.0 * BLSenseAmpHeight
+                     + 1.0 * colDecoderHeight;
 
     }
 
@@ -146,12 +145,11 @@ Tile::tileLenghtCalc()
         nArrayBlocksPerTile = ceil(tileStorage
                                    / subArrayStorage
                                    / nSubArraysPerArrayBlock
-                                  )
-                              * drs::subarrays_per_tile;
+                                  );
 
         tileHeight = nArrayBlocksPerTile * subArrayHeight
-                     + 1.0 * BLSenseAmpHeight / drs::tile
-                     + 1.0 * colDecoderHeight / drs::tile;
+                     + 1.0 * BLSenseAmpHeight
+                     + 1.0 * colDecoderHeight;
     }
 
     else {

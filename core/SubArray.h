@@ -74,19 +74,19 @@ class SubArray : public TechnologyValues
     }
 
     // Size in number of bits of a single subarray
-    bu::quantity<drs::information_per_subarray_unit> subArrayStorage;
+    bu::quantity<drs::bit_unit> subArrayStorage;
 
     // Size in number of bits of a single physical row of a subarray
-    bu::quantity<drs::information_per_subarray_unit> subArrayRowStorage;
+    bu::quantity<drs::bit_unit> subArrayRowStorage;
 
     // Size in number of bits of a single column physical of a subarray
-    bu::quantity<drs::information_per_subarray_unit> subArrayColumnStorage;
+    bu::quantity<drs::bit_unit> subArrayColumnStorage;
 
     //the width of the subarray which should be calculated
-    bu::quantity<drs::micrometer_per_subarray_unit> subArrayWidth;
+    bu::quantity<drs::micrometer_unit> subArrayWidth;
 
     //the height of the subarray which should be calculated
-    bu::quantity<drs::micrometer_per_subarray_unit>  subArrayHeight;
+    bu::quantity<drs::micrometer_unit>  subArrayHeight;
 
     void subArrayInitialize();
 

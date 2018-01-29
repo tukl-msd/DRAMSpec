@@ -76,23 +76,23 @@ class Timing : public Channel
     bu::quantity<drs::nanosecond_unit> cellDelay;
 
     //Resistance of local wordline
-    bu::quantity<drs::resistance_per_subarray_unit> localWordlineResistance;
+    bu::quantity<drs::ohm_unit> localWordlineResistance;
     //Capacitace of local wordline
-    bu::quantity<drs::nanofarad_per_subarray_unit> localWordlineCapacitance;
+    bu::quantity<drs::nanofarad_unit> localWordlineCapacitance;
     //Delay of local wordline
     bu::quantity<drs::nanosecond_unit> localWordlineDelay;
 
     //Resistance of local bitline
-    bu::quantity<drs::resistance_per_subarray_unit> localBitlineResistance;
+    bu::quantity<drs::ohm_unit> localBitlineResistance;
     //Capacitace of local bitline
-    bu::quantity<drs::nanofarad_per_subarray_unit> localBitlineCapacitance;
+    bu::quantity<drs::nanofarad_unit> localBitlineCapacitance;
     //Delay of local bitline
     bu::quantity<drs::nanosecond_unit> localBitlineDelay;
 
     //Resistance of global wordline
-    bu::quantity<drs::resistance_per_tile_unit> globalWordlineResistance;
+    bu::quantity<drs::ohm_unit> globalWordlineResistance;
     //Capacitace of global wordline
-    bu::quantity<drs::nanofarad_per_tile_unit> globalWordlineCapacitance;
+    bu::quantity<drs::nanofarad_unit> globalWordlineCapacitance;
     //Delay through global wordline driver and wiring
     bu::quantity<drs::nanosecond_unit> globalWordlineDelay;
 
@@ -109,16 +109,16 @@ class Timing : public Channel
     bu::quantity<drs::nanosecond_unit> ACTtoRefreshCellDelay;
 
     //Resistance of CSL wire
-    bu::quantity<drs::resistance_per_bank_unit> CSLResistance;
+    bu::quantity<drs::ohm_unit> CSLResistance;
     //Capacitace of CSL wire
-    bu::quantity<drs::nanofarad_per_bank_unit> CSLCapacitance;
+    bu::quantity<drs::nanofarad_unit> CSLCapacitance;
     //Delay through CSL driver and wiring
     bu::quantity<drs::nanosecond_unit> tcsl;
 
     //Resistance of global dataline wire
-    bu::quantity<drs::resistance_per_bank_unit> globalDatalineResistance;
+    bu::quantity<drs::ohm_unit> globalDatalineResistance;
     //Capacitace of global dataline wire
-    bu::quantity<drs::nanofarad_per_bank_unit> globalDatalineCapacitance;
+    bu::quantity<drs::nanofarad_unit> globalDatalineCapacitance;
     //Delay through global dataline driver and wiring
     bu::quantity<drs::nanosecond_unit> tgdl;
 

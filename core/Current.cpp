@@ -51,23 +51,23 @@ Current::currentInitialize()
   // Fixed value by Christian
   bitProCSL = 8 * drs::bits;
   // TODO: To be estimated in later versions of DRAMSpec!
-  currentPerPageSizeSlope = 1.0*drs::milliamperes_page_per_kibibyte;
+  currentPerPageSizeSlope = 1.0*drs::milliamperes_per_kibibyte;
 
   // Intermediate values added as variables for code cleanness
   nActiveSubarrays = 0;
   nLocalBitlines = 0;
   IDD0TotalCharge = 0*drs::nanocoulomb;
   effectiveTrc = 0*drs::nanosecond;
-  IDD0ChargingCurrent = 0*si::amperes;
+  IDD0ChargingCurrent = 0*drs::amperes;
   IDD1TotalCharge = 0*drs::nanocoulomb;
-  IDD1ChargingCurrent = 0*si::amperes;
+  IDD1ChargingCurrent = 0*drs::amperes;
   IDD4TotalCharge = 0*drs::nanocoulomb;
   ioTermRdCurrent = 0*drs::milliamperes;
-  IDD4ChargingCurrent = 0*si::amperes;
+  IDD4ChargingCurrent = 0*drs::amperes;
   ioTermWrCurrent = 0*drs::milliamperes;
   refreshCharge = 0*drs::nanocoulomb;
   effectiveTrfc = 0*drs::nanosecond;
-  IDD5ChargingCurrent = 0*si::amperes;
+  IDD5ChargingCurrent = 0*drs::amperes;
 
   // Main variables
   IDD0 = 0*drs::milliamperes;
@@ -118,8 +118,7 @@ Current::backgroundCurrentCalc()
 void
 Current::IDD0Calc()
 {
-  nActiveSubarrays = 1.0 * drs::bank * effectivePageStorage
-          / ( subArrayRowStorage * 1.0*drs::subarray );
+  nActiveSubarrays = effectivePageStorage / subArrayRowStorage;
 
   if ( dramType == "DDR4" ) {
     vppPumpsEfficiency = 1;
@@ -128,25 +127,25 @@ Current::IDD0Calc()
   }
 
   // Charge of master wordline
-  masterWordlineCharge = globalWordlineCapacitance * 1.0*drs::tile
+  masterWordlineCharge = globalWordlineCapacitance
                          *  vpp / vppPumpsEfficiency;
 
   // Charge of local wordline
-  localWordlineCharge = localWordlineCapacitance * 1.0*drs::subarray
+  localWordlineCharge = localWordlineCapacitance
                         * vpp
                         * nActiveSubarrays
                         / vppPumpsEfficiency ;
 
   //charge of local bitline
-  nLocalBitlines = SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)*drs::page/drs::bit;
-  localBitlineCharge = localBitlineCapacitance * 1.0*drs::subarray
+  nLocalBitlines = SCALE_QUANTITY(pageStorage, drs::bit_unit)/drs::bit; //(adimensionalization)
+  localBitlineCharge = localBitlineCapacitance
                        * vdd/2.0
                        * nLocalBitlines;
 
   rowAddrsLinesCharge =
           SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
-          * SCALE_QUANTITY(tileHeight, drs::millimeter_per_tile_unit)
-          * nTilesPerBank * 1.0*drs::bank
+          * SCALE_QUANTITY(tileHeight, drs::millimeter_unit)
+          * nTilesPerBank
           * nRowAddressLines
           * vdd;
 
@@ -182,24 +181,22 @@ Current::IDD1Calc()
 
   // nCSLs includes CSLEN and !CSLEN lines (+ 2),
   //  and we consider they have the same capacitance as CSLs.
-  nCSLs = nSubArraysPerArrayBlock * nHorizontalTiles * 1.0*drs::bank/drs::subarrays + 2.0;
-  CSLCharge = CSLCapacitance * 1.0*drs::bank
+  nCSLs = nSubArraysPerArrayBlock * nHorizontalTiles + 2.0;
+  CSLCharge = CSLCapacitance
               * vdd
               * nCSLs;
 
   // Charge of global Dataline
-  masterDatalineCharge = globalDatalineCapacitance / drs::bit
-                         * 1.0*drs::bank
+  masterDatalineCharge = globalDatalineCapacitance
                          * vdd
-                         * interface
+                         * interface / drs::bit //(adimensionalization)
                          * prefetch;
 
   // Charges for Dataqueue // 1 Read is done for interface x prefetch
   DQWireCharge = DQWireCapacitance
                  * vdd
-                 * interface
-                 * prefetch
-                  / drs::bit;
+                 * interface / drs::bit //(adimensionalization)
+                 * prefetch;
 
   // read charges in pC
   readingCharge = SSACharge
@@ -224,8 +221,7 @@ Current::IDD4RCalc()
 {
   colAddrsLinesCharge =
           SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
-          * SCALE_QUANTITY(bankWidth, drs::millimeter_per_bank_unit)
-          * 1.0*drs::bank
+          * SCALE_QUANTITY(bankWidth, drs::millimeter_unit)
           * nColumnAddressLines
           * vdd;
 

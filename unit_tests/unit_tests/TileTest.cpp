@@ -84,31 +84,31 @@ BOOST_AUTO_TEST_CASE( checkTile_real_input )
     }
 
 
-    BOOST_CHECK_MESSAGE( tile.tileStorage == 134217728/2.0*drs::bits_per_tile,
+    BOOST_CHECK_MESSAGE( tile.tileStorage == 134217728/2.0*drs::bits,
                         "Tile storage size different from the expected."
-                        << "\nExpected: " << 134217728/2.0*drs::bits_per_tile
+                        << "\nExpected: " << 134217728/2.0*drs::bits
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 1160*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 1160*drs::micrometer,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 1160*drs::micrometer_per_tile
+                        << "\nExpected: " << 1160*drs::micrometer
                         << "\nGot: " << ceil(tile.tileWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 2124*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 2124*drs::micrometer,
                         "Height of tile different from the expected."
-                        << "\nExpected: " << 2124*drs::micrometer_per_tile
+                        << "\nExpected: " << 2124*drs::micrometer
                         << "\nGot: " << ceil(tile.tileHeight));
 
-    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 16*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 16,
                         "Number of subarrays in the wordline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 16*drs::subarray_per_tile
+                        << "\nExpected: " << 16
                         << "\nGot: " << tile.nSubArraysPerArrayBlock);
 
-    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 17*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 17,
                         "Number of subarrays in the bitline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 17*drs::subarray_per_tile
+                        << "\nExpected: " << 17
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
 
@@ -192,31 +192,31 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-    BOOST_CHECK_MESSAGE( tile.tileStorage == 134217728/2.*drs::bits_per_tile,
+    BOOST_CHECK_MESSAGE( tile.tileStorage == 134217728/2.*drs::bits,
                         "Tile storage size different from the expected."
-                        << "\nExpected: " << 134217728/2.*drs::bits_per_tile
+                        << "\nExpected: " << 134217728/2.*drs::bits
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2310*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2310*drs::micrometer,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 2310*drs::micrometer_per_tile
+                        << "\nExpected: " << 2310*drs::micrometer
                         << "\nGot: " << ceil(tile.tileWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 1209*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 1209*drs::micrometer,
                         "Height of tile different from the expected."
-                        << "\nExpected: " << 1209*drs::micrometer_per_tile
+                        << "\nExpected: " << 1209*drs::micrometer
                         << "\nGot: " << ceil(tile.tileHeight));
 
-    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 32*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 32,
                         "Number of subarrays in the wordline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 32*drs::subarray_per_tile
+                        << "\nExpected: " << 32
                         << "\nGot: " << tile.nSubArraysPerArrayBlock);
 
-    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 9*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 9,
                         "Number of subarrays in the bitline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 9*drs::subarray_per_tile
+                        << "\nExpected: " << 9
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
 
@@ -225,8 +225,8 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
 
 
     tile.subArrayToPageFactor = 1;
-    tile.nTilesPerBank = 1*drs::tiles_per_bank;
-    tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
+    tile.nTilesPerBank = 1;
+    tile.pageSpanningFactor = 0.51;
     try {
         tile.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -240,43 +240,43 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << expectedMsg
                         << "\nGot: " << exceptionMsg);
 
-    tile.pageSpanningFactor = 1*drs::pages_per_tile;
+    tile.pageSpanningFactor = 1;
     try {
         tile.tileCompute();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-    BOOST_CHECK_MESSAGE( tile.tileStorage == 134217728*drs::bits_per_tile,
+    BOOST_CHECK_MESSAGE( tile.tileStorage == 134217728*drs::bits,
                         "Tile storage size different from the expected."
-                        << "\nExpected: " << 134217728*drs::bits_per_tile
+                        << "\nExpected: " << 134217728*drs::bits
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2310*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2310*drs::micrometer,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 2310*drs::micrometer_per_tile
+                        << "\nExpected: " << 2310*drs::micrometer
                         << "\nGot: " << ceil(tile.tileWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 2124*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 2124*drs::micrometer,
                         "Height of tile different from the expected."
-                        << "\nExpected: " << 2124*drs::micrometer_per_tile
+                        << "\nExpected: " << 2124*drs::micrometer
                         << "\nGot: " << ceil(tile.tileHeight));
 
-    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 32*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 32,
                         "Number of subarrays in the wordline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 32*drs::subarray_per_tile
+                        << "\nExpected: " << 32
                         << "\nGot: " << tile.nSubArraysPerArrayBlock);
 
-    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 17*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 17,
                         "Number of subarrays in the bitline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 17*drs::subarray_per_tile
+                        << "\nExpected: " << 17
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
 
 
-    tile.nTilesPerBank = 2*drs::tiles_per_bank;
-    tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
+    tile.nTilesPerBank = 2;
+    tile.pageSpanningFactor = 0.51;
     try {
         tile.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -289,77 +289,77 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << expectedMsg
                         << "\nGot: " << exceptionMsg);
 
-    tile.pageSpanningFactor = 1*drs::pages_per_tile;
+    tile.pageSpanningFactor = 1;
     try {
         tile.tileCompute();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-    BOOST_CHECK_MESSAGE( tile.tileStorage == 67108864*drs::bits_per_tile,
+    BOOST_CHECK_MESSAGE( tile.tileStorage == 67108864*drs::bits,
                         "Tile storage size different from the expected."
-                        << "\nExpected: " << 67108864*drs::bits_per_tile
+                        << "\nExpected: " << 67108864*drs::bits
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2310*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2310*drs::micrometer,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 2310*drs::micrometer_per_tile
+                        << "\nExpected: " << 2310*drs::micrometer
                         << "\nGot: " << ceil(tile.tileWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 1209*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 1209*drs::micrometer,
                         "Height of tile different from the expected."
-                        << "\nExpected: " << 1209*drs::micrometer_per_tile
+                        << "\nExpected: " << 1209*drs::micrometer
                         << "\nGot: " << ceil(tile.tileHeight));
 
-    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 32*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 32,
                         "Number of subarrays in the wordline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 32*drs::subarray_per_tile
+                        << "\nExpected: " << 32
                         << "\nGot: " << tile.nSubArraysPerArrayBlock);
 
-    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 9*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 9,
                         "Number of subarrays in the bitline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 9*drs::subarray_per_tile
+                        << "\nExpected: " << 9
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
 
-    tile.pageSpanningFactor = 0.5*drs::pages_per_tile;
+    tile.pageSpanningFactor = 0.5;
     try {
         tile.tileCompute();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-    BOOST_CHECK_MESSAGE( tile.tileStorage == 67108864*drs::bits_per_tile,
+    BOOST_CHECK_MESSAGE( tile.tileStorage == 67108864*drs::bits,
                         "Tile storage size different from the expected."
-                        << "\nExpected: " << 67108864*drs::bits_per_tile
+                        << "\nExpected: " << 67108864*drs::bits
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 1160*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 1160*drs::micrometer,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 1160*drs::micrometer_per_tile
+                        << "\nExpected: " << 1160*drs::micrometer
                         << "\nGot: " << ceil(tile.tileWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 2124*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 2124*drs::micrometer,
                         "Height of tile different from the expected."
-                        << "\nExpected: " << 2124*drs::micrometer_per_tile
+                        << "\nExpected: " << 2124*drs::micrometer
                         << "\nGot: " << ceil(tile.tileHeight));
 
-    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 16*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 16,
                         "Number of subarrays in the wordline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 16*drs::subarray_per_tile
+                        << "\nExpected: " << 16
                         << "\nGot: " << tile.nSubArraysPerArrayBlock);
 
-    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 17*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 17,
                         "Number of subarrays in the bitline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 17*drs::subarray_per_tile
+                        << "\nExpected: " << 17
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
 
 
-    tile.nTilesPerBank = 4*drs::tiles_per_bank;
-    tile.pageSpanningFactor = 0.51*drs::pages_per_tile;
+    tile.nTilesPerBank = 4;
+    tile.pageSpanningFactor = 0.51;
     try {
         tile.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -373,108 +373,108 @@ BOOST_AUTO_TEST_CASE( checkTile_different_tile_and_page_configs )
                         << "\nExpected: " << expectedMsg
                         << "\nGot: " << exceptionMsg);
 
-    tile.pageSpanningFactor = 1*drs::pages_per_tile;
+    tile.pageSpanningFactor = 1;
     try {
         tile.tileCompute();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-    BOOST_CHECK_MESSAGE( tile.tileStorage == 33554432*drs::bits_per_tile,
+    BOOST_CHECK_MESSAGE( tile.tileStorage == 33554432*drs::bits,
                         "Tile storage size different from the expected."
-                        << "\nExpected: " << 33554432*drs::bits_per_tile
+                        << "\nExpected: " << 33554432*drs::bits
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2310*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 2310*drs::micrometer,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 2310*drs::micrometer_per_tile
+                        << "\nExpected: " << 2310*drs::micrometer
                         << "\nGot: " << ceil(tile.tileWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 752*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 752*drs::micrometer,
                         "Height of tile different from the expected."
-                        << "\nExpected: " << 752*drs::micrometer_per_tile
+                        << "\nExpected: " << 752*drs::micrometer
                         << "\nGot: " << ceil(tile.tileHeight));
 
-    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 32*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 32,
                         "Number of subarrays in the wordline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 32*drs::subarray_per_tile
+                        << "\nExpected: " << 32
                         << "\nGot: " << tile.nSubArraysPerArrayBlock);
 
-    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 5*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 5,
                         "Number of subarrays in the bitline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 5*drs::subarray_per_tile
+                        << "\nExpected: " << 5
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
 
 
 
-    tile.pageSpanningFactor = 0.5*drs::pages_per_tile;
+    tile.pageSpanningFactor = 0.5;
     try {
         tile.tileCompute();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-    BOOST_CHECK_MESSAGE( tile.tileStorage == 33554432*drs::bits_per_tile,
-                        "Tile storage size different from the expected."
-                        << "\nExpected: " << 33554432*drs::bits_per_tile
+    BOOST_CHECK_MESSAGE( tile.tileStorage == 33554432*drs::bits,
+                        "Tile storage size different from the expbits_per_tileected."
+                        << "\nExpected: " << 33554432*drs::bits
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 1160*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 1160*drs::micrometer,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 1160*drs::micrometer_per_tile
+                        << "\nExpected: " << 1160*drs::micrometer
                         << "\nGot: " << ceil(tile.tileWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 1209*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 1209*drs::micrometer,
                         "Height of tile different from the expected."
-                        << "\nExpected: " << 1209*drs::micrometer_per_tile
+                        << "\nExpected: " << 1209*drs::micrometer
                         << "\nGot: " << ceil(tile.tileHeight));
 
-    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 16*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 16,
                         "Number of subarrays in the wordline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 16*drs::subarray_per_tile
+                        << "\nExpected: " << 16
                         << "\nGot: " << tile.nSubArraysPerArrayBlock);
 
-    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 9*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 9,
                         "Number of subarrays in the bitline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 9*drs::subarray_per_tile
+                        << "\nExpected: " << 9
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
 
 
-    tile.pageSpanningFactor = 0.25*drs::pages_per_tile;
+    tile.pageSpanningFactor = 0.25;
     try {
         tile.tileCompute();
     }catch (string exceptionMsgThrown){
         exceptionMsg = exceptionMsgThrown;
     }
-    BOOST_CHECK_MESSAGE( tile.tileStorage == 33554432*drs::bits_per_tile,
+    BOOST_CHECK_MESSAGE( tile.tileStorage == 33554432*drs::bits,
                         "Tile storage size different from the expected."
-                        << "\nExpected: " << 33554432*drs::bits_per_tile
+                        << "\nExpected: " << 33554432*drs::bits
                         << "\nGot: " << tile.tileStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 585*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileWidth) == 585*drs::micrometer,
                         "Width of tile different from the expected."
-                        << "\nExpected: " << 585*drs::micrometer_per_tile
+                        << "\nExpected: " << 585*drs::micrometer
                         << "\nGot: " << ceil(tile.tileWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 2124*drs::micrometer_per_tile,
+    BOOST_CHECK_MESSAGE( ceil(tile.tileHeight) == 2124*drs::micrometer,
                         "Height of tile different from the expected."
-                        << "\nExpected: " << 2124*drs::micrometer_per_tile
+                        << "\nExpected: " << 2124*drs::micrometer
                         << "\nGot: " << ceil(tile.tileHeight));
 
-    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 8*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nSubArraysPerArrayBlock == 8,
                         "Number of subarrays in the wordline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 8*drs::subarray_per_tile
+                        << "\nExpected: " << 8
                         << "\nGot: " << tile.nSubArraysPerArrayBlock);
 
-    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 17*drs::subarray_per_tile,
+    BOOST_CHECK_MESSAGE( tile.nArrayBlocksPerTile == 17,
                         "Number of subarrays in the bitline direction per tile "
                         << "different from the expected."
-                        << "\nExpected: " << 17*drs::subarray_per_tile
+                        << "\nExpected: " << 17
                         << "\nGot: " << tile.nArrayBlocksPerTile);
 
 

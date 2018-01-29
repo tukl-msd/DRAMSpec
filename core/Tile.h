@@ -73,17 +73,17 @@ class Tile : public SubArray
     }
 
     // Size in number of bits of a single tile
-    bu::quantity<drs::information_per_tile_unit> tileStorage;
+    bu::quantity<drs::bit_unit> tileStorage;
 
     // Width in micrometer of a single tile
-    bu::quantity<drs::micrometer_per_tile_unit> tileWidth;
+    bu::quantity<drs::micrometer_unit> tileWidth;
     // Height in micrometer of a single tile
-    bu::quantity<drs::micrometer_per_tile_unit> tileHeight;
+    bu::quantity<drs::micrometer_unit> tileHeight;
 
     // Number of subarrays per tile in the wordline direction
-    bu::quantity<drs::subarray_per_tile_unit> nSubArraysPerArrayBlock;
+    double nSubArraysPerArrayBlock;
     // Number of subarrays per tile in the bitline direction
-    bu::quantity<drs::subarray_per_tile_unit> nArrayBlocksPerTile;
+    double nArrayBlocksPerTile;
 
     void tileInitialize();
 

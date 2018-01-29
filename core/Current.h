@@ -72,7 +72,7 @@ class Current : public Timing
     // !! Hard-coded values converted to variables !!
     double IDD2nPercentageIfNotDll;
     double vppPumpsEfficiency;
-    bu::quantity<drs::milliampere_page_per_kibibyte_unit> currentPerPageSizeSlope;
+    bu::quantity<drs::milliampere_per_kibibyte_unit> currentPerPageSizeSlope;
     bu::quantity<drs::nanosecond_unit> SSAActiveTime;
     bu::quantity<drs::bit_unit> bitProCSL;
 
@@ -82,17 +82,17 @@ class Current : public Timing
     bu::quantity<drs::nanocoulomb_unit> rowAddrsLinesCharge;
     bu::quantity<drs::nanocoulomb_unit> IDD0TotalCharge;
     bu::quantity<drs::nanosecond_unit> effectiveTrc;
-    bu::quantity<si::current> IDD0ChargingCurrent;
+    bu::quantity<drs::ampere_unit> IDD0ChargingCurrent;
     bu::quantity<drs::nanocoulomb_unit> IDD1TotalCharge;
-    bu::quantity<si::current> IDD1ChargingCurrent;
+    bu::quantity<drs::ampere_unit> IDD1ChargingCurrent;
     bu::quantity<drs::nanocoulomb_unit> colAddrsLinesCharge;
     bu::quantity<drs::nanocoulomb_unit> IDD4TotalCharge;
     bu::quantity<drs::milliampere_unit> ioTermRdCurrent;
-    bu::quantity<si::current> IDD4ChargingCurrent;
+    bu::quantity<drs::ampere_unit> IDD4ChargingCurrent;
     bu::quantity<drs::milliampere_unit> ioTermWrCurrent;
     bu::quantity<drs::nanocoulomb_unit> refreshCharge;
     bu::quantity<drs::nanosecond_unit> effectiveTrfc;
-    bu::quantity<si::current> IDD5ChargingCurrent;
+    bu::quantity<drs::ampere_unit> IDD5ChargingCurrent;
 
     // Main variables
     //current IDD0 in mA ( ACT-PRE )

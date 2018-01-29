@@ -106,29 +106,29 @@ class TechnologyValues
     //wire capa in ff/mm
     bu::quantity<drs::femtofarad_per_millimeter_unit> wireCapacitance;
 
-    //cell capa
-    bu::quantity<drs::femtofarad_per_cell_unit> capacitancePerCell;
+    //cell capacitance
+    bu::quantity<drs::femtofarad_unit> capacitancePerCell;
 
     //cell resistance
-    bu::quantity<drs::kiloohm_per_cell_unit> resistancePerCell;
+    bu::quantity<drs::kiloohm_unit> resistancePerCell;
 
     //cell width
-    bu::quantity<drs::micrometer_per_cell_unit> cellWidth;
+    bu::quantity<drs::micrometer_unit> cellWidth;
 
     //cell height
-    bu::quantity<drs::micrometer_per_cell_unit> cellHeight;
+    bu::quantity<drs::micrometer_unit> cellHeight;
 
     //Bitline per cell capa
-    bu::quantity<drs::attofarad_per_cell_unit> capacitancePerBLCell;
+    bu::quantity<drs::attofarad_unit> capacitancePerBLCell;
 
     //Bitline per cell resistance
-    bu::quantity<drs::ohm_per_cell_unit> resistancePerBLCell;
+    bu::quantity<drs::ohm_unit> resistancePerBLCell;
 
     //Wordline per cell capa
-    bu::quantity<drs::attofarad_per_cell_unit> capacitancePerWLCell;
+    bu::quantity<drs::attofarad_unit> capacitancePerWLCell;
 
     //Wordline per cell resistance
-    bu::quantity<drs::ohm_per_cell_unit> resistancePerWLCell;
+    bu::quantity<drs::ohm_unit> resistancePerWLCell;
 
     //sense amp height
     bu::quantity<drs::micrometer_unit> BLSenseAmpHeight;
@@ -137,31 +137,31 @@ class TechnologyValues
     bu::quantity<drs::micrometer_unit> LWLDriverWidth;
 
     //Local wordline driver resistance in ohm
-    bu::quantity<drs::resistance_per_subarray_unit> LWLDriverResistance;
+    bu::quantity<drs::ohm_unit> LWLDriverResistance;
 
     //Row decoder (between tiles) width
     bu::quantity<drs::micrometer_unit> rowDecoderWidth;
 
     //global wordline driver resistance in ohm
-    bu::quantity<si::resistance> GWLDriverResistance;
+    bu::quantity<drs::ohm_unit> GWLDriverResistance;
 
     //current of SSA in microamperes
     bu::quantity<drs::microampere_per_bit_unit> Issa;
 
     //Write Restore Driver Resistance
-    bu::quantity<drs::resistance_per_subarray_unit> WRDriverResistance;
+    bu::quantity<drs::ohm_unit> WRDriverResistance;
 
     //Column decoder (between tiles) height
     bu::quantity<drs::micrometer_unit> colDecoderHeight;
 
     //CSL driver resistance in ohm
-    bu::quantity<si::resistance> CSLDriverResistance;
+    bu::quantity<drs::ohm_unit> CSLDriverResistance;
 
     //Load capacitance !!!  TODO: What exactly is it?  !!!
-    bu::quantity<drs::femtofarad_per_bank_unit> CSLLoadCapacitance;
+    bu::quantity<drs::femtofarad_unit> CSLLoadCapacitance;
 
     //GDL driver resistance in ohm
-    bu::quantity<si::resistance> GDLDriverResistance;
+    bu::quantity<drs::ohm_unit> GDLDriverResistance;
 
     //DQ driver (between banks) height
     bu::quantity<drs::micrometer_unit> DQDriverHeight;
@@ -170,7 +170,7 @@ class TechnologyValues
     bu::quantity<drs::micrometer_unit> DQtoTSVWireLength;
 
     //DQ driver resistance in ohm
-    bu::quantity<si::resistance> DQDriverResistance;
+    bu::quantity<drs::ohm_unit> DQDriverResistance;
 
     //Background current slope with frequency
     bu::quantity<drs::milliampere_per_megahertz_clock_unit> idd2nFreqSlope;
@@ -232,25 +232,25 @@ class TechnologyValues
     bu::quantity<drs::gibibit_unit> channelSize;
 
     //# of banks
-    bu::quantity<drs::bank_unit> nBanks;
+    double nBanks;
 
-    //# of banks
-    bu::quantity<drs::bank_unit> nHorizontalBanks;
+    //# of banks in the horizontal direction
+    double nHorizontalBanks;
 
-    //# of banks
-    bu::quantity<drs::bank_unit> nVerticalBanks;
+    //# of banks in the vertical direction
+    double nVerticalBanks;
 
     //cells per subarray row
-    bu::quantity<drs::cell_per_subarray_unit> cellsPerLWL;
+    double cellsPerLWL;
 
     //cells per subarray row redundancy
-    bu::quantity<drs::cell_per_subarray_unit> cellsPerLWLRedundancy;
+    double cellsPerLWLRedundancy;
 
     //cells per subarray column
-    bu::quantity<drs::cell_per_subarray_unit> cellsPerLBL;
+    double cellsPerLBL;
 
     //cells per subarray column redundancy
-    bu::quantity<drs::cell_per_subarray_unit> cellsPerLBLRedundancy;
+    double cellsPerLBLRedundancy;
 
     //Interface (channel-wise)
     bu::quantity<drs::bit_unit> interface;
@@ -265,13 +265,14 @@ class TechnologyValues
     bu::quantity<drs::megahertz_clock_unit> dramCoreFreq;
 
     // Number of tiles per bank
-    bu::quantity<drs::tile_per_bank_unit> nTilesPerBank;
+    double nTilesPerBank;
 
     // Page size - number of local sense amp. activated in a row access
-    bu::quantity<drs::kibibyte_per_page_unit> pageStorage;
+    bu::quantity<drs::kibibyte_unit> pageStorage;
 
     // Spanning factor of a page across tiles
-    bu::quantity<drs::page_per_tile_unit> pageSpanningFactor;
+    //  How much of the page storage is in each tile
+    double pageSpanningFactor;
 
     // Subarray to page factor (inverse percentage bitlines that are sensed per row access)
     double subArrayToPageFactor;
