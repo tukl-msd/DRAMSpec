@@ -46,135 +46,179 @@ TechnologyValues::technologyValuesInitialize()
     techFileName = "";
     archFileName = "";
 
-    technologyNode = 0*drs::nanometer;
-    vpp = 0*si::volt;
-    vdd = 0*si::volt;
-    wireResistance = 0*drs::ohm_per_millimeter;
-    wireCapacitance = 0*drs::femtofarad_per_millimeter;
-    capacitancePerCell = 0*drs::femtofarads;
-    resistancePerCell = 0*drs::kiloohm;
-    cellWidth = 0*drs::micrometer;
-    cellHeight = 0*drs::micrometer;
-    capacitancePerBLCell = 0*drs::attofarads;
-    resistancePerBLCell = 0*drs::ohm;
-    capacitancePerWLCell = 0*drs::attofarads;
-    resistancePerWLCell = 0*drs::ohm;
-    BLSenseAmpHeight = 0*drs::micrometer;
-    LWLDriverWidth = 0*drs::micrometer;
-    LWLDriverResistance = 0*drs::ohm;
-    rowDecoderWidth = 0*drs::micrometers;
-    GWLDriverResistance = 0*si::ohm;
-    Issa = 0*drs::microampere_per_bit;
-    WRDriverResistance = 0*drs::ohm;
-    colDecoderHeight = 0*drs::micrometers;
-    CSLDriverResistance = 0*si::ohms;
-    CSLLoadCapacitance = 0*drs::femtofarads;
-    GDLDriverResistance = 0*si::ohms;
-    DQDriverHeight = 0*drs::micrometers;
-    DQtoTSVWireLength = 0*drs::micrometers;
-    DQDriverResistance = 0*si::ohms;
-    idd2nFreqSlope = 0*drs::milliamperes_per_megahertz_clock;
-    idd2nTempAlpha = 0*drs::milliamperes;
-    idd2nTempBeta = 0*drs::eergeds;
-    idd2nRefTemp = 0*bu::celsius::degrees;
-    idd2nOffset = 0*drs::milliamperes;
-    IddOcdRcvSlope = 0*drs::microamperes_per_megahertz_clock;
-    TSVHeight = 0*drs::micrometers;
-    additionalLatencyTrl = 0*drs::clocks;
-    driverEnableDelay = 0*drs::nanoseconds;
-    inOutSSADelay = 0*drs::nanoseconds;
-    cmdDecoderDelay = 0*drs::nanoseconds;
-    IODelay = 0*drs::nanoseconds;
-    SSAPrechargeDelay = 0*drs::nanoseconds;
-    tWRMargin = 0*drs::nanoseconds;
-    equalizerDelay = 0*drs::nanoseconds;
+    technologyNode = INVALID_VALUE*drs::nanometer;
+    vpp = INVALID_VALUE*si::volt;
+    vdd = INVALID_VALUE*si::volt;
+    wireResistance = INVALID_VALUE*drs::ohm_per_millimeter;
+    wireCapacitance = INVALID_VALUE*drs::femtofarad_per_millimeter;
+    capacitancePerCell = INVALID_VALUE*drs::femtofarads;
+    resistancePerCell = INVALID_VALUE*drs::kiloohm;
+    cellWidth = INVALID_VALUE*drs::micrometer;
+    cellHeight = INVALID_VALUE*drs::micrometer;
+    capacitancePerBLCell = INVALID_VALUE*drs::attofarads;
+    resistancePerBLCell = INVALID_VALUE*drs::ohm;
+    capacitancePerWLCell = INVALID_VALUE*drs::attofarads;
+    resistancePerWLCell = INVALID_VALUE*drs::ohm;
+    BLSenseAmpHeight = INVALID_VALUE*drs::micrometer;
+    LWLDriverWidth = INVALID_VALUE*drs::micrometer;
+    LWLDriverResistance = INVALID_VALUE*drs::ohm;
+    rowDecoderWidth = INVALID_VALUE*drs::micrometers;
+    GWLDriverResistance = INVALID_VALUE*si::ohm;
+    Issa = INVALID_VALUE*drs::microampere_per_bit;
+    WRDriverResistance = INVALID_VALUE*drs::ohm;
+    colDecoderHeight = INVALID_VALUE*drs::micrometers;
+    CSLDriverResistance = INVALID_VALUE*si::ohms;
+    CSLLoadCapacitance = INVALID_VALUE*drs::femtofarads;
+    GDLDriverResistance = INVALID_VALUE*si::ohms;
+    DQDriverHeight = INVALID_VALUE*drs::micrometers;
+    DQtoTSVWireLength = INVALID_VALUE*drs::micrometers;
+    DQDriverResistance = INVALID_VALUE*si::ohms;
+    idd2nFreqSlope = INVALID_VALUE*drs::milliamperes_per_megahertz_clock;
+    idd2nTempAlpha = INVALID_VALUE*drs::milliamperes;
+    idd2nTempBeta = INVALID_VALUE*drs::eergeds;
+    idd2nRefTemp = INVALID_VALUE*bu::celsius::degrees;
+    idd2nOffset = INVALID_VALUE*drs::milliamperes;
+    IddOcdRcvSlope = INVALID_VALUE*drs::microamperes_per_megahertz_clock;
+    TSVHeight = INVALID_VALUE*drs::micrometers;
+    additionalLatencyTrl = INVALID_VALUE*drs::clocks;
+    driverEnableDelay = INVALID_VALUE*drs::nanoseconds;
+    inOutSSADelay = INVALID_VALUE*drs::nanoseconds;
+    cmdDecoderDelay = INVALID_VALUE*drs::nanoseconds;
+    IODelay = INVALID_VALUE*drs::nanoseconds;
+    SSAPrechargeDelay = INVALID_VALUE*drs::nanoseconds;
+    tWRMargin = INVALID_VALUE*drs::nanoseconds;
+    equalizerDelay = INVALID_VALUE*drs::nanoseconds;
 
     dramType = "";
     is3D = false;
     isDLL = false;
-    channelSize = 0*drs::gibibit;
-    nBanks = 0;
-    nHorizontalBanks = 0;
-    nVerticalBanks = 0;
-    cellsPerLWL = 0;
-    cellsPerLWLRedundancy = 0;
-    cellsPerLBL = 0;
-    cellsPerLBLRedundancy = 0;
-    interface = 0*drs::bit;
-    prefetch = 0;
-    dramFreq = 0*drs::megahertz_clock;
-    dramCoreFreq = 0*drs::megahertz_clock;
-    nTilesPerBank = 0;
-    pageStorage = 0*drs::kibibyte;
-    pageSpanningFactor = 0;
+    channelSize = INVALID_VALUE*drs::gibibit;
+    nBanks = INVALID_VALUE;
+    nHorizontalBanks = INVALID_VALUE;
+    nVerticalBanks = INVALID_VALUE;
+    cellsPerLWL = INVALID_VALUE;
+    cellsPerLWLRedundancy = INVALID_VALUE;
+    cellsPerLBL = INVALID_VALUE;
+    cellsPerLBLRedundancy = INVALID_VALUE;
+    interface = INVALID_VALUE*drs::bit;
+    prefetch = INVALID_VALUE;
+    dramFreq = INVALID_VALUE*drs::megahertz_clock;
+    dramCoreFreq = INVALID_VALUE*drs::megahertz_clock;
+    nTilesPerBank = INVALID_VALUE;
+    pageStorage = INVALID_VALUE*drs::kibibyte;
+    pageSpanningFactor = INVALID_VALUE;
     BLArchitecture = "";
-    subArrayToPageFactor = 0;
-    retentionTime = 0*drs::millisecond;
-    trefIBase = 0*drs::microsecond;
-    refreshMode = 0;
-    temperature = 0*bu::celsius::degrees;
+    subArrayToPageFactor = INVALID_VALUE;
+    retentionTime = INVALID_VALUE*drs::millisecond;
+    trefIBase = INVALID_VALUE*drs::microsecond;
+    refreshMode = INVALID_VALUE;
+    temperature = INVALID_VALUE*bu::celsius::degrees;
 
     warning = "";
 }
 
 double
 TechnologyValues::getJSONNumber(const rapidjson::Document& jsonDoc,
-                                const char* memberName)
+                                const char* memberName,
+                                const string& attributeType)
 {
-    if ( jsonDoc.HasMember( memberName ) == false )
-    {
-        string exceptionMsgThrown;
-        exceptionMsgThrown.append("[ERROR] ");
-        exceptionMsgThrown.append("Could not find member \"");
-        exceptionMsgThrown.append(memberName);
-        exceptionMsgThrown.append("\" in JSON document ");
-        exceptionMsgThrown.append(techFileName);
-        exceptionMsgThrown.append("!\n");
-        throw exceptionMsgThrown;
+  if ( jsonDoc.HasMember( memberName ) == false )
+  {
+    if ( attributeType == "mandatory" ) {
+      string exceptionMsgThrown;
+      exceptionMsgThrown.append("[ERROR] ");
+      exceptionMsgThrown.append("Could not find member \"");
+      exceptionMsgThrown.append(memberName);
+      exceptionMsgThrown.append("\" in JSON documents ");
+      exceptionMsgThrown.append(techFileName);
+      exceptionMsgThrown.append(" or ");
+      exceptionMsgThrown.append(archFileName);
+      exceptionMsgThrown.append("!\n");
+      throw exceptionMsgThrown;
     }
-    if ( jsonDoc[ memberName ].IsNumber() == false )
-    {
-        string exceptionMsgThrown;
-        exceptionMsgThrown.append("[ERROR] ");
-        exceptionMsgThrown.append("Member \"");
-        exceptionMsgThrown.append(memberName);
-        exceptionMsgThrown.append("\" in JSON document ");
-        exceptionMsgThrown.append(techFileName);
-        exceptionMsgThrown.append(" is expected to be a number!\n");
-        throw exceptionMsgThrown;
+    else if ( attributeType == "optional" ) {
+      return INVALID_VALUE;
     }
+    else {
+      std::string exceptionMsgThrown("[ERROR] ");
+      exceptionMsgThrown.append("Unexpected behaviour - ");
+      exceptionMsgThrown.append("could not decide on attribute type. ");
+      exceptionMsgThrown.append("Attribute was \"");
+      exceptionMsgThrown.append(memberName);
+      exceptionMsgThrown.append("\". ");
+      exceptionMsgThrown.append("Attribute type was \"");
+      exceptionMsgThrown.append(attributeType);
+      exceptionMsgThrown.append("\".");
+      throw exceptionMsgThrown;
+    }
+  }
+  if ( jsonDoc[ memberName ].IsNumber() == false )
+  {
+    string exceptionMsgThrown;
+    exceptionMsgThrown.append("[ERROR] ");
+    exceptionMsgThrown.append("Member \"");
+    exceptionMsgThrown.append(memberName);
+    exceptionMsgThrown.append("\" in JSON documents ");
+    exceptionMsgThrown.append(techFileName);
+    exceptionMsgThrown.append(" or ");
+    exceptionMsgThrown.append(archFileName);
+    exceptionMsgThrown.append(" is expected to be a number!\n");
+    throw exceptionMsgThrown;
+  }
 
-    return jsonDoc[ memberName ].GetDouble();
+  return jsonDoc[ memberName ].GetDouble();
 }
 
 string
 TechnologyValues::getJSONString(const rapidjson::Document& jsonDoc,
-                                const char* memberName)
+                                const char* memberName,
+                                const string& attributeType)
 {
-    if ( jsonDoc.HasMember( memberName ) == false )
-    {
-        string exceptionMsgThrown;
-        exceptionMsgThrown.append("[ERROR] ");
-        exceptionMsgThrown.append("Could not find member \"");
-        exceptionMsgThrown.append(memberName);
-        exceptionMsgThrown.append("\" in JSON document ");
-        exceptionMsgThrown.append(techFileName);
-        exceptionMsgThrown.append("!\n");
-        throw exceptionMsgThrown;
+  if ( jsonDoc.HasMember( memberName ) == false )
+  {
+    if ( attributeType == "mandatory" ) {
+      string exceptionMsgThrown;
+      exceptionMsgThrown.append("[ERROR] ");
+      exceptionMsgThrown.append("Could not find member \"");
+      exceptionMsgThrown.append(memberName);
+      exceptionMsgThrown.append("\" in JSON documents ");
+      exceptionMsgThrown.append(techFileName);
+      exceptionMsgThrown.append(" or ");
+      exceptionMsgThrown.append(archFileName);
+      exceptionMsgThrown.append("!\n");
+      throw exceptionMsgThrown;
     }
-    if ( jsonDoc[ memberName ].IsString() == false )
-    {
-        string exceptionMsgThrown;
-        exceptionMsgThrown.append("[ERROR] ");
-        exceptionMsgThrown.append("Member \"");
-        exceptionMsgThrown.append(memberName);
-        exceptionMsgThrown.append("\" in JSON document ");
-        exceptionMsgThrown.append(techFileName);
-        exceptionMsgThrown.append(" is expected to be a string!\n");
-        throw exceptionMsgThrown;
+    else if ( attributeType == "optional" ) {
+      return "";
     }
+    else {
+      std::string exceptionMsgThrown("[ERROR] ");
+      exceptionMsgThrown.append("Unexpected behaviour - ");
+      exceptionMsgThrown.append("could not decide on attribute type. ");
+      exceptionMsgThrown.append("Attribute was \"");
+      exceptionMsgThrown.append(memberName);
+      exceptionMsgThrown.append("\". ");
+      exceptionMsgThrown.append("Attribute type was \"");
+      exceptionMsgThrown.append(attributeType);
+      exceptionMsgThrown.append("\".");
+      throw exceptionMsgThrown;
+    }
+  }
+  if ( jsonDoc[ memberName ].IsString() == false )
+  {
+    string exceptionMsgThrown;
+    exceptionMsgThrown.append("[ERROR] ");
+    exceptionMsgThrown.append("Member \"");
+    exceptionMsgThrown.append(memberName);
+    exceptionMsgThrown.append("\" in JSON documents ");
+    exceptionMsgThrown.append(techFileName);
+    exceptionMsgThrown.append(" or ");
+    exceptionMsgThrown.append(archFileName);
+    exceptionMsgThrown.append(" is expected to be a string!\n");
+    throw exceptionMsgThrown;
+  }
 
-    return jsonDoc[ memberName ].GetString();
+  return jsonDoc[ memberName ].GetString();
 }
 
 void 
@@ -223,171 +267,255 @@ TechnologyValues::readjson(const string& t,const string& p)
 
     try {
         //Technology node in nm
-        technologyNode = getJSONNumber(techDocument, "TechnologyNode[nm]")
+        technologyNode = getJSONNumber(techDocument,
+                                       "TechnologyNode[nm]",
+                                       "mandatory")
                          * drs::nanometer;
 
         //voltage vpp
-        vpp = getJSONNumber(techDocument, "Vpp[V]")
+        vpp = getJSONNumber(techDocument,
+                            "Vpp[V]",
+                            "mandatory")
               * si::volt;
         //voltage vdd
-        vdd = getJSONNumber(techDocument, "Vdd[V]")
+        vdd = getJSONNumber(techDocument,
+                            "Vdd[V]",
+                            "mandatory")
               * si::volt;
 
         //wire resistance in ohm/mm
-        wireResistance = getJSONNumber(techDocument, "WireResistance[Ohm/mm]")
+        wireResistance = getJSONNumber(techDocument,
+                                       "WireResistance[Ohm/mm]",
+                                       "mandatory")
                          * drs::ohm_per_millimeter;
 
         //wire capa in ff/mm
-        wireCapacitance = getJSONNumber(techDocument, "WireCapacitance[fF/mm]")
+        wireCapacitance = getJSONNumber(techDocument,
+                                        "WireCapacitance[fF/mm]",
+                                        "mandatory")
                           * drs::femtofarad_per_millimeter;
 
         //cell capa
-        capacitancePerCell = getJSONNumber(techDocument, "CellCapacitance[fF]")
+        capacitancePerCell = getJSONNumber(techDocument,
+                                           "CellCapacitance[fF]",
+                                           "mandatory")
                              * drs::femtofarads;
 
         //cell resistance
-        resistancePerCell = getJSONNumber(techDocument, "CellResistance[KOhm]")
+        resistancePerCell = getJSONNumber(techDocument,
+                                          "CellResistance[KOhm]",
+                                          "mandatory")
                             * drs::kiloohm;
 
         //cell width
-        cellWidth = getJSONNumber(techDocument, "CellWidth[um]")
+        cellWidth = getJSONNumber(techDocument,
+                                  "CellWidth[um]",
+                                  "mandatory")
                     * drs::micrometers;
 
         //cell height
-        cellHeight = getJSONNumber(techDocument, "CellHeight[um]")
+        cellHeight = getJSONNumber(techDocument,
+                                   "CellHeight[um]",
+                                   "mandatory")
                      * drs::micrometers;
 
         //Bitline per cell capa
-        capacitancePerBLCell = getJSONNumber(techDocument, "BitlineCapacitancePerCell[aF]")
+        capacitancePerBLCell = getJSONNumber(techDocument,
+                                             "BitlineCapacitancePerCell[aF]",
+                                             "mandatory")
                                * drs::attofarads;
 
         //Bitline per cell resistance
-        resistancePerBLCell = getJSONNumber(techDocument, "BitlineResistancePerCell[Ohm]")
+        resistancePerBLCell = getJSONNumber(techDocument,
+                                            "BitlineResistancePerCell[Ohm]",
+                                            "mandatory")
                               * drs::ohm;
 
         //Wordline per cell capa
-        capacitancePerWLCell = getJSONNumber(techDocument, "WordlineCapacitancePerCell[aF]")
+        capacitancePerWLCell = getJSONNumber(techDocument,
+                                             "WordlineCapacitancePerCell[aF]",
+                                             "mandatory")
                                * drs::attofarads;
 
         //Wordline per cell resistance
-        resistancePerWLCell = getJSONNumber(techDocument, "WordlineResistancePerCell[Ohm]")
+        resistancePerWLCell = getJSONNumber(techDocument,
+                                            "WordlineResistancePerCell[Ohm]",
+                                            "mandatory")
                               * drs::ohm;
 
         //Sense amp height
-        BLSenseAmpHeight = getJSONNumber(techDocument, "PrimarySenseAmpHeight[um]")
+        BLSenseAmpHeight = getJSONNumber(techDocument,
+                                         "PrimarySenseAmpHeight[um]",
+                                         "mandatory")
                            * drs::micrometer;
 
         //Local wordline driver width
-        LWLDriverWidth = getJSONNumber(techDocument, "LocalWordlineDriverWitdh[um]")
+        LWLDriverWidth = getJSONNumber(techDocument,
+                                       "LocalWordlineDriverWitdh[um]",
+                                       "mandatory")
                         * drs::micrometer;
 
         //Local wordline driver resistance in ohm
-        LWLDriverResistance = getJSONNumber(techDocument, "LocalWordlineDriverResistance[Ohm]")
+        LWLDriverResistance = getJSONNumber(techDocument,
+                                            "LocalWordlineDriverResistance[Ohm]",
+                                            "mandatory")
                               * drs::ohm;
 
         //Row decoder (between tiles) width
-        rowDecoderWidth = getJSONNumber(techDocument, "RowDecoderWidth[um]")
+        rowDecoderWidth = getJSONNumber(techDocument,
+                                        "RowDecoderWidth[um]",
+                                        "mandatory")
                           * drs::micrometer;
 
         //Global wordline driver resistance in ohm
-        GWLDriverResistance = getJSONNumber(techDocument, "GlobalWordlineDriverResistance[Ohm]")
+        GWLDriverResistance = getJSONNumber(techDocument,
+                                            "GlobalWordlineDriverResistance[Ohm]",
+                                            "mandatory")
                               * si::ohm;
 
         //current of SSA in milliamperes
-        Issa = getJSONNumber(techDocument, "SecondarySenseAmpCurrent[uA]")
+        Issa = getJSONNumber(techDocument,
+                             "SecondarySenseAmpCurrent[uA]",
+                             "mandatory")
                * drs::microampere_per_bit;
 
         // Write Restore Driver resistance
-        WRDriverResistance = getJSONNumber(techDocument, "WriteDriverResistance[Ohm]")
+        WRDriverResistance = getJSONNumber(techDocument,
+                                           "WriteDriverResistance[Ohm]",
+                                           "mandatory")
                        * drs::ohm;
 
         //Column decoder (between tiles) height
-        colDecoderHeight = getJSONNumber(techDocument, "ColumnDecoderHeight[um]")
+        colDecoderHeight = getJSONNumber(techDocument,
+                                         "ColumnDecoderHeight[um]",
+                                         "mandatory")
                            * drs::micrometer;
 
         //CSL driver resistance in ohm
-        CSLDriverResistance = getJSONNumber(techDocument, "CSLDriverResistance[Ohm]")
+        CSLDriverResistance = getJSONNumber(techDocument,
+                                            "CSLDriverResistance[Ohm]",
+                                            "mandatory")
                               * si::ohm;
 
         //CSL load capacitance
-        CSLLoadCapacitance = getJSONNumber(techDocument, "CSLLoadCapacitance[fF]")
+        CSLLoadCapacitance = getJSONNumber(techDocument,
+                                           "CSLLoadCapacitance[fF]",
+                                           "mandatory")
                          * drs::femtofarads;
 
         //GDL driver resistance in ohm
-        GDLDriverResistance = getJSONNumber(techDocument, "GlobalDataLineDriverResistance[Ohm]")
+        GDLDriverResistance = getJSONNumber(techDocument,
+                                            "GlobalDataLineDriverResistance[Ohm]",
+                                            "mandatory")
                               * si::ohm;
 
         //DQ driver (between banks) height
-        DQDriverHeight = getJSONNumber(techDocument, "DQDriverHeight[um]")
+        DQDriverHeight = getJSONNumber(techDocument,
+                                       "DQDriverHeight[um]",
+                                       "mandatory")
                          * drs::micrometer;
 
         //Length of the wire going from the DQ main wiring to the TSV
-        DQtoTSVWireLength = getJSONNumber(techDocument, "DQtoTSVWireLength[um]")
+        DQtoTSVWireLength = getJSONNumber(techDocument,
+                                          "DQtoTSVWireLength[um]",
+                                          "mandatory")
                              * drs::micrometers;
 
         //DQ driver resistance in ohm
-        DQDriverResistance = getJSONNumber(techDocument, "DQDriverResistance[Ohm]")
+        DQDriverResistance = getJSONNumber(techDocument,
+                                           "DQDriverResistance[Ohm]",
+                                           "mandatory")
                              * si::ohm;
 
         //Background current slope with frequency
-        idd2nFreqSlope = getJSONNumber(techDocument, "IDD2NFreqSlope[mA/MHz]")
+        idd2nFreqSlope = getJSONNumber(techDocument,
+                                       "IDD2NFreqSlope[mA/MHz]",
+                                       "mandatory")
                                  * drs::milliamperes_per_megahertz_clock;
 
         //Background current alpha coefficient (models temperature dependency)
-        idd2nTempAlpha = getJSONNumber(techDocument, "IDD2NTempAlpha[mA]")
+        idd2nTempAlpha = getJSONNumber(techDocument,
+                                       "IDD2NTempAlpha[mA]",
+                                       "mandatory")
                                  * drs::milliamperes;
 
         //Background current beta coefficient (models temperature dependency)
-        idd2nTempBeta = getJSONNumber(techDocument, "IDD2NTempBeta[C^-1]")
+        idd2nTempBeta = getJSONNumber(techDocument,
+                                      "IDD2NTempBeta[C^-1]",
+                                      "mandatory")
                                  * drs::eergeds;
 
         //Background current reference temperature (models temperature dependency)
-        idd2nRefTemp = getJSONNumber(techDocument, "IDD2NRefTemp[C]")
+        idd2nRefTemp = getJSONNumber(techDocument,
+                                     "IDD2NRefTemp[C]",
+                                     "mandatory")
                                  * bu::celsius::degrees;
 
         //Background current offset (current at ref temp and 0 MHz)
-        idd2nOffset = getJSONNumber(techDocument, "IDD2NOffset[mA]")
+        idd2nOffset = getJSONNumber(techDocument,
+                                    "IDD2NOffset[mA]",
+                                    "mandatory")
                                   * drs::milliamperes;
 
         //Current slope per IO pin (Off Channel Driver)
-        IddOcdRcvSlope = getJSONNumber(techDocument, "OCDCurrentSlope[uA/MHz]")
+        IddOcdRcvSlope = getJSONNumber(techDocument,
+                                       "OCDCurrentSlope[uA/MHz]",
+                                       "mandatory")
                                     * drs::microamperes_per_megahertz_clock;
 
 
         //Height of the TSV area needed for each bank I/O
-        TSVHeight = getJSONNumber(techDocument, "TSVHeight[um]")
+        TSVHeight = getJSONNumber(techDocument,
+                                  "TSVHeight[um]",
+                                  "mandatory")
                     * drs::micrometer;
 
         //Additional latency required for trl calculation
-        additionalLatencyTrl = getJSONNumber(techDocument, "AdditionalTRLLatency[cc]")
+        additionalLatencyTrl = getJSONNumber(techDocument,
+                                             "AdditionalTRLLatency[cc]",
+                                             "mandatory")
                          * drs::clock;
 
         //Driver enabling delay
-        driverEnableDelay = getJSONNumber(techDocument, "DriverEnableDelay[ns]")
+        driverEnableDelay = getJSONNumber(techDocument,
+                                          "DriverEnableDelay[ns]",
+                                          "mandatory")
                          * drs::nanoseconds;
 
         //Signal delay from input to output of SSA
-        inOutSSADelay = getJSONNumber(techDocument, "InOutSSADelay[ns]")
+        inOutSSADelay = getJSONNumber(techDocument,
+                                      "InOutSSADelay[ns]",
+                                      "mandatory")
                          * drs::nanoseconds;
 
         //Command decoder delay - clock wave pipeline delay
-        cmdDecoderDelay = getJSONNumber(techDocument, "CommandDecoderDelay[ns]")
+        cmdDecoderDelay = getJSONNumber(techDocument,
+                                        "CommandDecoderDelay[ns]",
+                                        "mandatory")
                          * drs::nanoseconds;
 
         //I/O interface delay
-        IODelay = getJSONNumber(techDocument, "IODelay[ns]")
+        IODelay = getJSONNumber(techDocument,
+                                "IODelay[ns]",
+                                "mandatory")
                          * drs::nanoseconds;
 
         //Delay for SSA precharging
-        SSAPrechargeDelay = getJSONNumber(techDocument, "SSAPrechargeDelay[ns]")
+        SSAPrechargeDelay = getJSONNumber(techDocument,
+                                          "SSAPrechargeDelay[ns]",
+                                          "mandatory")
                          * drs::nanoseconds;
 
         // Security margin for Write Recovery
-        tWRMargin = getJSONNumber(techDocument, "tWRMargin[ns]")
+        tWRMargin = getJSONNumber(techDocument,
+                                  "tWRMargin[ns]",
+                                  "mandatory")
                          * drs::nanoseconds;
 
         //Equalizer circuit enabling delay
-        equalizerDelay = getJSONNumber(techDocument, "EqualizerDelay[ns]")
+        equalizerDelay = getJSONNumber(techDocument,
+                                       "EqualizerDelay[ns]",
+                                       "mandatory")
                          * drs::nanoseconds;
 
     } catch(string exceptionMsgThrown) {
@@ -437,84 +565,128 @@ TechnologyValues::readjson(const string& t,const string& p)
 
     try {
         //DRAM Type
-        dramType = getJSONString(archDocument, "DRAMType[-]");
+        dramType = getJSONString(archDocument,
+                                 "DRAMType[-]",
+                                 "mandatory");
 
         //3D ON/OFF Feature
-        //set 3D on for HMC/WideIO
-        is3D = ( getJSONString(archDocument, "3D[-]") == "ON" );
+        //set 3D on for HMC/WideIO/HBM
+        is3D = ( getJSONString(archDocument, "3D[-]", "mandatory") == "ON" );
 
         // DLL ON/OFF Feature
-        isDLL = ( getJSONString(archDocument, "DLL[-]") == "ON" );
+        isDLL = ( getJSONString(archDocument, "DLL[-]", "mandatory") == "ON" );
 
         //size of DRAM Channel
-        channelSize = getJSONNumber(archDocument, "ChannelSize[Gb]")
+        channelSize = getJSONNumber(archDocument,
+                                    "ChannelSize[Gb]",
+                                    "mandatory")
                       * drs::gibibits;
 
         //# of banks
-        nBanks = getJSONNumber(archDocument, "NumberOfBanksPerChannel[]");
+        nBanks = getJSONNumber(archDocument,
+                               "NumberOfBanksPerChannel[]",
+                               "mandatory");
 
         //# of banks in the row direction
-        nHorizontalBanks = getJSONNumber(archDocument, "NumberOfHorizontalBanksPerChannel[]");
+        nHorizontalBanks = getJSONNumber(archDocument,
+                                         "NumberOfHorizontalBanksPerChannel[]",
+                                         "optional");
 
         //# of banks in the column direction
-        nVerticalBanks = getJSONNumber(archDocument, "NumberOfVerticalBanksPerChannel[]");
+        nVerticalBanks = getJSONNumber(archDocument,
+                                       "NumberOfVerticalBanksPerChannel[]",
+                                       "optional");
 
         //cells per subarray row
-        cellsPerLWL = getJSONNumber(archDocument, "CellsPerSubarrayRow[]");
+        cellsPerLWL = getJSONNumber(archDocument,
+                                    "CellsPerSubarrayRow[]",
+                                    "mandatory");
 
         //cells per subarray row redundancy
-        cellsPerLWLRedundancy = getJSONNumber(archDocument, "RedundantCellsPerSubarrayRow[]");
+        cellsPerLWLRedundancy = getJSONNumber(archDocument,
+                                              "RedundantCellsPerSubarrayRow[]",
+                                              "mandatory");
 
         //cells per subarray column
-        cellsPerLBL = getJSONNumber(archDocument, "CellsPerSubarrayColumn[]");
+        cellsPerLBL = getJSONNumber(archDocument,
+                                    "CellsPerSubarrayColumn[]",
+                                    "mandatory");
 
         //cells per subarray column redundancy
-        cellsPerLBLRedundancy = getJSONNumber(archDocument, "RedundantCellsPerSubarrayColumn[]");
+        cellsPerLBLRedundancy = getJSONNumber(archDocument,
+                                              "RedundantCellsPerSubarrayColumn[]",
+                                              "mandatory");
 
         //Interface (channel-wise)
-        interface = getJSONNumber(archDocument, "Interface[bit]")
+        interface = getJSONNumber(archDocument,
+                                  "Interface[bit]",
+                                  "mandatory")
                     * drs::bits;
 
         //Number of prefetched words (interface wide) per CAS
-        prefetch = getJSONNumber(archDocument, "Prefetch[]");
+        prefetch = getJSONNumber(archDocument,
+                                 "Prefetch[]",
+                                 "mandatory");
 
         //DRAM Frequency
-        dramFreq = getJSONNumber(archDocument, "Frequency[MHz]")
+        dramFreq = getJSONNumber(archDocument,
+                                 "Frequency[MHz]",
+                                 "mandatory")
                          * drs::megahertz_clock;
 
         //DRAM Core Frequency
-        dramCoreFreq = getJSONNumber(archDocument, "CoreFrequency[MHz]")
+        dramCoreFreq = getJSONNumber(archDocument,
+                                     "CoreFrequency[MHz]",
+                                     "mandatory")
                          * drs::megahertz_clock;
 
         // Number of tiles per bank
-        nTilesPerBank = getJSONNumber(archDocument, "TilesPerBank[]");
+        nTilesPerBank = getJSONNumber(archDocument,
+                                      "TilesPerBank[]",
+                                      "mandatory");
 
         // Page size - number of local sense amp. activated in a row access
-        pageStorage = getJSONNumber(archDocument, "PageSize[KB]")
+        pageStorage = getJSONNumber(archDocument,
+                                    "PageSize[KB]",
+                                    "mandatory")
                          * drs::kibibyte;
 
         // Spanning factor of pages across tiles
-        pageSpanningFactor = getJSONNumber(archDocument, "PageSpanningFactor[]");
+        pageSpanningFactor = getJSONNumber(archDocument,
+                                           "PageSpanningFactor[]",
+                                           "mandatory");
 
         // Subarray to page factor (inverse percentage bitlines that are sensed per row access)
-        subArrayToPageFactor = getJSONNumber(archDocument, "SubarrayToPageFactor[]");
+        subArrayToPageFactor = getJSONNumber(archDocument,
+                                             "SubarrayToPageFactor[]",
+                                             "mandatory");
 
         // DRAM Bitline Architecture: OPEN or FOLDED bitline
-        BLArchitecture = getJSONString(archDocument, "BitlineArchitecture[-]");
+        BLArchitecture = getJSONString(archDocument,
+                                       "BitlineArchitecture[-]",
+                                       "mandatory");
 
         // Retention time
-        retentionTime = getJSONNumber(archDocument, "RetentionTime[ms]")
+        retentionTime = getJSONNumber(archDocument,
+                                      "RetentionTime[ms]",
+                                      "mandatory")
                          * drs::millisecond;
 
         // Normal mode and temp. average interval between AR commands
-        trefIBase = getJSONNumber(archDocument, "tREFI(base)[us]")
+        trefIBase = getJSONNumber(archDocument,
+                                  "tREFI(base)[us]",
+                                  "mandatory")
                          * drs::microsecond;
 
         // Refresh mode according to JEDEC (eg., JESD79-4B)
-        refreshMode = getJSONNumber(archDocument, "RefreshMode[]");
+        refreshMode = getJSONNumber(archDocument,
+                                    "RefreshMode[]",
+                                    "mandatory");
 
         // Temperature used for timings and currents calculations
-        temperature = getJSONNumber(archDocument, "Temperature[C]")
+        temperature = getJSONNumber(archDocument,
+                                    "Temperature[C]",
+                                    "mandatory")
                          * bu::celsius::degrees;
 
     } catch(string exceptionMsgThrown) {

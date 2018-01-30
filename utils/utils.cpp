@@ -41,6 +41,7 @@
 #include "utils.h"
 #include <stdio.h>
 #include <iostream>
+#include <limits>
 
 bool isInteger( double dn )
 {

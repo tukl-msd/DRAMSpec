@@ -195,8 +195,8 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
 
 
     channel.nBanks = 1.0;
-    channel.nHorizontalBanks = 0.0;
-    channel.nVerticalBanks = 0.0;
+    channel.nHorizontalBanks = INVALID_VALUE;
+    channel.nVerticalBanks = INVALID_VALUE;
     try {
         channel.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -226,8 +226,8 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
                         << "\nGot: " << ceil(channel.channelArea));
 
     channel.nBanks = 2.0;
-    channel.nHorizontalBanks = 0.0;
-    channel.nVerticalBanks = 0.0;
+    channel.nHorizontalBanks = INVALID_VALUE;
+    channel.nVerticalBanks = INVALID_VALUE;
     try {
         channel.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -257,8 +257,8 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
                         << "\nGot: " << ceil(channel.channelArea));
 
     channel.nBanks = 4.0;
-    channel.nHorizontalBanks = 0.0;
-    channel.nVerticalBanks = 0.0;
+    channel.nHorizontalBanks = INVALID_VALUE;
+    channel.nVerticalBanks = INVALID_VALUE;
     try {
         channel.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -288,8 +288,8 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
                         << "\nGot: " << ceil(channel.channelArea));
 
     channel.nBanks = 8.0;
-    channel.nHorizontalBanks = 0.0;
-    channel.nVerticalBanks = 0.0;
+    channel.nHorizontalBanks = INVALID_VALUE;
+    channel.nVerticalBanks = INVALID_VALUE;
     try {
         channel.tileCompute();
     }catch (string exceptionMsgThrown){

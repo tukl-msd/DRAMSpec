@@ -301,10 +301,12 @@ class TechnologyValues
     void technologyValuesInitialize();
 
     double getJSONNumber(const rapidjson::Document& jsonDoc,
-                         const char* memberName);
+                         const char* memberName,
+                         const string& attributeType);
 
     string getJSONString(const rapidjson::Document& jsonDoc,
-                         const char* memberName);
+                         const char* memberName,
+                         const string& attributeType);
 
     void readjson(const string& t,const string& p);
 

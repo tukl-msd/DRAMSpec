@@ -43,6 +43,8 @@
 
 #include <cmath>
 
+#define INVALID_VALUE std::numeric_limits<double>::max()
+
 bool isInteger( double dn );
 bool isPowerOfTwo( double n );
 

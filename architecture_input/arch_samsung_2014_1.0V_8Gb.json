@@ -6,7 +6,6 @@
     "ChannelSize[Gb]": 1,
 
     "NumberOfBanksPerChannel[]":8,
-    "NumberOfHorizontalBanksPerChannel[]": 0,
     "NumberOfVerticalBanksPerChannel[]": 4,
 
     "CellsPerSubarrayRow[]": 1046,

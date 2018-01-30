@@ -68,7 +68,8 @@ Channel::channelBanksPlacementAssess()
     // Defining default bank placement on channel,
     // executed when the number of banks in neither direction is defined
     // in the input file
-    if ( nHorizontalBanks == 0 && nVerticalBanks == 0 )
+    if ( nHorizontalBanks == INVALID_VALUE
+         && nVerticalBanks == INVALID_VALUE )
     {
         nVerticalBanks = pow(2, floor(log(nBanks)/log(4.0)) );
         nHorizontalBanks = nBanks / nVerticalBanks;
@@ -76,7 +77,7 @@ Channel::channelBanksPlacementAssess()
 
     // If one direction only is defined
     // define the other one.
-    else if ( nHorizontalBanks == 0 )
+    else if ( nHorizontalBanks == INVALID_VALUE )
     {
         if ( isPowerOfTwo(nVerticalBanks) == false
              || nVerticalBanks > nBanks ) {
@@ -90,7 +91,7 @@ Channel::channelBanksPlacementAssess()
 
         nHorizontalBanks = nBanks / nVerticalBanks;
     }
-    else if ( nVerticalBanks == 0 )
+    else if ( nVerticalBanks == INVALID_VALUE )
     {
         if ( isPowerOfTwo(nHorizontalBanks) == false
              || nVerticalBanks > nBanks ) {

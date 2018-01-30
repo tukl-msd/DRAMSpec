@@ -315,14 +315,14 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                         << "\nExpected: " << 8
                         << "\nGot: " << techValues.nBanks);
 
-    BOOST_CHECK_MESSAGE( techValues.nHorizontalBanks == 0,
+    BOOST_CHECK_MESSAGE( techValues.nHorizontalBanks == INVALID_VALUE,
                          "Number of banks in the row direction different from the expected."
-                        << "\nExpected: " << 0
+                        << "\nExpected: " << INVALID_VALUE
                         << "\nGot: " << techValues.nHorizontalBanks);
 
-    BOOST_CHECK_MESSAGE( techValues.nVerticalBanks == 0,
+    BOOST_CHECK_MESSAGE( techValues.nVerticalBanks == INVALID_VALUE,
                          "Number of banks in the colunm direction different from the expected."
-                        << "\nExpected: " << 0
+                        << "\nExpected: " << INVALID_VALUE
                         << "\nGot: " << techValues.nHorizontalBanks);
 
     BOOST_CHECK_MESSAGE( techValues.cellsPerLWL == 524,
@@ -344,11 +344,6 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
                          "Redundant cells per local bitline different from the expected."
                         << "\nExpected: " << 12
                         << "\nGot: " << techValues.cellsPerLBLRedundancy);
-
-    BOOST_CHECK_MESSAGE( techValues.nVerticalBanks == 0,
-                         "Number of banks in the column direction different from the expected."
-                        << "\nExpected: " << 0
-                        << "\nGot: " << techValues.nVerticalBanks);
 
     BOOST_CHECK_MESSAGE( techValues.interface == 16*drs::bit,
                          "Interface different from the expected."

@@ -165,8 +165,8 @@ Note: the number of technology and architecture description files must be equal.
 |DLL|Flag for the usage of Dealy-Locked Loop. ON means the DRAM uses DLL.|-|
 |ChannelSize|Data storage capacity of a single channel.|Gbit|
 |NumberOfBanksPerChannel|Total number of banks in a single channel.|dimensionless|
-|NumberOfHorizontalBanksPerChannel|Number of banks in row direction. Set to 0 (zero) for automatic calculation.|dimensionless|
-|NumberOfVerticalBanksPerChannel|Number of banks in a column direction. Set to 0 (zero) for automatic calculation.|dimensionless|
+|NumberOfHorizontalBanksPerChannel|Number of banks in row direction. (Optional)|dimensionless|
+|NumberOfVerticalBanksPerChannel|Number of banks in a column direction. (Optional)|dimensionless|
 |CellsPerSubarrayRow|Number of cells in row direction in a subarray, including redundace.|dimensionless|
 |RedundantCellsPerSubarrayRow|Number of redundant cells in row direction in a subarray.|dimensionless|
 |CellsPerSubarrayColumn|Number of cells in column direction in a subarray, including redundance.|dimensionless|
