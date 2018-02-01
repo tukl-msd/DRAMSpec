@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,12 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji
- *          Matthias Jung
- *          Christian Weis
- *          Kamal Haddad
- *          Andr'e Lucas Chinazzo
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #ifndef BANKTEST_CPP
 #define BANKTEST_CPP
@@ -80,20 +82,45 @@ BOOST_AUTO_TEST_CASE( checkBank_real_input )
     }
 
 
-    BOOST_CHECK_MESSAGE( bank.bankStorage == 134217728*drs::bits_per_bank,
+    BOOST_CHECK_MESSAGE( bank.bankStorage == 134217728*drs::bits,
                         "Bank storage size different from the expected."
-                        << "\nExpected: " << 134217728*drs::bits_per_bank
+                        << "\nExpected: " << 134217728*drs::bits
                         << "\nGot: " << bank.bankStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(bank.bankWidth) == 2799*drs::micrometer_per_bank,
+    BOOST_CHECK_MESSAGE( ceil(bank.bankWidth) == 2799*drs::micrometer,
                         "Width of bank different from the expected."
-                        << "\nExpected: " << 2799*drs::micrometer_per_bank
+                        << "\nExpected: " << 2799*drs::micrometer
                         << "\nGot: " << ceil(bank.bankWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 2374*drs::micrometer_per_bank,
+    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 2324*drs::micrometer,
                         "Height of bank different from the expected."
-                        << "\nExpected: " << 2374*drs::micrometer_per_bank
+                        << "\nExpected: " << 2324*drs::micrometer
                         << "\nGot: " << ceil(bank.bankHeight));
+
+    BOOST_CHECK_MESSAGE( bank.nBankLogicalRows == 8192,
+                        "Number logical rows in a bank"
+                        << "different from the expected."
+                        << "\nExpected: " << 8192
+                        << "\nGot: " << bank.nBankLogicalRows);
+
+    BOOST_CHECK_MESSAGE( bank.nRowAddressLines == 13,
+                        "Number of lines for row addressing "
+                        << "different from the expected."
+                        << "\nExpected: " << 13
+                        << "\nGot: " << bank.nRowAddressLines);
+
+    BOOST_CHECK_MESSAGE( bank.nBankLogicalColumns == 1024,
+                        "Number logical columns in a bank"
+                        << "different from the expected."
+                        << "\nExpected: " << 1024
+                        << "\nGot: " << bank.nBankLogicalColumns);
+
+    BOOST_CHECK_MESSAGE( bank.nColumnAddressLines == 10,
+                        "Number of lines for column addressing "
+                        << "different from the expected."
+                        << "\nExpected: " << 10
+                        << "\nGot: " << bank.nColumnAddressLines);
+
 }
 
 BOOST_AUTO_TEST_CASE( checkBank_dummy_input )
@@ -169,8 +196,8 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
     }
 
 
-    bank.tilesPerBank = 1.0*drs::tiles_per_bank;
-    bank.pageSpanningFactor = 1*drs::pages_per_tile;
+    bank.nTilesPerBank = 1.0;
+    bank.pageSpanningFactor = 1;
     try {
         bank.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -178,23 +205,23 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
     }
     bank.bankCompute();
 
-    BOOST_CHECK_MESSAGE( bank.bankStorage == 134217728*drs::bits_per_bank,
+    BOOST_CHECK_MESSAGE( bank.bankStorage == 134217728*drs::bits,
                         "Bank storage size different from the expected."
-                        << "\nExpected: " << 134217728*drs::bits_per_bank
+                        << "\nExpected: " << 134217728*drs::bits
                         << "\nGot: " << bank.bankStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(bank.bankWidth) == 2550*drs::micrometer_per_bank,
+    BOOST_CHECK_MESSAGE( ceil(bank.bankWidth) == 2550*drs::micrometer,
                         "Width of bank different from the expected."
-                        << "\nExpected: " << 2550*drs::micrometer_per_bank
+                        << "\nExpected: " << 2550*drs::micrometer
                         << "\nGot: " << ceil(bank.bankWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 2374*drs::micrometer_per_bank,
+    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 2324*drs::micrometer,
                         "Height of bank different from the expected."
-                        << "\nExpected: " << 2374*drs::micrometer_per_bank
+                        << "\nExpected: " << 2324*drs::micrometer
                         << "\nGot: " << ceil(bank.bankHeight));
 
-    bank.tilesPerBank = 2.0*drs::tiles_per_bank;
-    bank.pageSpanningFactor = 1*drs::pages_per_tile;
+    bank.nTilesPerBank = 2.0;
+    bank.pageSpanningFactor = 1;
     try {
         bank.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -202,23 +229,23 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
     }
     bank.bankCompute();
 
-    BOOST_CHECK_MESSAGE( bank.bankStorage == 134217728*drs::bits_per_bank,
+    BOOST_CHECK_MESSAGE( bank.bankStorage == 134217728*drs::bits,
                         "Bank storage size different from the expected."
-                        << "\nExpected: " << 134217728*drs::bits_per_bank
+                        << "\nExpected: " << 134217728*drs::bits
                         << "\nGot: " << bank.bankStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(bank.bankWidth) == 5099*drs::micrometer_per_bank,
+    BOOST_CHECK_MESSAGE( ceil(bank.bankWidth) == 5099*drs::micrometer,
                         "Width of bank different from the expected."
-                        << "\nExpected: " << 5099*drs::micrometer_per_bank
+                        << "\nExpected: " << 5099*drs::micrometer
                         << "\nGot: " << ceil(bank.bankWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 1459*drs::micrometer_per_bank,
+    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 1409*drs::micrometer,
                         "Height of bank different from the expected."
-                        << "\nExpected: " << 1459*drs::micrometer_per_bank
+                        << "\nExpected: " << 1409*drs::micrometer
                         << "\nGot: " << ceil(bank.bankHeight));
 
-    bank.tilesPerBank = 4.0*drs::tiles_per_bank;
-    bank.pageSpanningFactor = 1*drs::pages_per_tile;
+    bank.nTilesPerBank = 4.0;
+    bank.pageSpanningFactor = 1;
     try {
         bank.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -226,19 +253,19 @@ BOOST_AUTO_TEST_CASE( checkBank_different_tile_configs )
     }
     bank.bankCompute();
 
-    BOOST_CHECK_MESSAGE( bank.bankStorage == 134217728*drs::bits_per_bank,
+    BOOST_CHECK_MESSAGE( bank.bankStorage == 134217728*drs::bits,
                         "Bank storage size different from the expected."
-                        << "\nExpected: " << 134217728*drs::bits_per_bank
+                        << "\nExpected: " << 134217728*drs::bits
                         << "\nGot: " << bank.bankStorage);
 
-    BOOST_CHECK_MESSAGE( ceil(bank.bankWidth) == 5099*drs::micrometer_per_bank,
+    BOOST_CHECK_MESSAGE( ceil(bank.bankWidth) == 5099*drs::micrometer,
                         "Width of bank different from the expected."
-                        << "\nExpected: " << 5099*drs::micrometer_per_bank
+                        << "\nExpected: " << 5099*drs::micrometer
                         << "\nGot: " << ceil(bank.bankWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 1754*drs::micrometer_per_bank,
+    BOOST_CHECK_MESSAGE( ceil(bank.bankHeight) == 1704*drs::micrometer,
                         "Height of bank different from the expected."
-                        << "\nExpected: " << 1754*drs::micrometer_per_bank
+                        << "\nExpected: " << 1704*drs::micrometer
                         << "\nGot: " << ceil(bank.bankHeight));
 }
 

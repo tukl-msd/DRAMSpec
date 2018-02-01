@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,36 +33,40 @@
  *          Matthias Jung,
  *          Christian Weis,
  *          Kamal Haddad,
- *          Andr'e Lucas Chinazzo
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #include "Tile.h"
 
 void
 Tile::tileInitialize()
 {
-    tileStorage = 0*drs::bit_per_tile;
-    tileWidth = 0*drs::micrometer_per_tile;
-    tileHeight = 0*drs::micrometer_per_tile;
+    tileStorage = 0*drs::bits;
+    tileWidth = 0*drs::micrometers;
+    tileHeight = 0*drs::micrometers;
 
-    nSubArraysPerArrayBlock = 0*drs::subarray_per_tile;
-    nArrayBlocksPerTile = 0*drs::subarray_per_tile;
+    nSubArraysPerArrayBlock = 0;
+    nArrayBlocksPerTile = 0;
+
 }
 
 void
 Tile::tileStorageCalc()
 {
-    bu::quantity<drs::information_per_bank_unit> bankStorage(dramSize/nBanks);
+    bu::quantity<drs::bit_unit> bankStorage(channelSize/nBanks);
 
-    tileStorage = bankStorage/tilesPerBank;
+    tileStorage = bankStorage/nTilesPerBank;
+
 }
 
 void
 Tile::checkTileDataConsistency()
 {
     // Check input consistency with respect to tilesPerBank & pageSpanningFactor
-    if ( tilesPerBank == 1.0*drs::tile_per_bank ) {
-        if (   pageSpanningFactor != 1.0*drs::page_per_tile)
+    if ( nTilesPerBank == 1.0 ) {
+        if (   pageSpanningFactor != 1.0 )
         {
             std::string exceptionMsgThrown("[ERROR] ");
             exceptionMsgThrown.append("If architecture has ");
@@ -73,9 +77,9 @@ Tile::checkTileDataConsistency()
         }
     }
 
-    else if ( tilesPerBank == 2.0*drs::tile_per_bank ) {
-        if (   pageSpanningFactor != 1.0*drs::page_per_tile
-               && pageSpanningFactor != 0.5*drs::page_per_tile
+    else if ( nTilesPerBank == 2.0 ) {
+        if (   pageSpanningFactor != 1.0
+               && pageSpanningFactor != 0.5
                )
         {
             std::string exceptionMsgThrown("[ERROR] ");
@@ -87,10 +91,10 @@ Tile::checkTileDataConsistency()
         }
     }
 
-    else if ( tilesPerBank == 4.0*drs::tile_per_bank ) {
-        if (   pageSpanningFactor != 1*drs::page_per_tile
-            && pageSpanningFactor != 0.5*drs::page_per_tile
-            && pageSpanningFactor != 0.25*drs::page_per_tile)
+    else if ( nTilesPerBank == 4.0 ) {
+        if (   pageSpanningFactor != 1
+            && pageSpanningFactor != 0.5
+            && pageSpanningFactor != 0.25 )
         {
             std::string exceptionMsgThrown("[ERROR] ");
             exceptionMsgThrown.append("If architecture has ");
@@ -113,28 +117,27 @@ void
 Tile::tileLenghtCalc()
 {
     nSubArraysPerArrayBlock = ceil(
-                                    SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)
+                                    SCALE_QUANTITY(pageStorage, drs::bit_unit)
                                     * pageSpanningFactor
                                     * subArrayToPageFactor
                                     / subArrayRowStorage
-                                   );
+                                  );
 
     tileWidth = nSubArraysPerArrayBlock * subArrayWidth
-                + 1.0 * LWLDriverWidth / drs::tile
-                + 1.0 * rowDecoderWidth / drs::tile;
+                + 1.0 * LWLDriverWidth;
 
 
     if ( BLArchitecture == "OPEN" ) {
         nArrayBlocksPerTile = ceil(tileStorage
                                    / subArrayStorage
                                    / nSubArraysPerArrayBlock
-                                   + 1
-                                  )
-                              * drs::subarrays_per_tile;
+                                   + 1  // Dummy row of subarrays
+                                        //  for BL capacitance matching
+                                  );
 
         tileHeight = nArrayBlocksPerTile * subArrayHeight
-                     - 1.0 * BLSenseAmpHeight / drs::tile
-                     + 1.0 * colDecoderHeight / drs::tile;
+                     - 1.0 * BLSenseAmpHeight
+                     + 1.0 * colDecoderHeight;
 
     }
 
@@ -142,12 +145,11 @@ Tile::tileLenghtCalc()
         nArrayBlocksPerTile = ceil(tileStorage
                                    / subArrayStorage
                                    / nSubArraysPerArrayBlock
-                                  )
-                              * drs::subarrays_per_tile;
+                                  );
 
         tileHeight = nArrayBlocksPerTile * subArrayHeight
-                     + 1.0 * BLSenseAmpHeight / drs::tile
-                     + 1.0 * colDecoderHeight / drs::tile;
+                     + 1.0 * BLSenseAmpHeight
+                     + 1.0 * colDecoderHeight;
     }
 
     else {
@@ -156,35 +158,6 @@ Tile::tileLenghtCalc()
         exceptionMsgThrown.append("either \'OPEN\' or \'FOLDED\'.");
         throw exceptionMsgThrown;
     }
-}
-
-void
-Tile::tileLogicAssess()
-{
-
-    if ( BLArchitecture == "OPEN" ) {
-        nTileRowAddressLines = ceil (log2 ( subArrayColumnStorage
-                                            * ( nArrayBlocksPerTile
-                                                - 1.0*drs::subarray_per_tile
-                                              )
-                                            * 1.0*drs::tile/inf::bit
-                                          )
-                                    );
-    }
-    else if ( BLArchitecture == "FOLDED" ) {
-        nTileRowAddressLines = ceil (log2 ( subArrayColumnStorage
-                                            * nArrayBlocksPerTile
-                                            * 1.0*drs::tile/inf::bit
-                                          )
-                                    );
-    }
-
-    nTileColumnAddressLines = ceil (log2 ( subArrayRowStorage
-                                           * nSubArraysPerArrayBlock
-                                           * 1.0*drs::tile
-                                           / Interface
-                                         )
-                                   );
 
 }
 
@@ -200,6 +173,5 @@ Tile::tileCompute()
         throw exceptionMsgThrown;
     }
 
-    tileLogicAssess();
 }
 

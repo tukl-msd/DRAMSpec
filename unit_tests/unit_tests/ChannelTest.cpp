@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,12 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji
- *          Matthias Jung
- *          Christian Weis
- *          Kamal Haddad
- *          Andr'e Lucas Chinazzo
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #ifndef CHANNELTEST_CPP
 #define CHANNELTEST_CPP
@@ -90,14 +92,14 @@ BOOST_AUTO_TEST_CASE( checkChannel_real_input )
                         << "\nExpected: " << 11193*drs::micrometer
                         << "\nGot: " << ceil(channel.channelWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(channel.channelHeight) == 4747*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(channel.channelHeight) == 4897*drs::micrometer,
                         "Height of channel different from the expected."
-                        << "\nExpected: " << 4747*drs::micrometer
+                        << "\nExpected: " << 4897*drs::micrometer
                         << "\nGot: " << ceil(channel.channelHeight));
 
-    BOOST_CHECK_MESSAGE( ceil(channel.channelArea) == 54*drs::square_millimeter,
+    BOOST_CHECK_MESSAGE( ceil(channel.channelArea) == 55*drs::square_millimeter,
                         "Area of channel different from the expected."
-                        << "\nExpected: " << 54*drs::square_millimeter
+                        << "\nExpected: " << 55*drs::square_millimeter
                         << "\nGot: " << ceil(channel.channelArea));
 
 }
@@ -192,9 +194,9 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
     }
 
 
-    channel.nBanks = 1.0*drs::bank;
-    channel.nHorizontalBanks = 0.0*drs::bank;
-    channel.nVerticalBanks = 0.0*drs::bank;
+    channel.nBanks = 1.0;
+    channel.nHorizontalBanks = INVALID_VALUE;
+    channel.nVerticalBanks = INVALID_VALUE;
     try {
         channel.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -213,40 +215,9 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
                         << "\nExpected: " << 2799*drs::micrometer
                         << "\nGot: " << ceil(channel.channelWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(channel.channelHeight) == 15178*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(channel.channelHeight) == 15378*drs::micrometer,
                         "Height of channel different from the expected."
-                        << "\nExpected: " << 15178*drs::micrometer
-                        << "\nGot: " << ceil(channel.channelHeight));
-
-    BOOST_CHECK_MESSAGE( ceil(channel.channelArea) == 43*drs::square_millimeter,
-                        "Area of channel different from the expected."
-                        << "\nExpected: " << 43*drs::square_millimeter
-                        << "\nGot: " << ceil(channel.channelArea));
-
-    channel.nBanks = 2.0*drs::bank;
-    channel.nHorizontalBanks = 0.0*drs::bank;
-    channel.nVerticalBanks = 0.0*drs::bank;
-    try {
-        channel.tileCompute();
-    }catch (string exceptionMsgThrown){
-        cerr << exceptionMsgThrown << endl;
-    }
-    channel.bankCompute();
-    channel.channelCompute();
-
-    BOOST_CHECK_MESSAGE( channel.channelStorage == 1*drs::gibibits,
-                        "Channel storage size different from the expected."
-                        << "\nExpected: " << 1*drs::gibibits
-                        << "\nGot: " << channel.channelStorage);
-
-    BOOST_CHECK_MESSAGE( ceil(channel.channelWidth) == 5597*drs::micrometer,
-                        "Width of channel different from the expected."
-                        << "\nExpected: " << 5597*drs::micrometer
-                        << "\nGot: " << ceil(channel.channelWidth));
-
-    BOOST_CHECK_MESSAGE( ceil(channel.channelHeight) == 7861*drs::micrometer,
-                        "Height of channel different from the expected."
-                        << "\nExpected: " << 7861*drs::micrometer
+                        << "\nExpected: " << 15378*drs::micrometer
                         << "\nGot: " << ceil(channel.channelHeight));
 
     BOOST_CHECK_MESSAGE( ceil(channel.channelArea) == 44*drs::square_millimeter,
@@ -254,9 +225,9 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
                         << "\nExpected: " << 44*drs::square_millimeter
                         << "\nGot: " << ceil(channel.channelArea));
 
-    channel.nBanks = 4.0*drs::bank;
-    channel.nHorizontalBanks = 0.0*drs::bank;
-    channel.nVerticalBanks = 0.0*drs::bank;
+    channel.nBanks = 2.0;
+    channel.nHorizontalBanks = INVALID_VALUE;
+    channel.nVerticalBanks = INVALID_VALUE;
     try {
         channel.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -275,9 +246,40 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
                         << "\nExpected: " << 5597*drs::micrometer
                         << "\nGot: " << ceil(channel.channelWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(channel.channelHeight) == 8406*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(channel.channelHeight) == 8061*drs::micrometer,
                         "Height of channel different from the expected."
-                        << "\nExpected: " << 8406*drs::micrometer
+                        << "\nExpected: " << 8061*drs::micrometer
+                        << "\nGot: " << ceil(channel.channelHeight));
+
+    BOOST_CHECK_MESSAGE( ceil(channel.channelArea) == 46*drs::square_millimeter,
+                        "Area of channel different from the expected."
+                        << "\nExpected: " << 46*drs::square_millimeter
+                        << "\nGot: " << ceil(channel.channelArea));
+
+    channel.nBanks = 4.0;
+    channel.nHorizontalBanks = INVALID_VALUE;
+    channel.nVerticalBanks = INVALID_VALUE;
+    try {
+        channel.tileCompute();
+    }catch (string exceptionMsgThrown){
+        cerr << exceptionMsgThrown << endl;
+    }
+    channel.bankCompute();
+    channel.channelCompute();
+
+    BOOST_CHECK_MESSAGE( channel.channelStorage == 1*drs::gibibits,
+                        "Channel storage size different from the expected."
+                        << "\nExpected: " << 1*drs::gibibits
+                        << "\nGot: " << channel.channelStorage);
+
+    BOOST_CHECK_MESSAGE( ceil(channel.channelWidth) == 5597*drs::micrometer,
+                        "Width of channel different from the expected."
+                        << "\nExpected: " << 5597*drs::micrometer
+                        << "\nGot: " << ceil(channel.channelWidth));
+
+    BOOST_CHECK_MESSAGE( ceil(channel.channelHeight) == 8556*drs::micrometer,
+                        "Height of channel different from the expected."
+                        << "\nExpected: " << 8556*drs::micrometer
                         << "\nGot: " << ceil(channel.channelHeight));
 
     BOOST_CHECK_MESSAGE( ceil(channel.channelArea) == 48*drs::square_millimeter,
@@ -285,9 +287,9 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
                         << "\nExpected: " << 48*drs::square_millimeter
                         << "\nGot: " << ceil(channel.channelArea));
 
-    channel.nBanks = 8.0*drs::bank;
-    channel.nHorizontalBanks = 0.0*drs::bank;
-    channel.nVerticalBanks = 0.0*drs::bank;
+    channel.nBanks = 8.0;
+    channel.nHorizontalBanks = INVALID_VALUE;
+    channel.nVerticalBanks = INVALID_VALUE;
     try {
         channel.tileCompute();
     }catch (string exceptionMsgThrown){
@@ -306,14 +308,14 @@ BOOST_AUTO_TEST_CASE( checkChannel_different_bank_configs )
                         << "\nExpected: " << 11193*drs::micrometer
                         << "\nGot: " << ceil(channel.channelWidth));
 
-    BOOST_CHECK_MESSAGE( ceil(channel.channelHeight) == 4747*drs::micrometer,
+    BOOST_CHECK_MESSAGE( ceil(channel.channelHeight) == 4897*drs::micrometer,
                         "Height of channel different from the expected."
-                        << "\nExpected: " << 4747*drs::micrometer
+                        << "\nExpected: " << 4897*drs::micrometer
                         << "\nGot: " << ceil(channel.channelHeight));
 
-    BOOST_CHECK_MESSAGE( ceil(channel.channelArea) == 54*drs::square_millimeter,
+    BOOST_CHECK_MESSAGE( ceil(channel.channelArea) == 55*drs::square_millimeter,
                         "Area of channel different from the expected."
-                        << "\nExpected: " << 54*drs::square_millimeter
+                        << "\nExpected: " << 55*drs::square_millimeter
                         << "\nGot: " << ceil(channel.channelArea));
 
 }

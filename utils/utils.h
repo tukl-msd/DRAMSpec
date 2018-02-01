@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,17 +33,23 @@
  *          Matthias Jung,
  *          Christian Weis,
  *          Kamal Haddad,
- *          Andr'e Lucas Chinazzo
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #ifndef UTILS_H
 #define UTILS_H
 
 #include <cmath>
 
+#define INVALID_VALUE std::numeric_limits<double>::max()
+
 bool isInteger( double dn );
 bool isPowerOfTwo( double n );
 
 double timeToPercentage(double percentage);
+#define PRINT_VAR(varName) \
+    do{std::cout << #varName " = " << varName << std::endl;} while(false)
 
 #endif // UTILS_H

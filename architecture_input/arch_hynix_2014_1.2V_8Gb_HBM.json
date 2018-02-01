@@ -1,18 +1,20 @@
 {
-    "DRAMType[-]": "DDR3",
-    "3D[-]": "OFF",
+    "DRAMType[-]": "DDR",
+    "3D[-]": "ON",
     "DLL[-]": "ON",
 
     "ChannelSize[Gb]": 1,
 
     "NumberOfBanksPerChannel[]":8,
+    "NumberOfHorizontalBanksPerChannel[]": 2,
+    "NumberOfVerticalBanksPerChannel[]": 4,
 
-    "CellsPerSubarrayRow[]": 524,
-    "RedundantCellsPerSubarrayRow[]": 12,
-    "CellsPerSubarrayColumn[]": 524,
+    "CellsPerSubarrayRow[]": 1046,
+    "RedundantCellsPerSubarrayRow[]": 22,
+    "CellsPerSubarrayColumn[]": 512,
     "RedundantCellsPerSubarrayColumn[]": 12,
 
-    "Interface[bit]": 16,
+    "Interface[bit]": 128,
     "Prefetch[]": 8,
 
     "Frequency[MHz]": 800,
@@ -26,8 +28,9 @@
     "BitlineArchitecture[-]": "OPEN",
 
     "RetentionTime[ms]" : 64,
-    "tREFI(base)[us]" : 7.8125,
+    "tREFI(base)[us]" : 7.8,
     "RefreshMode[]":1,
 
     "Temperature[C]": 27
+
 }

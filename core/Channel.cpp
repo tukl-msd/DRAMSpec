@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,8 +33,10 @@
  *          Matthias Jung,
  *          Christian Weis,
  *          Kamal Haddad,
- *          Andr'e Lucas Chinazzo
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #include "Channel.h"
 
@@ -50,13 +52,13 @@ Channel::channelInitialize()
 void
 Channel::channelStorageCalc()
 {
-    channelStorage = dramSize;
+    channelStorage = channelSize;
 }
 
 void
 Channel::channelBanksPlacementAssess()
 {
-    if ( isPowerOfTwo(nBanks.value()) == false ) {
+    if ( isPowerOfTwo(nBanks) == false ) {
         std::string exceptionMsgThrown("[ERROR] ");
         exceptionMsgThrown.append("Total number of banks ");
         exceptionMsgThrown.append("must be a power of two.");
@@ -66,18 +68,18 @@ Channel::channelBanksPlacementAssess()
     // Defining default bank placement on channel,
     // executed when the number of banks in neither direction is defined
     // in the input file
-    if ( nHorizontalBanks == 0 * drs::banks &&
-         nVerticalBanks == 0 * drs::banks )
+    if ( nHorizontalBanks == INVALID_VALUE
+         && nVerticalBanks == INVALID_VALUE )
     {
-        nVerticalBanks = pow(2, floor(log(nBanks.value())/log(4.0)) ) * drs::bank;
-        nHorizontalBanks = nBanks / nVerticalBanks * drs::banks;
+        nVerticalBanks = pow(2, floor(log(nBanks)/log(4.0)) );
+        nHorizontalBanks = nBanks / nVerticalBanks;
     }
 
     // If one direction only is defined
     // define the other one.
-    else if ( nHorizontalBanks == 0 * drs::banks )
+    else if ( nHorizontalBanks == INVALID_VALUE )
     {
-        if ( isPowerOfTwo(nVerticalBanks.value()) == false
+        if ( isPowerOfTwo(nVerticalBanks) == false
              || nVerticalBanks > nBanks ) {
             std::string exceptionMsgThrown("[ERROR] ");
             exceptionMsgThrown.append("Number of banks in either direction ");
@@ -87,11 +89,11 @@ Channel::channelBanksPlacementAssess()
             throw exceptionMsgThrown;
         }
 
-        nHorizontalBanks = nBanks / nVerticalBanks * drs::banks;
+        nHorizontalBanks = nBanks / nVerticalBanks;
     }
-    else if ( nVerticalBanks == 0 * drs::banks )
+    else if ( nVerticalBanks == INVALID_VALUE )
     {
-        if ( isPowerOfTwo(nHorizontalBanks.value()) == false
+        if ( isPowerOfTwo(nHorizontalBanks) == false
              || nVerticalBanks > nBanks ) {
             std::string exceptionMsgThrown("[ERROR] ");
             exceptionMsgThrown.append("Number of banks in either direction ");
@@ -101,12 +103,12 @@ Channel::channelBanksPlacementAssess()
             throw exceptionMsgThrown;
         }
 
-        nVerticalBanks = nBanks / nHorizontalBanks * drs::banks;
+        nVerticalBanks = nBanks / nHorizontalBanks ;
     }
 
     // If number of banks in both directions is defined
     // make sure it matched with the defined total number of banks
-    else if ( nBanks * drs::bank != nHorizontalBanks * nVerticalBanks ) {
+    else if ( nBanks != nHorizontalBanks * nVerticalBanks ) {
         std::string exceptionMsgThrown("[ERROR] ");
         exceptionMsgThrown.append("Total number of banks does not match with ");
         exceptionMsgThrown.append("the number of banks in both directions.");
@@ -119,7 +121,8 @@ Channel::channelLenghtCalc()
 {
     channelWidth = nHorizontalBanks * bankWidth;
 
-    channelHeight = nVerticalBanks * bankHeight;
+    channelHeight = nVerticalBanks * bankHeight
+                    + 1.0 * DQDriverHeight;
     // Add TSV area if is 3D design
     if ( is3D ) {
         channelHeight = channelHeight + 1.0 * TSVHeight;

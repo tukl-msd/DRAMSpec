@@ -1,5 +1,5 @@
 {
-    "TechnologyNode[nm]": 23,
+    "TechnologyNode[nm]": 29,
 
     "Vpp[V]": 2.5,
     "Vdd[V]": 1.2,
@@ -9,8 +9,8 @@
 
     "CellCapacitance[fF]": 20,
     "CellResistance[KOhm]": 20,
-    "CellWidth[um]": 0.066 ,
-    "CellHeight[um]": 0.08 ,
+    "CellWidth[um]": 0.085,
+    "CellHeight[um]": 0.045,
 
     "BitlineCapacitancePerCell[aF]": 50,
     "BitlineResistancePerCell[Ohm]": 35,
@@ -34,7 +34,7 @@
     "CSLLoadCapacitance[fF]": 8,
     "GlobalDataLineDriverResistance[Ohm]" : 300,
 
-    "DQDriverHeight[um]": 100,
+    "DQDriverHeight[um]": 205,
     "DQtoTSVWireLength[um]": 200,
     "DQDriverResistance[Ohm]" : 250,
 
@@ -45,7 +45,7 @@
     "IDD2NOffset[mA]": 6.75,
     "OCDCurrentSlope[uA/MHz]": 4.221,
 
-    "TSVHeight[um]": 0,
+    "TSVHeight[um]": 896,
 
     "AdditionalTRLLatency[cc]" : 0,
 

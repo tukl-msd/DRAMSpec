@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,11 +11,11 @@
  *
  * 2. Redistributions in binary form must reproduce the above copyright
  *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distributio
+ *    documentation and/or other materials provided with the distribution.
  *
  * 3. Neither the name of the copyright holder nor the names of its
  *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permissio
+ *    this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
@@ -29,8 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #include "Current.h"
 #include <math.h>
@@ -40,271 +46,278 @@
 void
 Current::currentInitialize()
 {
-    // TODO: Find appropriate var. names and whether it should or not be an user input
-    IDD2nPercentageIfNotDll = 0.6;
-    vppPumpsEfficiency = 0.3;
-    currentPerPageSizeSlope = 2.0*drs::milliamperes_page_per_kibibyte;
-    SSAActiveTime = 1.5*drs::nanoseconds;
-    bitProCSL = 8 * drs::bits;
+  // Fixed value by Christian
+  IDD2nPercentageIfNotDll = 0.6;
+  // Fixed value by Christian
+  bitProCSL = 8 * drs::bits;
+  // TODO: To be estimated in later versions of DRAMSpec!
+  currentPerPageSizeSlope = 1.0*drs::milliamperes_per_kibibyte;
 
-    // Intermediate values added as variables for code cleanness
-    nActiveSubarrays = 0;
-    nLocalBitlines = 0;
-    IDD0TotalCharge = 0*drs::nanocoulomb;
-    effectiveTrc = 0*drs::nanosecond;
-    IDD0ChargingCurrent = 0*si::amperes;
-    IDD1TotalCharge = 0*drs::nanocoulomb;
-    IDD1ChargingCurrent = 0*si::amperes;
-    IDD4TotalCharge = 0*drs::nanocoulomb;
-    ioTermRdCurrent = 0*drs::milliamperes;
-    IDD4ChargingCurrent = 0*si::amperes;
-    ioTermWrCurrent = 0*drs::milliamperes;
-    refreshCharge = 0*drs::nanocoulomb;
-    effectiveTrfc = 0*drs::nanosecond;
-    IDD5ChargingCurrent = 0*si::amperes;
-    nRowActivations = 0;
+  // Intermediate values added as variables for code cleanness
+  nActiveSubarrays = 0;
+  nLocalBitlines = 0;
+  IDD0TotalCharge = 0*drs::nanocoulomb;
+  effectiveTrc = 0*drs::nanosecond;
+  IDD0ChargingCurrent = 0*drs::amperes;
+  IDD1TotalCharge = 0*drs::nanocoulomb;
+  IDD1ChargingCurrent = 0*drs::amperes;
+  IDD4TotalCharge = 0*drs::nanocoulomb;
+  ioTermRdCurrent = 0*drs::milliamperes;
+  IDD4ChargingCurrent = 0*drs::amperes;
+  ioTermWrCurrent = 0*drs::milliamperes;
+  refreshCharge = 0*drs::nanocoulomb;
+  effectiveTrfc = 0*drs::nanosecond;
+  IDD5ChargingCurrent = 0*drs::amperes;
 
-    // Main variables
-    IDD0 = 0*drs::milliamperes;
-    IDD1 = 0*drs::milliamperes;
-    IDD4R = 0*drs::milliamperes;
-    IDD4W = 0*drs::milliamperes;
-    IDD2n = 0*drs::milliamperes;
-    IDD3n = 0*drs::milliamperes;
-    IDD5 = 0*drs::milliamperes;
+  // Main variables
+  IDD0 = 0*drs::milliamperes;
+  IDD1 = 0*drs::milliamperes;
+  IDD4R = 0*drs::milliamperes;
+  IDD4W = 0*drs::milliamperes;
+  IDD2n = 0*drs::milliamperes;
+  IDD3n = 0*drs::milliamperes;
+  IDD5 = 0*drs::milliamperes;
 
-    masterWordlineCharge = 0*drs::nanocoulomb;
-    localWordlineCharge = 0*drs::nanocoulomb;
-    localBitlineCharge = 0*drs::nanocoulomb;
-    SSACharge = 0*drs::nanocoulomb;
-    CSLCharge = 0*drs::nanocoulomb;
-    masterDatalineCharge = 0*drs::nanocoulomb;
-    DQWireCharge = 0*drs::nanocoulomb;
-    readingCharge = 0*drs::nanocoulomb;
+  masterWordlineCharge = 0*drs::nanocoulomb;
+  localWordlineCharge = 0*drs::nanocoulomb;
+  localBitlineCharge = 0*drs::nanocoulomb;
+  nLDQs = 0*drs::bits;
+  SSACharge = 0*drs::nanocoulomb;
+  nCSLs = 0;
+  CSLCharge = 0*drs::nanocoulomb;
+  masterDatalineCharge = 0*drs::nanocoulomb;
+  DQWireCharge = 0*drs::nanocoulomb;
+  readingCharge = 0*drs::nanocoulomb;
 
-    includeIOTerminationCurrent = false;
+  includeIOTerminationCurrent = false;
 }
 
 // Background current calculation
 void
 Current::backgroundCurrentCalc()
 {
-    // Precharge background current (scaling with Freq)
-    IDD2n = backgroundCurrentSlope * dramFreq
-            + backgroundCurrentOffset;
 
-    if ( !isDLL ) {
-        IDD2n = IDD2nPercentageIfNotDll * IDD2n;
-    }
+  // Precharge background current
+  //  Linear increase with frequency
+  //  and exponential increase with temperature
+  IDD2n = idd2nFreqSlope * dramFreq
+          + idd2nTempAlpha
+            * ( exp(idd2nTempBeta * (temperature - idd2nRefTemp)) - 1 )
+          + idd2nOffset;
 
-    // Active background current:
-    // IDD3n is equal to IDD2n + active-adder
-    // Assumption : active-adder current = 4mA for 2K page
-    // and changes linearly while changing page size
-    IDD3n = IDD2n + currentPerPageSizeSlope * pageStorage;
+  if ( !isDLL ) {
+    IDD2n = IDD2nPercentageIfNotDll * IDD2n;
+  }
+
+  // Active background current:
+  // IDD3n is equal to IDD2n + active-adder
+  IDD3n = IDD2n + currentPerPageSizeSlope * pageStorage;
 
 }
 
 void
 Current::IDD0Calc()
 {
-    //   !!! CHECK !!!
-    // Number of active subarrays
-    //    [subarray / page] ???
-    nActiveSubarrays =
-            SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit) * 1.0*drs::page
-            / ( subArrayRowStorage * 1.0*drs::subarray );
+  nActiveSubarrays = effectivePageStorage / subArrayRowStorage;
 
-    // Charge of master wordline
-    masterWordlineCharge = globalWordlineCapacitance * 1.0*drs::tile
-                           *  vpp / vppPumpsEfficiency;
+  if ( dramType == "DDR4" ) {
+    vppPumpsEfficiency = 1;
+  } else {
+    vppPumpsEfficiency = 0.3;
+  }
 
-    // Charge of local wordline
-    localWordlineCharge = localWordlineCapacitance * 1.0*drs::subarray
-                          * vpp
-                          * nActiveSubarrays
-                          / vppPumpsEfficiency ;
+  // Charge of master wordline
+  masterWordlineCharge = globalWordlineCapacitance
+                         *  vpp / vppPumpsEfficiency;
 
-    //charge of local bitline
-    nLocalBitlines = SCALE_QUANTITY(pageStorage, drs::bit_per_page_unit)*drs::page/drs::bit;
-    localBitlineCharge = localBitlineCapacitance * 1.0*drs::subarray
-                         * vdd / 2.0 // <<-- WHY DIVIDED BY 2??
-                         * nLocalBitlines;
+  // Charge of local wordline
+  localWordlineCharge = localWordlineCapacitance
+                        * vpp
+                        * nActiveSubarrays
+                        / vppPumpsEfficiency ;
 
-    rowAddrsLinesCharge =
-            SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
-            * SCALE_QUANTITY(tileHeight, drs::millimeter_per_tile_unit)
-            * tilesPerBank * 1.0*drs::bank
-            * nTileRowAddressLines
-            * vdd;
+  //charge of local bitline
+  nLocalBitlines = SCALE_QUANTITY(pageStorage, drs::bit_unit)/drs::bit; //(adimensionalization)
+  localBitlineCharge = localBitlineCapacitance
+                       * vdd/2.0
+                       * nLocalBitlines;
 
-    IDD0TotalCharge = ( masterWordlineCharge
-                      + localWordlineCharge
-                      + localBitlineCharge
-                      + rowAddrsLinesCharge)
-                            * 2.0 ; // !! Why times 2? Maybe number of tiles?
+  rowAddrsLinesCharge =
+          SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+          * SCALE_QUANTITY(tileHeight, drs::millimeter_unit)
+          * nTilesPerBank
+          * nRowAddressLines
+          * vdd;
 
-    // Clock cycles of trc in ns
-    effectiveTrc = trc_clk * clkPeriod;
-    // Current caused by charging and discharging of capas in mA
-    IDD0ChargingCurrent = IDD0TotalCharge / effectiveTrc;
+  IDD0TotalCharge = ( masterWordlineCharge
+                    + localWordlineCharge
+                    + localBitlineCharge
+                    + rowAddrsLinesCharge)
+                          * 2.0 ; // !! Why times 2? Maybe number of tiles?
 
-    IDD0 = IDD3n
-           + SCALE_QUANTITY(IDD0ChargingCurrent, drs::milliampere_unit);
+  // Clock cycles of trc in ns
+  effectiveTrc = trc_clk * clkPeriod;
+  // Current caused by charging and discharging of capas in mA
+  IDD0ChargingCurrent = IDD0TotalCharge / effectiveTrc;
+
+  IDD0 = IDD3n
+         + SCALE_QUANTITY(IDD0ChargingCurrent, drs::milliampere_unit);
 
 }
 
 void
 Current::IDD1Calc()
 {
-    // Charges of SSA / SSA active for 1.5 ns
-    SSACharge = Interface
-                * prefetch
-                * SCALE_QUANTITY(Issa, drs::ampere_per_bit_unit)
-                * SSAActiveTime;
 
-    // Charges for CSL// 8 bits pro CSL
-    CSLCharge = CSLCapacitance * 1.0*drs::bank
-                * vdd
-                * Interface
-                * prefetch
-                / bitProCSL ;
+  nLDQs = interface * prefetch;
 
-    // Charge of global Dataline
-    masterDatalineCharge = globalDatalineCapacitance * 1.0*drs::bank
-                           * vdd
-                           * Interface
-                           * prefetch
-                            / drs::bit; // TODO: remove the work around
+  // SSA active time
+  SSAActiveTime = 1.5 * tccd;
 
-    // Charges for Dataqueue // 1 Read is done for interface x prefetch
-    DQWireCharge = DQWireCapacitance
-                   * vdd
-                   * Interface
-                   * prefetch
-                    / drs::bit; // TODO: remove the work around
+  // Charges of SSA
+  SSACharge = nLDQs
+              * SCALE_QUANTITY(Issa, drs::ampere_per_bit_unit)
+              * SSAActiveTime;
 
-    // read charges in pC
-    readingCharge = SSACharge
-                    + 2.0*CSLCharge // !! Why times 2? Maybe number of tiles?
-                    + 2.0*masterDatalineCharge // !! Why times 2? Maybe number of tiles?
-                    + DQWireCharge;
-    IDD1TotalCharge = (masterWordlineCharge
-                       + localWordlineCharge
-                       + localBitlineCharge
-                       + readingCharge)
-                            * 2.0; // !! Why times 2? Maybe number of tiles?
+  // nCSLs includes CSLEN and !CSLEN lines (+ 2),
+  //  and we consider they have the same capacitance as CSLs.
+  nCSLs = nSubArraysPerArrayBlock * nHorizontalTiles + 2.0;
+  CSLCharge = CSLCapacitance
+              * vdd
+              * nCSLs;
 
-    IDD1ChargingCurrent = IDD1TotalCharge / effectiveTrc;
+  // Charge of global Dataline
+  masterDatalineCharge = globalDatalineCapacitance
+                         * vdd
+                         * interface / drs::bit //(adimensionalization)
+                         * prefetch;
 
-    IDD1 = IDD3n
-           + SCALE_QUANTITY(IDD1ChargingCurrent, drs::milliampere_unit);
+  // Charges for Dataqueue // 1 Read is done for interface x prefetch
+  DQWireCharge = DQWireCapacitance
+                 * vdd
+                 * interface / drs::bit //(adimensionalization)
+                 * prefetch;
+
+  // read charges in pC
+  readingCharge = SSACharge
+                  + 2.0*CSLCharge // !! Why times 2? Maybe number of tiles?
+                  + 2.0*masterDatalineCharge // !! Why times 2? Maybe number of tiles?
+                  + DQWireCharge;
+  IDD1TotalCharge = (masterWordlineCharge
+                     + localWordlineCharge
+                     + localBitlineCharge
+                     + readingCharge)
+                          * 2.0; // !! Why times 2? Maybe number of tiles?
+
+  IDD1ChargingCurrent = IDD1TotalCharge / effectiveTrc;
+
+  IDD1 = IDD3n
+         + SCALE_QUANTITY(IDD1ChargingCurrent, drs::milliampere_unit);
 
 }
 
 void
 Current::IDD4RCalc()
 {
+  colAddrsLinesCharge =
+          SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+          * SCALE_QUANTITY(bankWidth, drs::millimeter_unit)
+          * nColumnAddressLines
+          * vdd;
+
+  IDD4TotalCharge = readingCharge + colAddrsLinesCharge;
+  if (includeIOTerminationCurrent) {
     // Scale the IDD_OCD_RCV with frequency linearly
     IddOcdRcv = IddOcdRcvSlope * dramFreq / drs::bit;
 
-    colAddrsLinesCharge =
-            SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
-            * SCALE_QUANTITY(tileWidth, drs::millimeter_per_tile_unit)
-            * tilesPerBank * 1.0*drs::bank
-            * nTileColumnAddressLines
-            * vdd;
-
-    IDD4TotalCharge = readingCharge + colAddrsLinesCharge;
-    // Number of output signals for read = interface number
-    // + 1 datastrobe signal pro 4 bits
-    if (includeIOTerminationCurrent) {
-       ioTermRdCurrent = (Interface + Interface/4.0)
-                         * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
+    // Case for [LP]DDRX ( x4, x8, x16 or x32 per channel )
+    //  Must have a DQS/!DQS pair for each 8 bits of data lines
+    if ( interface <= 32 * drs::bits) {
+     ioTermRdCurrent = ( interface + ceil(interface / 8.0) * 2.0 )
+                       * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
+    }
+    // Case for WIDEIO2 ( x64 per channel )
+    //  Must have a DQS/!DQS pair for each 16 bits of data lines
+    else if ( interface <= 64 * drs::bits) {
+     ioTermRdCurrent = ( interface + ceil(interface / 16.0) * 2.0 )
+                       * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
+    }
+    // Case for HBM ( x128 per channel )
+    //  Must have a DQS/!DQS pair for each 32 bits of data lines
+    else if ( interface <= 128 * drs::bits) {
+     ioTermRdCurrent = ( interface + ceil(interface / 32.0) * 2.0 )
+                       * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
     }
     else {
-       ioTermRdCurrent = 0*drs::milliamperes;
+      std::string exceptionMsgThrown("[ERROR] ");
+      exceptionMsgThrown.append("Custom interface size ");
+      exceptionMsgThrown.append("(greater than 128 bits or ");
+      exceptionMsgThrown.append("not a power of two) ");
+      exceptionMsgThrown.append("model is not yet implemented!");
+      throw exceptionMsgThrown;
     }
+  }
+  else {
+   ioTermRdCurrent = 0*drs::milliamperes;
+  }
 
-    IDD4ChargingCurrent = IDD4TotalCharge
-                          * SCALE_QUANTITY(dramCoreFreq, drs::gigahertz_clock_unit)
-                          / (1.0*drs::clock);
+  IDD4ChargingCurrent = IDD4TotalCharge
+                        * SCALE_QUANTITY(dramCoreFreq, drs::gigahertz_clock_unit)
+                        / (1.0*drs::clock);
 
-    IDD4R = IDD3n
-            + ioTermRdCurrent
-            + SCALE_QUANTITY(IDD4ChargingCurrent, drs::milliampere_unit);
+  IDD4R = IDD3n
+          + ioTermRdCurrent
+          + SCALE_QUANTITY(IDD4ChargingCurrent, drs::milliampere_unit);
 
 }
 
 void
 Current::IDD4WCalc()
 {
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
-    // !!!! TODO: DISCUSS THESE VALUES WITH CHRISTIAN IN FURTHER MEETINGS !!!! //
-    //number of signals for write is number of signals for read
-    //+ 1 extra signal for rcv per 8 bits
-    int rcvconst;
-    if(Interface/8.0 < 1*drs::bit) {
-        rcvconst = 1 ;
-    } else {
-        rcvconst = 0 ;
-    }
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
+  // Termination current for writting must include DQS/!DQS pairs
+  //  as well as DM lines charges (one for each 8 bits of data lines).
+  if (includeIOTerminationCurrent) {
+    ioTermWrCurrent = ioTermRdCurrent
+                      + ceil(interface / 8.0)
+                        * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
+  }
+  else {
+    ioTermWrCurrent = 0*drs::milliamperes;
+  }
 
-    //additional IO term current for Writes
-    if (includeIOTerminationCurrent) {
-        ioTermWrCurrent = (Interface/8.0 + rcvconst*drs::bit)
-                          * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
-    }
-    else {
-        ioTermWrCurrent = 0*drs::milliamperes;
-    }
-
-    IDD4W = IDD4R + ioTermWrCurrent;
+  IDD4W = IDD3n
+          + ioTermWrCurrent
+          + SCALE_QUANTITY(IDD4ChargingCurrent, drs::milliampere_unit);
 
 }
 
 void
 Current::IDD5Calc()
 {
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
-    // !!!! TODO: DISCUSS THESE VALUES WITH CHRISTIAN IN FURTHER MEETINGS !!!! //
-    // Charges for refresh
-    // Charges of IDD0 x 2 ( 2 rows pro command)x # of banksrefreshed pro
-    // x # of rows pro command
-    refreshCharge = ( masterWordlineCharge
-                      + localWordlineCharge    // <- Should't it be IDD0ChargingCurrent?
-                      + localBitlineCharge )
-                    * 2.0
-                    * 2.0
-                    * banksRefreshFactor
-                    * nBanks / (1.0*drs::bank);
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! //
+  refreshCharge = IDD0TotalCharge
+                  * nRowsRefreshedPerARCmd;
 
-    // Refresh current
-    effectiveTrfc = trfc_clk * clkPeriod;
+  // Refresh current
+  effectiveTrfc = trfc_clk * clkPeriod;
 
-    IDD5ChargingCurrent = refreshCharge / effectiveTrfc;
+  IDD5ChargingCurrent = refreshCharge / effectiveTrfc;
 
-    IDD5 = IDD3n
-           + SCALE_QUANTITY(IDD5ChargingCurrent, drs::milliampere_unit);
-
-    // Checking the current for the required refresh period
-    // Calculate the number of times each row if refreshed in 64 ms
-    // retention time
-    nRowActivations = SCALE_QUANTITY(trefI, drs::microsecond_unit)
-                    / requiredTrefI;
-
+  IDD5 = IDD3n
+         + SCALE_QUANTITY(IDD5ChargingCurrent, drs::milliampere_unit);
 
 }
 
 void
 Current::currentCompute()
 {
+  try{
     backgroundCurrentCalc();
     IDD0Calc();
     IDD1Calc();
     IDD4RCalc();
     IDD4WCalc();
     IDD5Calc();
+  } catch(string exceptionMsgThrown) {
+      throw exceptionMsgThrown;
+  }
 }

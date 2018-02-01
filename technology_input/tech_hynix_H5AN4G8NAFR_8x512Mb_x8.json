@@ -1,10 +1,10 @@
 {
-    "TechnologyNode[nm]": 23,
+    "TechnologyNode[nm]": 22,
 
-    "Vpp[V]": 2.5,
     "Vdd[V]": 1.2,
+    "Vpp[V]": 2.5,
 
-    "WireResistance[Ohm/mm]": 100,
+    "WireResistance[Ohm/mm]": 25,
     "WireCapacitance[fF/mm]" : 150,
 
     "CellCapacitance[fF]": 20,
@@ -13,39 +13,39 @@
     "CellHeight[um]": 0.08 ,
 
     "BitlineCapacitancePerCell[aF]": 50,
-    "BitlineResistancePerCell[Ohm]": 35,
+    "BitlineResistancePerCell[Ohm]": 40,
 
-    "WordlineCapacitancePerCell[aF]": 60,
-    "WordlineResistancePerCell[Ohm]": 25,
+    "WordlineCapacitancePerCell[aF]": 70,
+    "WordlineResistancePerCell[Ohm]": 40,
 
     "PrimarySenseAmpHeight[um]": 10,
 
     "LocalWordlineDriverWitdh[um]": 5,
     "LocalWordlineDriverResistance[Ohm]" : 500,
 
-    "SecondarySenseAmpCurrent[uA]": 200,
-    "GlobalWordlineDriverResistance[Ohm]": 200,
+    "RowDecoderWidth[um]": 125,
+    "GlobalWordlineDriverResistance[Ohm]" : 200,
 
-    "RowDecoderWidth[um]": 53.5,
+    "SecondarySenseAmpCurrent[uA]": 200,
     "WriteDriverResistance[Ohm]" : 300 ,
 
-    "ColumnDecoderHeight[um]": 250,
-    "CSLDriverResistance[Ohm]" : 170,
+    "ColumnDecoderHeight[um]": 125,
+    "CSLDriverResistance[Ohm]" : 300,
     "CSLLoadCapacitance[fF]": 8,
     "GlobalDataLineDriverResistance[Ohm]" : 300,
 
-    "DQDriverHeight[um]": 100,
+    "DQDriverHeight[um]": 225,
     "DQtoTSVWireLength[um]": 200,
     "DQDriverResistance[Ohm]" : 250,
 
-    "IDD2NFreqSlope[mA/MHz]": 0.015,
+    "IDD2NFreqSlope[mA/MHz]": 0.011255,
     "IDD2NTempAlpha[mA]": 0.6775,
     "IDD2NTempBeta[C^-1]": 0.04467,
     "IDD2NRefTemp[C]": 25,
-    "IDD2NOffset[mA]": 6.75,
-    "OCDCurrentSlope[uA/MHz]": 4.221,
+    "IDD2NOffset[mA]": 4.8296,
+    "OCDCurrentSlope[uA/MHz]": 4.22,
 
-    "TSVHeight[um]": 0,
+    "TSVHeight[um]":0,
 
     "AdditionalTRLLatency[cc]" : 0,
 

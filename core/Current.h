@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 // In this class the current (power) specification of DRAMs is done.
 // The class uses already initialized timings to do the calculations.
@@ -66,7 +72,7 @@ class Current : public Timing
     // !! Hard-coded values converted to variables !!
     double IDD2nPercentageIfNotDll;
     double vppPumpsEfficiency;
-    bu::quantity<drs::milliampere_page_per_kibibyte_unit> currentPerPageSizeSlope;
+    bu::quantity<drs::milliampere_per_kibibyte_unit> currentPerPageSizeSlope;
     bu::quantity<drs::nanosecond_unit> SSAActiveTime;
     bu::quantity<drs::bit_unit> bitProCSL;
 
@@ -76,18 +82,17 @@ class Current : public Timing
     bu::quantity<drs::nanocoulomb_unit> rowAddrsLinesCharge;
     bu::quantity<drs::nanocoulomb_unit> IDD0TotalCharge;
     bu::quantity<drs::nanosecond_unit> effectiveTrc;
-    bu::quantity<si::current> IDD0ChargingCurrent;
+    bu::quantity<drs::ampere_unit> IDD0ChargingCurrent;
     bu::quantity<drs::nanocoulomb_unit> IDD1TotalCharge;
-    bu::quantity<si::current> IDD1ChargingCurrent;
+    bu::quantity<drs::ampere_unit> IDD1ChargingCurrent;
     bu::quantity<drs::nanocoulomb_unit> colAddrsLinesCharge;
     bu::quantity<drs::nanocoulomb_unit> IDD4TotalCharge;
     bu::quantity<drs::milliampere_unit> ioTermRdCurrent;
-    bu::quantity<si::current> IDD4ChargingCurrent;
+    bu::quantity<drs::ampere_unit> IDD4ChargingCurrent;
     bu::quantity<drs::milliampere_unit> ioTermWrCurrent;
     bu::quantity<drs::nanocoulomb_unit> refreshCharge;
     bu::quantity<drs::nanosecond_unit> effectiveTrfc;
-    bu::quantity<si::current> IDD5ChargingCurrent;
-    int nRowActivations;
+    bu::quantity<drs::ampere_unit> IDD5ChargingCurrent;
 
     // Main variables
     //current IDD0 in mA ( ACT-PRE )
@@ -120,8 +125,14 @@ class Current : public Timing
     //charges for Local bitline + blsa
     bu::quantity<drs::nanocoulomb_unit> localBitlineCharge;
 
+    //Number of local DQ lines
+    bu::quantity<drs::bit_unit> nLDQs;
+
     //charges for SSA ( Secondary sense amp )
     bu::quantity<drs::nanocoulomb_unit> SSACharge;
+
+    //Number of CSL + CSLEN lines per bank
+    double nCSLs;
 
     //charges for CSL (column select line )
     bu::quantity<drs::nanocoulomb_unit> CSLCharge;

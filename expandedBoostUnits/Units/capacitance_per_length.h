@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,14 +29,21 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #ifndef DRAMSPEC_CAPACITANCE_PER_LENGHT_UNIT_H
 #define DRAMSPEC_CAPACITANCE_PER_LENGHT_UNIT_H
 
 #include "../dramSpecUnitsSystem.h"
 #include "../DerivedDimensions/capacitance_per_length.h"
+#include <boost/units/systems/si/prefixes.hpp>
 
 namespace boost {
 
@@ -58,6 +65,11 @@ BOOST_UNITS_STATIC_CONSTANT(femtofarads_per_millimeter,femtofarad_per_millimeter
 typedef make_scaled_unit<capacitance_per_length,scale<10, static_rational<-6>>>::type nanofarad_per_millimeter_unit;
 BOOST_UNITS_STATIC_CONSTANT(nanofarad_per_millimeter,nanofarad_per_millimeter_unit);
 BOOST_UNITS_STATIC_CONSTANT(nanofarads_per_millimeter,nanofarad_per_millimeter_unit);
+
+// nanofarad / micrometer = millifarad / meter
+typedef make_scaled_unit<capacitance_per_length,scale<10, static_rational<-3>>>::type nanofarad_per_micrometer_unit;
+BOOST_UNITS_STATIC_CONSTANT(nanofarad_per_micrometer,nanofarad_per_micrometer_unit);
+BOOST_UNITS_STATIC_CONSTANT(nanofarads_per_micrometer,nanofarad_per_micrometer_unit);
 
 } // namespace dramspec
 

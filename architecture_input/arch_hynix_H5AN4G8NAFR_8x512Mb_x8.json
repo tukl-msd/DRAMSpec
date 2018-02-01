@@ -1,5 +1,5 @@
 {
-    "DRAMType[-]": "DDR",
+    "DRAMType[-]": "DDR4",
     "3D[-]": "OFF",
     "DLL[-]": "ON",
 
@@ -7,15 +7,15 @@
 
     "NumberOfBanksPerChannel[]":16,
 
-    "CellsPerSubarrayRow[]": 524,
-    "RedundantCellsPerSubarrayRow[]": 12,
+    "CellsPerSubarrayRow[]": 1046,
+    "RedundantCellsPerSubarrayRow[]": 22,
     "CellsPerSubarrayColumn[]": 524,
     "RedundantCellsPerSubarrayColumn[]": 12,
 
     "Interface[bit]": 8,
     "Prefetch[]": 8,
 
-    "Frequency[MHz]": 1200,
+    "Frequency[MHz]": 800,
     "CoreFrequency[MHz]": 0,
 
     "TilesPerBank[]" : 2,
@@ -29,6 +29,6 @@
     "tREFI(base)[us]" : 7.8,
     "RefreshMode[]":1,
 
-    "Temperature[C]": 27
+    "Temperature[C]": 30
 
 }

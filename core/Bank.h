@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,8 +33,9 @@
  *          Matthias Jung,
  *          Christian Weis,
  *          Kamal Haddad,
- *          Andr'e Lucas Chinazzo
+ *          Andre Lucas Chinazzo
  */
+
 
 #ifndef BANK_H
 #define BANK_H
@@ -67,18 +68,31 @@ class Bank : public Tile
     }
 
     // Size in number of bits of a single bank
-    bu::quantity<drs::information_per_bank_unit> bankStorage;
+    bu::quantity<drs::bit_unit> bankStorage;
+
+    // Tiles placement on bank
+    double nVerticalTiles;
+    double nHorizontalTiles;
 
     // Width in micrometer of a single bank
-    bu::quantity<drs::micrometer_per_bank_unit> bankWidth;
+    bu::quantity<drs::micrometer_unit> bankWidth;
     // Height in micrometer of a single bank
-    bu::quantity<drs::micrometer_per_bank_unit> bankHeight;
+    bu::quantity<drs::micrometer_unit> bankHeight;
+
+    // Total page size accounting all tiles
+    bu::quantity<drs::bit_unit> effectivePageStorage;
+    double nBankLogicalRows;
+    double nRowAddressLines;
+    double nBankLogicalColumns;
+    double nColumnAddressLines;
 
     void bankInitialize();
 
     void bankCompute();
     void bankStorageCalc();
+    void bankTilesPlacementAssess();
     void bankLenghtCalc();
+    void bankLogicAssess();
 
 };
 

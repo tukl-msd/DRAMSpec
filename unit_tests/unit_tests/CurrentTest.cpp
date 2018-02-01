@@ -1,40 +1,42 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are
- * met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * 3. Neither the name of the copyright holder nor the names of its
- *    contributors may be used to endorse or promote products derived from
- *    this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
- * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
- * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * Authors: Omar Naji
- *          Matthias Jung
- *          Christian Weis
- *          Kamal Haddad
- *          Andr'e Lucas Chinazzo
- */
+* Copyright (c) 2017, University of Kaiserslautern
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are
+* met:
+*
+* 1. Redistributions of source code must retain the above copyright notice,
+*    this list of conditions and the following disclaimer.
+*
+* 2. Redistributions in binary form must reproduce the above copyright
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the distribution.
+*
+* 3. Neither the name of the copyright holder nor the names of its
+*    contributors may be used to endorse or promote products derived from
+*    this software without specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+* "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+* TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+* PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER
+* OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+* EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+* PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+* PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+* LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+* NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+* Authors: Omar Naji,
+*          Matthias Jung,
+*          Christian Weis,
+*          Kamal Haddad,
+*          Andre Lucas Chinazzo
+*/
+
+
 
 #ifndef CURRENTTEST_CPP
 #define CURRENTTEST_CPP
@@ -47,229 +49,252 @@ BOOST_AUTO_TEST_SUITE( testCurrent )
 
 BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
 {
-    int sim_argc = 6;
-    char* sim_argv[] = {"./executable",
-                        "-t",
-                        "../../technology_input/test_technology.json",
-                        "-p",
-                        "../../architecture_input/test_architecture.json",
-                        "-term"};
+  int sim_argc = 6;
+  char* sim_argv[] = {"./executable",
+                      "-t",
+                      "../../technology_input/test_technology.json",
+                      "-p",
+                      "../../architecture_input/test_architecture.json",
+                      "-term"};
 
-    ArgumentsParser inputFileName(sim_argc, sim_argv);
+  ArgumentsParser inputFileName(sim_argc, sim_argv);
 
-    string exceptionMsg("Empty");
-    try {
-        inputFileName.runArgParser();
-    }catch (string exceptionMsgThrown){
-        exceptionMsg = exceptionMsgThrown;
-    }
-    string expectedMsg("Empty");
-    if ( exceptionMsg != expectedMsg ) {
-        BOOST_FAIL( exceptionMsg );
-    }
+  string exceptionMsg("Empty");
+  try {
+      inputFileName.runArgParser();
+  }catch (string exceptionMsgThrown){
+      exceptionMsg = exceptionMsgThrown;
+  }
+  string expectedMsg("Empty");
+  if ( exceptionMsg != expectedMsg ) {
+      BOOST_FAIL( exceptionMsg );
+  }
 
-    Current current;
-    try {
-        current = Current(inputFileName.technologyFileName[0],
-                          inputFileName.architectureFileName[0],
-                          inputFileName.IOTerminationCurrentFlag);
-    }catch (string exceptionMsgThrown){
-        exceptionMsg = exceptionMsgThrown;
-    }
-    expectedMsg = string("Empty");
-    if ( exceptionMsg != expectedMsg ) {
-        BOOST_FAIL( exceptionMsg );
-    }
+  Current current;
+  try {
+      current = Current(inputFileName.technologyFileName[0],
+                        inputFileName.architectureFileName[0],
+                        inputFileName.IOTerminationCurrentFlag);
+  }catch (string exceptionMsgThrown){
+      exceptionMsg = exceptionMsgThrown;
+  }
+  expectedMsg = string("Empty");
+  if ( exceptionMsg != expectedMsg ) {
+      BOOST_FAIL( exceptionMsg );
+  }
 
+  double _mag;
 
-    // !! Hard-coded values converted to variables !!
-    BOOST_CHECK_MESSAGE( current.IDD2nPercentageIfNotDll == 0.6,
-                        "Accounted percentage of IDD2n if not DLL different from the expected."
-                        << "\nExpected around: " << 0.6
-                        << "\nGot: " << current.IDD2nPercentageIfNotDll);
+  _mag = 0.6;
+  BOOST_CHECK_MESSAGE( current.IDD2nPercentageIfNotDll == _mag,
+                      "Accounted percentage of IDD2n if not DLL different from the expected."
+                      << "\nExpected around: " << _mag
+                      << "\nGot: " << current.IDD2nPercentageIfNotDll);
 
-    BOOST_CHECK_MESSAGE( current.vppPumpsEfficiency == 0.3,
-                        "Efficiency of VPP pumps different from the expected."
-                        << "\nExpected around: " << 0.3
-                        << "\nGot: " << current.vppPumpsEfficiency);
+  _mag = 0.3;
+  BOOST_CHECK_MESSAGE( current.vppPumpsEfficiency == _mag,
+                      "Efficiency of VPP pumps different from the expected."
+                      << "\nExpected around: " << _mag
+                      << "\nGot: " << current.vppPumpsEfficiency);
 
-    // !!! TODO: Trouble printing out this value! !!!
-//    BOOST_CHECK_MESSAGE( current.currentPerPageSizeSlope == 2.0*drs::milliamperes_page_per_kibibyte,
-//                        "IDD2n current slope on page size different from the expected."
-//                        << "\nExpected around: " << 2.0*drs::milliamperes_page_per_kibibyte
-//                        << "\nGot: " << current.currentPerPageSizeSlope);
+  _mag = 6.714;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.SSAActiveTime, 3) == _mag*drs::nanoseconds,
+                      "Active time of secondary sense amp. different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanoseconds
+                      << "\nGot: " << current.SSAActiveTime);
 
-    BOOST_CHECK_MESSAGE( current.SSAActiveTime == 1.5*drs::nanoseconds,
-                        "Active time of secondary sense amp. different from the expected."
-                        << "\nExpected around: " << 1.5*drs::nanoseconds
-                        << "\nGot: " << current.SSAActiveTime);
+  _mag = 8;
+  BOOST_CHECK_MESSAGE( current.bitProCSL == _mag*drs::bits,
+                      "Number of bits pro CSL different fgrom the expected."
+                      << "\nExpected around: " << _mag*drs::bits
+                      << "\nGot: " << current.bitProCSL);
 
-    BOOST_CHECK_MESSAGE( current.bitProCSL == 8*drs::bits,
-                        "Number of bits pro CSL different fgrom the expected."
-                        << "\nExpected around: " << 8*drs::bits
-                        << "\nGot: " << current.bitProCSL);
+  _mag = 5.629;
+  BOOST_CHECK_MESSAGE( current.IddOcdRcvSlope == _mag*drs::microampere_per_megahertz_clock,
+                      "IddOcdRcvScalingFactor different from the expected."
+                      << "\nExpected around: " << _mag*drs::microampere_per_megahertz_clock
+                      << "\nGot: " << current.IddOcdRcvSlope);
 
-    BOOST_CHECK_MESSAGE( current.IddOcdRcvSlope == 5.629*drs::microampere_per_megahertz_clock,
-                        "IddOcdRcvScalingFactor different from the expected."
-                        << "\nExpected around: " << 5.629*drs::microampere_per_megahertz_clock
-                        << "\nGot: " << current.IddOcdRcvSlope);
+  _mag = 32;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.nActiveSubarrays, 3) == _mag,
+                      "Number of active subarrays different from the expected."
+                      << "\nExpected around: " << _mag
+                      << "\nGot: " << current.nActiveSubarrays);
 
-    // Intermediate values added as variables for code cleanness
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.nActiveSubarrays, 3) == 32,
-                        "Number of active subarrays different from the expected."
-                        << "\nExpected around: " << 32
-                        << "\nGot: " << current.nActiveSubarrays);
+  _mag = 16384;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.nLocalBitlines, 3) == _mag,
+                      "Number of local bitlines different from the expected."
+                      << "\nExpected around: " << _mag
+                      << "\nGot: " << current.nLocalBitlines);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.nLocalBitlines, 3) == 16384,
-                        "Number of local bitlines different from the expected."
-                        << "\nExpected around: " << 16384
-                        << "\nGot: " << current.nLocalBitlines);
+  _mag = 1.613;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0TotalCharge, 3) == _mag*drs::nanocoulombs,
+                      "Total charge accounted for IDD0 different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanocoulombs
+                      << "\nGot: " << current.IDD0TotalCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0TotalCharge, 3) == 1.615*drs::nanocoulombs,
-                        "Total charge accounted for IDD0 different from the expected."
-                        << "\nExpected around: " << 1.615*drs::nanocoulombs
-                        << "\nGot: " << current.IDD0TotalCharge);
+  _mag = 33.75;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.effectiveTrc, 3) == _mag*drs::nanoseconds,
+                      "Effective Trc different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanoseconds
+                      << "\nGot: " << current.effectiveTrc);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.effectiveTrc, 3) == 31.25*drs::nanoseconds,
-                        "Effective Trc different from the expected."
-                        << "\nExpected around: " << 31.25*drs::nanoseconds
-                        << "\nGot: " << current.effectiveTrc);
+  _mag = 0.048;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0ChargingCurrent, 3) == _mag*drs::amperes,
+                      "Part of IDD0 for charging lines different from the expected."
+                      << "\nExpected around: " << _mag*drs::amperes
+                      << "\nGot: " << current.IDD0ChargingCurrent);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0ChargingCurrent, 3) == 0.052*si::amperes,
-                        "Part of IDD0 for charging lines different from the expected."
-                        << "\nExpected around: " << 0.052*si::amperes
-                        << "\nGot: " << current.IDD0ChargingCurrent);
+  _mag = 3.619;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1TotalCharge, 3) == _mag*drs::nanocoulombs,
+                      "Total charge accounted for IDD1 different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanocoulombs
+                      << "\nGot: " << current.IDD1TotalCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1TotalCharge, 3) == 2.797*drs::nanocoulombs,
-                        "Total charge accounted for IDD1 different from the expected."
-                        << "\nExpected around: " << 2.797*drs::nanocoulombs
-                        << "\nGot: " << current.IDD1TotalCharge);
+  _mag = 0.108;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1ChargingCurrent, 3) == _mag*drs::amperes,
+                      "Part of IDD1 for charging lines different from the expected."
+                      << "\nExpected around: " << _mag*drs::amperes
+                      << "\nGot: " << current.IDD1ChargingCurrent);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1ChargingCurrent, 3) == 0.090*si::amperes,
-                        "Part of IDD1 for charging lines different from the expected."
-                        << "\nExpected around: " << 0.090*si::amperes
-                        << "\nGot: " << current.IDD1ChargingCurrent);
+  _mag = 1.038;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4TotalCharge, 3) == _mag*drs::nanocoulombs,
+                      "Total charge accounted for IDD4 different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanocoulombs
+                      << "\nGot: " << current.IDD4TotalCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4TotalCharge, 3) == 0.625*drs::nanocoulombs,
-                        "Total charge accounted for IDD4 different from the expected."
-                        << "\nExpected around: " << 0.625*drs::nanocoulombs
-                        << "\nGot: " << current.IDD4TotalCharge);
+  _mag = 90.064;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.ioTermRdCurrent, 3) == _mag*drs::milliampere,
+                      "I/O Termination current for reading different from the expected."
+                      << "\nExpected around: " << _mag*drs::milliampere
+                      << "\nGot: " << current.ioTermRdCurrent);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.ioTermRdCurrent, 3) == 90.064*drs::milliampere,
-                        "I/O Termination current for reading different from the expected."
-                        << "\nExpected around: " << 90.064*drs::milliampere
-                        << "\nGot: " << current.ioTermRdCurrent);
+  _mag = 0.208;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4ChargingCurrent, 3) == _mag*drs::amperes,
+                      "Part of IDD4 for charging lines different from the expected."
+                      << "\nExpected around: " << _mag*drs::amperes
+                      << "\nGot: " << current.IDD4ChargingCurrent);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4ChargingCurrent, 3) == 0.125*si::amperes,
-                        "Part of IDD4 for charging lines different from the expected."
-                        << "\nExpected around: " << 0.125*si::amperes
-                        << "\nGot: " << current.IDD4ChargingCurrent);
+  _mag = 99.071;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.ioTermWrCurrent, 3) == _mag*drs::milliampere,
+                      "I/O Termination current for writing different from the expected."
+                      << "\nExpected around: " << _mag*drs::milliampere
+                      << "\nGot: " << current.ioTermWrCurrent);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.ioTermWrCurrent, 3) == 9.007*drs::milliampere,
-                        "I/O Termination current for writing different from the expected."
-                        << "\nExpected around: " << 9.007*drs::milliampere
-                        << "\nGot: " << current.ioTermWrCurrent);
+  _mag = 12.901;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.refreshCharge, 3) == _mag*drs::nanocoulombs,
+                      "Total charge accounted refreshing different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanocoulombs
+                      << "\nGot: " << current.refreshCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.refreshCharge, 3) == 50.174*drs::nanocoulombs,
-                        "Total charge accounted refreshing different from the expected."
-                        << "\nExpected around: " << 50.174*drs::nanocoulombs
-                        << "\nGot: " << current.refreshCharge);
+  _mag = 45;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.effectiveTrfc, 3) == _mag*drs::nanoseconds,
+                      "Effective Trfc different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanoseconds
+                      << "\nGot: " << current.effectiveTrfc);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.effectiveTrfc, 3) == 201.25*drs::nanoseconds,
-                        "Effective Trfc different from the expected."
-                        << "\nExpected around: " << 201.25*drs::nanoseconds
-                        << "\nGot: " << current.effectiveTrfc);
+  _mag = 0.287;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD5ChargingCurrent, 3) == _mag*drs::amperes,
+                      "Part of IDD5 for charging lines different from the expected."
+                      << "\nExpected around: " << _mag*drs::amperes
+                      << "\nGot: " << current.IDD5ChargingCurrent);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD5ChargingCurrent, 3) == 0.250*si::amperes,
-                        "Part of IDD5 for charging lines different from the expected."
-                        << "\nExpected around: " << 0.250*si::amperes
-                        << "\nGot: " << current.IDD5ChargingCurrent);
+  // Main variables
+  _mag = 86.845;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0, 3) == _mag*drs::milliampere,
+                      "IDD0 different from the expected."
+                      << "\nExpected around: " << _mag*drs::milliampere
+                      << "\nGot: " << current.IDD0);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.nRowActivations, 3) == 2,
-                        "nRowActivation different from the expected."
-                        << "\nExpected around: " << 2
-                        << "\nGot: " << current.nRowActivations);
+  _mag = 146.282;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1, 3) == _mag*drs::milliampere,
+                      "IDD1 different from the expected."
+                      << "\nExpected around: " << _mag*drs::milliampere
+                      << "\nGot: " << current.IDD1);
 
-    // Main variables
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0, 3) == 92.659*drs::milliampere,
-                        "IDD0 different from the expected."
-                        << "\nExpected around: " << 92.659*drs::milliampere
-                        << "\nGot: " << current.IDD0);
+  _mag = 336.721;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4R, 3) == _mag*drs::milliampere,
+                      "IDD4R different from the expected."
+                      << "\nExpected around: " << _mag*drs::milliampere
+                      << "\nGot: " << current.IDD4R);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1, 3) == 130.473*drs::milliampere,
-                        "IDD1 different from the expected."
-                        << "\nExpected around: " << 130.473*drs::milliampere
-                        << "\nGot: " << current.IDD1);
+  _mag = 345.727;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4W, 3) == _mag*drs::milliampere,
+                      "IDD4W different from the expected."
+                      << "\nExpected around: " << _mag*drs::milliampere
+                      << "\nGot: " << current.IDD4W);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4R, 3) == 255.988*drs::milliampere,
-                        "IDD4R different from the expected."
-                        << "\nExpected around: " << 255.988*drs::milliampere
-                        << "\nGot: " << current.IDD4R);
+  _mag = 37.064;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD2n, 3) == _mag*drs::milliampere,
+                      "IDD2n different from the expected."
+                      << "\nExpected around: " << _mag*drs::milliampere
+                      << "\nGot: " << current.IDD2n);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4W, 3) == 264.995*drs::milliampere,
-                        "IDD4W different from the expected."
-                        << "\nExpected around: " << 264.995*drs::milliampere
-                        << "\nGot: " << current.IDD4W);
+  _mag = 39.064;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD3n, 3) == _mag*drs::milliampere,
+                      "IDD3n different from the expected."
+                      << "\nExpected around: " << _mag*drs::milliampere
+                      << "\nGot: " << current.IDD3n);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD2n, 3) == 37*drs::milliampere,
-                        "IDD2n different from the expected."
-                        << "\nExpected around: " << 37*drs::milliampere
-                        << "\nGot: " << current.IDD2n);
+  _mag = 325.75;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD5, 3) == _mag*drs::milliampere,
+                      "IDD5 different from the expected."
+                      << "\nExpected around: " << _mag*drs::milliampere
+                      << "\nGot: " << current.IDD5);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD3n, 3) == 41*drs::milliampere,
-                        "IDD3n different from the expected."
-                        << "\nExpected around: " << 41*drs::milliampere
-                        << "\nGot: " << current.IDD3n);
+  _mag = 0.004133;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.masterWordlineCharge, 6) == _mag*drs::nanocoulombs,
+                      "Charge accounted for master word line different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanocoulombs
+                      << "\nGot: " << current.masterWordlineCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD5, 3) == 290.31*drs::milliampere,
-                        "IDD5 different from the expected."
-                        << "\nExpected around: " << 290.31*drs::milliampere
-                        << "\nGot: " << current.IDD5);
+  _mag = 0.024;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.localWordlineCharge, 3) == _mag*drs::nanocoulombs,
+                      "Charge accounted for local word line different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanocoulombs
+                      << "\nGot: " << current.localWordlineCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.masterWordlineCharge, 6) == 0.004989*drs::nanocoulombs,
-                        "Charge accounted for master word line different from the expected."
-                        << "\nExpected around: " << 0.004989*drs::nanocoulombs
-                        << "\nGot: " << current.masterWordlineCharge);
+  _mag = 0.756;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.localBitlineCharge, 3) == _mag*drs::nanocoulombs,
+                      "Charge accounted for local bit line different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanocoulombs
+                      << "\nGot: " << current.localBitlineCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.localWordlineCharge, 3) == 0.024*drs::nanocoulombs,
-                        "Charge accounted for local word line different from the expected."
-                        << "\nExpected around: " << 0.024*drs::nanocoulombs
-                        << "\nGot: " << current.localWordlineCharge);
+  _mag = 0.258;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.SSACharge, 3) == _mag*drs::nanocoulombs,
+                      "Charge accounted for secondary sense amp. different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanocoulombs
+                      << "\nGot: " << current.SSACharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.localBitlineCharge, 3) == 0.756*drs::nanocoulombs,
-                        "Charge accounted for local bit line different from the expected."
-                        << "\nExpected around: " << 0.756*drs::nanocoulombs
-                        << "\nGot: " << current.localBitlineCharge);
+  _mag = 0.034;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.CSLCharge, 3) == _mag*drs::nanocoulombs,
+                      "Charge accounted for column select line different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanocoulombs
+                      << "\nGot: " << current.CSLCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.SSACharge, 3) == 0.058*drs::nanocoulombs,
-                        "Charge accounted for secondary sense amp. different from the expected."
-                        << "\nExpected around: " << 0.058*drs::nanocoulombs
-                        << "\nGot: " << current.SSACharge);
+  _mag = 0.125;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.masterDatalineCharge, 3) == _mag*drs::nanocoulombs,
+                      "Charge accounted for master data line different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanocoulombs
+                      << "\nGot: " << current.masterDatalineCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.CSLCharge, 3) == 0.017*drs::nanocoulombs,
-                        "Charge accounted for column select line different from the expected."
-                        << "\nExpected around: " << 0.017*drs::nanocoulombs
-                        << "\nGot: " << current.CSLCharge);
+  _mag = 0.452;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.DQWireCharge, 3) == _mag*drs::nanocoulombs,
+                      "Charge accounted for dataqueue wire different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanocoulombs
+                      << "\nGot: " << current.DQWireCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.masterDatalineCharge, 3) == 0.128*drs::nanocoulombs,
-                        "Charge accounted for master data line different from the expected."
-                        << "\nExpected around: " << 0.128*drs::nanocoulombs
-                        << "\nGot: " << current.masterDatalineCharge);
+  _mag = 1.027;
+  BOOST_CHECK_MESSAGE( ROUND_UP(current.readingCharge, 3) == _mag*drs::nanocoulombs,
+                      "Total charge accounted for reading lines different from the expected."
+                      << "\nExpected around: " << _mag*drs::nanocoulombs
+                      << "\nGot: " << current.readingCharge);
 
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.DQWireCharge, 3) == 0.269*drs::nanocoulombs,
-                        "Charge accounted for dataqueue wire different from the expected."
-                        << "\nExpected around: " << 0.269*drs::nanocoulombs
-                        << "\nGot: " << current.DQWireCharge);
-
-    BOOST_CHECK_MESSAGE( ROUND_UP(current.readingCharge, 3) == 0.615*drs::nanocoulombs,
-                        "Total charge accounted for reading lines different from the expected."
-                        << "\nExpected around: " << 0.615*drs::nanocoulombs
-                        << "\nGot: " << current.readingCharge);
-
-    BOOST_CHECK_MESSAGE( current.includeIOTerminationCurrent == true,
-                        "I/O termination current flag different from the expected."
-                        << "\nExpected: " << true
-                        << "\nGot: " << current.includeIOTerminationCurrent);
+  _mag = (double)true;
+  BOOST_CHECK_MESSAGE( current.includeIOTerminationCurrent == (bool)_mag,
+                      "I/O termination current flag different from the expected."
+                      << "\nExpected: " << (bool)_mag
+                      << "\nGot: " << current.includeIOTerminationCurrent);
 
 }
 

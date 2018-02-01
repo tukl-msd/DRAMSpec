@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,12 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji
- *          Matthias Jung
- *          Christian Weis
- *          Kamal Haddad
- *          Andr'e Lucas Chinazzo
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #include "ArgumentsParser.h"
 
@@ -47,46 +49,34 @@ ArgumentsParser::ArgumentsParser(int argc, char** argv)
     argvID = 1;
     nConfigurations = 0;
     IOTerminationCurrentFlag = false;
-    helpMessage.str("");
+    printInternalTimings = false;
 }
 
 void ArgumentsParser::runArgParser()
 {
-    // Help run
-    if ( cpargc == 1 ) {
-        helpMessage << "Parameters:"
-                    << endl;
-        helpMessage << "  Mandatory:"
-                    << endl;
-        helpMessage << "    -t    <path/to/technologyfile.json>   "
-                    << "(Specify which technology description file should be used.)"
-                    << endl;
-        helpMessage << "    -p    <path/to/architecturefile.json> "
-                    << "(Specify which architecture description file should be used.)"
-                    << endl;
-        helpMessage << "  Optional:"
-                    << endl;
-        helpMessage << "    -term                                 "
-                    << "(Include IO termination currents for read and write operations.)"
-                    << endl;
-        helpMessage << "For more information, see README.md."
-                    << endl;
+    if ( argvID >= cpargc ) {
+        // Help run (no arguments)
+        if ( cpargc == 1 ) {
+            helpStrStream << helpMessage;
+        }
+        // Or end of parsing
+        return;
+    }
+
+    // Help run (by argument)
+    if ( string(cpargv[argvID]) == "-h" ) {
+        helpStrStream << helpMessage;
     }
 
     // Normal run
-    if ( argvID >= cpargc ) {
-        return;
-    }
     if( string(cpargv[argvID]) == "-t") {
         argvID++;
         if(!getTechFileName()) {
             string exceptionMsgThrown("[ERROR] ");
             exceptionMsgThrown.append("Unexpected argument \'");
             exceptionMsgThrown.append(cpargv[argvID]);
-            exceptionMsgThrown.append("\'.\nUse \'-t\' and \'-p\' before the ");
-            exceptionMsgThrown.append("Technology and Archtecture file names, respectively.\n");
-            exceptionMsgThrown.append("Use \'-term\' to include the");
-            exceptionMsgThrown.append(" OI Termination Current calculation.\n");
+            exceptionMsgThrown.append("\'\n");
+            exceptionMsgThrown.append(helpMessage);
             throw exceptionMsgThrown;
        }
     }
@@ -96,10 +86,8 @@ void ArgumentsParser::runArgParser()
             string exceptionMsgThrown("[ERROR] ");
             exceptionMsgThrown.append("Unexpected argument \'");
             exceptionMsgThrown.append(cpargv[argvID]);
-            exceptionMsgThrown.append("\'.\nUse \'-t\' and \'-p\' before the ");
-            exceptionMsgThrown.append("Technology and Archtecture file names, respectively.\n");
-            exceptionMsgThrown.append("Use \'-term\' to include the");
-            exceptionMsgThrown.append(" OI Termination Current calculation.\n");
+            exceptionMsgThrown.append("\'\n");
+            exceptionMsgThrown.append(helpMessage);
             throw exceptionMsgThrown;
        }
     }
@@ -108,14 +96,17 @@ void ArgumentsParser::runArgParser()
         argvID++;
         runArgParser();
     }
+    else if( string(cpargv[argvID]) == "-internaltimings") {
+        printInternalTimings = true;
+        argvID++;
+        runArgParser();
+    }
     else {
         string exceptionMsgThrown("[ERROR] ");
         exceptionMsgThrown.append("Unexpected argument \'");
         exceptionMsgThrown.append(cpargv[argvID]);
-        exceptionMsgThrown.append("\'.\nUse \'-t\' and \'-p\' before the ");
-        exceptionMsgThrown.append("Technology and Archtecture file names, respectively.\n");
-        exceptionMsgThrown.append("Use \'-term\' to include the");
-        exceptionMsgThrown.append(" OI Termination Current calculation.\n");
+        exceptionMsgThrown.append("\'\n");
+        exceptionMsgThrown.append(helpMessage);
         throw exceptionMsgThrown;
     }
 
@@ -140,10 +131,7 @@ void ArgumentsParser::runArgParser()
          string exceptionMsgThrown("[ERROR] ");
          exceptionMsgThrown.append("No technology nor architecture ");
          exceptionMsgThrown.append("file provided!\n");
-         exceptionMsgThrown.append("Use \'-t\' and \'-p\' before the ");
-         exceptionMsgThrown.append("Technology and Archtecture file names, respectively.\n");
-         exceptionMsgThrown.append("Use \'-term\' to include the");
-         exceptionMsgThrown.append(" OI Termination Current calculation.\n");
+         exceptionMsgThrown.append(helpMessage);
          throw exceptionMsgThrown;
 
      }
@@ -162,11 +150,17 @@ bool ArgumentsParser::getTechFileName()
         else if( string(cpargv[argvID]) == "-term") {
             IOTerminationCurrentFlag = true;
             argvID++;
-            runArgParser();
+            if(!getTechFileName()) { return false; }
+        }
+        else if( string(cpargv[argvID]) == "-internaltimings") {
+            printInternalTimings = true;
+            argvID++;
+            if(!getTechFileName()) { return false; }
+        }
+        else if (cpargv[argvID][0] == '-') {
+            return false;
         }
         else {
-            if (cpargv[argvID][0] == '-') { return false; }
-
             technologyFileName.push_back(cpargv[argvID]);
             argvID++;
             if(!getTechFileName()) { return false; }
@@ -189,11 +183,17 @@ bool ArgumentsParser::getArchFileName()
         else if( string(cpargv[argvID]) == "-term") {
             IOTerminationCurrentFlag = true;
             argvID++;
-            runArgParser();
+            if(!getArchFileName()) { return false; }
+        }
+        else if( string(cpargv[argvID]) == "-internaltimings") {
+            printInternalTimings = true;
+            argvID++;
+            if(!getArchFileName()) { return false; }
+        }
+        else if (cpargv[argvID][0] == '-') {
+            return false;
         }
         else {
-            if (cpargv[argvID][0] == '-') { return false; }
-
             architectureFileName.push_back(cpargv[argvID]);
             argvID++;
             if(!getArchFileName()) { return false; }

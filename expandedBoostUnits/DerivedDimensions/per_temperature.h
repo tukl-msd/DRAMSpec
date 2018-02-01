@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,30 +29,33 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_PAGE_PER_BANK_DERIVED_DIMENSION_H
-#define DRAMSPEC_PAGE_PER_BANK_DERIVED_DIMENSION_H
+
+
+#ifndef DRAMSPEC_PER_TEMPERATURE_DERIVED_DIMENSION_H
+#define DRAMSPEC_PER_TEMPERATURE_DERIVED_DIMENSION_H
 
 #include <boost/units/derived_dimension.hpp>
 
-#include "../BaseDimensions/page.h"
-#include "../BaseDimensions/tile.h"
+#include <boost/units/physical_dimensions/temperature.hpp>
 
 namespace boost {
 
 namespace units {
 
-/// derived dimension for #pages per tile
-/// PAGE^1 tile^-1
-typedef derived_dimension<page_base_dimension,1,
-                          tile_base_dimension,-1>::type
-                                        page_per_tile_dimension;
-
+/// derived dimension for "per temperature"
+/// TEMP^-1
+typedef derived_dimension<temperature_base_dimension,-1>::type
+                                        per_temperature_dimension;
 
 } // namespace units
 
 } // namespace boost
 
-#endif // DRAMSPEC_PAGE_PER_BANK_DERIVED_DIMENSION_H
+#endif // DRAMSPEC_PER_TEMPERATURE_DERIVED_DIMENSION_H

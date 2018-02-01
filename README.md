@@ -2,7 +2,7 @@
 
 ![DRAMSpec](http://www.uni-kl.de/fileadmin/3d-dram/dramSpec.png "DRAMSpec Logo")
 
-If you use **DRAMSpec** in your research, we would appreciate a citation to: 
+If you use **DRAMSpec** in your research, we would appreciate a citation to:
 
 **A High-Level DRAM Timing, Power and Area Exploration Tool**,
 O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn.,
@@ -11,14 +11,14 @@ O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn.,
 BibTeX:
 
 ``` bibtex
-@INPROCEEDINGS{DRAMSpec, 
-author={O. Naji and C. Weis and M. Jung and N. Wehn and A. Hansson}, 
-booktitle={2015 International Conference on Embedded Computer Systems: Architectures, Modeling, and Simulation (SAMOS)}, 
-title={A high-level DRAM timing, power and area exploration tool}, 
-year={2015}, 
-pages={149-156}, 
-keywords={DRAM chips;energy conservation;logic design;memory architecture;microprocessor chips;DDR3;DRAMSpec;energy saving;mobile devices;open source high-level DRAM bank modeling tool;processor designers;servers;Computational modeling;Computer architecture;Delays;Integrated circuit modeling;Performance evaluation;Random access memory}, 
-doi={10.1109/SAMOS.2015.7363670}, 
+@INPROCEEDINGS{DRAMSpec,
+author={O. Naji and C. Weis and M. Jung and N. Wehn and A. Hansson},
+booktitle={2015 International Conference on Embedded Computer Systems: Architectures, Modeling, and Simulation (SAMOS)},
+title={A high-level DRAM timing, power and area exploration tool},
+year={2015},
+pages={149-156},
+keywords={DRAM chips;energy conservation;logic design;memory architecture;microprocessor chips;DDR3;DRAMSpec;energy saving;mobile devices;open source high-level DRAM bank modeling tool;processor designers;servers;Computational modeling;Computer architecture;Delays;Integrated circuit modeling;Performance evaluation;Random access memory},
+doi={10.1109/SAMOS.2015.7363670},
 month={July},}
 ```
 
@@ -61,6 +61,8 @@ Author: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andre Lucas Chin
 
 DRAMSpec requires some libraries from [boost](http://www.boost.org/). If you do not have it or the version you have is older than the 1.58, please follow the first four (4) steps from their [getting started](http://www.boost.org/doc/libs/1_63_0/more/getting_started/unix-variants.html) section.
 
+DRAMSpec is built as a Qt Creator project, therefore requiring the `qmake` tool. If you do not have Qt installed, you can find it [here](http://www.qt.io/download).
+
 ### Cloning from github (recursive to get submodules!)
 ``` bash
     git clone --recursive <URL>
@@ -84,10 +86,14 @@ The executable is now available under `build/release/` by the name `dramspec`.
 
 ### Running DRAMSpec
 
-The program expect as parameters (at least) one technology and one achitecture description files. The flags `-t` and `-p` precede the technology and architecture description files, respectively. The optional `-term` flag will include the IO termination currents for read and write operations of the DRAM.
+The program expect as parameters (at least) one technology and one achitecture description files. The flags `-t` and `-p` precede the technology and architecture description files, respectively.
+
+The optional `-term` flag will include the IO termination currents for read and write operations of the DRAM.
+
+For more detailed information on timings, it is possible to print out all internal timing variables using the flag `-internaltimings`.
 
 ``` bash
-    ./build/release/dramspec -t <path/to/technologyfilename> -p <path/to/parameterfilename> [-term]
+    ./build/release/dramspec -t <path/to/technologyfilename> -p <path/to/parameterfilename> [-term] [-internaltimings]
 ```
 
 #### Examples:
@@ -99,7 +105,7 @@ The program expect as parameters (at least) one technology and one achitecture d
 It is also possible to run multiple input files at once:
 
 ``` bash
-    ./build/release/dramspec -t <t1.json> <t2.json> -p <p1.json> <p1.json> [-term]
+    ./build/release/dramspec -t <t1.json> <t2.json> -p <p1.json> <p2.json> [-term] [-internaltimings]
 ```
 Note: the number of technology and architecture description files must be equal.
 
@@ -131,26 +137,26 @@ Note: the number of technology and architecture description files must be equal.
 |WriteDriverResistance|Output resistance of the write driver.|Ohm|
 |ColumnDecoderHeight|Lenght in column direction of the column address decoder.|um|
 |CSLDriverResistance|Output resistance of the column select line driver.|Ohm|
-|CSLLoadCapacitance|  |fF|
+|CSLLoadCapacitance|Column select line capacitive load (LBL to GBL transistors gates).|fF|
 |GlobalDataLineDriverResistance|Output resistance of the global dataline driver.|Ohm|
 |DQDriverHeight|Length in column direction of the DQ driver.|um|
+|DQtoTSVWireLength|Length of the wire from DQ main line to TSV connection.|um|
 |DQDriverResistance|Output resistance of the DQ driver.|Ohm|
-|BackgroundCurrentSlope|Slope in relation to operating frequency of the precharge background current.|mA/MHz|
-|BackgroundCurrentOffset|Constant term of precharge background current (frequency invariant).|mA|
+|IDD2NFreqSlope|Slope in relation to operating frequency of the precharge background current.|mA/MHz|
+|IDD2NTempAlpha|Alpha coeff. (alpha * (exp(beta * (T - TRef)) - 1)) in relation to operating temperature of the precharge background current.|mA|
+|IDD2NTempBeta|Beta coeff. (alpha * (exp(beta * (T - TRef)) - 1)) in relation to operating temperature of the precharge background current.|C^-1|
+|IDD2NRefTemp|Ref. temperature (alpha * (exp(beta * (T - TRef)) - 1)) in relation to operating temperature of the precharge background current.|C|
+|IDD2NOffset|Constant term of precharge background current. It is IDD2n at 0 MHz and TRef.|mA|
 |OCDCurrentSlope|Slope of current sinked by the off-chip driver in relation to operating frequency.|uA/MHz|
 |TSVHeight|Length in column direction of TSV area.|um|
 |AdditionalTRLLatency|Added latency (tAL [2]) to tCAS resulting in tRL.|cc|
-|DriverOffset|  |ns|
-|BLSADelay|  |ns|
-|CommandDecoderDelay|  |ns|
-|InterfaceDelay|  |ns|
-|IODelay|  |ns|
-|SSAPrechargeDelay|  |ns|
-|SecurityMargin|  |ns|
-|EqualizerDelay|  |ns|
-|ACTCommandDelay|  |ns|
-|PRECommandDelay|  |ns|
-|Offset|  |ns|
+|DriverEnableDelay| Time interval between driving signal to active driver. |ns|
+|InOutSSADelay|Signal delay from input to output of the secondary sense amplifier.|ns|
+|CommandDecoderDelay|Clock wave pipeline delay for decode and fetch command in the same cycle it is registered.|ns|
+|IODelay|I/O interface delay.|ns|
+|SSAPrechargeDelay|Secondary sense amplifier precharge delay.|ns|
+|tWRMargin|Security margin for Write Recovery.|ns|
+|EqualizerDelay|Equalizer circuit enabling delay.|ns|
 
 ### DRAM Architecture related inputs
 
@@ -161,8 +167,8 @@ Note: the number of technology and architecture description files must be equal.
 |DLL|Flag for the usage of Dealy-Locked Loop. ON means the DRAM uses DLL.|-|
 |ChannelSize|Data storage capacity of a single channel.|Gbit|
 |NumberOfBanksPerChannel|Total number of banks in a single channel.|dimensionless|
-|NumberOfHorizontalBanksPerChannel|Number of banks in row direction. Set to 0 (zero) for automatic calculation.|dimensionless|
-|NumberOfVerticalBanksPerChannel|Number of banks in a column direction. Set to 0 (zero) for automatic calculation.|dimensionless|
+|NumberOfHorizontalBanksPerChannel|Number of banks in row direction. (Optional)|dimensionless|
+|NumberOfVerticalBanksPerChannel|Number of banks in a column direction. (Optional)|dimensionless|
 |CellsPerSubarrayRow|Number of cells in row direction in a subarray, including redundace.|dimensionless|
 |RedundantCellsPerSubarrayRow|Number of redundant cells in row direction in a subarray.|dimensionless|
 |CellsPerSubarrayColumn|Number of cells in column direction in a subarray, including redundance.|dimensionless|
@@ -170,15 +176,16 @@ Note: the number of technology and architecture description files must be equal.
 |Interface|Number of datalines of the IO bus. This number is the length of a single data word.|bit|
 |Prefetch|Number of prefetched data words for a single read command (RD).|dimensionless|
 |Frequency|Nominal Synchronous DRAM clock frequency.|MHz|
-|CoreFrequency|DRAM Core clock frequency.|MHz|
+|CoreFrequency|DRAM Core clock frequency. Set to 0 (zero) for automatic calculation.|MHz|
 |TilesPerBank|Number of tiles (subsections) of a single bank.|dimensionless|
 |PageSize|Amount of data sensed after an bank activate command (ACT).|KByte|
 |PageSpanningFactor|Percetange of page size sensed on a single bank tile.|dimensionless|
 |SubarrayToPageFactor|Ratio between number of cells in a physical row and the page size.|dimensionless|
 |BitlineArchitecture|Chosen architecture of bitlines. Can be either OPEN bitlines, or FOLDED bitlines.|-|
 |RetentionTime|Minimum amout of time each and every cell must keep its information before being refreshed.|ms|
-|RequiredRefreshPeriod|Required refresh interval latency. Average time interval in between Refresh commands.|us|
-|BankRefreshFactor|Ratio between the number of rows actived in one refresh command and the number of banks.|dimensionless|
+|tREFI(base)|Base average interval between two AREF commands (1X refresh mode, normal temperature). Please see [4] for reference.|us|
+|RefreshMode|Base tREFI divider for effective tREFI [4]. Please use 1, 2, etc, for X1, X2, ect, refresh modes.|dimensionless|
+|Temperature|Operating temperature of the device.|C|
 
 ## Output Data
 
@@ -220,7 +227,7 @@ Note: the number of technology and architecture description files must be equal.
 |tRFC|Refresh Cycle latency. The time interval between Refresh and Activation commands.|cc|
 |tREFI|Refresh Interval latency. Average time interval in between Refresh commands. |cc|
 
-### Currents [3]
+### Currents [3, 4]
 
 | Abbreviation | Description | Unit |
 |:------------:|:-----------:|:----:|
@@ -261,3 +268,7 @@ Morgan Kaufmann, 2007
 [3] DDR3 SDRAM standard (revision F),
 JEDEC,
 July 2012.
+
+[4] DDR4 SDRAM standard (revision B),
+JEDEC,
+June 2017.

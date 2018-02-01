@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,12 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji
- *          Matthias Jung
- *          Christian Weis
- *          Kamal Haddad
- *          Andr'e Lucas Chinazzo
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #ifndef SUBARRAYTEST_CPP
 #define SUBARRAYTEST_CPP
@@ -82,45 +84,45 @@ BOOST_AUTO_TEST_CASE( checkSubArray_real_input)
     }
 
 
-    BOOST_CHECK_MESSAGE( subarray.subArrayStorage == 262144*drs::bits_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.subArrayStorage == 262144*drs::bits,
                          "Size of subarray different from the expected."
-                        << "\nExpected: " << 262144*drs::bits_per_subarray
+                        << "\nExpected: " << 262144*drs::bits
                         << "\nGot: " << subarray.subArrayStorage);
 
-    BOOST_CHECK_MESSAGE( subarray.subArrayRowStorage == 512*drs::bits_per_subarray,
-                         "Size of subarray row different from the expected."
-                        << "\nExpected: " << 512*drs::bits_per_subarray
+    BOOST_CHECK_MESSAGE( subarray.subArrayRowStorage == 512*drs::bits,
+                        "Size of subarray row different from the expected."
+                        << "\nExpected: " << 512*drs::bits
                         << "\nGot: " << subarray.subArrayRowStorage);
 
-    BOOST_CHECK_MESSAGE( subarray.subArrayColumnStorage == 512*drs::bits_per_subarray,
-                         "Size of subarray row different from the expected."
-                        << "\nExpected: " << 512*drs::bits_per_subarray
+    BOOST_CHECK_MESSAGE( subarray.subArrayColumnStorage == 512*drs::bits,
+                         "Size of subarray column different from the expected."
+                        << "\nExpected: " << 512*drs::bits
                         << "\nGot: " << subarray.subArrayColumnStorage);
 
-    BOOST_CHECK_MESSAGE( subarray.subArrayWidth == 71.88*drs::micrometer_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.subArrayWidth == 71.88*drs::micrometer,
                         "Width of subarray different from the expected."
-                        << "\nExpected: " << 71.88*drs::micrometer_per_subarray
+                        << "\nExpected: " << 71.88*drs::micrometer
                         << "\nGot: " << subarray.subArrayWidth);
 
-    BOOST_CHECK_MESSAGE( subarray.subArrayHeight == 114.32*drs::micrometer_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.subArrayHeight == 114.32*drs::micrometer,
                         "Height of subarray different from the expected."
-                        << "\nExpected: " << 114.32*drs::micrometer_per_subarray
+                        << "\nExpected: " << 114.32*drs::micrometer
                         << "\nGot: " << subarray.subArrayHeight);
 
-    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 400*si::ohm,
+    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 400*drs::ohms,
                         "Resistance of global wordline driver different from the expected."
-                        << "\nExpected: " << 400*si::ohm
+                        << "\nExpected: " << 400*drs::ohms
                         << "\nGot: " << subarray.GWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 1000*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 1000*drs::ohms,
                         "Resistance of local wordline driver different from the expected."
-                        << "\nExpected: " << 1000*drs::ohms_per_subarray
+                        << "\nExpected: " << 1000*drs::ohms
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 600*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
-                        << "\nExpected: " << 600*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 600*drs::ohms,
+                        "WR restore driver resistance different from the expected."
+                        << "\nExpected: " << 600*drs::ohms
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 }
 
@@ -160,45 +162,45 @@ BOOST_AUTO_TEST_CASE( checkSubArray_dummy_input )
     }
 
 
-    BOOST_CHECK_MESSAGE( subarray.subArrayStorage == 11229034*drs::bits_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.subArrayStorage == 11229034*drs::bits,
                          "Size of subarray different from the expected."
-                        << "\nExpected: " << 11229034*drs::bits_per_subarray
+                        << "\nExpected: " << 11229034*drs::bits
                         << "\nGot: " << subarray.subArrayStorage);
 
-    BOOST_CHECK_MESSAGE( subarray.subArrayRowStorage == -2258*drs::bits_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.subArrayRowStorage == -2258*drs::bits,
                         "Size of subarray row different from the expected."
-                        << "\nExpected: " << -2258*drs::bits_per_subarray
+                        << "\nExpected: " << -2258*drs::bits
                         << "\nGot: " << subarray.subArrayRowStorage);
 
-    BOOST_CHECK_MESSAGE( subarray.subArrayColumnStorage == -4973*drs::bits_per_subarray,
-                         "Size of subarray row different from the expected."
-                        << "\nExpected: " << -4973*drs::bits_per_subarray
+    BOOST_CHECK_MESSAGE( subarray.subArrayColumnStorage == -4973*drs::bits,
+                         "Size of subarray column different from the expected."
+                        << "\nExpected: " << -4973*drs::bits
                         << "\nGot: " << subarray.subArrayColumnStorage);
 
-    BOOST_CHECK_MESSAGE( subarray.subArrayWidth == 5901281*drs::micrometer_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.subArrayWidth == 5901281*drs::micrometer,
                         "Width of subarray different from the expected."
-                        << "\nExpected: " << 5901281*drs::micrometer_per_subarray
+                        << "\nExpected: " << 5901281*drs::micrometer
                         << "\nGot: " << subarray.subArrayWidth);
 
-    BOOST_CHECK_MESSAGE( subarray.subArrayHeight == 2606889*drs::micrometer_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.subArrayHeight == 2606889*drs::micrometer,
                         "Height of subarray different from the expected."
-                        << "\nExpected: " << 2606889*drs::micrometer_per_subarray
+                        << "\nExpected: " << 2606889*drs::micrometer
                         << "\nGot: " << subarray.subArrayHeight);
 
-    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 4005*si::ohm,
+    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 4005*drs::ohms,
                         "Resistance of global wordline driver different from the expected."
-                        << "\nExpected: " << 4005*si::ohm
+                        << "\nExpected: " << 4005*drs::ohms
                         << "\nGot: " << subarray.GWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 5422*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 5422*drs::ohms,
                         "Resistance of local wordline driver different from the expected."
-                        << "\nExpected: " << 5422*drs::ohms_per_subarray
+                        << "\nExpected: " << 5422*drs::ohms
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 6131*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
-                        << "\nExpected: " << 6131*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 6131*drs::ohms,
+                        "WR restore driver resistance different from the expected."
+                        << "\nExpected: " << 6131*drs::ohms
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 
 }
@@ -242,51 +244,51 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_pageStorages )
     subarray.readjson(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
-    subarray.pageStorage = 1*drs::kibibytes_per_page;
+    subarray.pageStorage = 1*drs::kibibytes;
     subarray. driverUpdate();
-    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 4605*si::ohm,
+    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 4605*drs::ohms,
                         "Resistance of global wordline driver different from the expected."
-                        << "\nExpected: " << 4605*si::ohm
+                        << "\nExpected: " << 4605*drs::ohms
                         << "\nGot: " << subarray.GWLDriverResistance);
 
     subarray.readjson(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
-    subarray.pageStorage = 2*drs::kibibytes_per_page;
+    subarray.pageStorage = 2*drs::kibibytes;
     subarray. driverUpdate();
-    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 4405*si::ohm,
+    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 4405*drs::ohms,
                         "Resistance of global wordline driver different from the expected."
-                        << "\nExpected: " << 4405*si::ohm
+                        << "\nExpected: " << 4405*drs::ohms
                         << "\nGot: " << subarray.GWLDriverResistance);
 
     subarray.readjson(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
-    subarray.pageStorage = 4*drs::kibibytes_per_page;
+    subarray.pageStorage = 4*drs::kibibytes;
     subarray. driverUpdate();
-    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 4205*si::ohm,
+    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 4205*drs::ohms,
                         "Resistance of global wordline driver different from the expected."
-                        << "\nExpected: " << 4205*si::ohm
+                        << "\nExpected: " << 4205*drs::ohms
                         << "\nGot: " << subarray.GWLDriverResistance);
 
     subarray.readjson(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
-    subarray.pageStorage = 8*drs::kibibytes_per_page;
+    subarray.pageStorage = 8*drs::kibibytes;
     subarray. driverUpdate();
-    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 4105*si::ohm,
+    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 4105*drs::ohms,
                         "Resistance of global wordline driver different from the expected."
-                        << "\nExpected: " << 4105*si::ohm
+                        << "\nExpected: " << 4105*drs::ohms
                         << "\nGot: " << subarray.GWLDriverResistance);
 
     subarray.readjson(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
-    subarray.pageStorage = 16*drs::kibibytes_per_page;
+    subarray.pageStorage = 16*drs::kibibytes;
     subarray. driverUpdate();
-    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 4005*si::ohm,
+    BOOST_CHECK_MESSAGE( subarray.GWLDriverResistance == 4005*drs::ohms,
                         "Resistance of global wordline driver different from the expected."
-                        << "\nExpected: " << 4005*si::ohm
+                        << "\nExpected: " << 4005*drs::ohms
                         << "\nGot: " << subarray.GWLDriverResistance);
 
 }
@@ -330,81 +332,81 @@ BOOST_AUTO_TEST_CASE( checkSubArray_different_bitPerLWL )
     subarray.readjson(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
-    subarray.subArrayRowStorage = 255*drs::bits_per_subarray; // < 256
+    subarray.subArrayRowStorage = 255*drs::bits; // < 256
     subarray. driverUpdate();
-    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 5422*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 5422*drs::ohms,
                         "Resistance of local wordline driver different from the expected."
-                        << "\nExpected: " << 5422*drs::ohms_per_subarray
+                        << "\nExpected: " << 5422*drs::ohms
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 6131*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
-                        << "\nExpected: " << 6131*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 6131*drs::ohms,
+                        "WR restore driver resistance different from the expected."
+                        << "\nExpected: " << 6131*drs::ohms
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 
     subarray.readjson(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
-    subarray.subArrayRowStorage = 256*drs::bits_per_subarray;
+    subarray.subArrayRowStorage = 256*drs::bits;
     subarray. driverUpdate();
-    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 5322*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 5322*drs::ohms,
                         "Resistance of local wordline driver different from the expected."
-                        << "\nExpected: " << 5322*drs::ohms_per_subarray
+                        << "\nExpected: " << 5322*drs::ohms
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 6031*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
-                        << "\nExpected: " << 6031*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 6031*drs::ohms,
+                        "WR restore driver resistance different from the expected."
+                        << "\nExpected: " << 6031*drs::ohms
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 
     subarray.readjson(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
-    subarray.subArrayRowStorage = 512*drs::bits_per_subarray;
+    subarray.subArrayRowStorage = 512*drs::bits;
     subarray. driverUpdate();
-    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 5222*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 5222*drs::ohms,
                         "Resistance of local wordline driver different from the expected."
-                        << "\nExpected: " << 5222*drs::ohms_per_subarray
+                        << "\nExpected: " << 5222*drs::ohms
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 5931*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
-                        << "\nExpected: " << 5931*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 5931*drs::ohms,
+                        "WR restore driver resistance different from the expected."
+                        << "\nExpected: " << 5931*drs::ohms
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 
     subarray.readjson(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
-    subarray.subArrayRowStorage = 1024*drs::bits_per_subarray;
+    subarray.subArrayRowStorage = 1024*drs::bits;
     subarray. driverUpdate();
-    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 5122*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 5122*drs::ohms,
                         "Resistance of local wordline driver different from the expected."
-                        << "\nExpected: " << 5122*drs::ohms_per_subarray
+                        << "\nExpected: " << 5122*drs::ohms
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 5831*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
-                        << "\nExpected: " << 5831*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 5831*drs::ohms,
+                        "WR restore driver resistance different from the expected."
+                        << "\nExpected: " << 5831*drs::ohms
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 
     subarray.readjson(inputFileName.technologyFileName[0],
                       inputFileName.architectureFileName[0]);
     subarray.subArrayCompute();
-    subarray.subArrayRowStorage = 1025*drs::bits_per_subarray; // > 1024
+    subarray.subArrayRowStorage = 1025*drs::bits; // > 1024
     subarray. driverUpdate();
-    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 5022*drs::ohms_per_subarray,
+    BOOST_CHECK_MESSAGE( subarray.LWLDriverResistance == 5022*drs::ohms,
                         "Resistance of local wordline driver different from the expected."
-                        << "\nExpected: " << 5022*drs::ohms_per_subarray
+                        << "\nExpected: " << 5022*drs::ohms
                         << "\nGot: " << subarray.LWLDriverResistance);
 
-    BOOST_CHECK_MESSAGE( subarray.WRResistance == 5731*drs::ohms_per_subarray,
-                        "WR restore resistance different from the expected."
-                        << "\nExpected: " << 5731*drs::ohms_per_subarray
-                        << "\nGot: " << subarray.WRResistance);
+    BOOST_CHECK_MESSAGE( subarray.WRDriverResistance == 5731*drs::ohms,
+                        "WR restore driver resistance different from the expected."
+                        << "\nExpected: " << 5731*drs::ohms
+                        << "\nGot: " << subarray.WRDriverResistance);
 
 }
 

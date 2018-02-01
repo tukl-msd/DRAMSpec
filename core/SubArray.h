@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #ifndef SUBARRAY_H
 #define SUBARRAY_H
@@ -59,24 +65,28 @@ class SubArray : public TechnologyValues
         TechnologyValues(technologyFileName, architectureFileName)
     {
         subArrayInitialize();
-        subArrayCompute();
+        try {
+            subArrayCompute();
+        }catch (string exceptionMsgThrown){
+            throw exceptionMsgThrown;
+        }
         driverUpdate();
     }
 
     // Size in number of bits of a single subarray
-    bu::quantity<drs::information_per_subarray_unit> subArrayStorage;
+    bu::quantity<drs::bit_unit> subArrayStorage;
 
-    // Size in number of bits of a single row of a subarray
-    bu::quantity<drs::information_per_subarray_unit> subArrayRowStorage;
+    // Size in number of bits of a single physical row of a subarray
+    bu::quantity<drs::bit_unit> subArrayRowStorage;
 
-    // Size in number of bits of a single column of a subarray
-    bu::quantity<drs::information_per_subarray_unit> subArrayColumnStorage;
+    // Size in number of bits of a single column physical of a subarray
+    bu::quantity<drs::bit_unit> subArrayColumnStorage;
 
     //the width of the subarray which should be calculated
-    bu::quantity<drs::micrometer_per_subarray_unit> subArrayWidth;
+    bu::quantity<drs::micrometer_unit> subArrayWidth;
 
     //the height of the subarray which should be calculated
-    bu::quantity<drs::micrometer_per_subarray_unit>  subArrayHeight;
+    bu::quantity<drs::micrometer_unit>  subArrayHeight;
 
     void subArrayInitialize();
 

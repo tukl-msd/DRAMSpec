@@ -35,27 +35,26 @@
     "GlobalDataLineDriverResistance[Ohm]" : 600,
 
     "DQDriverHeight[um]": 500,
+    "DQtoTSVWireLength[um]": 200,
     "DQDriverResistance[Ohm]" : 500,
 
-    "BackgroundCurrentSlope[mA/MHz]": 0.015,
-    "BackgroundCurrentOffset[mA]": 6.75,
+    "IDD2NFreqSlope[mA/MHz]": 0.015,
+    "IDD2NTempAlpha[mA]": 0.6775,
+    "IDD2NTempBeta[C^-1]": 0.04467,
+    "IDD2NRefTemp[C]": 25,
+    "IDD2NOffset[mA]": 6.75,
     "OCDCurrentSlope[uA/MHz]": 0.8443,
 
     "TSVHeight[um]": 0,
 
     "AdditionalTRLLatency[cc]" : 0,
 
-    "DriverOffset[ns]": 0.6,
-    "BLSADelay[ns]": 2,
+    "DriverEnableDelay[ns]": 0.6,
+    "InOutSSADelay[ns]": 2,
     "CommandDecoderDelay[ns]": 2,
-    "InterfaceDelay[ns]": 1,
     "IODelay[ns]": 1,
     "SSAPrechargeDelay[ns]": 1,
-    "SecurityMargin[ns]": 1,
-    "EqualizerDelay[ns]": 1,
-    "ACTCommandDelay[ns]": 5,
-    "PRECommandDelay[ns]": 5,
-    "Offset[ns]": 10
-
+    "tWRMargin[ns]": 1,
+    "EqualizerDelay[ns]": 1
 
 }

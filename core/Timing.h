@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 //In this class the timing specification of DRAMs is done
 //The class uses an initialized DRAM Channel to compute the timing specification
@@ -70,47 +76,54 @@ class Timing : public Channel
     bu::quantity<drs::nanosecond_unit> cellDelay;
 
     //Resistance of local wordline
-    bu::quantity<drs::resistance_per_subarray_unit> localWordlineResistance;
+    bu::quantity<drs::ohm_unit> localWordlineResistance;
     //Capacitace of local wordline
-    bu::quantity<drs::nanofarad_per_subarray_unit> localWordlineCapacitance;
+    bu::quantity<drs::nanofarad_unit> localWordlineCapacitance;
     //Delay of local wordline
     bu::quantity<drs::nanosecond_unit> localWordlineDelay;
 
     //Resistance of local bitline
-    bu::quantity<drs::resistance_per_subarray_unit> localBitlineResistance;
+    bu::quantity<drs::ohm_unit> localBitlineResistance;
     //Capacitace of local bitline
-    bu::quantity<drs::nanofarad_per_subarray_unit> localBitlineCapacitance;
+    bu::quantity<drs::nanofarad_unit> localBitlineCapacitance;
     //Delay of local bitline
     bu::quantity<drs::nanosecond_unit> localBitlineDelay;
 
     //Resistance of global wordline
-    bu::quantity<drs::resistance_per_tile_unit> globalWordlineResistance;
+    bu::quantity<drs::ohm_unit> globalWordlineResistance;
     //Capacitace of global wordline
-    bu::quantity<drs::nanofarad_per_tile_unit> globalWordlineCapacitance;
+    bu::quantity<drs::nanofarad_unit> globalWordlineCapacitance;
     //Delay through global wordline driver and wiring
     bu::quantity<drs::nanosecond_unit> globalWordlineDelay;
 
     //t_rcd: ACT to internal read or write delay time
     bu::quantity<drs::nanosecond_unit> trcd;
 
+    //Delay of the cell for 99% (recharge)
+    bu::quantity<drs::nanosecond_unit> cellDelay99p;
+
+    //Delay of the bitline for 99% (recharge)
+    bu::quantity<drs::nanosecond_unit> localBitlineDelay99p;
+
+    //Delay for internal ACT cmd to effective refresh of the cell
+    bu::quantity<drs::nanosecond_unit> ACTtoRefreshCellDelay;
+
     //Resistance of CSL wire
-    bu::quantity<drs::resistance_per_bank_unit> CSLResistance;
+    bu::quantity<drs::ohm_unit> CSLResistance;
     //Capacitace of CSL wire
-    bu::quantity<drs::nanofarad_per_bank_unit> CSLCapacitance;
+    bu::quantity<drs::nanofarad_unit> CSLCapacitance;
     //Delay through CSL driver and wiring
     bu::quantity<drs::nanosecond_unit> tcsl;
 
     //Resistance of global dataline wire
-    bu::quantity<drs::resistance_per_bank_unit> globalDatalineResistance;
+    bu::quantity<drs::ohm_unit> globalDatalineResistance;
     //Capacitace of global dataline wire
-    bu::quantity<drs::nanofarad_per_bank_unit> globalDatalineCapacitance;
+    bu::quantity<drs::nanofarad_unit> globalDatalineCapacitance;
     //Delay through global dataline driver and wiring
     bu::quantity<drs::nanosecond_unit> tgdl;
 
     //DQ wire length
-    bu::quantity<drs::millimeter_unit> DQWireLength;
-    // Factor which defines the page size * subArrayToPageFactor relation
-    bu::quantity<drs::kibibyte_per_page_unit> bankWidthFactor;
+    bu::quantity<drs::micrometer_unit> DQWireLength;
     //Resistance of DQ wire
     bu::quantity<si::resistance> DQWireResistance;
     //Capacitace of DQ wire
@@ -144,11 +157,20 @@ class Timing : public Channel
     //trc - Row Cycle delay
     bu::quantity<drs::nanosecond_unit> trc;
 
-    //trfc - Refresh Cycle delay
-    bu::quantity<drs::nanosecond_unit> trfc;
+    //tck - One clock cycle time
+    bu::quantity<drs::nanosecond_unit> tck;
+
+    //tck - One core clock cycle time
+    bu::quantity<drs::nanosecond_unit> tckCore;
 
     //trefI - Refresh Interval delay
     bu::quantity<drs::nanosecond_unit> trefI;
+
+    //Number of rows refreshed per auto-refresh command (total, not per bank)
+    double nRowsRefreshedPerARCmd;
+
+    //trfc - Refresh Cycle delay
+    bu::quantity<drs::nanosecond_unit> trfc;
 
     //Maximum core frequency
     bu::quantity<drs::megahertz_clock_unit> maxCoreFreq;
@@ -202,6 +224,8 @@ class Timing : public Channel
 
     void trcCalc();
 
+    void tckCalc();
+
     void trfcCalc();
 
     void trefICalc();
@@ -210,7 +234,7 @@ class Timing : public Channel
 
     void timingCompute();
 
-    void printTiming();
+    void printTimings();
 };
 
 #endif

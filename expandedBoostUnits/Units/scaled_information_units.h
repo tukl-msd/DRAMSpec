@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,8 +29,14 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
+
+
 
 #ifndef DRAMSPEC_SCALED_INFORMATION_UNITS
 #define DRAMSPEC_SCALED_INFORMATION_UNITS
@@ -53,9 +59,6 @@ namespace dramspec {
 typedef make_scaled_unit<information::hu::bit::info,scale<2, static_rational<0>>>::type bit_unit;
 BOOST_UNITS_STATIC_CONSTANT(bit,bit_unit);
 BOOST_UNITS_STATIC_CONSTANT(bits,bit_unit);
-typedef make_scaled_unit<information::hu::bit::info,scale<2, static_rational<3>>>::type baite_unit;
-BOOST_UNITS_STATIC_CONSTANT(baite,baite_unit);
-BOOST_UNITS_STATIC_CONSTANT(baites,baite_unit);
 typedef make_scaled_unit<information::hu::bit::info,scale<2, static_rational<10>>>::type kibibit_unit;
 BOOST_UNITS_STATIC_CONSTANT(kibibit,kibibit_unit);
 BOOST_UNITS_STATIC_CONSTANT(kibibits,kibibit_unit);
@@ -69,6 +72,9 @@ BOOST_UNITS_STATIC_CONSTANT(bytes,byte_unit);
 typedef make_scaled_unit<information::hu::byte::info,scale<2, static_rational<10>>>::type kibibyte_unit;
 BOOST_UNITS_STATIC_CONSTANT(kibibyte,kibibyte_unit);
 BOOST_UNITS_STATIC_CONSTANT(kibibytes,kibibyte_unit);
+typedef make_scaled_unit<information::hu::byte::info,scale<2, static_rational<10>>>::type gibibyte_unit;
+BOOST_UNITS_STATIC_CONSTANT(gibibyte,gibibyte_unit);
+BOOST_UNITS_STATIC_CONSTANT(gibibytes,gibibyte_unit);
 
 } // namespace dramspec
 

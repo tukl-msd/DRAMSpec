@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, University of Kaiserslautern
+ * Copyright (c) 2017, University of Kaiserslautern
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,17 +29,20 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Authors: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andr'e Lucas Chinazzo
+ * Authors: Omar Naji,
+ *          Matthias Jung,
+ *          Christian Weis,
+ *          Kamal Haddad,
+ *          Andre Lucas Chinazzo
  */
 
-#ifndef DRAMSPEC_PAGE_BASE_UNIT_H
-#define DRAMSPEC_PAGE_BASE_UNIT_H
 
-#include <string>
 
-#include <boost/units/config.hpp>
-#include <boost/units/base_unit.hpp>
-#include "../BaseDimensions/page.h"
+#ifndef DRAMSPEC_PER_TEMPERATURE_UNIT_H
+#define DRAMSPEC_PER_TEMPERATURE_UNIT_H
+
+#include "../dramSpecUnitsSystem.h"
+#include "../DerivedDimensions/per_temperature.h"
 
 namespace boost {
 
@@ -47,13 +50,10 @@ namespace units {
 
 namespace dramspec {
 
-struct page_base_unit:
-        public base_unit<page_base_unit,
-                         page_dimension, -35>
-{
-    static std::string name()   { return("page"); }
-    static std::string symbol() { return("page"); }
-};
+typedef unit<per_temperature_dimension,dramspec::system_bit> per_temperature_unit;
+
+BOOST_UNITS_STATIC_CONSTANT(eerged,per_temperature_unit);
+BOOST_UNITS_STATIC_CONSTANT(eergeds,per_temperature_unit);
 
 } // namespace dramspec
 
@@ -61,12 +61,5 @@ struct page_base_unit:
 
 } // namespace boost
 
-#if BOOST_UNITS_HAS_BOOST_TYPEOF
 
-#include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
-
-BOOST_TYPEOF_REGISTER_TYPE(boost::units::dramspec::page_base_unit)
-
-#endif
-
-#endif // DRAMSPEC_PAGE_BASE_UNIT_H
+#endif // DRAMSPEC_PER_TEMPERATURE_UNIT_H
