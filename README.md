@@ -2,7 +2,7 @@
 
 ![DRAMSpec](http://www.uni-kl.de/fileadmin/3d-dram/dramSpec.png "DRAMSpec Logo")
 
-If you use **DRAMSpec** in your research, we would appreciate a citation to: 
+If you use **DRAMSpec** in your research, we would appreciate a citation to:
 
 **A High-Level DRAM Timing, Power and Area Exploration Tool**,
 O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn.,
@@ -60,6 +60,8 @@ Author: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andre Lucas Chin
 ## Installing
 
 DRAMSpec requires some libraries from [boost](http://www.boost.org/). If you do not have it or the version you have is older than the 1.58, please follow the first four (4) steps from their [getting started](http://www.boost.org/doc/libs/1_63_0/more/getting_started/unix-variants.html) section.
+
+DRAMSpec is built as a Qt Creator project, therefore requiring the `qmake` tool. If you do not have Qt installed, you can find it [here](http://www.qt.io/download).
 
 ### Cloning from github (recursive to get submodules!)
 ``` bash
