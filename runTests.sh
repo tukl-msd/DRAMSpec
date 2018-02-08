@@ -8,6 +8,5 @@ qmake CONFIG+=debug DRAMSpec.pro;
 echo "Compiling...";
 make -s -j4;
 
-cd build/debug/;
 echo "Testing...";
-./dramspec_test;
+./build/debug/dramspec_test;

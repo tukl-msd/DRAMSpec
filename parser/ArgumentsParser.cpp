@@ -45,7 +45,9 @@ using namespace std;
 ArgumentsParser::ArgumentsParser(int argc, char** argv)
 {
     cpargc = argc;
-    cpargv = argv;
+    for ( int it = 0; it < argc; it++ ) {
+      cpargv.push_back((string)argv[it]);
+    }
     argvID = 1;
     nConfigurations = 0;
     IOTerminationCurrentFlag = false;
@@ -64,12 +66,12 @@ void ArgumentsParser::runArgParser()
     }
 
     // Help run (by argument)
-    if ( string(cpargv[argvID]) == "-h" ) {
+    if ( cpargv[argvID] == "-h" ) {
         helpStrStream << helpMessage;
     }
 
     // Normal run
-    if( string(cpargv[argvID]) == "-t") {
+    if( cpargv[argvID] == "-t") {
         argvID++;
         if(!getTechFileName()) {
             string exceptionMsgThrown("[ERROR] ");
@@ -80,7 +82,7 @@ void ArgumentsParser::runArgParser()
             throw exceptionMsgThrown;
        }
     }
-    else if( string(cpargv[argvID]) == "-p") {
+    else if( cpargv[argvID] == "-p") {
         argvID++;
         if(!getArchFileName()) {
             string exceptionMsgThrown("[ERROR] ");
@@ -91,12 +93,12 @@ void ArgumentsParser::runArgParser()
             throw exceptionMsgThrown;
        }
     }
-    else if( string(cpargv[argvID]) == "-term") {
+    else if( cpargv[argvID] == "-term") {
         IOTerminationCurrentFlag = true;
         argvID++;
         runArgParser();
     }
-    else if( string(cpargv[argvID]) == "-internaltimings") {
+    else if( cpargv[argvID] == "-internaltimings") {
         printInternalTimings = true;
         argvID++;
         runArgParser();
@@ -143,16 +145,16 @@ bool ArgumentsParser::getTechFileName()
 {
     while (argvID < cpargc) {
 
-        if( string(cpargv[argvID]) == "-p") {
+        if( cpargv[argvID] == "-p") {
             argvID++;
             if(!getArchFileName()) { return false; }
         }
-        else if( string(cpargv[argvID]) == "-term") {
+        else if( cpargv[argvID] == "-term") {
             IOTerminationCurrentFlag = true;
             argvID++;
             if(!getTechFileName()) { return false; }
         }
-        else if( string(cpargv[argvID]) == "-internaltimings") {
+        else if( cpargv[argvID] == "-internaltimings") {
             printInternalTimings = true;
             argvID++;
             if(!getTechFileName()) { return false; }
@@ -176,16 +178,16 @@ bool ArgumentsParser::getArchFileName()
 {
     while (argvID < cpargc) {
 
-        if( string(cpargv[argvID]) == "-t") {
+        if( cpargv[argvID] == "-t") {
             argvID++;
             if(!getTechFileName()) { return false; }
         }
-        else if( string(cpargv[argvID]) == "-term") {
+        else if( cpargv[argvID] == "-term") {
             IOTerminationCurrentFlag = true;
             argvID++;
             if(!getArchFileName()) { return false; }
         }
-        else if( string(cpargv[argvID]) == "-internaltimings") {
+        else if( cpargv[argvID] == "-internaltimings") {
             printInternalTimings = true;
             argvID++;
             if(!getArchFileName()) { return false; }

@@ -11,7 +11,7 @@
 
     "CellsPerSubarrayRow[]": 1046,
     "RedundantCellsPerSubarrayRow[]": 22,
-    "CellsPerSubarrayColumn[]": 512,
+    "CellsPerSubarrayColumn[]": 524,
     "RedundantCellsPerSubarrayColumn[]": 12,
 
     "Interface[bit]": 128,

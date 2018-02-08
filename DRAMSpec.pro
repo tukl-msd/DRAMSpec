@@ -150,4 +150,5 @@ OTHER_FILES += README.md
 OTHER_FILES += IODescription.md
 OTHER_FILES += runTests.sh
 OTHER_FILES += buildDRAMSpec.sh
+OTHER_FILES += .gitignore
 

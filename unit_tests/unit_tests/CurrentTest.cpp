@@ -52,9 +52,9 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
   int sim_argc = 6;
   char* sim_argv[] = {"./executable",
                       "-t",
-                      "../../technology_input/test_technology.json",
+                      "technology_input/test_technology.json",
                       "-p",
-                      "../../architecture_input/test_architecture.json",
+                      "architecture_input/test_architecture.json",
                       "-term"};
 
   ArgumentsParser inputFileName(sim_argc, sim_argv);

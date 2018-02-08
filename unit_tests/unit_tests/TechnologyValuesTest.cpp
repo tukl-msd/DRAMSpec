@@ -52,9 +52,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_real_input )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../../technology_input/test_technology.json",
+                        "technology_input/test_technology.json",
                         "-p",
-                        "../../architecture_input/test_architecture.json"};
+                        "architecture_input/test_architecture.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
@@ -418,9 +418,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../../technology_input/tech_dummy_input.json",
+                        "technology_input/tech_dummy_input.json",
                         "-p",
-                        "../../architecture_input/arch_dummy_input.json"};
+                        "architecture_input/arch_dummy_input.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
 
@@ -780,9 +780,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_no_tech_file )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../../technology_input/not_a_file.json",
+                        "technology_input/not_a_file.json",
                         "-p",
-                        "../../architecture_input/test_architecture.json"};
+                        "architecture_input/test_architecture.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
     string exceptionMsg("Empty");
@@ -819,9 +819,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_no_arch_file )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../../technology_input/test_technology.json",
+                        "technology_input/test_technology.json",
                         "-p",
-                        "../../architecture_input/not_a_file.json"};
+                        "architecture_input/not_a_file.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
     string exceptionMsg("Empty");
@@ -859,9 +859,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_bad_tech_file )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../../main.cpp",
+                        "main.cpp",
                         "-p",
-                        "../../architecture_input/test_architecture.json"};
+                        "architecture_input/test_architecture.json"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
     string exceptionMsg("Empty");
@@ -899,9 +899,9 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_bad_arch_file )
     int sim_argc = 5;
     char* sim_argv[] = {"./executable",
                         "-t",
-                        "../../technology_input/test_technology.json",
+                        "technology_input/test_technology.json",
                         "-p",
-                        "../../main.cpp"};
+                        "main.cpp"};
 
     ArgumentsParser inputFileName(sim_argc, sim_argv);
     string exceptionMsg("Empty");

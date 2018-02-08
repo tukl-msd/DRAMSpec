@@ -12,5 +12,3 @@ dramspec
 *.pro.user*
 quickTests/
 Makefile
-architecture_input/test_trfc_tref1.json
-technology_input/test_trfc_tref1.json

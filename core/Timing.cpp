@@ -442,7 +442,7 @@ Timing::clkTiming()
         warning.append("Go Down with Frequency!!\n");
         warning.append("If user wants to keep the high frequency, ");
         warning.append("try using a smaller bank or a higher ");
-        warning.append("subarray2rowbufferfactor.\n");
+        warning.append("SubarrayToPageFactor.\n");
     }
 
 }

@@ -76,7 +76,7 @@ public:
 
 private:
     int cpargc;
-    char** cpargv;
+    vector<string> cpargv;
     int argvID;
 
     bool getTechFileName();
