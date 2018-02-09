@@ -37,8 +37,10 @@ mac {
     INCLUDEPATH += /opt/boost/include
 }
 
-# Newest version of Boost Library
-INCLUDEPATH += /users/chinazzo/libs/boost_1_62_0
+# Current version of Boost Library
+# Tested with Boost 1.58 up to 1.63
+# Please update this path to point to your newest Boost Library version
+INCLUDEPATH += /users/chinazzo/libs/boost_1_63_0
 
 #DRAMSpec License
 OTHER_FILES += License

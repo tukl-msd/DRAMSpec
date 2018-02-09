@@ -59,7 +59,7 @@ Author: Omar Naji, Matthias Jung, Christian Weis, Kamal Haddad, Andre Lucas Chin
 
 ## Installing
 
-DRAMSpec requires some libraries from [boost](http://www.boost.org/). If you do not have it or the version you have is older than the 1.58, please follow the first four (4) steps from their [getting started](http://www.boost.org/doc/libs/1_63_0/more/getting_started/unix-variants.html) section.
+DRAMSpec requires some libraries from [boost](http://www.boost.org/). If you do not have it or the version you have is older than the 1.58, please follow the first four (4) steps from their [getting started](http://www.boost.org/doc/libs/1_63_0/more/getting_started/unix-variants.html) section. After updating your boost version, make sure to link it properly in the [project file](DRAMSpec.pro#L43).
 
 DRAMSpec is built as a Qt Creator project, therefore requiring the `qmake` tool. If you do not have Qt installed, you can find it [here](http://www.qt.io/download).
 
