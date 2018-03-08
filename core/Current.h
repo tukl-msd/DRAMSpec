@@ -72,7 +72,7 @@ class Current : public Timing
     // !! Hard-coded values converted to variables !!
     double IDD2nPercentageIfNotDll;
     double vppPumpsEfficiency;
-    bu::quantity<drs::milliampere_per_kibibyte_unit> currentPerPageSizeSlope;
+    bu::quantity<drs::milliampere_unit> activeBankLeakage;
     bu::quantity<drs::nanosecond_unit> SSAActiveTime;
     bu::quantity<drs::bit_unit> bitProCSL;
 
@@ -107,13 +107,18 @@ class Current : public Timing
     //current IDD4W in mA
     bu::quantity<drs::milliampere_unit> IDD4W;
 
-    //background current IDD2n precharge background current
+    //Precharge background current
     bu::quantity<drs::milliampere_unit> IDD2n;
 
-    //background current IDD3n active background current
+    //Rho parameter - refer to:
+    // Jung, M. et al, "A New BankSensitive DRAMPower Model for Efficient
+    // Design Space Exploration", 2016
+    double rho;
+
+    //Active background current
     bu::quantity<drs::milliampere_unit> IDD3n;
 
-    //calculate the refresh current
+    //refresh current
     bu::quantity<drs::milliampere_unit> IDD5;
 
     //charges for MWL ( Master wordline )

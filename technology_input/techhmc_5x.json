@@ -45,6 +45,10 @@
     "IDD2NOffset[mA]": 12,
     "OCDCurrentSlope[uA/MHz]": 1.1257,
 
+    "FullySharedResourcesCurrent[mA]": 2,
+    "SemiSharedResourcesCurrent[mA]": 0.5,
+    "nBanksPerSemiSharedResource[]": 2,
+
     "TSVHeight[um]": 0,
 
     "AdditionalTRLLatency[cc]" : 0,

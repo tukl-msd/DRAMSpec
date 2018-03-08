@@ -438,7 +438,7 @@ Timing::clkTiming()
     if( dramCoreFreq > maxCoreFreq ) {
         warning.append("[WARNING] ");
         warning.append("Specified frequency ");
-        warning.append("too high for DRAM Desing. ");
+        warning.append("too high for DRAM Design. ");
         warning.append("Go Down with Frequency!!\n");
         warning.append("If user wants to keep the high frequency, ");
         warning.append("try using a smaller bank or a higher ");

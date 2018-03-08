@@ -152,6 +152,9 @@ Note: the number of technology and architecture description files must be equal.
 |IDD2NRefTemp|Ref. temperature (alpha * (exp(beta * (T - TRef)) - 1)) in relation to operating temperature of the precharge background current.|C|
 |IDD2NOffset|Constant term of precharge background current. It is IDD2n at 0 MHz and TRef.|mA|
 |OCDCurrentSlope|Slope of current sinked by the off-chip driver in relation to operating frequency.|uA/MHz|
+|FullySharedResourcesCurrent|Current drawn by resources shared by all banks. For example, O/I interface, supply voltage generators and common control logic [5].|mA|
+|SemiSharedResourcesCurrent|Current drawn by resources shared by some\* banks. For example, O/I interface, supply voltage generators and common control logic [5].|mA|
+|nBanksPerSemiSharedResource|\*Number of banks that share each semi global resource.|mA|
 |TSVHeight|Length in column direction of TSV area.|um|
 |AdditionalTRLLatency|Added latency (tAL [2]) to tCAS resulting in tRL.|cc|
 |DriverEnableDelay| Time interval between driving signal to active driver. |ns|
@@ -231,7 +234,7 @@ Note: the number of technology and architecture description files must be equal.
 |tRFC|Refresh Cycle latency. The time interval between Refresh and Activation commands.|cc|
 |tREFI|Refresh Interval latency. Average time interval in between Refresh commands. |cc|
 
-### Currents [3, 4]
+### Currents [3, 4, 5]
 
 | Abbreviation | Description | Unit |
 |:------------:|:-----------:|:----:|
@@ -240,6 +243,7 @@ Note: the number of technology and architecture description files must be equal.
 |IDD1|Operating One Bank Active-Read-Precharge Current.|mA|
 |IDD2N|Precharge Standby Current|mA|
 |IDD3N|Active Standby Current|mA|
+|Rho [5]|Ratio of (IDD3N - IDD2N) which is independent on number of active banks|-|
 |IDD4R|Operating Burst Read Current|mA|
 |IDD4W|Operating Burst Write Current|mA|
 |IDD5B|Burst Refresh Current|mA|
@@ -262,17 +266,21 @@ Note: the number of technology and architecture description files must be equal.
 
 ## Reference
 [1] **A High-Level DRAM Timing, Power and Area Exploration Tool**,
-O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn.,
+O. Naji, A. Hansson, C. Weis, M. Jung, N. Wehn,
 *IEEE International Conference on Embedded Computer Systems Architectures Modeling and Simulation (SAMOS)*, July, 2015, Samos Island, Greece, [DOI](http://dx.doi.org/10.1109/SAMOS.2015.7363670)
 
-[2] Memory Systems: Cache, DRAM, Disk,
+[2] **Memory Systems: Cache, DRAM, Disk**,
 B. Jacob, S. Ng and D. Wang,
 Morgan Kaufmann, 2007
 
-[3] DDR3 SDRAM standard (revision F),
+[3] **DDR3 SDRAM standard** (revision F),
 JEDEC,
 July 2012.
 
-[4] DDR4 SDRAM standard (revision B),
+[4] **DDR4 SDRAM standard** (revision B),
 JEDEC,
 June 2017.
+
+[5] **A New Bank Sensitive DRAMPower Model for Efficient Design Space Exploration**,
+M. Jung, D. Mathew, E. Zullian, C. Weis, N. Wehn,
+*IEEE International Workshop on Power and Timing Modeling, Optimization and Simulation (PATMOS)*, Sept., 2016, Bremen, Germany.

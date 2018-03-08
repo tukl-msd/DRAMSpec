@@ -51,7 +51,7 @@ Current::currentInitialize()
   // Fixed value by Christian
   bitProCSL = 8 * drs::bits;
   // TODO: To be estimated in later versions of DRAMSpec!
-  currentPerPageSizeSlope = 1.0*drs::milliamperes_per_kibibyte;
+  activeBankLeakage = 0.1*drs::milliamperes;
 
   // Intermediate values added as variables for code cleanness
   nActiveSubarrays = 0;
@@ -92,7 +92,6 @@ Current::currentInitialize()
   includeIOTerminationCurrent = false;
 }
 
-// Background current calculation
 void
 Current::backgroundCurrentCalc()
 {
@@ -110,10 +109,20 @@ Current::backgroundCurrentCalc()
   }
 
   // Active background current:
-  // IDD3n is equal to IDD2n + active-adder
-  IDD3n = IDD2n + currentPerPageSizeSlope * pageStorage;
+  // TODO: Missing leakage model for 1-bank active
+  IDD3n = IDD2n
+          + fullySharedResourcesCurrent
+          + nBanks * semiSharedResourcesCurrent / nBanksPerSemiSharedResource
+          + nBanks * activeBankLeakage;
+
+  //Calculation of Rho parameter - refer to:
+  // Jung, M. et al, "A New BankSensitive DRAMPower Model for Efficient
+  // Design Space Exploration", 2016
+  // Background current calculation
+  rho = fullySharedResourcesCurrent / (IDD3n - IDD2n);
 
 }
+
 
 void
 Current::IDD0Calc()
@@ -137,7 +146,8 @@ Current::IDD0Calc()
                         / vppPumpsEfficiency ;
 
   //charge of local bitline
-  nLocalBitlines = SCALE_QUANTITY(pageStorage, drs::bit_unit)/drs::bit; //(adimensionalization)
+  //                                               (adimensionalization)
+  nLocalBitlines = SCALE_QUANTITY(pageStorage, drs::bit_unit)/drs::bit;
   localBitlineCharge = localBitlineCapacitance
                        * vdd/2.0
                        * nLocalBitlines;

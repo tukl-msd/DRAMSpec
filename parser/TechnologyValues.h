@@ -190,6 +190,15 @@ class TechnologyValues
     //Current slope per IO pin in relation to clock frequency
     bu::quantity<drs::microampere_per_megahertz_clock_unit> IddOcdRcvSlope;
 
+    //Current of the resources shared by all banks
+    bu::quantity<drs::milliampere_unit> fullySharedResourcesCurrent;
+
+    //Current of the resources shared by blocks of banks
+    bu::quantity<drs::milliampere_unit> semiSharedResourcesCurrent;
+
+    //Size of the block of banks that share the same "semi shared" resources
+    double nBanksPerSemiSharedResource;
+
     //Height of the TSV area needed for each bank I/O
     bu::quantity<drs::micrometer_unit> TSVHeight;
 

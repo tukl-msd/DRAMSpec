@@ -79,6 +79,9 @@ TechnologyValues::technologyValuesInitialize()
     idd2nRefTemp = INVALID_VALUE*bu::celsius::degrees;
     idd2nOffset = INVALID_VALUE*drs::milliamperes;
     IddOcdRcvSlope = INVALID_VALUE*drs::microamperes_per_megahertz_clock;
+    fullySharedResourcesCurrent = INVALID_VALUE*drs::milliamperes;
+    semiSharedResourcesCurrent = INVALID_VALUE*drs::milliamperes;
+    nBanksPerSemiSharedResource = INVALID_VALUE;
     TSVHeight = INVALID_VALUE*drs::micrometers;
     additionalLatencyTrl = INVALID_VALUE*drs::clocks;
     driverEnableDelay = INVALID_VALUE*drs::nanoseconds;
@@ -462,6 +465,23 @@ TechnologyValues::readjson(const string& t,const string& p)
                                        "OCDCurrentSlope[uA/MHz]",
                                        "mandatory")
                                     * drs::microamperes_per_megahertz_clock;
+
+        //Current of the resources shared by all banks
+        fullySharedResourcesCurrent = getJSONNumber(techDocument,
+                                              "FullySharedResourcesCurrent[mA]",
+                                                    "mandatory")
+                                      * drs::milliamperes;
+
+        //Current of the resources shared by blocks of banks
+        semiSharedResourcesCurrent = getJSONNumber(techDocument,
+                                              "SemiSharedResourcesCurrent[mA]",
+                                                   "mandatory")
+                                     * drs::milliamperes;
+
+        //Size of the block of banks that share the same "semi shared" resources
+        nBanksPerSemiSharedResource = getJSONNumber(techDocument,
+                                                "nBanksPerSemiSharedResource[]",
+                                                    "mandatory");
 
 
         //Height of the TSV area needed for each bank I/O

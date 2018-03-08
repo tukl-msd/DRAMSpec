@@ -200,25 +200,25 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                       << "\nGot: " << current.IDD5ChargingCurrent);
 
   // Main variables
-  _mag = 86.845;
+  _mag = 89.645;
   BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0, 3) == _mag*drs::milliampere,
                       "IDD0 different from the expected."
                       << "\nExpected around: " << _mag*drs::milliampere
                       << "\nGot: " << current.IDD0);
 
-  _mag = 146.282;
+  _mag = 149.082;
   BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1, 3) == _mag*drs::milliampere,
                       "IDD1 different from the expected."
                       << "\nExpected around: " << _mag*drs::milliampere
                       << "\nGot: " << current.IDD1);
 
-  _mag = 336.721;
+  _mag = 339.521;
   BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4R, 3) == _mag*drs::milliampere,
                       "IDD4R different from the expected."
                       << "\nExpected around: " << _mag*drs::milliampere
                       << "\nGot: " << current.IDD4R);
 
-  _mag = 345.727;
+  _mag = 348.527;
   BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD4W, 3) == _mag*drs::milliampere,
                       "IDD4W different from the expected."
                       << "\nExpected around: " << _mag*drs::milliampere
@@ -230,13 +230,13 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                       << "\nExpected around: " << _mag*drs::milliampere
                       << "\nGot: " << current.IDD2n);
 
-  _mag = 39.064;
+  _mag = 41.864;
   BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD3n, 3) == _mag*drs::milliampere,
                       "IDD3n different from the expected."
                       << "\nExpected around: " << _mag*drs::milliampere
                       << "\nGot: " << current.IDD3n);
 
-  _mag = 325.75;
+  _mag = 328.55;
   BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD5, 3) == _mag*drs::milliampere,
                       "IDD5 different from the expected."
                       << "\nExpected around: " << _mag*drs::milliampere

@@ -189,6 +189,9 @@ DRAMSpec::jsonOutputWrite(int dramConfigID)
     //parsing of IDD3n
     currentdoc.AddMember("IDD3n", dram->IDD3n.value() , currentdoc.GetAllocator());
 
+    //parsing of Rho parameter
+    currentdoc.AddMember("Rho", dram->rho , currentdoc.GetAllocator());
+
     //parsing of IDD5
     currentdoc.AddMember("IDD5", dram->IDD5.value() , currentdoc.GetAllocator());
 
@@ -270,6 +273,7 @@ DRAMSpec::arrangeOutput(const string outputType)
     << BUILD_LINE("IDD1                 [mA]", dram->IDD1.value())
     << BUILD_LINE("IDD2N                [mA]", dram->IDD2n.value())
     << BUILD_LINE("IDD3N                [mA]", dram->IDD3n.value())
+    << BUILD_LINE("Rho                  []  ", dram->rho)
     << BUILD_LINE("IDD4R                [mA]", dram->IDD4R.value())
     << BUILD_LINE("IDD4W                [mA]", dram->IDD4W.value())
     << BUILD_LINE("IDD5B                [mA]", dram->IDD5.value())
