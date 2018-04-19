@@ -55,42 +55,28 @@ DRAMSpec::jsonOutputWrite(int dramConfigID)
     rapidjson::Document timingnsdoc;
     timingnsdoc.SetObject();
 
-    //parsing of trcd
-    timingnsdoc.AddMember("trcd", dram->trcd.value() , timingnsdoc.GetAllocator());
-
-    //parsing of tcl ( tcl = tcas )
-    timingnsdoc.AddMember("tcl", dram->tcas.value() , timingnsdoc.GetAllocator());
-
-    //parsing of tras
-    timingnsdoc.AddMember("tras", dram->tras.value() , timingnsdoc.GetAllocator());
-
-    //parsing of trp
-    timingnsdoc.AddMember("trp", dram->trp.value() , timingnsdoc.GetAllocator());
-
-    //parsing of trc
-    timingnsdoc.AddMember("trc", dram->trc.value() , timingnsdoc.GetAllocator());
-
-    //parsing of trl
-    timingnsdoc.AddMember("trl", dram->trl.value() , timingnsdoc.GetAllocator());
-
-    // Don't have proper model yet
-//    //parsing of twl
-//    timingnsdoc.AddMember("twl", dram->twl , timingnsdoc.GetAllocator());
-
-    //parsing of trtp
-    timingnsdoc.AddMember("trtp", dram->trtp.value() , timingnsdoc.GetAllocator());
-
-    //parsing of tccd
-    timingnsdoc.AddMember("tccd", dram->tccd.value() , timingnsdoc.GetAllocator());
-
-    //parsing of twr
-    timingnsdoc.AddMember("twr", dram->twr.value() , timingnsdoc.GetAllocator());
-
-    //parsing of trfc
-    timingnsdoc.AddMember("trfc", dram->trfc.value() , timingnsdoc.GetAllocator());
-
-    //parsing of trefI
-    timingnsdoc.AddMember("trefI", dram->trefI.value() , timingnsdoc.GetAllocator());
+    timingnsdoc.AddMember(
+          "trcd",   dram->trcd.value(),   timingnsdoc.GetAllocator());
+    timingnsdoc.AddMember(
+          "tcl",    dram->tcas.value(),   timingnsdoc.GetAllocator());
+    timingnsdoc.AddMember(
+          "tras",   dram->tras.value(),   timingnsdoc.GetAllocator());
+    timingnsdoc.AddMember(
+          "trp",    dram->trp.value(),    timingnsdoc.GetAllocator());
+    timingnsdoc.AddMember(
+          "trc",    dram->trc.value(),    timingnsdoc.GetAllocator());
+    timingnsdoc.AddMember(
+          "trl",    dram->trl.value(),    timingnsdoc.GetAllocator());
+    timingnsdoc.AddMember(
+          "trtp",   dram->trtp.value(),   timingnsdoc.GetAllocator());
+    timingnsdoc.AddMember(
+          "tccd",   dram->tccd.value(),   timingnsdoc.GetAllocator());
+    timingnsdoc.AddMember(
+          "twr",    dram->twr.value(),    timingnsdoc.GetAllocator());
+    timingnsdoc.AddMember(
+          "trfc",   dram->trfc.value(),   timingnsdoc.GetAllocator());
+    timingnsdoc.AddMember(
+          "trefI",  dram->trefI.value(),  timingnsdoc.GetAllocator());
 
     // Convert JSON document to string
     rapidjson::GenericStringBuffer< rapidjson::UTF8<> > timingnsbuffer;
@@ -109,53 +95,41 @@ DRAMSpec::jsonOutputWrite(int dramConfigID)
     timingnsresultfile.close();
 
     //parsing the timing results in clock cycles
-    rapidjson::Document timingdoc;
-    timingdoc.SetObject();
+    rapidjson::Document timingsDoc;
+    timingsDoc.SetObject();
 
-    //parsing of frequency
-    timingdoc.AddMember("Frequency", dram->dramFreq.value(), timingdoc.GetAllocator());
-
-    //parsing of trcd in cc ( clock cycles )
-    timingdoc.AddMember("trcd_cc", dram->trcd_clk.value() , timingdoc.GetAllocator());
-
-    //parsing of tcl in cc ( tcl = tcas )
-    timingdoc.AddMember("tcl_cc", dram->tcas_clk.value() , timingdoc.GetAllocator());
-
-    //parsing of tras in cc
-    timingdoc.AddMember("tras_cc", dram->tras_clk.value() , timingdoc.GetAllocator());
-
-    //parsing of trp in cc
-    timingdoc.AddMember("trp_cc", dram->trp_clk.value() , timingdoc.GetAllocator());
-
-    //parsing of trc in cc
-    timingdoc.AddMember("trc_cc", dram->trc_clk.value() , timingdoc.GetAllocator());
-
-    //parsing of trl in cc
-    timingdoc.AddMember("trl_cc", dram->trl_clk.value() , timingdoc.GetAllocator());
-
-    //parsing of twl in cc
-    timingdoc.AddMember("twl_cc", dram->twl_clk.value() , timingdoc.GetAllocator());
-
-    //parsing of trtp in cc
-    timingdoc.AddMember("trtp_cc", dram->trtp_clk.value() , timingdoc.GetAllocator());
-
-    //parsing of tccd in cc
-    timingdoc.AddMember("tccd_cc", dram->tccd_clk.value() , timingdoc.GetAllocator());
-
-    //parsing of twr in cc
-    timingdoc.AddMember("twr_cc", dram->twr_clk.value() , timingdoc.GetAllocator());
-
-    //parsing of trfc in cc
-    timingdoc.AddMember("trfc_cc", dram->trfc_clk.value() , timingdoc.GetAllocator());
-
-    //parsing of trefI in cc
-    timingdoc.AddMember("trefI_cc", dram->trefI_clk.value() , timingdoc.GetAllocator());
+    timingsDoc.AddMember(
+          "Frequency",  dram->dramFreq.value(),   timingsDoc.GetAllocator());
+    timingsDoc.AddMember(
+          "trcd_cc",    dram->trcd_clk.value() ,  timingsDoc.GetAllocator());
+    timingsDoc.AddMember(
+          "tcl_cc",     dram->tcas_clk.value() ,  timingsDoc.GetAllocator());
+    timingsDoc.AddMember(
+          "tras_cc",    dram->tras_clk.value() ,  timingsDoc.GetAllocator());
+    timingsDoc.AddMember(
+          "trp_cc",     dram->trp_clk.value() ,   timingsDoc.GetAllocator());
+    timingsDoc.AddMember(
+          "trc_cc",     dram->trc_clk.value() ,   timingsDoc.GetAllocator());
+    timingsDoc.AddMember(
+          "trl_cc",     dram->trl_clk.value() ,   timingsDoc.GetAllocator());
+    timingsDoc.AddMember(
+          "twl_cc",     dram->twl_clk.value() ,   timingsDoc.GetAllocator());
+    timingsDoc.AddMember(
+          "trtp_cc",    dram->trtp_clk.value() ,  timingsDoc.GetAllocator());
+    timingsDoc.AddMember(
+          "tccd_cc",    dram->tccd_clk.value() ,  timingsDoc.GetAllocator());
+    timingsDoc.AddMember(
+          "twr_cc",     dram->twr_clk.value() ,   timingsDoc.GetAllocator());
+    timingsDoc.AddMember(
+          "trfc_cc",    dram->trfc_clk.value() ,  timingsDoc.GetAllocator());
+    timingsDoc.AddMember(
+          "trefI_cc",   dram->trefI_clk.value() , timingsDoc.GetAllocator());
 
     // Convert JSON document to string
     rapidjson::GenericStringBuffer< rapidjson::UTF8<> > timingbuffer;
     rapidjson::Writer< rapidjson::GenericStringBuffer<
     rapidjson::UTF8<> > > timingwriter(timingbuffer);
-    timingdoc.Accept(timingwriter);
+    timingsDoc.Accept(timingwriter);
     const char* timingstr = timingbuffer.GetString();
 
     //Placing timing results (in clock cycles) in different files according to file number
@@ -171,29 +145,30 @@ DRAMSpec::jsonOutputWrite(int dramConfigID)
     rapidjson::Document currentdoc;
     currentdoc.SetObject();
 
-    //parsing of IDD0
-    currentdoc.AddMember("IDD0", dram->IDD0.value() , currentdoc.GetAllocator());
-
-    //parsing of IDD1
-    currentdoc.AddMember("IDD1", dram->IDD1.value() , currentdoc.GetAllocator());
-
-    //parsing of IDD4R
-    currentdoc.AddMember("IDD4R", dram->IDD4R.value() , currentdoc.GetAllocator());
-
-    //parsing of IDD4W
-    currentdoc.AddMember("IDD4W", dram->IDD4W.value() , currentdoc.GetAllocator());
-
-    //parsing of IDD2n
-    currentdoc.AddMember("IDD2n", dram->IDD2n.value() , currentdoc.GetAllocator());
-
-    //parsing of IDD3n
-    currentdoc.AddMember("IDD3n", dram->IDD3n.value() , currentdoc.GetAllocator());
-
-    //parsing of Rho parameter
-    currentdoc.AddMember("Rho", dram->rho , currentdoc.GetAllocator());
-
-    //parsing of IDD5
-    currentdoc.AddMember("IDD5", dram->IDD5.value() , currentdoc.GetAllocator());
+    currentdoc.AddMember(
+          "IDD0",   dram->IDD0.value(),   currentdoc.GetAllocator());
+    currentdoc.AddMember(
+          "IPP0",   dram->IPP0.value(),   currentdoc.GetAllocator());
+    currentdoc.AddMember(
+          "IDD1",   dram->IDD1.value(),   currentdoc.GetAllocator());
+    currentdoc.AddMember(
+          "IPP1",   dram->IPP0.value(),   currentdoc.GetAllocator());
+    currentdoc.AddMember(
+          "IDD4R",  dram->IDD4R.value(),  currentdoc.GetAllocator());
+    currentdoc.AddMember(
+          "IDD4W",  dram->IDD4W.value(),  currentdoc.GetAllocator());
+    currentdoc.AddMember(
+          "IDD2n",  dram->IDD2n.value(),  currentdoc.GetAllocator());
+    currentdoc.AddMember(
+          "IDD3n",  dram->IDD3n.value(),  currentdoc.GetAllocator());
+    currentdoc.AddMember(
+          "IPP3n",  dram->IPP3n.value(),  currentdoc.GetAllocator());
+    currentdoc.AddMember(
+          "Rho",    dram->rho,            currentdoc.GetAllocator());
+    currentdoc.AddMember(
+          "IDD5B",  dram->IDD5b.value(),  currentdoc.GetAllocator());
+    currentdoc.AddMember(
+          "IPP5B",  dram->IPP5b.value(),  currentdoc.GetAllocator());
 
     //convert JSON document to string
     rapidjson::GenericStringBuffer< rapidjson::UTF8<> > currentbuffer;
@@ -238,55 +213,59 @@ DRAMSpec::arrangeOutput(const string outputType)
     ostringstream resultTable;
 
     resultTable
-    << BUILD_LINE("DRAM frequency       [MHz]", dram->dramFreq.value())
-    << BUILD_LINE("Core frequency       [MHz]", dram->dramCoreFreq.value())
-    << BUILD_LINE("Max core frequency   [MHz]", dram->maxCoreFreq.value())
+    << BUILD_LINE("DRAM frequency       [MHz]",   dram->dramFreq.value())
+    << BUILD_LINE("Core frequency       [MHz]",   dram->dramCoreFreq.value())
+    << BUILD_LINE("Max core frequency   [MHz]",   dram->maxCoreFreq.value())
 
-    << BUILD_LINE("tRCD                 [ns]", dram->trcd.value())
-    << BUILD_LINE("tCL (tCAS)           [ns]", dram->tcas.value())
-    << BUILD_LINE("tRAS                 [ns]", dram->tras.value())
-    << BUILD_LINE("tRP                  [ns]", dram->trp.value())
-    << BUILD_LINE("tRC                  [ns]", dram->trc.value())
-    << BUILD_LINE("tRL                  [ns]", dram->trl.value())
-    << BUILD_LINE("tRTP                 [ns]", dram->trtp.value())
-    << BUILD_LINE("tCCD                 [ns]", dram->tccd.value())
-    << BUILD_LINE("tWR                  [ns]", dram->twr.value())
-    << BUILD_LINE("tRFC                 [ns]", dram->trfc.value())
-    << BUILD_LINE("tREFI                [ns]", dram->trefI.value())
+    << BUILD_LINE("tRCD                 [ns]",    dram->trcd.value())
+    << BUILD_LINE("tCL (tCAS)           [ns]",    dram->tcas.value())
+    << BUILD_LINE("tRAS                 [ns]",    dram->tras.value())
+    << BUILD_LINE("tRP                  [ns]",    dram->trp.value())
+    << BUILD_LINE("tRC                  [ns]",    dram->trc.value())
+    << BUILD_LINE("tRL                  [ns]",    dram->trl.value())
+    << BUILD_LINE("tRTP                 [ns]",    dram->trtp.value())
+    << BUILD_LINE("tCCD                 [ns]",    dram->tccd.value())
+    << BUILD_LINE("tWR                  [ns]",    dram->twr.value())
+    << BUILD_LINE("tRFC                 [ns]",    dram->trfc.value())
+    << BUILD_LINE("tREFI                [ns]",    dram->trefI.value())
 
-    << BUILD_LINE("tRCD                 [cc]", dram->trcd_clk.value())
-    << BUILD_LINE("tCL (tCAS)           [cc]", dram->tcas_clk.value())
-    << BUILD_LINE("Core tCL             [cc]", dram->tcas_coreClk.value())
-    << BUILD_LINE("tRAS                 [cc]", dram->tras_clk.value())
-    << BUILD_LINE("tRP                  [cc]", dram->trp_clk.value())
-    << BUILD_LINE("tRC                  [cc]", dram->trc_clk.value())
-    << BUILD_LINE("tRL                  [cc]", dram->trl_clk.value())
-    << BUILD_LINE("Core tRL             [cc]", dram->trl_coreClk.value())
-    << BUILD_LINE("tRTP                 [cc]", dram->trtp_clk.value())
-    << BUILD_LINE("tCCD                 [cc]", dram->tccd_clk.value())
-    << BUILD_LINE("Core tCCD            [cc]", dram->tccd_coreClk.value())
-    << BUILD_LINE("tWR                  [cc]", dram->twr_clk.value())
-    << BUILD_LINE("tRFC                 [cc]", dram->trfc_clk.value())
-    << BUILD_LINE("tREFI                [cc]", dram->trefI_clk.value())
+    << BUILD_LINE("tRCD                 [cc]",    dram->trcd_clk.value())
+    << BUILD_LINE("tCL (tCAS)           [cc]",    dram->tcas_clk.value())
+    << BUILD_LINE("Core tCL             [cc]",    dram->tcas_coreClk.value())
+    << BUILD_LINE("tRAS                 [cc]",    dram->tras_clk.value())
+    << BUILD_LINE("tRP                  [cc]",    dram->trp_clk.value())
+    << BUILD_LINE("tRC                  [cc]",    dram->trc_clk.value())
+    << BUILD_LINE("tRL                  [cc]",    dram->trl_clk.value())
+    << BUILD_LINE("Core tRL             [cc]",    dram->trl_coreClk.value())
+    << BUILD_LINE("tRTP                 [cc]",    dram->trtp_clk.value())
+    << BUILD_LINE("tCCD                 [cc]",    dram->tccd_clk.value())
+    << BUILD_LINE("Core tCCD            [cc]",    dram->tccd_coreClk.value())
+    << BUILD_LINE("tWR                  [cc]",    dram->twr_clk.value())
+    << BUILD_LINE("tRFC                 [cc]",    dram->trfc_clk.value())
+    << BUILD_LINE("tREFI                [cc]",    dram->trefI_clk.value())
 
-    << BUILD_LINE("IDD0                 [mA]", dram->IDD0.value())
-    << BUILD_LINE("IDD1                 [mA]", dram->IDD1.value())
-    << BUILD_LINE("IDD2N                [mA]", dram->IDD2n.value())
-    << BUILD_LINE("IDD3N                [mA]", dram->IDD3n.value())
-    << BUILD_LINE("Rho                  []  ", dram->rho)
-    << BUILD_LINE("IDD4R                [mA]", dram->IDD4R.value())
-    << BUILD_LINE("IDD4W                [mA]", dram->IDD4W.value())
-    << BUILD_LINE("IDD5B                [mA]", dram->IDD5.value())
+    << BUILD_LINE("IDD0                 [mA]",    dram->IDD0.value())
+    << BUILD_LINE("IPP0                 [mA]",    dram->IPP0.value())
+    << BUILD_LINE("IDD1                 [mA]",    dram->IDD1.value())
+    << BUILD_LINE("IPP1                 [mA]",    dram->IPP1.value())
+    << BUILD_LINE("IDD2N                [mA]",    dram->IDD2n.value())
+    << BUILD_LINE("IDD3N                [mA]",    dram->IDD3n.value())
+    << BUILD_LINE("IPP3N                [mA]",    dram->IPP3n.value())
+    << BUILD_LINE("Rho                  []  ",    dram->rho)
+    << BUILD_LINE("IDD4R                [mA]",    dram->IDD4R.value())
+    << BUILD_LINE("IDD4W                [mA]",    dram->IDD4W.value())
+    << BUILD_LINE("IDD5B                [mA]",    dram->IDD5b.value())
+    << BUILD_LINE("IPP5B                [mA]",    dram->IPP5b.value())
 
-    << BUILD_LINE("Subarray height      [um]", dram->subArrayHeight.value())
-    << BUILD_LINE("Subarray width       [um]", dram->subArrayWidth.value())
-    << BUILD_LINE("Tile height          [um]", dram->tileHeight.value())
-    << BUILD_LINE("Tile width           [um]", dram->tileWidth.value())
-    << BUILD_LINE("Bank height          [um]", dram->bankHeight.value())
-    << BUILD_LINE("Bank width           [um]", dram->bankWidth.value())
-    << BUILD_LINE("Channel height       [um]", dram->channelHeight.value())
-    << BUILD_LINE("Channel width        [um]", dram->channelWidth.value())
-    << BUILD_LINE("Channel area       [(mm)^2]", dram->channelArea.value())
+    << BUILD_LINE("Subarray height      [um]",    dram->subArrayHeight.value())
+    << BUILD_LINE("Subarray width       [um]",    dram->subArrayWidth.value())
+    << BUILD_LINE("Tile height          [um]",    dram->tileHeight.value())
+    << BUILD_LINE("Tile width           [um]",    dram->tileWidth.value())
+    << BUILD_LINE("Bank height          [um]",    dram->bankHeight.value())
+    << BUILD_LINE("Bank width           [um]",    dram->bankWidth.value())
+    << BUILD_LINE("Channel height       [um]",    dram->channelHeight.value())
+    << BUILD_LINE("Channel width        [um]",    dram->channelWidth.value())
+    << BUILD_LINE("Channel area       [(mm)^2]",  dram->channelArea.value())
     ;
 
     return resultTable.str();

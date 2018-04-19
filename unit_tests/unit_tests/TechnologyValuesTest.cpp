@@ -913,6 +913,11 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
                         << "\nExpected around: " << 1103*drs::nanoseconds
                         << "\nGot: " << techValues.equalizerDelay);
 
+    BOOST_CHECK_MESSAGE( techValues.vppPumpsEfficiency == 0.3,
+                        "Efficiency of VPP pumps different from the expected."
+                        << "\nExpected around: " << 0.3
+                        << "\nGot: " << techValues.vppPumpsEfficiency);
+
 
 
 
@@ -933,6 +938,13 @@ BOOST_AUTO_TEST_CASE( checkInputTechnologyValues_dummy_input )
     BOOST_CHECK_MESSAGE( techValues.isDLL
                          == false,
                          "DLL flag"
+                         " different from the expected."
+                        << "\nExpected: " << false
+                        << "\nGot: " << techValues.isDLL);
+
+    BOOST_CHECK_MESSAGE( techValues.hasExternalVpp
+                         == false,
+                         "External Vpp flag"
                          " different from the expected."
                         << "\nExpected: " << false
                         << "\nGot: " << techValues.isDLL);

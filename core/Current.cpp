@@ -53,30 +53,42 @@ Current::currentInitialize()
   // TODO: To be estimated in later versions of DRAMSpec!
   activeBankLeakage = 0.1*drs::milliamperes;
 
+
   // Intermediate values added as variables for code cleanness
   nActiveSubarrays = 0;
   nLocalBitlines = 0;
+  IDD3nOneACTBank = 0*drs::milliamperes;
+  IPP3nOneACTBank = 0*drs::milliamperes;
   IDD0TotalCharge = 0*drs::nanocoulomb;
+  IPP0TotalCharge = 0*drs::nanocoulomb;
   effectiveTrc = 0*drs::nanosecond;
   IDD0ChargingCurrent = 0*drs::amperes;
+  IPP0ChargingCurrent = 0*drs::amperes;
+  SSAActiveTime = 0*drs::nanosecond;
   IDD1TotalCharge = 0*drs::nanocoulomb;
   IDD1ChargingCurrent = 0*drs::amperes;
   IDD4TotalCharge = 0*drs::nanocoulomb;
   ioTermRdCurrent = 0*drs::milliamperes;
   IDD4ChargingCurrent = 0*drs::amperes;
   ioTermWrCurrent = 0*drs::milliamperes;
-  refreshCharge = 0*drs::nanocoulomb;
+  iDDRefreshCharge = 0*drs::nanocoulomb;
+  iPPRefreshCharge = 0*drs::nanocoulomb;
   effectiveTrfc = 0*drs::nanosecond;
-  IDD5ChargingCurrent = 0*drs::amperes;
+  IDD5bChargingCurrent = 0*drs::amperes;
+  IPP5bChargingCurrent = 0*drs::amperes;
 
   // Main variables
   IDD0 = 0*drs::milliamperes;
+  IPP0 = 0*drs::milliamperes;
   IDD1 = 0*drs::milliamperes;
+  IPP1 = 0*drs::milliamperes;
   IDD4R = 0*drs::milliamperes;
   IDD4W = 0*drs::milliamperes;
   IDD2n = 0*drs::milliamperes;
   IDD3n = 0*drs::milliamperes;
-  IDD5 = 0*drs::milliamperes;
+  IPP3n = 0*drs::milliamperes;
+  IDD5b = 0*drs::milliamperes;
+  IPP5b = 0*drs::milliamperes;
 
   masterWordlineCharge = 0*drs::nanocoulomb;
   localWordlineCharge = 0*drs::nanocoulomb;
@@ -93,7 +105,7 @@ Current::currentInitialize()
 }
 
 void
-Current::backgroundCurrentCalc()
+Current::IDD2NCalc()
 {
 
   // Precharge background current
@@ -108,6 +120,12 @@ Current::backgroundCurrentCalc()
     IDD2n = IDD2nPercentageIfNotDll * IDD2n;
   }
 
+
+}
+
+void
+Current::IXX3NCalc()
+{
   // Active background current:
   // TODO: Missing leakage model for 1-bank active
   IDD3n = IDD2n
@@ -115,38 +133,45 @@ Current::backgroundCurrentCalc()
           + nBanks * semiSharedResourcesCurrent / nBanksPerSemiSharedResource
           + nBanks * activeBankLeakage;
 
+  // Active background current for single active bank
+  IDD3nOneACTBank = IDD2n
+                    + fullySharedResourcesCurrent
+                    + semiSharedResourcesCurrent
+                    + activeBankLeakage;
+
   //Calculation of Rho parameter - refer to:
   // Jung, M. et al, "A New BankSensitive DRAMPower Model for Efficient
   // Design Space Exploration", 2016
   // Background current calculation
   rho = fullySharedResourcesCurrent / (IDD3n - IDD2n);
 
+  if ( hasExternalVpp ) {
+    // First estimation based on datasheet values
+    IPP3n = IDD3n / 10.0;
+    IPP3nOneACTBank = IDD3nOneACTBank / 10.0;
+  }
+  else {
+    IPP3n = 0 * drs::milliamperes;
+    IPP3nOneACTBank = 0 * drs::milliamperes;
+  }
 }
 
 
 void
-Current::IDD0Calc()
+Current::IXX0Calc()
 {
   nActiveSubarrays = effectivePageStorage / subArrayRowStorage;
 
-  if ( dramType == "DDR4" ) {
-    vppPumpsEfficiency = 1;
-  } else {
-    vppPumpsEfficiency = 0.3;
-  }
-
   // Charge of master wordline
   masterWordlineCharge = globalWordlineCapacitance
-                         *  vpp / vppPumpsEfficiency;
+                         * vpp;
 
   // Charge of local wordline
   localWordlineCharge = localWordlineCapacitance
                         * vpp
-                        * nActiveSubarrays
-                        / vppPumpsEfficiency ;
+                        * nActiveSubarrays;
 
-  //charge of local bitline
-  //                                               (adimensionalization)
+  //charge of local bitline                       (adimensionalization)
   nLocalBitlines = SCALE_QUANTITY(pageStorage, drs::bit_unit)/drs::bit;
   localBitlineCharge = localBitlineCapacitance
                        * vdd/2.0
@@ -155,28 +180,44 @@ Current::IDD0Calc()
   rowAddrsLinesCharge =
           SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
           * SCALE_QUANTITY(tileHeight, drs::millimeter_unit)
-          * nTilesPerBank
           * nRowAddressLines
           * vdd;
 
-  IDD0TotalCharge = ( masterWordlineCharge
-                    + localWordlineCharge
-                    + localBitlineCharge
-                    + rowAddrsLinesCharge)
-                          * 2.0 ; // !! Why times 2? Maybe number of tiles?
+  IPP0TotalCharge = ( 3.0 * masterWordlineCharge
+                      + localWordlineCharge )
+                    * nTilesPerBank;
+
+  IDD0TotalCharge = ( localBitlineCharge
+                      + rowAddrsLinesCharge )
+                    * nTilesPerBank;
 
   // Clock cycles of trc in ns
   effectiveTrc = trc_clk * clkPeriod;
   // Current caused by charging and discharging of capas in mA
-  IDD0ChargingCurrent = IDD0TotalCharge / effectiveTrc;
+  if ( hasExternalVpp ) {
+    IDD0ChargingCurrent = IDD0TotalCharge / effectiveTrc;
+    IDD0 = IDD3nOneACTBank
+           + SCALE_QUANTITY(IDD0ChargingCurrent, drs::milliampere_unit);
 
-  IDD0 = IDD3n
-         + SCALE_QUANTITY(IDD0ChargingCurrent, drs::milliampere_unit);
+    IPP0ChargingCurrent = IPP0TotalCharge / effectiveTrc;
+    IPP0 = IPP3nOneACTBank
+           + SCALE_QUANTITY(IPP0ChargingCurrent, drs::milliampere_unit);
+  }
+  else {
+    IDD0ChargingCurrent = (IDD0TotalCharge
+                           + IPP0TotalCharge / vppPumpsEfficiency)
+                          / effectiveTrc;
+    IPP0ChargingCurrent = 0 * drs::amperes;
+    IDD0 = IDD3nOneACTBank
+           + SCALE_QUANTITY(IDD0ChargingCurrent, drs::milliampere_unit);
+    IPP0 = 0 * drs::milliamperes;
+  }
+
 
 }
 
 void
-Current::IDD1Calc()
+Current::IXX1Calc()
 {
 
   nLDQs = interface * prefetch;
@@ -200,29 +241,40 @@ Current::IDD1Calc()
   masterDatalineCharge = globalDatalineCapacitance
                          * vdd
                          * interface / drs::bit //(adimensionalization)
-                         * prefetch;
+                         * prefetch
+                         * 2.0; // GDL and !GDL
 
   // Charges for Dataqueue // 1 Read is done for interface x prefetch
   DQWireCharge = DQWireCapacitance
                  * vdd
                  * interface / drs::bit //(adimensionalization)
-                 * prefetch;
+                 * prefetch
+                 * 2.0; // DQ and !DQ
 
   // read charges in pC
   readingCharge = SSACharge
-                  + 2.0*CSLCharge // !! Why times 2? Maybe number of tiles?
-                  + 2.0*masterDatalineCharge // !! Why times 2? Maybe number of tiles?
+                  + CSLCharge
+                  + masterDatalineCharge
                   + DQWireCharge;
-  IDD1TotalCharge = (masterWordlineCharge
-                     + localWordlineCharge
-                     + localBitlineCharge
-                     + readingCharge)
-                          * 2.0; // !! Why times 2? Maybe number of tiles?
 
-  IDD1ChargingCurrent = IDD1TotalCharge / effectiveTrc;
+  IDD1TotalCharge = localBitlineCharge * nTilesPerBank + readingCharge;
 
-  IDD1 = IDD3n
-         + SCALE_QUANTITY(IDD1ChargingCurrent, drs::milliampere_unit);
+  if ( hasExternalVpp ) {
+    IDD1ChargingCurrent = IDD1TotalCharge / effectiveTrc;
+    IDD1 = IDD3nOneACTBank
+           + SCALE_QUANTITY(IDD1ChargingCurrent, drs::milliampere_unit);
+
+    IPP1 = IPP0;
+  }
+  else {
+    IDD1ChargingCurrent = (IDD1TotalCharge
+                           + IPP0TotalCharge / vppPumpsEfficiency)
+                          / effectiveTrc;
+    IDD1 = IDD3nOneACTBank
+           + SCALE_QUANTITY(IDD1ChargingCurrent, drs::milliampere_unit);
+
+    IPP1 = 0 * drs::milliamperes;
+  }
 
 }
 
@@ -244,19 +296,22 @@ Current::IDD4RCalc()
     //  Must have a DQS/!DQS pair for each 8 bits of data lines
     if ( interface <= 32 * drs::bits) {
      ioTermRdCurrent = ( interface + ceil(interface / 8.0) * 2.0 )
-                       * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
+                       * SCALE_QUANTITY(IddOcdRcv,
+                                        drs::milliampere_per_bit_unit);
     }
     // Case for WIDEIO2 ( x64 per channel )
     //  Must have a DQS/!DQS pair for each 16 bits of data lines
     else if ( interface <= 64 * drs::bits) {
      ioTermRdCurrent = ( interface + ceil(interface / 16.0) * 2.0 )
-                       * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
+                       * SCALE_QUANTITY(IddOcdRcv,
+                                        drs::milliampere_per_bit_unit);
     }
     // Case for HBM ( x128 per channel )
     //  Must have a DQS/!DQS pair for each 32 bits of data lines
     else if ( interface <= 128 * drs::bits) {
      ioTermRdCurrent = ( interface + ceil(interface / 32.0) * 2.0 )
-                       * SCALE_QUANTITY(IddOcdRcv, drs::milliampere_per_bit_unit);
+                       * SCALE_QUANTITY(IddOcdRcv,
+                                        drs::milliampere_per_bit_unit);
     }
     else {
       std::string exceptionMsgThrown("[ERROR] ");
@@ -272,7 +327,8 @@ Current::IDD4RCalc()
   }
 
   IDD4ChargingCurrent = IDD4TotalCharge
-                        * SCALE_QUANTITY(dramCoreFreq, drs::gigahertz_clock_unit)
+                        * SCALE_QUANTITY(dramCoreFreq,
+                                         drs::gigahertz_clock_unit)
                         / (1.0*drs::clock);
 
   IDD4R = IDD3n
@@ -302,31 +358,56 @@ Current::IDD4WCalc()
 }
 
 void
-Current::IDD5Calc()
+Current::IXX5BCalc()
 {
-  refreshCharge = IDD0TotalCharge
-                  * nRowsRefreshedPerARCmd;
+  if ( hasExternalVpp ) {
+    iDDRefreshCharge = IDD0TotalCharge
+                       * nRowsRefreshedPerARCmd;
+    iPPRefreshCharge = IPP0TotalCharge
+                       * nRowsRefreshedPerARCmd;
 
-  // Refresh current
-  effectiveTrfc = trfc_clk * clkPeriod;
+    effectiveTrfc = trfc_clk * clkPeriod;
 
-  IDD5ChargingCurrent = refreshCharge / effectiveTrfc;
+    IDD5bChargingCurrent = iDDRefreshCharge / effectiveTrfc;
+    IPP5bChargingCurrent = iPPRefreshCharge / effectiveTrfc;
 
-  IDD5 = IDD3n
-         + SCALE_QUANTITY(IDD5ChargingCurrent, drs::milliampere_unit);
+    IDD5b = IDD3n
+           + SCALE_QUANTITY(IDD5bChargingCurrent, drs::milliampere_unit);
+    IPP5b = IPP3n
+           + SCALE_QUANTITY(IPP5bChargingCurrent, drs::milliampere_unit);
+  }
+  else {
+    iDDRefreshCharge = IDD0TotalCharge
+                       * nRowsRefreshedPerARCmd;
+    iPPRefreshCharge = IPP0TotalCharge
+                       * nRowsRefreshedPerARCmd;
 
+    effectiveTrfc = trfc_clk * clkPeriod;
+
+    IDD5bChargingCurrent = ( iDDRefreshCharge
+                             + iPPRefreshCharge /vppPumpsEfficiency)
+                           / effectiveTrfc;
+    IPP5bChargingCurrent = 0 * drs::amperes;
+
+    IDD5b = IDD3n
+           + SCALE_QUANTITY(IDD5bChargingCurrent, drs::milliampere_unit);
+    IPP5b = IPP3n
+           + SCALE_QUANTITY(IPP5bChargingCurrent, drs::milliampere_unit);
+
+  }
 }
 
 void
 Current::currentCompute()
 {
   try{
-    backgroundCurrentCalc();
-    IDD0Calc();
-    IDD1Calc();
+    IDD2NCalc();
+    IXX3NCalc();
+    IXX0Calc();
+    IXX1Calc();
     IDD4RCalc();
     IDD4WCalc();
-    IDD5Calc();
+    IXX5BCalc();
   } catch(string exceptionMsgThrown) {
       throw exceptionMsgThrown;
   }

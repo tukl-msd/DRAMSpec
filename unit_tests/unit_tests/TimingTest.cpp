@@ -131,19 +131,19 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << _mag*drs::ohms
                         << "\nGot: " << timing.globalWordlineResistance);
 
-    _mag = 4.43e-4;
+    _mag = 1.083e-3;
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineCapacitance, 6) == _mag*drs::nanofarads,
                         "Capacitance of global wordline different from the expected."
                         << "\nExpected around: " << _mag*drs::nanofarads
                         << "\nGot: " << timing.globalWordlineCapacitance);
 
-    _mag = 1.059;
+    _mag = 1.723;
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.globalWordlineDelay, 3) == _mag*drs::nanoseconds,
                         "Delay through global wordline different from the expected."
                         << "\nExpected around: " << _mag*drs::nanoseconds
                         << "\nGot: " << timing.globalWordlineDelay);
 
-    _mag = 10.165;
+    _mag = 10.829;
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trcd, 3) == _mag*drs::nanoseconds,
                         "trcd different from the expected."
                         << "\nExpected around: " << _mag*drs::nanoseconds
@@ -161,7 +161,7 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << _mag*drs::nanoseconds
                         << "\nGot: " << timing.localBitlineDelay99p);
 
-    _mag = 15.649;
+    _mag = 16.312;
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.ACTtoRefreshCellDelay, 3) == _mag*drs::nanoseconds,
                         "\"Internal\" tRAS different from the expected."
                         << "\nExpected around: " << _mag*drs::nanoseconds
@@ -239,7 +239,7 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << _mag*drs::nanoseconds
                         << "\nGot: " << timing.tccd);
 
-    _mag = 24.310;
+    _mag = 24.974;
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.tras, 3) == _mag*drs::nanoseconds,
                         "tras different from the expected."
                         << "\nExpected around: " << _mag*drs::nanoseconds
@@ -257,13 +257,13 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << _mag*drs::nanoseconds
                         << "\nGot: " << timing.trp);
 
-    _mag = 33.495;
+    _mag = 34.159;
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trc, 3) == _mag*drs::nanoseconds,
                         "trc different from the expected."
                         << "\nExpected around: " << _mag*drs::nanoseconds
                         << "\nGot: " << timing.trc);
 
-    _mag = 44.834;
+    _mag = 45.497;
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc, 3) == _mag*drs::nanoseconds,
                         "trfc different from the expected."
                         << "\nExpected around: " << _mag*drs::nanoseconds
@@ -329,7 +329,7 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << _mag*drs::clocks
                         << "\nGot: " << timing.trp_clk);
 
-    _mag = 27;
+    _mag = 28;
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trc_clk, 3) == _mag*drs::clocks,
                         "trc in number of clocks different from the expected."
                         << "\nExpected around: " << _mag*drs::clocks
@@ -377,7 +377,7 @@ BOOST_AUTO_TEST_CASE( checkTiming_real_input )
                         << "\nExpected around: " << _mag*drs::clocks
                         << "\nGot: " << timing.twr_clk);
 
-    _mag = 36;
+    _mag = 37;
     BOOST_CHECK_MESSAGE( ROUND_UP(timing.trfc_clk, 3) == _mag*drs::clocks,
                         "trfc in number of clocks different from the expected."
                         << "\nExpected around: " << _mag*drs::clocks

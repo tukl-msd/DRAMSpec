@@ -71,7 +71,6 @@ class Current : public Timing
 
     // !! Hard-coded values converted to variables !!
     double IDD2nPercentageIfNotDll;
-    double vppPumpsEfficiency;
     bu::quantity<drs::milliampere_unit> activeBankLeakage;
     bu::quantity<drs::nanosecond_unit> SSAActiveTime;
     bu::quantity<drs::bit_unit> bitProCSL;
@@ -79,10 +78,14 @@ class Current : public Timing
     // Intermediate values added as variables for code cleanness
     double nActiveSubarrays;
     double nLocalBitlines;
+    bu::quantity<drs::milliampere_unit> IDD3nOneACTBank;
+    bu::quantity<drs::milliampere_unit> IPP3nOneACTBank;
     bu::quantity<drs::nanocoulomb_unit> rowAddrsLinesCharge;
     bu::quantity<drs::nanocoulomb_unit> IDD0TotalCharge;
+    bu::quantity<drs::nanocoulomb_unit> IPP0TotalCharge;
     bu::quantity<drs::nanosecond_unit> effectiveTrc;
     bu::quantity<drs::ampere_unit> IDD0ChargingCurrent;
+    bu::quantity<drs::ampere_unit> IPP0ChargingCurrent;
     bu::quantity<drs::nanocoulomb_unit> IDD1TotalCharge;
     bu::quantity<drs::ampere_unit> IDD1ChargingCurrent;
     bu::quantity<drs::nanocoulomb_unit> colAddrsLinesCharge;
@@ -90,83 +93,56 @@ class Current : public Timing
     bu::quantity<drs::milliampere_unit> ioTermRdCurrent;
     bu::quantity<drs::ampere_unit> IDD4ChargingCurrent;
     bu::quantity<drs::milliampere_unit> ioTermWrCurrent;
-    bu::quantity<drs::nanocoulomb_unit> refreshCharge;
+    bu::quantity<drs::nanocoulomb_unit> iDDRefreshCharge;
+    bu::quantity<drs::nanocoulomb_unit> iPPRefreshCharge;
     bu::quantity<drs::nanosecond_unit> effectiveTrfc;
-    bu::quantity<drs::ampere_unit> IDD5ChargingCurrent;
+    bu::quantity<drs::ampere_unit> IDD5bChargingCurrent;
+    bu::quantity<drs::ampere_unit> IPP5bChargingCurrent;
 
     // Main variables
-    //current IDD0 in mA ( ACT-PRE )
     bu::quantity<drs::milliampere_unit> IDD0;
-
-    //current IDD1 in mA
+    bu::quantity<drs::milliampere_unit> IPP0;
     bu::quantity<drs::milliampere_unit> IDD1;
-
-    //current IDD4R in mA
+    bu::quantity<drs::milliampere_unit> IPP1;
     bu::quantity<drs::milliampere_unit> IDD4R;
-
-    //current IDD4W in mA
     bu::quantity<drs::milliampere_unit> IDD4W;
-
-    //Precharge background current
     bu::quantity<drs::milliampere_unit> IDD2n;
-
     //Rho parameter - refer to:
     // Jung, M. et al, "A New BankSensitive DRAMPower Model for Efficient
     // Design Space Exploration", 2016
     double rho;
-
-    //Active background current
     bu::quantity<drs::milliampere_unit> IDD3n;
+    bu::quantity<drs::milliampere_unit> IPP3n;
+    bu::quantity<drs::milliampere_unit> IDD5b;
+    bu::quantity<drs::milliampere_unit> IPP5b;
 
-    //refresh current
-    bu::quantity<drs::milliampere_unit> IDD5;
-
-    //charges for MWL ( Master wordline )
     bu::quantity<drs::nanocoulomb_unit> masterWordlineCharge;
-
-    //charges for LWL ( local wordline )
     bu::quantity<drs::nanocoulomb_unit> localWordlineCharge;
-
-    //charges for Local bitline + blsa
     bu::quantity<drs::nanocoulomb_unit> localBitlineCharge;
-
-    //Number of local DQ lines
     bu::quantity<drs::bit_unit> nLDQs;
-
-    //charges for SSA ( Secondary sense amp )
     bu::quantity<drs::nanocoulomb_unit> SSACharge;
-
-    //Number of CSL + CSLEN lines per bank
     double nCSLs;
-
-    //charges for CSL (column select line )
     bu::quantity<drs::nanocoulomb_unit> CSLCharge;
-
-    //charges for MDL ( master dataline )
     bu::quantity<drs::nanocoulomb_unit> masterDatalineCharge;
-
-    //charges for DQ
     bu::quantity<drs::nanocoulomb_unit> DQWireCharge;
-
-    //charges for reading
     bu::quantity<drs::nanocoulomb_unit> readingCharge;
-
-    //Current per IO pin
     bu::quantity<drs::microampere_per_bit_unit> IddOcdRcv;
 
-    // Termination current flag
     bool includeIOTerminationCurrent;
 
     void currentInitialize();
 
-    //function for calculation of Background Current
-    void backgroundCurrentCalc();
+    //function for calculation of IDD2N
+    void IDD2NCalc();
 
-    //function for calculation of IDD0
-    void IDD0Calc();
+    //function for calculation of IDD3N and IPP3N
+    void IXX3NCalc();
 
-    //function for calculation of IDD1
-    void IDD1Calc();
+    //function for calculation of IDD0 and IPP0
+    void IXX0Calc();
+
+    //function for calculation of IDD1 and IPP1
+    void IXX1Calc();
 
     //function for calculation of IDD4R
     void IDD4RCalc();
@@ -174,8 +150,8 @@ class Current : public Timing
     //function for calculation of IDD4W
     void IDD4WCalc();
 
-    //function for calculation of IDD5
-    void IDD5Calc();
+    //function for calculation of IDD5B and IPP3B
+    void IXX5BCalc();
 
     void currentCompute();
 

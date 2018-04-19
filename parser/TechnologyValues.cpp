@@ -91,10 +91,12 @@ TechnologyValues::technologyValuesInitialize()
     SSAPrechargeDelay = INVALID_VALUE*drs::nanoseconds;
     tWRMargin = INVALID_VALUE*drs::nanoseconds;
     equalizerDelay = INVALID_VALUE*drs::nanoseconds;
+    vppPumpsEfficiency = INVALID_VALUE;
 
     dramType = "";
     is3D = false;
     isDLL = false;
+    hasExternalVpp = false;
     channelSize = INVALID_VALUE*drs::gibibit;
     nBanks = INVALID_VALUE;
     nHorizontalBanks = INVALID_VALUE;
@@ -170,6 +172,24 @@ TechnologyValues::getJSONNumber(const rapidjson::Document& jsonDoc,
   }
 
   return jsonDoc[ memberName ].GetDouble();
+}
+
+double
+TechnologyValues::getJSONNumber(const rapidjson::Document& jsonDoc,
+                                const char* memberName,
+                                const string& attributeType,
+                                double defaultValue)
+{
+  double valueFromFile, returnValue;
+  valueFromFile = getJSONNumber(jsonDoc, memberName, attributeType);
+
+  if ( valueFromFile == INVALID_VALUE ) {
+    returnValue = defaultValue;
+  }
+  else {
+    returnValue = valueFromFile;
+  }
+  return returnValue;
 }
 
 string
@@ -538,6 +558,12 @@ TechnologyValues::readjson(const string& t,const string& p)
                                        "mandatory")
                          * drs::nanoseconds;
 
+        //Vdd -> Vpp pump circuitry efficiency
+        vppPumpsEfficiency = getJSONNumber(techDocument,
+                                           "VppPumpEfficiency[-]",
+                                           "optional",
+                                           0.3);
+
     } catch(string exceptionMsgThrown) {
         throw exceptionMsgThrown;
     }
@@ -595,6 +621,27 @@ TechnologyValues::readjson(const string& t,const string& p)
 
         // DLL ON/OFF Feature
         isDLL = ( getJSONString(archDocument, "DLL[-]", "mandatory") == "ON" );
+
+        // External Vpp source
+        string hasExternalVppStr = getJSONString(archDocument,
+                                      "ExternalVPP[-]", "optional");
+        if ( hasExternalVppStr == "YES" ) {
+          hasExternalVpp = true;
+        }
+        if ( dramType.find("DDR4")    != string::npos ||
+             dramType.find("HBM")     != string::npos ||
+             dramType.find("WideIO")  != string::npos
+        ) {
+          if ( hasExternalVppStr == "" ) { // Not defined by user
+            hasExternalVpp = true;
+          }
+          else if ( hasExternalVppStr != "YES" ) {
+            warning.append("[WARNING] ");
+            warning.append("DRAM type ");
+            warning.append(dramType);
+            warning.append(" should have external Vpp source.\n");
+          }
+        }
 
         //size of DRAM Channel
         channelSize = getJSONNumber(archDocument,

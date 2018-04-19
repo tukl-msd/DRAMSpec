@@ -164,6 +164,7 @@ Note: the number of technology and architecture description files must be equal.
 |SSAPrechargeDelay|Secondary sense amplifier precharge delay.|ns|
 |tWRMargin|Security margin for Write Recovery.|ns|
 |EqualizerDelay|Equalizer circuit enabling delay.|ns|
+|VppPumpsEfficiency|(Optional) Efficiency of voltage pumps for Vpp, when existing.|-|
 
 ### DRAM Architecture related inputs
 
@@ -172,6 +173,7 @@ Note: the number of technology and architecture description files must be equal.
 |DRAMType|DRAM type. Currently only differenciates between DDR or SDR.|-|
 |3D|Flag for 3D designs. ON means it is a 3D design.|-|
 |DLL|Flag for the usage of Dealy-Locked Loop. ON means the DRAM uses DLL.|-|
+|ExternalVPP|(Optional) Flag for the existance of external Vpp voltage source. YES/NO.|-|
 |ChannelSize|Data storage capacity of a single channel.|Gbit|
 |NumberOfBanksPerChannel|Total number of banks in a single channel.|dimensionless|
 |NumberOfHorizontalBanksPerChannel|Number of banks in row direction. (Optional)|dimensionless|

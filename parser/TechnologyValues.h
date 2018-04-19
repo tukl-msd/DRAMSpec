@@ -157,7 +157,7 @@ class TechnologyValues
     //CSL driver resistance in ohm
     bu::quantity<drs::ohm_unit> CSLDriverResistance;
 
-    //Load capacitance !!!  TODO: What exactly is it?  !!!
+    //Load capacitance
     bu::quantity<drs::femtofarad_unit> CSLLoadCapacitance;
 
     //GDL driver resistance in ohm
@@ -226,6 +226,9 @@ class TechnologyValues
     //Equalizer circuit enabling delay
     bu::quantity<drs::nanosecond_unit> equalizerDelay;
 
+    //Vdd -> Vpp pump circuitry efficiency
+    double vppPumpsEfficiency;
+
 
 
     //DRAM Type
@@ -236,6 +239,9 @@ class TechnologyValues
 
     // DLL ON/OFF Feature
     bool isDLL;
+
+    // External Vpp source
+    bool hasExternalVpp;
 
     //size of DRAM Channel
     bu::quantity<drs::gibibit_unit> channelSize;
@@ -312,6 +318,10 @@ class TechnologyValues
     double getJSONNumber(const rapidjson::Document& jsonDoc,
                          const char* memberName,
                          const string& attributeType);
+    double getJSONNumber(const rapidjson::Document& jsonDoc,
+                         const char* memberName,
+                         const string& attributeType,
+                         double deafultValue);
 
     string getJSONString(const rapidjson::Document& jsonDoc,
                          const char* memberName,

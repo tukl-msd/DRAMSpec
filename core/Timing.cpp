@@ -170,8 +170,10 @@ Timing::trcdCalc()
            * SCALE_QUANTITY(tileWidth, drs::millimeter_unit);
 
     globalWordlineCapacitance =
-           SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
-           * SCALE_QUANTITY(tileWidth, drs::millimeter_unit);
+           SCALE_QUANTITY(40 * drs::femtofarads, drs::nanofarad_unit)
+            * nSubArraysPerArrayBlock
+           + SCALE_QUANTITY(wireCapacitance, drs::nanofarad_per_millimeter_unit)
+            * SCALE_QUANTITY(tileWidth, drs::millimeter_unit);
 
     // Calculating delay through global wordline driver and wiring
     globalWordlineDelay = driverEnableDelay
@@ -181,7 +183,10 @@ Timing::trcdCalc()
           * globalWordlineCapacitance;
     
     // Calculating trcd
-    trcd = globalWordlineDelay + localWordlineDelay + cellDelay + localBitlineDelay;
+    trcd = globalWordlineDelay
+            + localWordlineDelay
+            + cellDelay
+            + localBitlineDelay;
 
     cellDelay99p = timeToPercentage(99) / timeToPercentage(90)
                    * cellDelay;
