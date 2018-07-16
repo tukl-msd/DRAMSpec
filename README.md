@@ -284,5 +284,5 @@ JEDEC,
 June 2017.
 
 [5] **A New Bank Sensitive DRAMPower Model for Efficient Design Space Exploration**,
-M. Jung, D. Mathew, E. Zullian, C. Weis, N. Wehn,
+M. Jung, D. Mathew, É. Zulian, C. Weis, N. Wehn,
 *IEEE International Workshop on Power and Timing Modeling, Optimization and Simulation (PATMOS)*, Sept., 2016, Bremen, Germany.
