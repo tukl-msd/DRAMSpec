@@ -196,11 +196,11 @@ Current::IXX0Calc()
   // Current caused by charging and discharging of capas in mA
   if ( hasExternalVpp ) {
     IDD0ChargingCurrent = IDD0TotalCharge / effectiveTrc;
-    IDD0 = IDD3nOneACTBank
+    IDD0 = IDD3n
            + SCALE_QUANTITY(IDD0ChargingCurrent, drs::milliampere_unit);
 
     IPP0ChargingCurrent = IPP0TotalCharge / effectiveTrc;
-    IPP0 = IPP3nOneACTBank
+    IPP0 = IPP3n
            + SCALE_QUANTITY(IPP0ChargingCurrent, drs::milliampere_unit);
   }
   else {
@@ -208,7 +208,7 @@ Current::IXX0Calc()
                            + IPP0TotalCharge / vppPumpsEfficiency)
                           / effectiveTrc;
     IPP0ChargingCurrent = 0 * drs::amperes;
-    IDD0 = IDD3nOneACTBank
+    IDD0 = IDD3n
            + SCALE_QUANTITY(IDD0ChargingCurrent, drs::milliampere_unit);
     IPP0 = 0 * drs::milliamperes;
   }
@@ -261,7 +261,7 @@ Current::IXX1Calc()
 
   if ( hasExternalVpp ) {
     IDD1ChargingCurrent = IDD1TotalCharge / effectiveTrc;
-    IDD1 = IDD3nOneACTBank
+    IDD1 = IDD3n
            + SCALE_QUANTITY(IDD1ChargingCurrent, drs::milliampere_unit);
 
     IPP1 = IPP0;
@@ -270,7 +270,7 @@ Current::IXX1Calc()
     IDD1ChargingCurrent = (IDD1TotalCharge
                            + IPP0TotalCharge / vppPumpsEfficiency)
                           / effectiveTrc;
-    IDD1 = IDD3nOneACTBank
+    IDD1 = IDD3n
            + SCALE_QUANTITY(IDD1ChargingCurrent, drs::milliampere_unit);
 
     IPP1 = 0 * drs::milliamperes;

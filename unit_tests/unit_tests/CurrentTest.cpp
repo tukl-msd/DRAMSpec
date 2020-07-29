@@ -262,7 +262,7 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                       << "\nGot: " << current.IPP5bChargingCurrent);
 
   // Main variables
-  _mag = 86.572;
+  _mag = 88.772;
   BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD0, 3) == _mag*drs::milliampere,
                       "IDD0 different from the expected."
                       << "\nExpected around: " << _mag*drs::milliampere
@@ -274,7 +274,7 @@ BOOST_AUTO_TEST_CASE( checkCurrent_real_input )
                       << "\nExpected around: " << _mag*drs::milliampere
                       << "\nGot: " << current.IPP0);
 
-  _mag = 127.172;
+  _mag = 129.372;
   BOOST_CHECK_MESSAGE( ROUND_UP(current.IDD1, 3) == _mag*drs::milliampere,
                       "IDD1 different from the expected."
                       << "\nExpected around: " << _mag*drs::milliampere
