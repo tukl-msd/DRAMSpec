@@ -12,3 +12,5 @@ dramspec
 *.pro.user*
 quickTests/
 Makefile
+.qmake.stash
+dramspec_test_plugin_import.cpp
