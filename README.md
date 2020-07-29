@@ -1,6 +1,6 @@
 # DRAMSpec - A DRAM Current and Timing Generator
 
-![DRAMSpec](misc/logo.png "DRAMSpec Logo")
+<img src="misc/DRAMSpec2.png" width="350" style="float: left;"/>  
 
 If you use **DRAMSpec** in your research, we would appreciate a citation to:
 
